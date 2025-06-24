@@ -1,5 +1,6 @@
-{ ... }: {
-  imports = [ ./hardware.nix ../shared ];
+{ config, lib, pkgs, c, ... }: {
+  imports = [ ../configuration.nix ];
 
-  # Very specific configuration for this machine goes here...
+  # Very specific configuration goes here.
+  # You can use this file to overwrite some options defines in `configuration.nix`.
 }

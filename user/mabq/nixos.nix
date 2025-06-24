@@ -13,7 +13,7 @@
   users.users.${c.user} = {
     isNormalUser = true;
     home = "/home/${c.user}";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" ]; # Enable `sudo` for the user.
     shell = pkgs.fish;
     # use `mkpasswd -m sha-512` to generate a hashed password
     hashedPassword =
