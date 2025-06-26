@@ -1,7 +1,6 @@
 id:
 
 let
-  system-configuration = import ../system/${id}/config.nix;
   defaults = {
     inherit id;
     config = "x86_64-linux";
@@ -14,4 +13,4 @@ let
     pkgsAllowUnfree = false;
     pkgsInsecure = [ ];
   };
-in defaults // system-configuration
+in defaults // (import ../system/${id}/config.nix)

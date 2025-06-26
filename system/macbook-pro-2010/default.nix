@@ -1,6 +1,14 @@
 { config, lib, pkgs, c, ... }: {
-  imports = [ ../configuration.nix ];
+  imports = [ ./hardware-configuration.nix ../configuration.nix ];
 
-  # Very specific configuration goes here.
-  # You can use this file to overwrite some options defines in `configuration.nix`.
+  # Use this file for machine specific configurations, do not edit `hardware-configuration.nix`.
+
+  swapDevices = [{
+    device = "/.swapfile";
+    size = 4096; # Size in MB (e.g., 4096MB = 4GB)
+  }];
+
+  # Prefer network manager over dhcp (mutually exclusive options in nixos).
+  networking.useDHCP = false;
+  networking.networkmanager.enable = true;
 }

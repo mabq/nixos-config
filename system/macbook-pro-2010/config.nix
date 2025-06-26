@@ -1,1 +1,5 @@
-{ hostname = "macbook"; }
+{
+  hostname = "macbook";
+  pkgsAllowUnfree = true;
+}
+

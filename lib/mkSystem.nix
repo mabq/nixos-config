@@ -1,4 +1,4 @@
-{ nixpkgs, home-manager, inputs }:
+{ nixpkgs, nixpkgs-unstable, home-manager, inputs }:
 
 id:
 
@@ -15,16 +15,20 @@ in nixpkgs.lib.nixosSystem rec {
   modules = [
     {
       # expose to all modules as arguments
-      config._module.args = { inherit c inputs; };
+      config._module.args = {
+        c = c;
+        nixpkgs-unstable = nixpkgs-unstable;
+        inputs = inputs;
+      };
     }
     systemConfig
     userOSConfig
-    home-manager.nixosModules.home-manager
+    home-manager.nixosModules.home-manager.home-manager
     {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.backupFileExtension = "backup";
-      users.${c.user} = userHMConfig;
+      home-manager.users.${c.user} = userHMConfig;
     }
   ];
 }

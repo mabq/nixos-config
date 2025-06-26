@@ -6,12 +6,6 @@
 
 { config, lib, pkgs, c, ... }: {
 
-  imports = [ # Include the results of the hardware scan.
-    ./${c.id}/hardware-configuration.nix
-  ];
-
-  # ---
-
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -23,14 +17,6 @@
 
   # Define your hostname.
   networking.hostName = c.hostname;
-
-  # Pick only one of the below networking options.
-  networking.networkmanager.enable =
-    true; # Easiest to use and most distros use this>
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # The global useDHCP flag is deprecated, therefore explicitly set to false here.
-  networking.useDHCP = false;
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -64,7 +50,7 @@
 
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
-  environment.environment.systemPackages = with pkgs; [ vim ];
+  environment.environment.systemPackages = with pkgs; [ ];
 
   # ---
 
@@ -76,8 +62,7 @@
 
   # ---
 
-  # from mitchel, do I need this? 🚩
-  # nixpkgs.hostPlatform = lib.mkDefault c.system;
+  nixpkgs.hostPlatform = c.system;
 
   # Allow propietary packages?
   nixpkgs.config.allowUnfree = c.pkgsAllowUnfree;
