@@ -3,7 +3,7 @@ id:
 let
   defaults = {
     inherit id;
-    config = "x86_64-linux";
+    system = "x86_64-linux";
     hostname = "dev";
     user = "mabq";
     firewall = true;
