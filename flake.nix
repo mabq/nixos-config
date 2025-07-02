@@ -16,8 +16,8 @@
   outputs = { self, nixpkgs, ... }@inputs:
     let
       overlays = [
-        inputs.jujutsu.overlays.default
-        inputs.zig.overlays.default
+        # inputs.jujutsu.overlays.default
+        # inputs.zig.overlays.default
 
         (final: prev: rec {
           # Want the latest version of these
