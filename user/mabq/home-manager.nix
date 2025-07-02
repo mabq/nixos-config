@@ -28,6 +28,7 @@
     # sentry-cli
     # erdtree
     # watch
+    nushell
 
     # gopls
     # zigpkgs."0.14.0"
