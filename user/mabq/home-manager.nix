@@ -9,7 +9,7 @@
   # home.homeDirectory = "/home/${c.user}";
 
   # Home-manager requires this be set - DO NOT TOUCH!
-  home.stateVersion = "25.11";
+  home.stateVersion = "25.05";
 
   # Packages I always want installed. Most packages I install using
   # per-project flakes sourced with direnv and nix-shell, so this is
