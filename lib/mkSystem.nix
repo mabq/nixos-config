@@ -20,7 +20,7 @@ in nixpkgs.lib.nixosSystem rec {
 
     systemConfig
     userOSConfig
-    inputs.home-manager.nixosModules.home-manager.home-manager
+    inputs.home-manager.nixosModules.home-manager
     {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
