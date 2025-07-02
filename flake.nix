@@ -1,5 +1,5 @@
 {
-  description = "System configuration";
+  description = "NixOS system configuration";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
@@ -12,11 +12,20 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, ... }@inputs:
+  # This flake outputs a NixOS configuration
+  outputs = { self, nixpkgs, ... }@inputs:
     let
-      mkSystem = import ./lib/mkSystem.nix {
-        inherit nixpkgs nixpkgs-unstable home-manager inputs;
-      };
+      overlays = [
+        inputs.jujutsu.overlays.default
+        inputs.zig.overlays.default
+
+        (final: prev: rec {
+          # Want the latest version of these
+          nushell =
+            inputs.nixpkgs-unstable.legacyPackages.${prev.system}.nushell;
+        })
+      ];
+      mkSystem = import ./lib/mkSystem.nix { inherit overlays nixpkgs inputs; };
     in {
       nixosConfigurations = {
         macbook = mkSystem "macbook-pro-2010";

@@ -1,7 +1,9 @@
 # Tip:
 #   In "MyNixOs" website search: `home-manager <program>` for home-manager configuration options.
 
-{ config, lib, pkgs, c, ... }: {
+{ inputs, c, ... }:
+
+{ config, lib, pkgs, ... }: {
 
   # home.username = c.user;
   # home.homeDirectory = "/home/${c.user}";

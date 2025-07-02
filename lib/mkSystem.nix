@@ -1,4 +1,4 @@
-{ nixpkgs, nixpkgs-unstable, home-manager, inputs }:
+{ overlays, nixpkgs, inputs }:
 
 id:
 
@@ -13,22 +13,23 @@ in nixpkgs.lib.nixosSystem rec {
   system = c.system;
 
   modules = [
-    {
-      # expose to all modules as arguments
-      config._module.args = {
-        c = c;
-        nixpkgs-unstable = nixpkgs-unstable;
-        inputs = inputs;
-      };
-    }
+    # Apply our overlays. Overlays are keyed by system type so we have
+    # to go through and apply our system type. We do this first so
+    # the overlays are available globally.
+    { nixpkgs.overlays = overlays; }
+
     systemConfig
     userOSConfig
-    home-manager.nixosModules.home-manager.home-manager
+    inputs.home-manager.nixosModules.home-manager.home-manager
     {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.backupFileExtension = "backup";
-      home-manager.users.${c.user} = userHMConfig;
+      home-manager.users.${c.user} = import userHMConfig { inherit inputs c; };
     }
+
+    # Expose some extra arguments so that our modules can parameterize better
+    # based on these values.
+    { config._module.args = { inherit c inputs; }; }
   ];
 }
