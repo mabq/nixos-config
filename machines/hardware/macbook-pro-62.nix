@@ -4,30 +4,27 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
-    ];
+  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   boot.initrd.availableKernelModules = [ "ehci_pci" "ahci" "firewire_ohci" "usbhid" "usb_storage" "sd_mod" "sr_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" =
-    { device = "/dev/mapper/crypted";
-      fsType = "ext4";
-    };
+  fileSystems."/" = {
+    device = "/dev/mapper/crypted";
+    fsType = "ext4";
+  };
 
   # boot.initrd.luks.devices."crypted".device = "/dev/disk/by-uuid/d4b0294a-23a4-480c-a81e-504edc9c84aa";
   boot.initrd.luks.devices."crypted".device = "/dev/disk/by-partlabel/rootpt";
 
-  fileSystems."/boot" =
-    {
-      # device = "/dev/disk/by-uuid/0876-4F87";
-      device = "/dev/disk/by-partlabel/bootpt";
-      fsType = "vfat";
-      options = [ "fmask=0077" "dmask=0077" ];
-    };
+  fileSystems."/boot" = {
+    # device = "/dev/disk/by-uuid/0876-4F87";
+    device = "/dev/disk/by-partlabel/bootpt";
+    fsType = "vfat";
+    options = [ "fmask=0077" "dmask=0077" ];
+  };
 
   swapDevices = [ ];
 

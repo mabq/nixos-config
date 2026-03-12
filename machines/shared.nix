@@ -4,10 +4,14 @@
   boot.loader.systemd-boot.enable = lib.mkDefault true;
   boot.loader.efi.canTouchEfiVariables = lib.mkDefault true;
 
+  # Use the latest stable Linux kernel available in nixpkgs
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
   environment.systemPackages = with pkgs; [
     age
     git
     neovim
+    yazi
   ];
 
   networking.networkmanager.enable = lib.mkDefault true;
