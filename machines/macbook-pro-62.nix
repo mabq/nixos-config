@@ -3,7 +3,7 @@
 {
   imports = [
     ./hardware/${machine}.nix
-    ./shared.nix
+    ./defaults.nix
   ];
 
   # Enable CUPS to print documents
