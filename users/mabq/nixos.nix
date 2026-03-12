@@ -2,7 +2,7 @@
 
 {
   # add `~/.local/bin` to PATH
-  environment.localBinInPath = mkDefault true;
+  environment.localBinInPath = true;
 
   users.users.${user} = {
     isNormalUser = true;
