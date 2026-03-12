@@ -41,6 +41,8 @@
   services.pipewire.enable = lib.mkDefault true;
   services.pipewire.pulse.enable = lib.mkDefault true;
 
+  services.tailscale.enable = lib.mkDefault true; # (3)
+
   # Don't require password for sudo actions to wheel members
   security.sudo.wheelNeedsPassword = lib.mkDefault false;
 
@@ -58,4 +60,7 @@
 # (2)
 # [Hashimoto](https://github.com/mitchellh/nixos-config/blob/0c42252d8951ac338fe9d80d45ea912e0b956993/machines/vm-shared.nix#L14)
 # [NixOS Manual](https://nixos.org/manual/nixos/unstable/#sec-kernel-config)
+# -----------------------------------------------------------------------------
+# (3)
+# Manually authenticate with `sudo tailscale up`.
 # -----------------------------------------------------------------------------
