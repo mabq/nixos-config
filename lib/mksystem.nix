@@ -6,7 +6,7 @@ let
   machineConfig = ../machines/${machine}.nix;
   userConfig = ../users/${user}/nixos.nix;
   # homeManagerConfig = ../users/${user}/home-manager.nix;
-in nixpkgs.lib.nixosSystem = {
+in nixpkgs.lib.nixosSystem {
   modules = [
     # { nixpkgs.overlays = overlays; }
 
