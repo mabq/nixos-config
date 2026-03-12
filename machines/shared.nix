@@ -4,8 +4,7 @@
   boot.loader.systemd-boot.enable = lib.mkDefault true;
   boot.loader.efi.canTouchEfiVariables = lib.mkDefault true;
 
-  # Use the latest stable Linux kernel available in nixpkgs
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_latest; # 1
 
   environment.systemPackages = with pkgs; [
     age
@@ -17,6 +16,7 @@
   networking.networkmanager.enable = lib.mkDefault true;
   networking.hostName = lib.mkDefault "${machine}";
 
+  nix.package = pkgs.nixVersions.latest;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   nixpkgs.config.allowUnfree = lib.mkDefault true;
@@ -39,3 +39,12 @@
 
   time.timeZone = lib.mkDefault "America/Guayaquil";
 }
+
+# -----------------------------------------------------------------------------
+# 1
+#
+# Use the latest stable Linux kernel available in nixpkgs.
+# [Hashimoto](https://github.com/mitchellh/nixos-config/blob/0c42252d8951ac338fe9d80d45ea912e0b956993/machines/vm-shared.nix#L11)
+# [NixOS Manual](https://nixos.org/manual/nixos/unstable/#sec-kernel-config)
+#
+# -----------------------------------------------------------------------------
