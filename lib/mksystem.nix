@@ -20,5 +20,5 @@ in {
         _module.args = { inherit inputs machine user; };
       }
     ];
-  }
+  };
 }
