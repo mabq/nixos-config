@@ -36,7 +36,7 @@
   # Enable the OpenSSH daemon
   services.openssh.enable = lib.mkDefault true;
   services.openssh.settings.PasswordAuthentication = lib.mkDefault true;
-  services.openssh.settings.PermitRootLogin = lib.mkDefault "no";
+  services.openssh.settings.PermitRootLogin = lib.mkDefault "yes"; # !!!!!!!!!!!!!!!!!!!!!!
 
   services.pipewire.enable = lib.mkDefault true;
   services.pipewire.pulse.enable = lib.mkDefault true;

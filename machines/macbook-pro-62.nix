@@ -6,7 +6,7 @@
     ./defaults.nix
   ];
 
-  services.openssh.enable = false;
+  # services.openssh.enable = false;
 
   # Enable CUPS to print documents
   # services.printing.enable = true;
