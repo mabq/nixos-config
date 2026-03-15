@@ -10,6 +10,7 @@
 
   environment.systemPackages = with pkgs; [
     age
+    gh
     git
     neovim
     yazi
