@@ -4,6 +4,7 @@
   imports = [
     ./hardware/${machine}.nix
     ./defaults.nix
+    ./network/network-manager.nix
   ];
 
   # services.openssh.enable = false;
