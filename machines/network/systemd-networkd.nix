@@ -1,6 +1,6 @@
 {config, lib, pkgs, machine, ...}:
 {
-  # networking.dhcpcd.enable = false;
+  networking.dhcpcd.enable = false;
 
   # --- Network DNS
   #     Use systemd-resolved to resolve DNS queries
