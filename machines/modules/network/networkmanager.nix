@@ -12,6 +12,8 @@
   # NetworkManager
   # ----------------------------------------------------------------------------
 
+  # networking.networkmanager.wifi.backend = "iwd"; # and use impala
+
   # Add use to networkmanager group (required to connect)
   users.users.${user}.extraGroups = [ "networkmanager" ];
 
