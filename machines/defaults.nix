@@ -14,7 +14,6 @@
     git
     neovim
     yazi
-    impala # TUI for managing wifi
   ];
 
   networking.hostName = lib.mkDefault "${machine}";

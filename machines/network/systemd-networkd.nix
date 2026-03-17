@@ -2,6 +2,10 @@
 {
   networking.dhcpcd.enable = false;
 
+  environment.systemPackages = with pkgs; [
+    impala # TUI for managing wifi
+  ];
+
   # --- Network DNS
   #     Use systemd-resolved to resolve DNS queries
   # services.resolved = {
