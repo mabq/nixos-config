@@ -16,6 +16,8 @@
     yazi
   ];
 
+  networking.firewall.enable = lib.mkDefault true;
+
   networking.hostName = lib.mkDefault "${machine}";
 
   # i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";
