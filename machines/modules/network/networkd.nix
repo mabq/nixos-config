@@ -105,6 +105,10 @@ in {
  
   services.resolved.enable = lib.mkDefault true;
 
+  # systemd-resolved prioritizes per-link DNS servers over global ones when a
+  # link has +DefaultRoute (which enp3s0 has). Your ISP router is advertising
+  # itself as a DNS resolver via DHCP or IPv6 Router Advertisements.
+
   #############################################################################
 
   # WI-FI AUTHENTICATION TOOLS.
