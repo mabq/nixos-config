@@ -4,7 +4,7 @@
   imports = [
     ./hardware/${machine}.nix
     ./default.nix
-    ./modules/network/systemd-networkd.nix
+    ./modules/network/networkd.nix
   ];
 
 

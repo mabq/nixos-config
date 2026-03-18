@@ -1,9 +1,8 @@
-# TODO:
-#  - `/etc/resolv.conf` is not pointing to systemd dir.
+# Systemd daemon to configure network interfaces. Faster and lighter than
+# NetworkManager and provides better integration with systemd-resolved.
 
-{config, pkgs, lib, ...}:
+{config, pkgs, lib, ...}: let
 
-let
   interface_dns_servers = [
     # Cloudflare IPv4 and IPv6 as primary
     "1.1.1.1"
@@ -25,10 +24,12 @@ let
   interface_link_options = {
     RequiredForOnline = "routable"; # The link has carrier and routable address configured.
   };
+
 in {
+
   #############################################################################
 
-  # Create networkd configuration files.
+  # CREATE NETWORKD CONFIGURATION FILES.
   #
   #   > Documentaion: `man systemd-network`
   #
@@ -36,7 +37,7 @@ in {
   #
   #   > Command: `networkctl <SUBCOMMAND>`
   #
-  #   > Service: `systemd-networkd`
+  #   > Service: `systemd-networkd.service`
   #
   # The first (in alphanumeric order) of the network files that matches a given
   # interface is applied, all later files are ignored, even if they match as well.
@@ -74,6 +75,7 @@ in {
       linkConfig = interface_link_options;
       networkConfig = interface_network_options;
       dns = interface_dns_servers;
+      # Lower priority than ethernet or Wi-Fi
       dhcpV4Config.RouteMetric = 700;
       dhcpV6Config.RouteMetric = 700;
     };
@@ -82,20 +84,19 @@ in {
   # Let NixOS create "fallback" configuration files (default)
   #  - `/etc/systemd/network/99-ethernet-default-dhcp.network`
   #  - `/etc/systemd/network/99-wireless-client-dhcp.network`
-  networking.useDHCP = true;
+  networking.useDHCP = lib.mkDefault true;
 
   #############################################################################
 
-  # Setup DNS catching with systemd-resolved.
+  # SETUP DNS CATCHING WITH SYSTEMD-RESOLVED.
   #
   #   > Documentaion: `man 5 resolved.conf`
   #
-  #   > Files: `/etc/resolv.conf` -> `/etc/systemd/resolved.conf`
-  #   TODO: Disable tailscale to see if this happens
+  #   > Files: `/etc/resolv.conf` -> `/etc/static/resolv.conf`
   #
   #   > Command: `resolvectl <SUBCOMMAND>`
   #
-  #   > Service: `systemd-resolved`
+  #   > Service: `systemd-resolved.service`
   #
   # Most of the same options you can configure for resolved can be configured
   # by networkd per interface basis.
@@ -106,14 +107,17 @@ in {
 
   #############################################################################
 
-  # Wi-Fi authentication tools.
+  # WI-FI AUTHENTICATION TOOLS.
   #
   # Unlike NetworkManager, networkd does not have a client to handle Wi-Fi
   # authentication. So we need to install the following tools.
  
   # Internet wireless daemon (required by impala)
-  networking.wireless.iwd.enable = true;
+  networking.wireless.iwd.enable = lib.mkDefault true;
 
   # TUI for managing wifi authentication
   environment.systemPackages = [ pkgs.impala ];
+
+  #############################################################################
+
 }
