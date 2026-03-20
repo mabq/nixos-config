@@ -14,6 +14,7 @@
     gh
     git
     neovim
+    ripgrep
     yazi
   ];
 

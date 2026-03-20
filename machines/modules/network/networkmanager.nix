@@ -22,16 +22,36 @@
     ./systemd-resolved.nix
   ];
 
-  networking.networkmanager.enable = true;
-  networking.networkmanager.ensureProfiles.profiles = {
-    wired = {
-      connection = {
-        id = "Wired connection";
-        type = "ethernet";
+  networking.networkmanager = {
+    enable = true;
+    ensureProfiles.profiles = {
+      Ethernet = {
+        connection = {
+          id = "Ethernet (DNS)";
+          type = "ethernet";
+        };
+        ipv4 = {
+          method = "auto";
+          ignore-auto-dns = true;
+        };
+        ipv6 = {
+          method = "auto";
+          ignore-auto-dns = true;
+        };
       };
-      ipv4 = {
-        method = "auto";
-        ignore-auto-dns = true;
+      Wifi = {
+        connection = {
+          id = "Wifi (DNS)";
+          type = "Wi-Fi";
+        };
+        ipv4 = {
+          method = "auto";
+          ignore-auto-dns = true;
+        };
+        ipv6 = {
+          method = "auto";
+          ignore-auto-dns = true;
+        };
       };
     };
   };
