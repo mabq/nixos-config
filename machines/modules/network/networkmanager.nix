@@ -1,5 +1,3 @@
-# ---
-#
 # Use NetworkManager only on devices that frequently switch between Wi-Fi
 # networks, otherwise use systemd-networkd (see note about ssh "hiccups" below).
 #
@@ -64,8 +62,6 @@
 # [5] https://networkmanager.dev/docs/api/latest/settings-ipv4.html
 # [6] `resolvectl status`
 # [7] https://search.nixos.org/options?channel=unstable&query=networking.networkmanager
-#
-# ---
 
 {user, lib, ...}:
 {
