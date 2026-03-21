@@ -1,5 +1,34 @@
-# Systemd daemon to configure network interfaces. Faster and lighter than
-# NetworkManager and provides better integration with systemd-resolved.
+# ---
+#
+# systemd-networkd is faster and ligher than NetworkManager, but also much
+# simpler.
+#
+# For example, once it establishes a connection it stays out of the way,
+# consumming very little resources. It does not run a permanent background
+# process trying to find Wi-Fi networks with better signal (which is good for
+# performance but less convinient for devices that switch networks frequently).
+#
+# More importantly, because systemd-networkd follows a declarative model
+# `networkctl` is primarily a read-only diagnostic tool rather than a
+# configuration editor (like `nmtui`) - to make changes you need to edit the
+# configuration files [1].
+#
+# While this might seem tedious, the reality is that most probably you won't
+# ever need to do - the files created by this NixOS module make ethernet
+# connections "just work" and you can connect to any Wi-Fi networks using
+# `impala` [2].
+#
+# Because of its declarative approach it makes a much better fit for NixOS,
+# making all configurations fully reproducible. It also offers much better
+# integration with systemd-resolved than NetworkManager (both tools manage
+# interfaces).
+#
+# ---
+#
+# [1] `/etc/systemd/network/`
+# [2] TUI for managing wifi authenticatio.
+#
+# ---
 
 {config, pkgs, lib, ...}: let
 
@@ -32,10 +61,6 @@ in {
   # CREATE NETWORKD CONFIGURATION FILES.
   #
   #   > Documentaion: `man systemd-network`
-  #
-  #   > Files: `/etc/systemd/network/`
-  #
-  #   > Command: `networkctl <SUBCOMMAND>`
   #
   #   > Service: `systemd-networkd.service`
   #
