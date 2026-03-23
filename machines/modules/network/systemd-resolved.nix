@@ -1,29 +1,24 @@
-# Read learning notes: Linux > Network > DNS section.
-
-#############################################################################
-
-# SETUP DNS CATCHING WITH SYSTEMD-RESOLVED.
+# To understand all the tools involved in DNS resolutions and their
+# relationship read the learning notes (Linux > Network).
 #
-#   > Documentaion: `man 5 resolved.conf`
+# systemd-resolved provides a DNS stub listener in 127.0.0.53 that caches
+# resolved queries to make subsequent queries much faster.
 #
-#   > Files: `/etc/resolv.conf` -> `/etc/static/resolv.conf`
+# Both systemd-networkd and NetworkManager are configured to use the Global
+# DNS servers defined here. You can change these at runtime [1].
 #
-#   > Command: `resolvectl <SUBCOMMAND>`
+# Use `resolvectl status` to check DNS servers being currently used.
 #
-#   > Service: `systemd-resolved.service`
+# For more information see [2] or [3].
 #
-# Most of the same options you can configure for resolved can be configured
-# by networkd per interface basis.
+# ---
 #
-# No need to set any options here, networkd passes those options to resolved.
+# [1] `sudo resolvectl dns <interface> <DNS IP>`, you can undo the change by
+# resetting the `systemd-networkd` service.
 #
-# systemd-resolved prioritizes per-link DNS servers over global ones when a
-# link has +DefaultRoute (which enp3s0 has). Your ISP router is advertising
-# itself as a DNS resolver via DHCP or IPv6 Router Advertisements.
+# [2] https://wiki.archlinux.org/title/Systemd-resolved
 #
-# TODO: Different DNS servers for different domains.
-#
-#############################################################################
+# [3] `man 5 resolved.conf`
 
 {config, pkgs, lib, user, ...}:
 {
@@ -42,10 +37,15 @@
         "2620:fe::fe"
         "2620:fe::9"
       ];
-      Domains = "~."; # creates a global routing domain that ensures all DNS queries go through your specified global servers rather than any link-specific ones
-      DNSOverTLS = "opportunistic";
-      DNSSEC = "allow-downgrade";
-      MulticastDNS = true;
+      Domains = "~."; # [1]
+      DNSOverTLS = "opportunistic"; # [2]
+      DNSSEC = "allow-downgrade"; # [3]
+      MulticastDNS = true; # [4]
     };
   };
 }
+
+# [1] https://www.freedesktop.org/software/systemd/man/latest/resolved.conf.html#Domains=
+# [2] https://www.freedesktop.org/software/systemd/man/latest/resolved.conf.html#DNSOverTLS=
+# [3] https://www.freedesktop.org/software/systemd/man/latest/resolved.conf.html#DNSSEC=
+# [4] https://www.freedesktop.org/software/systemd/man/latest/resolved.conf.html#MulticastDNS=

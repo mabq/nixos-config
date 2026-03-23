@@ -1,7 +1,7 @@
 # Systemd-networkd was designed to be configured declaratively, making it a
 # perfect match for NixOS.
 #
-# Read [1] and [2] to understand where systemd-networkd looks for configuration
+# Read [1] and [2] to learn where systemd-networkd looks for configuration
 # files and how it prioritize them (the numbered prefix is important).
 #
 # `networkctl` [3] can be used to instrospect and control systemd-networkd at
@@ -38,24 +38,19 @@
 # [4] https://wiki.archlinux.org/title/Systemd-networkd
 # [5] TUI for managing wifi authentication.
 
-{config, pkgs, lib, ...}: let
-  dhcpOptions = {
-    UseDNS = "no";
-    RouteMetric = 100; # [2]
-  };
-in {
+{config, pkgs, lib, ...}:
+{
   imports = [ ./systemd-resolved.nix ];
 
   systemd.network = {
     enable = lib.mkDefault true;
-
     networks = { # [1]
       "20-ethernet" = {
         matchConfig.Name = "en* eth*"; # `enp3s0`, `eno1`, etc.
         linkConfig.RequiredForOnline = "routable"; # [1]
         networkConfig.DHCP = "yes";
         dhcpV4Config = {
-          UseDNS = "no";
+          UseDNS = "no"; # [5]
           RouteMetric = 100; # [2]
         };
         dhcpV6Config = {
@@ -81,8 +76,8 @@ in {
     };
   };
 
-  # Do not create any automatic network configuration files [4]
-  networking.useDHCP = false;
+  # Do not create any automatic network configuration files
+  networking.useDHCP = false; # [4]
 
   # Use iwd to handle Wi-Fi authentication, scanning, and connection.
   # systemd-networkd handles IP configuration (DHCP, static IP, etc.) on the
@@ -93,9 +88,13 @@ in {
   environment.systemPackages = [ pkgs.impala ];
 }
 
-# [1] The first (in alphanumeric order) of the network files that matches a
+# [0] The first (in alphanumeric order) of the network files that matches a
 # given interface is applied, all later files are ignored, even if they match
 # as well.
+#
+# [1] Prevent `systemd-networkd-wait-online.service` (enabled by default) from
+# exiting before network interfaces have a routable IP address (and thus having
+# other services that require a working network connection starting too early).
 #
 # [2] systemd-networkd does not set per-interface-type default route metrics,
 # so it needs to be configured manually. When both wireless and wired devices
@@ -108,3 +107,6 @@ in {
 # [4] Leaving this option enabled (default) creates `99-<name>.network`
 # files in `/etc/systemd/network/`. These end up managing interfaces for
 # which you did not create any files, which could be confusing.
+#
+# [5] Use Global DNS servers defined by systemd-resolved. To see how to change
+# those at runtime see notes on the systemd-resolved module.
