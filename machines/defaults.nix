@@ -2,7 +2,6 @@
 # Feel free to override any in each machine's config file.
 
 {
-  # --- Default modules
   networkManager ? "systemd-networkd",
 }:
 
@@ -10,10 +9,8 @@
 
 {
   imports = [
-    ../modules/network-managers/${networkManager}.nix
+    ../modules/network-manager/${networkManager}.nix
   ];
-
-  # --- Default configurations
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = lib.mkDefault true;
@@ -44,7 +41,6 @@
 
   nixpkgs.config.allowUnfree = lib.mkDefault true;
 
-  # Must enable default shell
   programs.zsh = {
     enable = lib.mkDefault true;
     autosuggestions.enable = lib.mkDefault true;

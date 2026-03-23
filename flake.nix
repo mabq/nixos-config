@@ -30,8 +30,8 @@
 # from NixOS modules.
 #
 # [2] The machine id in this repository. Make it descriptive so that you
-# don´t ever need to change it - if you do, you must manually change all the
-# hardcoded references.
+# don´t ever need to change it - if you do, you must also change the machine
+# directory name.
 #
 # [3] Or use `nixos-25.11` for more stable releases.
 #
