@@ -2,14 +2,10 @@
   description = "My NixOS config";
 
   inputs = {
-    nixpkgs = {
-      # url = "github:NixOS/nixpkgs/nixos-25.11";
-      url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    };
-
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable"; # [3]
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs"; # [4]
     };
   };
 
@@ -17,24 +13,29 @@
     overlays = [];
     mkSystem = import ./lib/mksystem.nix { inherit overlays nixpkgs inputs; };
   in {
-    nixosConfigurations.macbook-pro-62 = mkSystem { # 1
-      machine = "macbook-pro-62"; # 2
-      user = "mabq";
+    nixosConfigurations = {
+      macbook = mkSystem { # [1]
+        machine = "macbook-pro-62"; # [2]
+        user = "mabq";
+      };
     };
   };
 }
 
-# -----------------------------------------------------------------------------
-# 1
+# [1] The NixOS configuration name. Tightly related to the hostname because
+# `nixos-rebuild switch --flake .#<nixos-config>` uses the hostname of the
+# current machine as the NixOS configuration name if none is provided.
+# If you change it, make sure you also change the hostname in the machine
+# configuration file - unfortunatelly the NixOS config name cannot be accessed
+# from NixOS modules.
 #
-# This name is used to target a NixOS configuration when using
-# `nixos-rebuild switch --flake .#<name>`
-# -----------------------------------------------------------------------------
-# 2
+# [2] The machine id in this repository. Make it descriptive so that you
+# don´t ever need to change it - if you do, you must manually change all the
+# hardcoded references.
 #
-# The name of the NixOS configuration can't be accesse from within Nix modules,
-# so we use the `machine` attribute to target the machine files.
+# [3] Or use `nixos-25.11` for more stable releases.
 #
-# This name is used by default as the hostname, but you can overwrite that
-# in the machine-specific file.
-# -----------------------------------------------------------------------------
+# [4] Make the Home-manager flake use our flake version of Nixpkgs. This is
+# not something you can do with all flakes, but Home-manager is designed to
+# expect this change.
+

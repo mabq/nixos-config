@@ -40,10 +40,10 @@
 
 {config, pkgs, lib, ...}:
 {
-  imports = [ ./systemd-resolved.nix ];
+  imports = [ ./shared/systemd-resolved.nix ];
 
   systemd.network = {
-    enable = lib.mkDefault true;
+    enable = true;
     networks = { # [1]
       "20-ethernet" = {
         matchConfig.Name = "en* eth*"; # `enp3s0`, `eno1`, etc.
@@ -82,11 +82,13 @@
   # Use iwd to handle Wi-Fi authentication, scanning, and connection.
   # systemd-networkd handles IP configuration (DHCP, static IP, etc.) on the
   # wireless interface after iwd connects it.
-  networking.wireless.iwd.enable = lib.mkDefault true;
+  networking.wireless.iwd.enable = true;
 
   # Impala is a TUI for managing Wi-Fi.
   environment.systemPackages = [ pkgs.impala ];
 }
+
+# ---
 
 # [0] The first (in alphanumeric order) of the network files that matches a
 # given interface is applied, all later files are ignored, even if they match

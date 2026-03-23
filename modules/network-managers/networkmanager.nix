@@ -65,16 +65,16 @@
 
 {user, lib, ...}:
 {
-  imports = [ ./systemd-resolved.nix ];
+  imports = [ ./shared/systemd-resolved.nix ];
 
   networking.networkmanager = {
-    enable = lib.mkDefault true;
+    enable = true;
 
     # Create an ethernet connection with `ignore-auto-dns` enabled by default
     ensureProfiles.profiles = {
       ethernet-nixos = { # name given to file in `/run/NetworkManager/system-connections`
         connection = {
-          id = "ethernet-nixos"; # connection name displayed in nmtui
+          id = "ethernet-global-dns"; # connection name displayed in nmtui
           type = "ethernet";
         };
         ipv4 = {

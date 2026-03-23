@@ -45,6 +45,8 @@
   };
 }
 
+# ---
+
 # [1] https://www.freedesktop.org/software/systemd/man/latest/resolved.conf.html#Domains=
 # [2] https://www.freedesktop.org/software/systemd/man/latest/resolved.conf.html#DNSOverTLS=
 # [3] https://www.freedesktop.org/software/systemd/man/latest/resolved.conf.html#DNSSEC=
