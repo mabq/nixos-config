@@ -40,10 +40,10 @@
 
 {config, pkgs, lib, ...}:
 {
-  imports = [ ./shared/systemd-resolved.nix ];
+  imports = [ ./systemd-resolved.nix ];
 
   systemd.network = {
-    enable = true;
+    enable = lib.mkDefault true;
     networks = { # [1]
       "10-ethernet" = let
         config = {

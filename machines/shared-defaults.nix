@@ -1,17 +1,7 @@
 # This file contains default modules and configurations for all machines.
 # Feel free to override any in each machine's config file.
-
-{
-  networkManager ? "systemd-networkd",
-}:
-
 { config, lib, pkgs, ...}:
-
 {
-  imports = [
-    ../modules/network-manager/${networkManager}.nix
-  ];
-
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = lib.mkDefault true;
   boot.loader.efi.canTouchEfiVariables = lib.mkDefault true;
@@ -24,6 +14,7 @@
     bat
     gh
     git
+    ncdu
     neovim
     ripgrep
     yazi
@@ -41,25 +32,24 @@
 
   nixpkgs.config.allowUnfree = lib.mkDefault true;
 
+  # Don't require password for sudo actions to wheel members
+  security.sudo.wheelNeedsPassword = lib.mkDefault false;
+
   # Enable the OpenSSH daemon
-  # TODO: Should I just enable access with SSH key?
   services.openssh = {
     enable = lib.mkDefault true;
     settings = {
+      # TODO: Should I just enable access with SSH key?
       PasswordAuthentication = lib.mkDefault true;
       PermitRootLogin = lib.mkDefault "no";
     };
   };
 
-  # TODO: This should be moved to a "desktop" category, this is not required for servers
-  services.pipewire = {
-    enable = lib.mkDefault true;
-    pulse.enable = lib.mkDefault true;
-  };
-
   services.tailscale.enable = lib.mkDefault true; # [3]
 
   time.timeZone = lib.mkDefault "America/Guayaquil";
+
+  # virtualisation.docker.enable = true;
 }
 
 # [1]

@@ -2,12 +2,12 @@
 {
   imports = [
     ./hardware-configuration.nix
-    (import ../defaults.nix {})
+    ../shared-defaults.nix
+    ../../modules/systemd-networkd.nix
+    ../../modules/pipewire.nix
   ];
 
   networking.hostName = "macbook";
-
-  virtualisation.docker.enable = true;
 
   # ---
 

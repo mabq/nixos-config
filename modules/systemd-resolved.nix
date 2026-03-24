@@ -23,7 +23,7 @@
 {config, pkgs, lib, user, ...}:
 {
   services.resolved = {
-    enable = true;
+    enable = lib.mkDefault true;
     settings.Resolve = {
       DNS = [ # CloudFlare
         "1.1.1.1"
