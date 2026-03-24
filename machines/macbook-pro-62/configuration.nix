@@ -7,9 +7,11 @@
 
   networking.hostName = "macbook";
 
-  system.stateVersion = "25.11"; # [1]
+  virtualisation.docker.enable = true;
 
   # ---
+
+  system.stateVersion = "25.11"; # [1]
 
   # [1] The installation version - used to maintain compatibility with
   # application data (e.g. databases) created on older NixOS versions.

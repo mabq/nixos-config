@@ -45,33 +45,31 @@
   systemd.network = {
     enable = true;
     networks = { # [1]
-      "20-ethernet" = {
+      "10-ethernet" = let
+        config = {
+          UseDNS = "no"; # [3][5]
+          RouteMetric = 100; # [2]
+        };
+      in {
         matchConfig.Name = "en* eth*"; # `enp3s0`, `eno1`, etc.
         linkConfig.RequiredForOnline = "routable"; # [1]
         networkConfig.DHCP = "yes";
-        dhcpV4Config = {
-          UseDNS = "no"; # [5]
-          RouteMetric = 100; # [2]
-        };
-        dhcpV6Config = {
-          UseDNS = "no";
-          RouteMetric = 100;
-        };
-        ipv6AcceptRAConfig.UseDNS = false; # [3]
+        dhcpV4Config = config;
+        dhcpV6Config = config;
+        ipv6AcceptRAConfig = config;
       };
-      "20-wlan" = {
+      "20-wifi" = let
+        config = {
+          UseDNS = "no"; # [3][5]
+          RouteMetric = 600; # lower priority than ethernet
+        };
+      in {
         matchConfig.Name = "wl*"; # `wlan0`, `wlan1`, etc.
         linkConfig.RequiredForOnline = "routable";
         networkConfig.DHCP = "yes";
-        dhcpV4Config = {
-          UseDNS = "no";
-          RouteMetric = 600; # lower priority than wired connections
-        };
-        dhcpV6Config = {
-          UseDNS = "no";
-          RouteMetric = 600;
-        };
-        ipv6AcceptRAConfig.UseDNS = false;
+        dhcpV4Config = config;
+        dhcpV6Config = config;
+        ipv6AcceptRAConfig = config;
       };
     };
   };

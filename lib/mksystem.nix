@@ -3,15 +3,15 @@
 { machine, user }:
 
 let
-  machineConfig = ../machines/${machine};
-  userConfig = ../users/${user}/nixos.nix;
+  machineConfig = ../machines/${machine}/configuration.nix;
+  userNixOSConfig = ../users/${user}/nixos.nix;
   # homeManagerConfig = ../users/${user}/home-manager.nix;
 in nixpkgs.lib.nixosSystem {
   specialArgs = { inherit inputs machine user; }; # 1
   modules = [
     # { nixpkgs.overlays = overlays; }
     machineConfig
-    userConfig
+    userNixOSConfig
   ];
 }
 

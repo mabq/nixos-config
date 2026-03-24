@@ -41,35 +41,25 @@
 
   nixpkgs.config.allowUnfree = lib.mkDefault true;
 
-  programs.zsh = {
-    enable = lib.mkDefault true;
-    autosuggestions.enable = lib.mkDefault true;
-    syntaxHighlighting.enable = lib.mkDefault true;
-  };
-
   # Enable the OpenSSH daemon
-  services = {
-    openssh = {
-      enable = lib.mkDefault true;
-      settings = {
-        PasswordAuthentication = lib.mkDefault true;
-        PermitRootLogin = lib.mkDefault "no";
-      };
+  # TODO: Should I just enable access with SSH key?
+  services.openssh = {
+    enable = lib.mkDefault true;
+    settings = {
+      PasswordAuthentication = lib.mkDefault true;
+      PermitRootLogin = lib.mkDefault "no";
     };
-    pipewire = {
-      enable = lib.mkDefault true;
-      pulse.enable = lib.mkDefault true;
-    };
-    tailscale.enable = lib.mkDefault true; # [3]
   };
 
-  # Don't require password for sudo actions to wheel members
-  security.sudo.wheelNeedsPassword = lib.mkDefault false;
+  # TODO: This should be moved to a "desktop" category, this is not required for servers
+  services.pipewire = {
+    enable = lib.mkDefault true;
+    pulse.enable = lib.mkDefault true;
+  };
+
+  services.tailscale.enable = lib.mkDefault true; # [3]
 
   time.timeZone = lib.mkDefault "America/Guayaquil";
-
-  # Virtualization settings
-  virtualisation.docker.enable = lib.mkDefault true;
 }
 
 # [1]
