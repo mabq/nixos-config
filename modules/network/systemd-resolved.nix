@@ -20,10 +20,11 @@
 #
 # [3] `man 5 resolved.conf`
 
-{config, pkgs, lib, user, ...}:
+{lib, ...}:
 {
   services.resolved = {
     enable = lib.mkDefault true;
+
     settings.Resolve = {
       DNS = [ # CloudFlare
         "1.1.1.1"
@@ -42,12 +43,29 @@
       DNSSEC = "allow-downgrade"; # [3]
       MulticastDNS = true; # [4]
     };
+
   };
+
+  # Explicitly disable resolvconf
+  # TODO: Check that tailscale (which uses WireGuard) still works
+  networking.resolvconf.enable = false; # https://wiki.archlinux.org/title/Openresolv
 }
 
 # ---
 
-# [1] https://www.freedesktop.org/software/systemd/man/latest/resolved.conf.html#Domains=
-# [2] https://www.freedesktop.org/software/systemd/man/latest/resolved.conf.html#DNSOverTLS=
-# [3] https://www.freedesktop.org/software/systemd/man/latest/resolved.conf.html#DNSSEC=
-# [4] https://www.freedesktop.org/software/systemd/man/latest/resolved.conf.html#MulticastDNS=
+# [1] Without the `Domains=~.` option in resolved.conf(5), systemd-resolved
+# might use the per-link DNS servers, if any of them set Domains=~. in the
+# per-link configuration.
+# This option will not affect queries of domain names that match the more
+# specific search domains specified in per-link configuration, they will still
+# be resolved using their respective per-link DNS servers.
+# https://www.freedesktop.org/software/systemd/man/latest/resolved.conf.html#Domains=
+#
+# [2] https://wiki.archlinux.org/title/Systemd-resolved#DNS_over_TLS
+# https://www.freedesktop.org/software/systemd/man/latest/resolved.conf.html#DNSOverTLS=
+#
+# [3] https://wiki.archlinux.org/title/Systemd-resolved#DNSSEC
+# https://www.freedesktop.org/software/systemd/man/latest/resolved.conf.html#DNSSEC=
+#
+# [4] https://wiki.archlinux.org/title/Systemd-resolved#mDNS
+# https://www.freedesktop.org/software/systemd/man/latest/resolved.conf.html#MulticastDNS=

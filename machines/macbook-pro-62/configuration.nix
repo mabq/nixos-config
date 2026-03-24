@@ -3,8 +3,7 @@
   imports = [
     ./hardware-configuration.nix
     ../shared-defaults.nix
-    ../../modules/systemd-networkd.nix
-    ../../modules/pipewire.nix
+    ../../modules/network/systemd-networkd.nix
   ];
 
   networking.hostName = "macbook";

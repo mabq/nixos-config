@@ -15,6 +15,7 @@
     gh
     git
     ncdu
+    ngrep # A grep-like utility that allows you to search for network packets on an interface
     neovim
     ripgrep
     yazi
@@ -32,6 +33,13 @@
 
   nixpkgs.config.allowUnfree = lib.mkDefault true;
 
+  # Default shell is per-user
+  programs.zsh = {
+    enable = lib.mkDefault true;
+    autosuggestions.enable = lib.mkDefault true;
+    syntaxHighlighting.enable = lib.mkDefault true;
+  };
+
   # Don't require password for sudo actions to wheel members
   security.sudo.wheelNeedsPassword = lib.mkDefault false;
 
@@ -48,8 +56,6 @@
   services.tailscale.enable = lib.mkDefault true; # [3]
 
   time.timeZone = lib.mkDefault "America/Guayaquil";
-
-  # virtualisation.docker.enable = true;
 }
 
 # [1]
