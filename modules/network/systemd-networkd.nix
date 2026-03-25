@@ -18,11 +18,11 @@
       "10-ether" = {
         matchConfig = {
           # The `[MATCH]` section determines which file is used to configure
-          # each interface. Only the first one to match is used - reason for
-          # number prefix. [2]
+          # each interface. Only the first one to match is used - that is the
+          # reason for numbered prefix [2].
           #
           # Matching with `Type=ether` causes issues with containers because it
-          # also matches virtual Ethernet interfaces (`veth*`). [3]
+          # also matches virtual Ethernet interfaces (`veth*`) [3].
           # Instead match by globbing the network interface name.
           Name = "en* eth*";
         };
@@ -34,15 +34,18 @@
           RequiredForOnline = "routable";
         };
         networkConfig = {
+          # Let the DHCP server assign the IP address.
           DHCP = "yes";
+          # Force multicastDNS for this interface, it was not using the
+          # systemd-resolved configuration.
           MulticastDNS = "yes";
           # Prevent this interface from being used as a default DNS route.
           # DNSDefaultRoute = false;
         };
         dhcpV4Config = {
-          # Don't use DNS servers obtained from DHCP server
+          # Do not override the Global DNS servers of systemd-resolved.
           UseDNS = "no";
-          # Prefer ethernet over Wi-Fi (lower takes precedence)
+          # Prefer ethernet over Wi-Fi (lower takes precedence).
           RouteMetric = 100;
         };
         dhcpV6Config = {
@@ -55,6 +58,7 @@
         };
       };
 
+      # Same but for wireless networks...
       "20-wlan" = {
         matchConfig = {
           Name = "wl*"; # `wlan0`, `wlan1`, etc.
@@ -69,6 +73,9 @@
         };
         dhcpV4Config = {
           UseDNS = "no";
+          # Lower priority than ethernet - try to have only one active
+          # connection at a time, otherwise you might experience "Asymmetric
+          # Routing" or "Reverse Path Filtering (RPF)" conflicts.
           RouteMetric = 600;
         };
         dhcpV6Config = {
