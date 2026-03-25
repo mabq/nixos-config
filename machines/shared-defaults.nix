@@ -21,8 +21,6 @@
     yazi
   ];
 
-  networking.firewall.enable = lib.mkDefault true;
-
   # i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";
  
   # Use the latest version of the `nix` CLI
@@ -39,6 +37,10 @@
     autosuggestions.enable = lib.mkDefault true;
     syntaxHighlighting.enable = lib.mkDefault true;
   };
+
+  # ---
+
+  networking.firewall.enable = lib.mkDefault true;
 
   # Enable the OpenSSH daemon
   services.openssh = {

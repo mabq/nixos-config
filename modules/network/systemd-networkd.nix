@@ -36,6 +36,7 @@
         networkConfig = {
           DHCP = "yes";
           MulticastDNS = "yes";
+          IPv4ReversePathFilter = "loose";
           # Prevent this interface from being used as a default DNS route.
           # DNSDefaultRoute = false;
         };
@@ -65,6 +66,7 @@
         networkConfig = {
           DHCP = "yes";
           MulticastDNS = "yes";
+          IPv4ReversePathFilter = "loose";
           # DNSDefaultRoute = false;
         };
         dhcpV4Config = {
