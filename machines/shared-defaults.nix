@@ -47,8 +47,8 @@
   services.openssh = {
     enable = lib.mkDefault true;
     settings = {
-      # TODO: Should I just enable access with SSH key?
-      PasswordAuthentication = lib.mkDefault true;
+      # Only accessible via SSH key.
+      PasswordAuthentication = lib.mkDefault false;
       PermitRootLogin = lib.mkDefault "no";
     };
   };
