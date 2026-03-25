@@ -40,9 +40,6 @@
     syntaxHighlighting.enable = lib.mkDefault true;
   };
 
-  # Don't require password for sudo to members of the `wheel` group.
-  security.sudo.wheelNeedsPassword = lib.mkDefault false;
-
   # Enable the OpenSSH daemon
   services.openssh = {
     enable = lib.mkDefault true;
@@ -52,13 +49,17 @@
       PermitRootLogin = lib.mkDefault "no";
     };
   };
-
+  # TODO: Clear the path (either SSH keys, Tailscale auth, User passwords?)
   services.tailscale.enable = lib.mkDefault true; # [3]
 
   time.timeZone = lib.mkDefault "America/Guayaquil";
 
-  # Do not allow to change users with imperative commands. Make sure you set
-  # the root password on installation and normal users passwords with hashes.
+  # ---
+
+  # No sudo password for members of `wheel`.
+  security.sudo.wheelNeedsPassword = lib.mkDefault false;
+
+  # No imperative changes of user accounts.
   users.mutableUsers = false;
 }
 
