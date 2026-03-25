@@ -48,7 +48,7 @@
     enable = lib.mkDefault true;
     settings = {
       # TODO: Should I just enable access with SSH key?
-      PasswordAuthentication = lib.mkDefault true;
+      PasswordAuthentication = lib.mkDefault false;
       PermitRootLogin = lib.mkDefault "no";
     };
   };
