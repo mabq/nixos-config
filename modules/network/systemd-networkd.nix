@@ -96,7 +96,7 @@
 
   # iwd brings the wireless link up (scans, authenticates, associates).
   # systemd-networkd configures IP/DNS after iwd has brought the link up. [1]
-  networking.wireless.iwd.enable = true;
+  networking.wireless.iwd.enable = lib.mkDefault true;
   # The user must be a member of the `wheel` group to manage iwd [2]
   users.users.${user}.extraGroups = [ "wheel" ]; 
 
@@ -112,6 +112,11 @@
 # ----------------------------------------------------------------------------- 
 # Additional notes
 # ----------------------------------------------------------------------------- 
+#
+# With this setup, all the commands you need to manage the network are `ip`,
+# `networkctl` and `resolvectl`.
+#
+# ---
 #
 # Systemd-networkd is configured declaratively - perfect for Nixos management.
 #

@@ -19,7 +19,7 @@
   # ---------------------------------------------------------------------------
  
   # Explicitly disable resolvconf [1]
-  networking.resolvconf.enable = false;
+  networking.resolvconf.enable = lib.mkDefault false;
 
   # [1] https://wiki.archlinux.org/title/Openresolv
 
