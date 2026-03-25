@@ -1,3 +1,41 @@
+{user, lib, ...}:
+{
+  imports = [
+    ./local/disable-conflicting-services.nix
+    ./local/systemd-resolved.nix
+  ];
+
+  networking.networkmanager = {
+    enable = lib.mkDefault true;
+
+    # Create an ethernet connection with `ignore-auto-dns` enabled by default
+    ensureProfiles.profiles = {
+      ethernet-nixos = { # name given to file in `/run/NetworkManager/system-connections`
+        connection = {
+          id = "ethernet-resolved"; # connection name displayed in nmtui
+          type = "ethernet";
+        };
+        ipv4 = {
+          method = "auto"; # configure IP automatically
+          ignore-auto-dns = true;
+        };
+        ipv6 = {
+          method = "auto";
+          ignore-auto-dns = true;
+        };
+      };
+    };
+
+  };
+
+  # Only members of the `networkmanager` group can use `nmtui` or `nmcli`
+  users.users.${user}.extraGroups = [ "networkmanager" ];
+}
+
+# -----------------------------------------------------------------------------
+# Additional notes
+# -----------------------------------------------------------------------------
+#
 # Use NetworkManager only on devices that frequently switch between Wi-Fi
 # networks, otherwise use systemd-networkd (see note about ssh "hiccups" below).
 #
@@ -63,33 +101,3 @@
 # [6] `resolvectl status`
 # [7] https://search.nixos.org/options?channel=unstable&query=networking.networkmanager
 
-{user, lib, ...}:
-{
-  imports = [ ./systemd-resolved.nix ];
-
-  networking.networkmanager = {
-    enable = lib.mkDefault true;
-
-    # Create an ethernet connection with `ignore-auto-dns` enabled by default
-    ensureProfiles.profiles = {
-      ethernet-nixos = { # name given to file in `/run/NetworkManager/system-connections`
-        connection = {
-          id = "ethernet-resolved"; # connection name displayed in nmtui
-          type = "ethernet";
-        };
-        ipv4 = {
-          method = "auto"; # configure IP automatically
-          ignore-auto-dns = true;
-        };
-        ipv6 = {
-          method = "auto";
-          ignore-auto-dns = true;
-        };
-      };
-    };
-
-  };
-
-  # Only members of the `networkmanager` group can use `nmtui` or `nmcli`
-  users.users.${user}.extraGroups = [ "networkmanager" ];
-}

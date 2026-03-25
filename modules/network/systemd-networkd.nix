@@ -1,83 +1,55 @@
-# Systemd-networkd was designed to be configured declaratively, making it a
-# perfect match for NixOS.
-#
-# Read [1] and [2] to learn where systemd-networkd looks for configuration
-# files and how it prioritize them (the numbered prefix is important).
-#
-# `networkctl` [3] can be used to instrospect and control systemd-networkd at
-# runtime. The few changes it allows are stored in "drop-in" files that do not
-# modify the main configuration file - also explained in [2].
-#
-# Being part of systemd it offers much better integration with systemd-resolved.
-#
-# For more information see the ArchWiki [4].
-#
-# ---
-#
-# systemd-networkd is ligher and faster that NetworkManager, but it also has
-# less builtin features.
-#
-# It does not come with a builtin wireless adapter - use `iwd` + `impala` [4]
-# to manage Wi-Fi authentication.
-#
-# It won't automatically switch to another Wi-Fi network, you need to do that
-# manually.
-#
-# It lacks the ability to automatically open "login pages" when connecting to
-# public networks using captive portals - you need to trigger those manually,
-# just run `networkctl status <wlan>` and look for the "Captive Portal" field,
-# then manually open the portal in your browser using the URL shown, or try
-# accessing `http://neverssl.com` or `http://captive.apple.com` to trigger the
-# redirect.
-#
-# ---
-#
-# [1] https://man.archlinux.org/man/systemd-networkd.8.en
-# [2] https://man.archlinux.org/man/systemd.network.5
-# [3] https://man.archlinux.org/man/networkctl.1.en
-# [4] https://wiki.archlinux.org/title/Systemd-networkd
-# [5] TUI for managing wifi authentication.
-
-{config, pkgs, lib, user, ...}:
+{ config, pkgs, lib, user, ... }:
 {
-  imports = [ ./systemd-resolved.nix ];
+  imports = [
+    ./local/disable-conflicting-services.nix
+    ./local/systemd-resolved.nix
+  ];
 
-  # ---
-
-  # Disable the legacy global DHCP
-  networking.useDHCP = false; # [4][6]
-
-  # (Optional but recommended) Disable the dhcpcd daemon entirely to avoid
-  # conflicts where both try to manage the same interfaces.
-  networking.dhcpcd.enable = false; # [6]
-
-  # ---
+  # ---------------------------------------------------------------------------
+  # Configure systemd-networkd
+  # ---------------------------------------------------------------------------
 
   systemd.network = {
     enable = lib.mkDefault true;
 
-    networks = { # [1]
+    # Configuration options for `.network` files [1]
+    networks = {
 
       "10-ether" = {
-        matchConfig = { # https://man.archlinux.org/man/systemd.network.5#%5BMATCH%5D_SECTION_OPTIONS
-          Name = "en* eth*"; # Matching with `Type=ether` causes issues with containers because it also matches virtual Ethernet interfaces (`veth*`) - see https://bugs.archlinux.org/task/70892. Instead match by globbing the network interface name.
+        matchConfig = {
+          # The `[MATCH]` section determines which file is used to configure
+          # each interface. Only the first one to match is used - reason for
+          # number prefix. [2]
+          #
+          # Matching with `Type=ether` causes issues with containers because it
+          # also matches virtual Ethernet interfaces (`veth*`). [3]
+          # Instead match by globbing the network interface name.
+          Name = "en* eth*";
         };
-        linkConfig = { # https://man.archlinux.org/man/systemd.network.5#%5BLINK%5D_SECTION_OPTIONS
-          RequiredForOnline = "routable"; # Prevent `systemd-networkd-wait-online.service` (enabled by default) from exiting before network interfaces have a routable IP address (and thus having other services that require a working network connection starting too early).
+        linkConfig = {
+          # Prevent `systemd-networkd-wait-online.service` (enabled by default)
+          # from exiting before network interfaces have a routable IP address
+          # (and thus having other services that require a working network
+          # connection starting too early).
+          RequiredForOnline = "routable";
         };
-        networkConfig = { # https://man.archlinux.org/man/systemd.network.5#%5BNETWORK%5D_SECTION_OPTIONS
+        networkConfig = {
           DHCP = "yes";
-          # DNSDefaultRoute = false; # # Prevent this interface from being the default DNS route
+          MulticastDNS = "yes";
+          # Prevent this interface from being used as a default DNS route.
+          # DNSDefaultRoute = false;
         };
-        dhcpV4Config = { # https://man.archlinux.org/man/systemd.network.5#%5BDHCPV4%5D_SECTION_OPTIONS
-          UseDNS = "no"; # [3][5]
-          RouteMetric = 100; # [2]
+        dhcpV4Config = {
+          # Don't use DNS servers obtained from DHCP server
+          UseDNS = "no";
+          # Prefer ethernet over Wi-Fi (lower takes precedence)
+          RouteMetric = 100;
         };
-        dhcpV6Config = { # https://man.archlinux.org/man/systemd.network.5#%5BDHCPV6%5D_SECTION_OPTIONS
+        dhcpV6Config = {
           UseDNS = "no";
           RouteMetric = 100;
         };
-        ipv6AcceptRAConfig = { # https://man.archlinux.org/man/systemd.network.5#%5BIPV6ACCEPTRA%5D_SECTION_OPTIONS
+        ipv6AcceptRAConfig = {
           UseDNS = "no";
           RouteMetric = 100;
         };
@@ -92,7 +64,8 @@
         };
         networkConfig = {
           DHCP = "yes";
-          # DNSDefaultRoute = false; # # Prevent this interface from being the default DNS route
+          MulticastDNS = "yes";
+          # DNSDefaultRoute = false;
         };
         dhcpV4Config = {
           UseDNS = "no";
@@ -109,54 +82,74 @@
       };
 
     };
+
   };
 
-  # ---
+  # [1] https://man.archlinux.org/man/systemd.network.5
+  #     https://wiki.archlinux.org/title/Systemd-networkd
+  # [2] https://man.archlinux.org/man/systemd.network.5#%5BMATCH%5D_SECTION_OPTIONS
+  # [3] See https://bugs.archlinux.org/task/70892
 
-  # iwd brings the wireless link up (scans, authenticates, associates),
-  # systemd-networkd configures IP/DNS after iwd has brought the link up.
-  networking.wireless.iwd = { # https://wiki.archlinux.org/title/Iwd
-    enable = true;
-    settings = { # https://wiki.archlinux.org/title/Iwd#Optional_configuration
-      General = {
-        EnableNetworkConfiguration = false; # https://wiki.archlinux.org/title/Iwd#Enable_built-in_network_configuration
-      };
-      Scan = {
-        DisablePeriodicScan = true; # https://wiki.archlinux.org/title/Iwd#Disable_periodic_scan_for_available_networks
-      };
-    };
-  };
+  # ---------------------------------------------------------------------------
+  # Wi-Fi tools
+  # ---------------------------------------------------------------------------
 
-  # impala provides a TUI interface for iwd.
-  environment.systemPackages = [ pkgs.impala ]; # https://wiki.archlinux.org/title/Iwd#Installation
-  users.users.${user}.extraGroups = [ "wheel" ]; # https://wiki.archlinux.org/title/Iwd#Usage
+  # iwd brings the wireless link up (scans, authenticates, associates).
+  # systemd-networkd configures IP/DNS after iwd has brought the link up. [1]
+  networking.wireless.iwd.enable = true;
+  # The user must be a member of the `wheel` group to manage iwd [2]
+  users.users.${user}.extraGroups = [ "wheel" ]; 
+
+  # impala provides a TUI interface for iwd [3]
+  environment.systemPackages = [ pkgs.impala ]; 
+
+  # [1] https://wiki.archlinux.org/title/Iwd
+  # [2] https://wiki.archlinux.org/title/Iwd#Usage
+  # [3] https://wiki.archlinux.org/title/Iwd#Installation
 
 }
 
+# ----------------------------------------------------------------------------- 
+# Additional notes
+# ----------------------------------------------------------------------------- 
+#
+# Systemd-networkd is configured declaratively - perfect for Nixos management.
+#
+# `networkctl` [1] is primarily used to query network configuration, the few
+# state changes you will ever do with it are added to "drop-in" files that do
+# not affect the main `.network` files [2].
+#
+# Changes in "drop-in" files are invisible to NixOS, hence not reproducible.
+#
+# [1] https://man.archlinux.org/man/networkctl.1.en
+# [2] https://man.archlinux.org/man/systemd.network.5#DESCRIPTION
+#
 # ---
-
-# [0] The first (in alphanumeric order) of the network files that matches a
-# given interface is applied, all later files are ignored, even if they match
-# as well.
 #
+# Systemd-networkd offers full integration with systemd-resolved.
 #
-# [2] systemd-networkd does not set per-interface-type default route metrics,
-# so it needs to be configured manually. When both wireless and wired devices
-# on the system have active connections, the kernel will use the metric
-# to decide on-the-fly which one to use.
+# Systemd-networkd configurations [1] take precedence over systemd-resolved
+# configurations [2]. This allows you to set per-link configurations.
 #
-# [3] Disable DNS from IPv6 Router Advertisements. This was blocking the
-# interface from using the Global DNS servers of systemd-resolved.
+# Here we instruct systemd-networkd to inform systemd-resolved to ignore the
+# default DNS Servers received from the DHCP server (ISP router).
 #
-# [4] Leaving this option enabled (default) creates `99-<name>.network`
-# files in `/etc/systemd/network/`. These end up managing interfaces for
-# which you did not create any files, which could be confusing.
+# [1] https://man.archlinux.org/man/systemd.network.5
+# [2] https://man.archlinux.org/man/resolved.conf.5
 #
-# [5] Use Global DNS servers defined by systemd-resolved. To see how to change
-# those at runtime see notes on the systemd-resolved module.
+# ---
 #
-# [6] It is advised to run only one DHCP client or network manager on the
-# system. Find a list of the currently running services with
-# `systemctl --type=service` and then stop or reconfigure those that conflict.
-# https://wiki.archlinux.org/title/Systemd-networkd#Required_services_and_setup
+# systemd-networkd is ligher and faster than NetworkManager.
 #
+# It does not come with a builtin wireless daemon. We need to add `iwd` to
+# manage Wi-Fi networks - `impala` is a TUI for iwd.
+#
+# It does not run background processes - e.g. it won't automatically switch to
+# another Wi-Fi network, you need to do that manually.
+#
+# It lacks the ability to automatically open "login pages" when connecting to
+# public networks using captive portals - you need to trigger those manually.
+# Run `networkctl status <wlan>` and look for the "Captive Portal" field,
+# then manually open the portal in your browser using the URL shown, or try
+# accessing `http://neverssl.com` or `http://captive.apple.com` to trigger the
+# redirect.
