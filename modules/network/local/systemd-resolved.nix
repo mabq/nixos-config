@@ -31,6 +31,9 @@
       # Encrypt DNS queries whenever possible [2]. Fallback to unencrypted
       # queries if the DNS server does not support it to avoid DNS resolution
       # failure.
+      # To verify that DNS over TLS is being used run `ngrep port 853`, it
+      # should produce encrypted output. On the other hand `ngrep port 53`
+      # should produce no output at all.
       DNSOverTLS = "opportunistic";
 
       # Verify DNS signatures whenever possible [3]. This totally depends on
