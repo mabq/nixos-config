@@ -2,10 +2,10 @@
   description = "My NixOS config";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable"; # [3]
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable"; # [1]
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs"; # [4]
+      inputs.nixpkgs.follows = "nixpkgs"; # [2]
     };
   };
 
@@ -14,28 +14,22 @@
     mkSystem = import ./lib/mksystem.nix { inherit overlays nixpkgs inputs; };
   in {
     nixosConfigurations = {
-      macbook = mkSystem { # [1]
-        machine = "macbook-pro-62"; # [2]
+      macbook-pro-62 = mkSystem { # [3]
+        machine = "macbook-pro-62"; # [4]
         user = "mabq";
       };
     };
   };
 }
 
-# [1] The NixOS configuration name. Tightly related to the hostname because
-# `nixos-rebuild switch --flake .#<nixos-config>` uses the hostname of the
-# current machine as the NixOS configuration name if none is provided.
-# If you change it, make sure you also change the hostname in the machine
-# configuration file - unfortunatelly the NixOS config name cannot be accessed
-# from NixOS modules.
+# [1] Use `nixos-25.11` for stable releases.
 #
-# [2] The machine id in this repository. Make it descriptive so that you
-# don´t ever need to change it - if you do, you must also change the machine
-# directory name.
+# [2] Override home-manager's nixpkgs version with our version. Not all flakes
+# expect this change but home-manager does.
 #
-# [3] Or use `nixos-25.11` for more stable releases.
+# [3] NixOS configuration name - cannot be accessed in NixOS modules.
 #
-# [4] Make the Home-manager flake use our flake version of Nixpkgs. This is
-# not something you can do with all flakes, but Home-manager is designed to
-# expect this change.
-
+# [4] Machine configuration name - can be accessed in NixOS modules via
+# special arguments. Use the same name as the NixOS configuration name - this
+# will be set as the default hostname and `nixos-rebuild` command uses the
+# hostname when no NixOS configuration name is passed.

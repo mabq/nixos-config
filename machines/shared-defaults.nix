@@ -1,6 +1,6 @@
 # This file contains default modules and configurations for all machines.
 # Feel free to override any in each machine's config file.
-{ config, lib, pkgs, ...}:
+{ config, lib, pkgs, machine, ...}:
 {
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = lib.mkDefault true;
@@ -20,6 +20,8 @@
     ripgrep
     yazi
   ];
+
+  networking.hostName = lib.mkDefault machine;
 
   # i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";
  

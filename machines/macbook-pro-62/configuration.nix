@@ -6,8 +6,6 @@
     ../../modules/network/systemd-networkd.nix
   ];
 
-  networking.hostName = "macbook";
-
   # ---
 
   system.stateVersion = "25.11"; # [1]
