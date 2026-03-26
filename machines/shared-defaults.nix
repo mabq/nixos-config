@@ -12,10 +12,11 @@
   environment.systemPackages = with pkgs; [
     age
     bat
+    fd # Simple, fast and user-friendly alternative to find
     gh
     git
     ncdu
-    ngrep # check if a network port is being used `sudo ngrep port <port>`
+    ngrep # Network packet analyzer - use `sudo ngrep port <port>` to check if a port is being used
     neovim
     ripgrep
     yazi
@@ -45,7 +46,6 @@
   networking.firewall.enable = lib.mkDefault true;
 
   # Enable the OpenSSH daemon
-  # Tailscale SSH does not use the standard system SSH daemon.
   services.openssh = {
     enable = lib.mkDefault false;
     settings = {
@@ -54,7 +54,10 @@
       PermitRootLogin = lib.mkDefault "no";
     };
   };
-  # TODO: Clear the path (either SSH keys, Tailscale auth, User passwords?)
+
+  # Tailscale SSH does not use the standard system SSH daemon. Port 22 isn't
+  # even listening on the public internet, while still maintaining secure,
+  # private access.
   services.tailscale.enable = lib.mkDefault true; # [3]
 
   time.timeZone = lib.mkDefault "America/Guayaquil";
