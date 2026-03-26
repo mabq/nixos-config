@@ -15,7 +15,7 @@
     gh
     git
     ncdu
-    ngrep # A grep-like utility that allows you to search for network packets on an interface
+    ngrep # check if a network port is being used `sudo ngrep port <port>`
     neovim
     ripgrep
     yazi
@@ -45,8 +45,9 @@
   networking.firewall.enable = lib.mkDefault true;
 
   # Enable the OpenSSH daemon
+  # Tailscale SSH does not use the standard system SSH daemon.
   services.openssh = {
-    enable = lib.mkDefault true;
+    enable = lib.mkDefault false;
     settings = {
       # Only accessible via SSH key.
       PasswordAuthentication = lib.mkDefault false;
