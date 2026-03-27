@@ -14,8 +14,8 @@
     mkSystem = import ./lib/mksystem.nix { inherit overlays nixpkgs inputs; };
   in {
     nixosConfigurations = {
-      macbook-pro-62 = mkSystem { # [3]
-        machine = "macbook-pro-62"; # [4]
+      macbook = mkSystem { # [3]
+        machine = "macbook"; # [4]
         user = "mabq";
       };
     };
