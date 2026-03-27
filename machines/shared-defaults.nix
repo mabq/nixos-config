@@ -18,6 +18,7 @@
     ncdu
     ngrep # Network packet analyzer - use `sudo ngrep port <port>` to check if a port is being used
     neovim
+    pciutils # Provides the `lspci` command
     ripgrep
     yazi
   ];
