@@ -165,3 +165,13 @@
 # then manually open the portal in your browser using the URL shown, or try
 # accessing `http://neverssl.com` or `http://captive.apple.com` to trigger the
 # redirect.
+#
+# ---
+#
+# You only need to configure hardware interfaces. Virtual interfaces like
+# `wg0` or `tailscale0` are managed directly by those programs.
+#
+# See how WireGuard [1] and Tailscale [2] work.
+#
+# [1] https://www.wireguard.com/
+# [2] https://tailscale.com/blog/how-tailscale-works

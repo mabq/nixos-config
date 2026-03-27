@@ -43,22 +43,20 @@
 
   # ---
 
+  # Block all ports by default.
   networking.firewall.enable = lib.mkDefault true;
 
-  # Enable the OpenSSH daemon
+  # Enable the OpenSSH daemon (in case you ever lose Tailscale access).
   services.openssh = {
-    enable = lib.mkDefault false;
+    enable = lib.mkDefault true;
     settings = {
-      # Only accessible via SSH key.
       PasswordAuthentication = lib.mkDefault false;
       PermitRootLogin = lib.mkDefault "no";
     };
   };
 
-  # Tailscale SSH does not use the standard system SSH daemon. Port 22 isn't
-  # even listening on the public internet, while still maintaining secure,
-  # private access.
-  services.tailscale.enable = lib.mkDefault true; # [3]
+  # Enable Tailscale - must authenticate manually `sudo tailscale up`.
+  services.tailscale.enable = lib.mkDefault true;
 
   time.timeZone = lib.mkDefault "America/Guayaquil";
 
@@ -71,12 +69,8 @@
   users.mutableUsers = false;
 }
 
-# [1]
-# [Hashimoto](https://github.com/mitchellh/nixos-config/blob/0c42252d8951ac338fe9d80d45ea912e0b956993/machines/vm-shared.nix#L11)
-# [NixOS Manual](https://nixos.org/manual/nixos/unstable/#sec-kernel-config)
+# [1] https://github.com/mitchellh/nixos-config/blob/0c42252d8951ac338fe9d80d45ea912e0b956993/machines/vm-shared.nix#L11
+#     https://nixos.org/manual/nixos/unstable/#sec-kernel-config
 #
-# [2]
-# [Hashimoto](https://github.com/mitchellh/nixos-config/blob/0c42252d8951ac338fe9d80d45ea912e0b956993/machines/vm-shared.nix#L14)
-# [NixOS Manual](https://nixos.org/manual/nixos/unstable/#sec-kernel-config)
-#
-# [3] Manually authenticate with `sudo tailscale up`.
+# [2] https://github.com/mitchellh/nixos-config/blob/0c42252d8951ac338fe9d80d45ea912e0b956993/machines/vm-shared.nix#L14
+#     https://nixos.org/manual/nixos/unstable/#sec-kernel-config
