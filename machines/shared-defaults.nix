@@ -12,6 +12,7 @@
   environment.systemPackages = with pkgs; [
     age
     bat
+    caligula # User-friendly, lightweight TUI for disk imaging
     fd # Simple, fast and user-friendly alternative to find
     gh
     git

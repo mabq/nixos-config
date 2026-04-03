@@ -6,6 +6,8 @@
     ../../modules/network/systemd-networkd.nix
   ];
 
+  services.openssh.enable = false;
+
   # ---
 
   system.stateVersion = "25.11"; # [1]
