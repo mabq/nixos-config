@@ -48,6 +48,7 @@
           # Prefer ethernet over Wi-Fi (lower takes precedence).
           RouteMetric = 100;
         };
+        # TODO: this is failing, I assume it is a bug, try again later
         # dhcpV6Config = {
         #   UseDNS = "no";
         #   RouteMetric = 100;
@@ -78,6 +79,7 @@
           # Routing" or "Reverse Path Filtering (RPF)" conflicts.
           RouteMetric = 600;
         };
+        # TODO: this is failing, I assume it is a bug, try again later
         # dhcpV6Config = {
         #   UseDNS = "no";
         #   RouteMetric = 600;

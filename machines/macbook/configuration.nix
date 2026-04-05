@@ -6,7 +6,7 @@
     ../../modules/network/systemd-networkd.nix
   ];
 
-  services.openssh.enable = false;
+  # services.openssh.enable = false;
 
   # ---
 
