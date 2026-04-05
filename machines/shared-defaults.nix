@@ -16,6 +16,7 @@
     fd # Simple, fast and user-friendly alternative to find
     gh
     git
+    iperf # Tool to measure IP bandwidth using UDP or TCP
     just # Handy way to save and run project-specific commands
     ncdu
     ngrep # Network packet analyzer - use `sudo ngrep port <port>` to check if a port is being used

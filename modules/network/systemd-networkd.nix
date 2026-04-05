@@ -48,10 +48,10 @@
           # Prefer ethernet over Wi-Fi (lower takes precedence).
           RouteMetric = 100;
         };
-        dhcpV6Config = {
-          UseDNS = "no";
-          RouteMetric = 100;
-        };
+        # dhcpV6Config = {
+        #   UseDNS = "no";
+        #   RouteMetric = 100;
+        # };
         ipv6AcceptRAConfig = {
           UseDNS = "no";
           RouteMetric = 100;
@@ -78,10 +78,10 @@
           # Routing" or "Reverse Path Filtering (RPF)" conflicts.
           RouteMetric = 600;
         };
-        dhcpV6Config = {
-          UseDNS = "no";
-          RouteMetric = 600;
-        };
+        # dhcpV6Config = {
+        #   UseDNS = "no";
+        #   RouteMetric = 600;
+        # };
         ipv6AcceptRAConfig = {
           UseDNS = "no";
           RouteMetric = 600;
