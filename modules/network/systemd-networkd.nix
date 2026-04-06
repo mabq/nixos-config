@@ -44,17 +44,16 @@
         };
         dhcpV4Config = {
           # Do not override the Global DNS servers of systemd-resolved.
-          UseDNS = "no";
+          UseDNS = false;
           # Prefer ethernet over Wi-Fi (lower takes precedence).
           RouteMetric = 100;
         };
-        # TODO: this is failing, I assume it is a bug, try again later
-        # dhcpV6Config = {
-        #   UseDNS = "no";
-        #   RouteMetric = 100;
-        # };
+        dhcpConfig = {
+          UseDNS = false;
+          RouteMetric = 100;
+        };
         ipv6AcceptRAConfig = {
-          UseDNS = "no";
+          UseDNS = false;
           RouteMetric = 100;
         };
       };
@@ -73,19 +72,18 @@
           # DNSDefaultRoute = false;
         };
         dhcpV4Config = {
-          UseDNS = "no";
+          UseDNS = false;
           # Lower priority than ethernet - try to have only one active
           # connection at a time, otherwise you might experience "Asymmetric
           # Routing" or "Reverse Path Filtering (RPF)" conflicts.
           RouteMetric = 600;
         };
-        # TODO: this is failing, I assume it is a bug, try again later
-        # dhcpV6Config = {
-        #   UseDNS = "no";
-        #   RouteMetric = 600;
-        # };
+        dhcpConfig = {
+          UseDNS = false;
+          RouteMetric = 600;
+        };
         ipv6AcceptRAConfig = {
-          UseDNS = "no";
+          UseDNS = false;
           RouteMetric = 600;
         };
       };
