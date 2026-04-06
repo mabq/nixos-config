@@ -36,6 +36,7 @@
         networkConfig = {
           # Let the DHCP server assign the IP address.
           DHCP = "yes";
+          IPv6AcceptRA = "yes";
           # Force multicastDNS for this interface, it was not using the
           # systemd-resolved configuration.
           MulticastDNS = "yes";
@@ -48,9 +49,9 @@
           # Prefer ethernet over Wi-Fi (lower takes precedence).
           RouteMetric = 100;
         };
-        dhcpConfig = {
+        dhcpV6Config = {
           UseDNS = false;
-          RouteMetric = 100;
+          # There is no `RouteMetric` option in this section
         };
         ipv6AcceptRAConfig = {
           UseDNS = false;
@@ -64,10 +65,11 @@
           Name = "wl*"; # `wlan0`, `wlan1`, etc.
         };
         linkConfig = {
-          RequiredForOnline = "routable";
+          RequiredForOnline = "no";
         };
         networkConfig = {
           DHCP = "yes";
+          IPv6AcceptRA = "yes";
           MulticastDNS = "yes";
           # DNSDefaultRoute = false;
         };
@@ -78,9 +80,9 @@
           # Routing" or "Reverse Path Filtering (RPF)" conflicts.
           RouteMetric = 600;
         };
-        dhcpConfig = {
+        dhcpV6Config = {
           UseDNS = false;
-          RouteMetric = 600;
+          # There is no `RouteMetric` option in this section
         };
         ipv6AcceptRAConfig = {
           UseDNS = false;
