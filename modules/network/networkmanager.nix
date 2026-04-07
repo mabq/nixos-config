@@ -1,9 +1,5 @@
 {user, lib, ...}:
 {
-  imports = [
-    ./local/disable-conflicting-services.nix
-  ];
-
   networking.networkmanager = {
     enable = lib.mkDefault true;
 
