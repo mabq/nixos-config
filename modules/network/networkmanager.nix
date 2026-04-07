@@ -2,29 +2,30 @@
 {
   imports = [
     ./local/disable-conflicting-services.nix
-    ./local/systemd-resolved.nix
   ];
 
   networking.networkmanager = {
     enable = lib.mkDefault true;
 
-    # Create an ethernet connection with `ignore-auto-dns` enabled by default
-    ensureProfiles.profiles = {
-      ethernet-nixos = { # name given to file in `/run/NetworkManager/system-connections`
-        connection = {
-          id = "ethernet-resolved"; # connection name displayed in nmtui
-          type = "ethernet";
-        };
-        ipv4 = {
-          method = "auto"; # configure IP automatically
-          ignore-auto-dns = true;
-        };
-        ipv6 = {
-          method = "auto";
-          ignore-auto-dns = true;
-        };
-      };
-    };
+    # NOTE: When using NetworkManager setup DNS servers manually using `nmtui`,
+    # mixing it with systemd-resolved could cause more trouble than convenience.
+    #
+    # # Create an ethernet connection with `ignore-auto-dns` enabled by default
+    # ensureProfiles.profiles = {
+    #   ethernet-nixos = { # name given to file in `/run/NetworkManager/system-connections`
+    #     connection = {
+    #       id = "ethernet-resolved"; # connection name displayed in nmtui
+    #       type = "ethernet"; };
+    #     ipv4 = {
+    #       method = "auto"; # configure IP automatically
+    #       ignore-auto-dns = true;
+    #     };
+    #     ipv6 = {
+    #       method = "auto";
+    #       ignore-auto-dns = true;
+    #     };
+    #   };
+    # };
 
   };
 
@@ -56,6 +57,9 @@
 #
 # ---
 #
+# NOTE: I disabled systemd-resolved when using NetworkManager, just edit
+# the DNS servers manually with `nmtui`.
+#
 # NetworkManager thinks in connections, while systemd-resolved thinks in
 # interfaces. When a connection is established, NetworkManager pushes the DNS
 # parameters received from the DHCP server (ISP router) to systemd-resolved.
@@ -70,7 +74,7 @@
 # (unknown names and passwords), but we can create an ethernet connection that
 # has "Ignore automatically obtained DNS parameters" enabled by default (you
 # can always create more if you need).
-
+#
 # Wi-Fi networks will use obtained DNS parameters by default which might be
 # useful to connect to captive portals in public networks. To use
 # systemd-resolved DNS servers just enable the "ignore automatically obtained
