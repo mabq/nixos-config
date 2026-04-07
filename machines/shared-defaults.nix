@@ -13,6 +13,7 @@
     age
     bat
     caligula # User-friendly, lightweight TUI for disk imaging
+    dnsutils # Domain name server
     fd # Simple, fast and user-friendly alternative to find
     gh
     git
