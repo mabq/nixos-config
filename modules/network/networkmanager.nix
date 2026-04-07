@@ -1,7 +1,7 @@
-{user, lib, ...}:
+{user, ...}:
 {
   networking.networkmanager = {
-    enable = lib.mkDefault true;
+    enable = true;
 
     # NOTE: When using NetworkManager setup DNS servers manually using `nmtui`,
     # mixing it with systemd-resolved could cause more trouble than convenience.
