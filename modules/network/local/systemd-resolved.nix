@@ -62,14 +62,10 @@
 # Additional notes
 # -----------------------------------------------------------------------------
 #
-# To understand all the tools involved in DNS resolutions and their
-# relationship read the learning notes (Linux > Network).
-#
 # systemd-resolved [1] provides a DNS stub listener in 127.0.0.53 that caches
 # resolved queries to make subsequent queries much faster.
 #
-# Both systemd-networkd and NetworkManager are configured to use the Global
-# DNS servers defined here. You can change these at runtime by executing
+# You can change global DNS servers at runtime by executing
 # `sudo resolvectl dns <interface> <DNS IP>`. To undo the changes just
 # restart the systemd-networkd service.
 #
@@ -80,8 +76,9 @@
 # -----------------------------------------------------------------------------
 #
 # Tailscale lets you force any device in your tailnet to use your tailnet DNS
-# settings instead of its local DNS settings [1]
+# settings instead of its local DNS settings [1][2]
 #
 # [1] https://tailscale.com/docs/reference/dns-in-tailscale?tab=macos#override-dns-servers
+# [2] https://tailscale.com/blog/sisyphean-dns-client-linux
 #
 # -----------------------------------------------------------------------------

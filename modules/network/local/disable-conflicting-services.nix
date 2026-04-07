@@ -22,7 +22,6 @@
   networking.resolvconf.enable = lib.mkDefault false;
 
   # [1] https://wiki.archlinux.org/title/Openresolv
-
 }
 
 # -----------------------------------------------------------------------------
