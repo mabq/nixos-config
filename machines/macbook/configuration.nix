@@ -3,7 +3,7 @@
   imports = [
     ./hardware-configuration.nix
     ../shared-defaults.nix
-    ../../modules/network/systemd-networkd.nix
+    ../../modules/network/networkmanager.nix
   ];
 
   # services.openssh.enable = false;
