@@ -76,4 +76,12 @@
 # Use `resolvectl status` to check DNS servers being currently used.
 #
 # [1] https://wiki.archlinux.org/title/Systemd-resolved
-
+#
+# -----------------------------------------------------------------------------
+#
+# Tailscale lets you force any device in your tailnet to use your tailnet DNS
+# settings instead of its local DNS settings [1]
+#
+# [1] https://tailscale.com/docs/reference/dns-in-tailscale?tab=macos#override-dns-servers
+#
+# -----------------------------------------------------------------------------
