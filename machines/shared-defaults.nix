@@ -10,22 +10,23 @@
   boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest; # [1]
 
   environment.systemPackages = with pkgs; [
-    age
-    bat
+    age # Modern encryption tool with small explicit keys
+    bat # Cat clone with syntax highlighting and Git integration
     caligula # User-friendly, lightweight TUI for disk imaging
     dnsutils # Domain name server
     fd # Simple, fast and user-friendly alternative to find
-    gh
-    git
+    gh # GitHub CLI tool
+    git # Distributed version control system
     iperf # Tool to measure IP bandwidth using UDP or TCP
     just # Handy way to save and run project-specific commands
-    ncdu
+    ncdu # Disk usage analyzer with an ncurses interface
     ngrep # Network packet analyzer - use `sudo ngrep port <port>` to check if a port is being used
-    neovim
+    neovim # Vim text editor fork focused on extensibility and agility
     nix-tree # Interactively browse a Nix store paths dependencies
     pciutils # Provides the `lspci` command
-    ripgrep
-    yazi
+    ripgrep # Utility that combines the usability of The Silver Searcher with the raw speed of grep
+    wget # Tool for retrieving files using HTTP, HTTPS, and FTP
+    yazi # Blazing fast terminal file manager written in Rust, based on async I/O
   ];
 
   networking.hostName = lib.mkDefault machine;
