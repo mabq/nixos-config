@@ -100,6 +100,10 @@
   # Enable and configure systemd-resolved for DNS resolution
   # ---------------------------------------------------------------------------
 
+  # Disable conflicting services [5]
+  networking.resolvconf.enable = false;
+
+  # Enable and configure resolved
   services.resolved = {
     enable = true;
     settings.Resolve = {
@@ -140,9 +144,6 @@
       MulticastDNS = true;
     };
   };
-
-  # Disable conflicting services [5]
-  networking.resolvconf.enable = false;
 
   # [1] https://www.freedesktop.org/software/systemd/man/latest/resolved.conf.html#Domains=
   # [2] https://wiki.archlinux.org/title/Systemd-resolved#DNS_over_TLS

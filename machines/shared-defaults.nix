@@ -22,6 +22,7 @@
     ncdu
     ngrep # Network packet analyzer - use `sudo ngrep port <port>` to check if a port is being used
     neovim
+    nix-tree # Interactively browse a Nix store paths dependencies
     pciutils # Provides the `lspci` command
     ripgrep
     yazi
