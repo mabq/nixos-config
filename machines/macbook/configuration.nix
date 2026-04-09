@@ -4,6 +4,7 @@
     ./hardware-configuration.nix
     ../shared-defaults.nix
     ../../modules/network/systemd-networkd.nix
+    ../../modules/bluetooth.nix
   ];
 
   networking.firewall.enable = false;
