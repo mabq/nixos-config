@@ -5,6 +5,7 @@
     ../shared-defaults.nix
     ../../modules/network/systemd-networkd.nix
     ../../modules/bluetooth.nix
+    ../../modules/pipewire.nix
   ];
 
   networking.firewall.enable = false;

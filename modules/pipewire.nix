@@ -2,6 +2,7 @@
 {
   services.pipewire = {
     enable = lib.mkDefault true;
+    alsa.enable = lib.mkDefault true;
     pulse.enable = lib.mkDefault true; # [1]
     jack.enable = lib.mkDefault true;  # [2]
     wireplumber.enable = lib.mkDefault true;  # [3]
