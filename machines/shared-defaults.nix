@@ -9,6 +9,11 @@
   # Use the latest stable linux kernel available in Nixpkgs
   boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest; # [1]
 
+  # zRam creates a compressed swap area inside your RAM. It is significantly faster than swapping
+  # to an SSD and effectively increases your total memory capacity
+  zramSwap.enable = true;
+  zramSwap.memoryPercent = 50; # Use up to 50% of RAM as compressed swap
+
   environment.systemPackages = with pkgs; [
     age # Modern encryption tool with small explicit keys
     bat # Cat clone with syntax highlighting and Git integration
