@@ -38,7 +38,7 @@
           # Let the DHCP server assign the IP address.
           DHCP = "yes";
           # Accept Router Advertisement for IPv6
-          IPv6AcceptRA = "yes";
+          # IPv6AcceptRA = "yes";
           # MulticastDNS = "yes";
           # Prevent this interface from being used as a default DNS route.
           # DNSDefaultRoute = false;
@@ -68,7 +68,7 @@
         };
         networkConfig = {
           DHCP = "yes";
-          IPv6AcceptRA = "yes";
+          # IPv6AcceptRA = "yes";
           # MulticastDNS = "yes";
           # DNSDefaultRoute = false;
         };
