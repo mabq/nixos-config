@@ -64,7 +64,7 @@
           Name = "wl*"; # `wlan0`, `wlan1`, etc.
         };
         linkConfig = {
-          RequiredForOnline = "routable";
+          # RequiredForOnline = "routable";
         };
         networkConfig = {
           DHCP = "yes";
