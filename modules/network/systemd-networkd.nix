@@ -32,7 +32,8 @@
           # from exiting before network interfaces have a routable IP address
           # (and thus having other services that require a working network
           # connection starting too early).
-          RequiredForOnline = "routable";
+          # RequiredForOnline = "routable";
+          RequiredForOnline = "no";
         };
         networkConfig = {
           # Let the DHCP server assign the IP address.
@@ -64,7 +65,7 @@
           Name = "wl*"; # `wlan0`, `wlan1`, etc.
         };
         linkConfig = {
-          # RequiredForOnline = "routable";
+          RequiredForOnline = "no";
         };
         networkConfig = {
           DHCP = "yes";
