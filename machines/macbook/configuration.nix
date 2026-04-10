@@ -10,8 +10,6 @@
 
   networking.firewall.enable = false;
 
-  services.spotifyd.enable = true;
-
   # hardware.enableAllFirmware = true;
 
   # ---
