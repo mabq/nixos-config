@@ -12,6 +12,10 @@
   # Enable and configure systemd-networkd.
   systemd.network = {
     enable = true;
+
+    # Consider the system "online" when any interface reaches "routable" state
+    wait-online.anyInterface = true;
+
     # Create `.network` configuration files [1] - only need to configure hardware
     # interfaces. Virtual interfaces like `wg0` or `tailscale0` are managed
     # directly by those programs.
@@ -37,9 +41,7 @@
         networkConfig = {
           # Let the DHCP server assign the IP address.
           DHCP = "yes";
-          # Accept Router Advertisement for IPv6
-          # IPv6AcceptRA = "yes";
-          # MulticastDNS = "yes";
+          MulticastDNS = "yes";
           # Prevent this interface from being used as a default DNS route.
           # DNSDefaultRoute = false;
         };
@@ -64,12 +66,11 @@
           Name = "wl*"; # `wlan0`, `wlan1`, etc.
         };
         linkConfig = {
-          RequiredForOnline = "no";
+          RequiredForOnline = "routable";
         };
         networkConfig = {
           DHCP = "yes";
-          # IPv6AcceptRA = "yes";
-          # MulticastDNS = "yes";
+          MulticastDNS = "yes";
           # DNSDefaultRoute = false;
         };
         dhcpV4Config = {
