@@ -10,6 +10,8 @@
 
   networking.firewall.enable = false;
 
+  hardware.enableAllFirmware = true;
+
   # ---
 
   system.stateVersion = "25.11"; # [1]

@@ -7,7 +7,6 @@
     settings = {
       General = {
         Experimental = lib.mkDefault true; # Shows battery charge of connected devices
-        Enable = "Source,Sink,Media,Socket";
         ControllerMode = "dual";
       };
     };

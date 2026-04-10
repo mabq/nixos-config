@@ -1,4 +1,4 @@
-{ lib, user }:
+{ lib, user, ... }:
 {
   virtualisation.docker.enable = lib.mkDefault true;
 
