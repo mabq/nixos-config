@@ -21,7 +21,7 @@ with lib;
     swapDevices = [
       {
         device = "/var/lib/swapfile";
-        size = mkdefault 4 * 1024; # Adjust this on per-machine basis - NixOS expects the value in MB.
+        size = mkDefault (4 * 1024); # Adjust this on per-machine basis - NixOS expects the value in MB.
         priority = 5; # Lower priority than zram swap - lower number means lower priority
       }
     ];

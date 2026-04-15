@@ -1,6 +1,6 @@
 {
   imports = [
-    ./memory/zram.nix
-    ./memory/swap.nix
+    ./memory
+    ./network
   ];
 }

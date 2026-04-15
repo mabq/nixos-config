@@ -2,19 +2,10 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../shared-defaults.nix
-    ../../modules/network/systemd-networkd.nix
-    ../../modules/bluetooth.nix
-    ../../modules/pipewire.nix
+    ../default.nix
+    # ../../modules/bluetooth.nix
+    # ../../modules/pipewire.nix
   ];
-
-  networking.firewall.enable = false;
-
-  mySystem.memory.swap.enable = false;
-
-  # hardware.enableAllFirmware = true;
-
-  # ---
 
   system.stateVersion = "25.11"; # [1]
 

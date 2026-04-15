@@ -1,17 +1,18 @@
 # This file contains default modules and configurations for all machines.
 # Feel free to override any in each machine's config file.
 { config, lib, pkgs, machine, ...}:
+with lib;
 {
   imports = [
     ../modules/mySystem
   ];
 
   # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = lib.mkDefault true;
-  boot.loader.efi.canTouchEfiVariables = lib.mkDefault true;
+  boot.loader.systemd-boot.enable = mkDefault true;
+  boot.loader.efi.canTouchEfiVariables = mkDefault true;
 
   # Use the latest stable linux kernel available in Nixpkgs
-  boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest; # [1]
+  boot.kernelPackages = mkDefault pkgs.linuxPackages_latest; # [1]
 
   environment.systemPackages = with pkgs; [
     age # Modern encryption tool with small explicit keys
@@ -33,48 +34,43 @@
     yazi # Blazing fast terminal file manager written in Rust, based on async I/O
   ];
 
-  networking.hostName = lib.mkDefault machine;
-
-  # i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";
+  # i18n.defaultLocale = mkDefault "en_US.UTF-8";
  
   # Use the latest version of the `nix` CLI
   nix = {
-    package = lib.mkDefault pkgs.nixVersions.latest; # [2]
+    package = mkDefault pkgs.nixVersions.latest; # [2]
     settings.experimental-features = [ "nix-command" "flakes" ];
   };
 
-  nixpkgs.config.allowUnfree = lib.mkDefault true;
+  nixpkgs.config.allowUnfree = mkDefault true;
 
   # Default shell is per-user
   programs.zsh = {
-    enable = lib.mkDefault true;
-    autosuggestions.enable = lib.mkDefault true;
-    syntaxHighlighting.enable = lib.mkDefault true;
+    enable = mkDefault true;
+    autosuggestions.enable = mkDefault true;
+    syntaxHighlighting.enable = mkDefault true;
   };
 
   # ---
 
-  # Block all ports by default.
-  networking.firewall.enable = lib.mkDefault true;
-
   # Enable the OpenSSH daemon (in case you ever lose Tailscale access).
   services.openssh = {
-    enable = lib.mkDefault true;
+    enable = mkDefault true;
     settings = {
-      PasswordAuthentication = lib.mkDefault false;
-      PermitRootLogin = lib.mkDefault "no";
+      PasswordAuthentication = mkDefault false;
+      PermitRootLogin = mkDefault "no";
     };
   };
 
   # Enable Tailscale - must authenticate manually `sudo tailscale up`.
-  services.tailscale.enable = lib.mkDefault true;
+  services.tailscale.enable = mkDefault true;
 
-  time.timeZone = lib.mkDefault "America/Guayaquil";
+  time.timeZone = mkDefault "America/Guayaquil";
 
   # ---
 
   # No sudo password for members of `wheel`.
-  security.sudo.wheelNeedsPassword = lib.mkDefault false;
+  security.sudo.wheelNeedsPassword = mkDefault false;
 
   # No imperative changes of user accounts.
   users.mutableUsers = false;
