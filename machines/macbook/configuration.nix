@@ -7,6 +7,9 @@
     # ../../modules/pipewire.nix
   ];
 
+  mySystem.memory.swap.enable = false;
+  mySystem.network.manager = "networkmanager";
+
   system.stateVersion = "25.11"; # [1]
 
   # [1] The installation version - used to maintain compatibility with
