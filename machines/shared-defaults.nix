@@ -2,17 +2,17 @@
 # Feel free to override any in each machine's config file.
 { config, lib, pkgs, machine, ...}:
 {
+  imports = [
+    ../modules/mySystem/swap.nix
+    ../modules/mySystem/zram.nix
+  ];
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = lib.mkDefault true;
   boot.loader.efi.canTouchEfiVariables = lib.mkDefault true;
 
   # Use the latest stable linux kernel available in Nixpkgs
   boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest; # [1]
-
-  # zRam creates a compressed swap area inside your RAM. It is significantly faster than swapping
-  # to an SSD and effectively increases your total memory capacity
-  zramSwap.enable = true;
-  zramSwap.memoryPercent = 50; # Use up to 50% of RAM as compressed swap
 
   environment.systemPackages = with pkgs; [
     age # Modern encryption tool with small explicit keys
