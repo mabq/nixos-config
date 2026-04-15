@@ -1,9 +1,7 @@
-# This module enables zram swap for all machines by default.
+# Enable/disable on per-machin basis using:
+#   mySystem.memory.zram.enable = true|false;
 #
-# You can completely disable this on per-machin basis using:
-#   mySystem.memory.zram.enable = false;
-#
-# Or adjust the compression algorithm or memoryPercent using the zram module, e.g:
+# Adjust settings using the zram module, e.g:
 #   zramSwap.memoryPercent = 20;
 #   zramSwap.algorithm = "zstd";
 #
@@ -18,13 +16,7 @@
 { config, lib, ... }:
 with lib;
 {
-  options.mySystem.memory.zram = {
-    enable = mkOption {
-      type = types.bool;
-      default = true;
-      description = "Enable in-memory compressed devices and swap space provided by the zram kernel module.";
-    };
-  };
+  options.mySystem.memory.zram.enable = mkEnableOption "Enable zram.";
 
   config = mkIf config.mySystem.memory.zram.enable {
     zramSwap = {

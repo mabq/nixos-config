@@ -2,13 +2,12 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../default.nix
+    ../defaults.nix
     # ../../modules/bluetooth.nix
     # ../../modules/pipewire.nix
   ];
 
   mySystem.memory.swap.enable = false;
-  mySystem.network.manager = "networkmanager";
 
   system.stateVersion = "25.11"; # [1]
 

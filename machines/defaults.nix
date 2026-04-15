@@ -1,11 +1,19 @@
-# This file contains default modules and configurations for all machines.
-# Feel free to override any in each machine's config file.
+# Defaults - override any of these on per-machine basis.
+
 { config, lib, pkgs, machine, ...}:
 with lib;
 {
   imports = [
-    ../modules/mySystem
+    ../modules/mySystem/memory/swap.nix
+    ../modules/mySystem/memory/zram.nix
+    ../modules/mySystem/network/manager.nix
   ];
+
+  mySystem.memory.swap.enable = mkDefault false;
+  mySystem.memory.zram.enable = mkDefault true;
+  mySystem.network.manager = mkDefault "networkd";
+
+  # ---
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = mkDefault true;
@@ -35,6 +43,9 @@ with lib;
   ];
 
   # i18n.defaultLocale = mkDefault "en_US.UTF-8";
+
+  networking.hostName = mkDefault machine;
+  networking.firewall.enable = mkDefault true;
  
   # Use the latest version of the `nix` CLI
   nix = {

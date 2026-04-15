@@ -1,11 +1,7 @@
 { config, lib, user, ... }:
 with lib;
 {
-  options.mySystem.network.networkmanager.enable = mkOption {
-    type = types.bool;
-    default = false;
-    description = "Use NetworkManager as the network manager";
-  };
+  options.mySystem.network.networkmanager.enable = mkEnableOption "Use NetworkManager as the network manager";
 
   config = mkIf config.mySystem.network.networkmanager.enable {
     networking.networkmanager = {
