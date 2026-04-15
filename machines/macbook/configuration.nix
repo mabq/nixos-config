@@ -10,6 +10,8 @@
 
   networking.firewall.enable = false;
 
+  mySystem.memory.swap.enable = false;
+
   # hardware.enableAllFirmware = true;
 
   # ---

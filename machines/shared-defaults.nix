@@ -3,8 +3,8 @@
 { config, lib, pkgs, machine, ...}:
 {
   imports = [
-    ../modules/mySystem/swap.nix
-    ../modules/mySystem/zram.nix
+    ../modules/mySystem/memory/zram.nix
+    ../modules/mySystem/memory/swap.nix
   ];
 
   # Use the systemd-boot EFI boot loader.
