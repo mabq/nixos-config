@@ -42,17 +42,18 @@ with lib;
     yazi # Blazing fast terminal file manager written in Rust, based on async I/O
   ]
   ++ optionals config.hardware.bluetooth.enable [
-    # NOTE:
-    # If you cannot connect Sony's Headphones is because the pipewire user services
-    # has not initiated. The user session must be initiated for the pipewire's user
-    # units to be triggered.
+    # NOTE: If you cannot connect Sony's Headphones is because the pipewire
+    # user services has not initiated. The user session must be initiated for
+    # the pipewire's user units to be triggered.
     bluetui # TUI for managing bluetooth on Linux
+  ]
+  ++ optionals config.services.pipewire.enable [
+    wiremix # Simple TUI mixer for PipeWire
   ];
 
   # i18n.defaultLocale = mkDefault "en_US.UTF-8";
 
   hardware.bluetooth.enable = mkDefault true;
-
 
   networking.hostName = mkDefault machine;
   networking.firewall.enable = mkDefault true;
@@ -72,7 +73,10 @@ with lib;
     syntaxHighlighting.enable = mkDefault true;
   };
 
-  # ---
+  security.rtkit.enable = mkIf config.services.pipewire.enable true;
+
+  # No sudo password for members of `wheel`.
+  security.sudo.wheelNeedsPassword = mkDefault false;
 
   # Enable the OpenSSH daemon (in case you ever lose Tailscale access).
   services.openssh = {
@@ -86,12 +90,14 @@ with lib;
   # Enable Tailscale - must authenticate manually `sudo tailscale up`.
   services.tailscale.enable = mkDefault true;
 
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    jack.enable = true;
+    pulse.enable = true;
+  };
+
   time.timeZone = mkDefault "America/Guayaquil";
-
-  # ---
-
-  # No sudo password for members of `wheel`.
-  security.sudo.wheelNeedsPassword = mkDefault false;
 
   # No imperative changes of user accounts.
   users.mutableUsers = false;
