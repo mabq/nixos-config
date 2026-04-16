@@ -40,9 +40,19 @@ with lib;
     ripgrep # Utility that combines the usability of The Silver Searcher with the raw speed of grep
     wget # Tool for retrieving files using HTTP, HTTPS, and FTP
     yazi # Blazing fast terminal file manager written in Rust, based on async I/O
+  ]
+  ++ optionals config.hardware.bluetooth.enable [
+    # NOTE:
+    # If you cannot connect Sony's Headphones is because the pipewire user services
+    # has not initiated. The user session must be initiated for the pipewire's user
+    # units to be triggered.
+    bluetui # TUI for managing bluetooth on Linux
   ];
 
   # i18n.defaultLocale = mkDefault "en_US.UTF-8";
+
+  hardware.bluetooth.enable = mkDefault true;
+
 
   networking.hostName = mkDefault machine;
   networking.firewall.enable = mkDefault true;

@@ -3,11 +3,7 @@
   imports = [
     ./hardware-configuration.nix
     ../defaults.nix
-    # ../../modules/bluetooth.nix
-    # ../../modules/pipewire.nix
   ];
-
-  mySystem.memory.swap.enable = false;
 
   system.stateVersion = "25.11"; # [1]
 
