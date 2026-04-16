@@ -1,6 +1,6 @@
 # Defaults - override any of these on per-machine basis.
 
-{ config, lib, pkgs, machine, ...}:
+{ config, lib, pkgs, machine, user, ...}:
 with lib;
 {
   imports = [
@@ -101,6 +101,11 @@ with lib;
 
   # No imperative changes of user accounts.
   users.mutableUsers = false;
+
+  users.users.${user}.extraGroups = []
+    ++ optionals config.virtualisation.docker.enable [ "docker" ];
+
+  virtualisation.docker.enable = mkDefault true;
 }
 
 # [1] https://github.com/mitchellh/nixos-config/blob/0c42252d8951ac338fe9d80d45ea912e0b956993/machines/vm-shared.nix#L11
