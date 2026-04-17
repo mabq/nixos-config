@@ -1,7 +1,10 @@
-# Set the network manager on per-machine basis using `mySystem.network.manager = "networkd|networkmanager";`
+# Options:
+#   mySystem.network.manager = "networkd|networkmanager";
 
 { config, lib, ... }:
+
 with lib;
+
 {
   imports = [
     ./networkd.nix

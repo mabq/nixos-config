@@ -1,5 +1,7 @@
 { config, lib, pkgs, user, ... }:
+
 with lib;
+
 {
   options.mySystem.network.networkd.enable = mkEnableOption "Use systemd-networkd as the network manager";
 

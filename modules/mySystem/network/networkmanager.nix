@@ -1,5 +1,7 @@
 { config, lib, user, ... }:
+
 with lib;
+
 {
   options.mySystem.network.networkmanager.enable = mkEnableOption "Use NetworkManager as the network manager";
 
