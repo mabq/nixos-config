@@ -10,6 +10,7 @@ in nixpkgs.lib.nixosSystem {
   specialArgs = { inherit inputs machine user; }; # 1
   modules = [
     # { nixpkgs.overlays = overlays; }
+    inputs.disko.nixosModules.disko
     machineConfig
     userNixOSConfig
   ];

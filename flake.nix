@@ -3,19 +3,27 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable"; # [1]
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs"; # [2]
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs: let
+  outputs = { self, nixpkgs, ... }@inputs: let
     overlays = [];
     mkSystem = import ./lib/mksystem.nix { inherit overlays nixpkgs inputs; };
   in {
     nixosConfigurations = {
       macbook = mkSystem { # [3]
         machine = "macbook"; # [4]
+        user = "mabq";
+      };
+      xps = mkSystem {
+        machine = "xps";
         user = "mabq";
       };
     };

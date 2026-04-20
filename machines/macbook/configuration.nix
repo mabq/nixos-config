@@ -3,7 +3,13 @@
   imports = [
     ./hardware-configuration.nix
     ../defaults.nix
+    ../../modules/diskConfig/single-disk-ext4-crypt.nix
   ];
+
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
+  disko.devices.disk.main.device = "/dev/sda";
 
   system.stateVersion = "25.11"; # [1]
 

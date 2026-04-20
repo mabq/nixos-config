@@ -11,10 +11,6 @@ with lib;
 
   # ---
 
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = mkDefault true;
-  boot.loader.efi.canTouchEfiVariables = mkDefault true;
-
   # Use the latest stable linux kernel available in Nixpkgs
   boot.kernelPackages = mkDefault pkgs.linuxPackages_latest; # [1]
 
