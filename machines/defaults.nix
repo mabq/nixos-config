@@ -53,6 +53,13 @@ with lib;
 
   hardware.bluetooth.enable = mkDefault true;
 
+  hardware.facter = {
+    # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/hardware/facter/facter.md#what-gets-configured-module-hardware-facter-features
+    reportPath = ${machine}/facter.json;
+    # Do not create networkd config files
+    detected.dhcp.enable = mkDefault false;
+  };
+
   networking = {
     hostName = mkDefault machine;
     firewall.enable = mkDefault true;

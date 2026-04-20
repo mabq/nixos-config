@@ -7,10 +7,12 @@
 #  imports = [ ./disko-config.nix ];
 #  disko.devices.disk.main.device = "/dev/sda";
 # }
+{lib, ...}:
 {
   disko.devices = {
     disk = {
       main = {
+        device = lib.mkDefault = "/dev/sda"; # change this on per-machine basis where different
         type = "disk";
         content = {
           type = "gpt";
