@@ -14,6 +14,7 @@
   # This relative path refers to the directory on your source machine (the computer where you run the nixos-anywhere command).
   # The facter.json file is never "copied" as a loose file to the target machine. Instead, it is baked directly into the Nix Store on the target.
   hardware.facter.reportPath = ./facter.json;
+  systemd.network.wait-online.ignoredInterfaces = [ "wlp6s0" ];
 
   system.stateVersion = "25.11";
 }
