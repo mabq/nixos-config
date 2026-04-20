@@ -1,29 +1,17 @@
-# Disk configuration compatible with both BIOS and EFI systems.
-# https://github.com/nix-community/disko-templates/blob/main/single-disk-ext4/disko-config.nix
-#
-# USAGE in your configuration.nix.
-# Update devices to match your hardware.
-# {
-#  imports = [ ./disko-config.nix ];
-#  disko.devices.disk.main.device = "/dev/sda";
-# }
 {lib, ...}:
 {
   disko.devices = {
     disk = {
       main = {
-        device = lib.mkDefault "/dev/sda"; # change this on per-machine basis where different
         type = "disk";
+        device = lib.mkDefault "/dev/sda"; # change this on per-machine basis where different
         content = {
           type = "gpt";
           partitions = {
-            boot = {
-              size = "1M";
-              type = "EF02"; # for grub MBR
-            };
+            # EFI System Partition (FAT32, ~512MB)
             ESP = {
-              size = "1G";
-              type = "EF00";
+              size = "512M";
+              type = "EF00"; # # EFI System Partition GUID
               content = {
                 type = "filesystem";
                 format = "vfat";
@@ -31,13 +19,14 @@
                 mountOptions = [ "umask=0077" ];
               };
             };
+            # Root partition (ext4, uses remaining space)
             root = {
               size = "100%";
               content = {
                 type = "luks"; # LUKS passphrase will be prompted interactively only
                 name = "crypted";
                 settings = {
-                  allowDiscards = true;
+                  allowDiscards = true; # TRIM support for SSDs
                 };
                 content = {
                   type = "filesystem";
