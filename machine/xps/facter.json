@@ -2394,7 +2394,7 @@
         "resources": [
           {
             "type": "hwaddr",
-            "address": 98
+            "address": 51
           },
           {
             "type": "phwaddr",
@@ -2634,6 +2634,28 @@
       },
       {
         "index": 51,
+        "attached_to": 0,
+        "class_list": [
+          "network_interface"
+        ],
+        "base_class": {
+          "hex": "0107",
+          "name": "Network Interface",
+          "value": 263
+        },
+        "sub_class": {
+          "hex": "0000",
+          "name": "Loopback",
+          "value": 0
+        },
+        "model": "Loopback network interface",
+        "sysfs_id": "/class/net/lo",
+        "unix_device_names": [
+          "lo"
+        ]
+      },
+      {
+        "index": 52,
         "attached_to": 19,
         "class_list": [
           "network_interface"
@@ -2657,7 +2679,7 @@
         "resources": [
           {
             "type": "hwaddr",
-            "address": 98
+            "address": 51
           },
           {
             "type": "phwaddr",
@@ -2672,28 +2694,6 @@
         "driver_modules": [
           "ath9k",
           "ath9k"
-        ]
-      },
-      {
-        "index": 52,
-        "attached_to": 0,
-        "class_list": [
-          "network_interface"
-        ],
-        "base_class": {
-          "hex": "0107",
-          "name": "Network Interface",
-          "value": 263
-        },
-        "sub_class": {
-          "hex": "0000",
-          "name": "Loopback",
-          "value": 0
-        },
-        "model": "Loopback network interface",
-        "sysfs_id": "/class/net/lo",
-        "unix_device_names": [
-          "lo"
         ]
       }
     ],
