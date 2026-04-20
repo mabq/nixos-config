@@ -4,10 +4,10 @@ with lib;
 
 {
   imports = [
-    ../modules/mySystem/network/manager.nix
+    # ../modules/mySystem/network/manager.nix
   ];
 
-  mySystem.network.manager = mkDefault "networkd";
+  # mySystem.network.manager = mkDefault "networkd";
 
   # ---
 
@@ -55,7 +55,7 @@ with lib;
 
   hardware.facter = {
     # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/hardware/facter/facter.md#what-gets-configured-module-hardware-facter-features
-    reportPath = ${machine}/facter.json;
+    reportPath = ./xps/facter.json;
     # Do not create networkd config files
     detected.dhcp.enable = mkDefault false;
   };
