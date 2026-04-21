@@ -1001,7 +1001,7 @@
         "fpu_exception": false,
         "cpuid_level": 10,
         "write_protect": false,
-        "tlb_size": 32732,
+        "tlb_size": 32767,
         "clflush_size": 64,
         "cache_alignment": 64,
         "address_sizes": {
@@ -1152,10 +1152,8 @@
         "unix_device_names": [
           "/dev/disk/by-id/ata-Hitachi_HTS543225L9SA02_081220FB1E00LKKMBK3F",
           "/dev/disk/by-id/wwn-0x5000cca55ff314ed",
-          "/dev/disk/by-label/ARCH_202508",
           "/dev/disk/by-path/pci-0000:00:0b.0-ata-1",
           "/dev/disk/by-path/pci-0000:00:0b.0-ata-1.0",
-          "/dev/disk/by-uuid/2025-08-01-13-39-26-00",
           "/dev/sda"
         ],
         "resources": [
@@ -2396,7 +2394,7 @@
         "resources": [
           {
             "type": "hwaddr",
-            "address": 97
+            "address": 100
           },
           {
             "type": "phwaddr",
@@ -2595,48 +2593,6 @@
     "network_interface": [
       {
         "index": 50,
-        "attached_to": 19,
-        "class_list": [
-          "network_interface"
-        ],
-        "base_class": {
-          "hex": "0107",
-          "name": "Network Interface",
-          "value": 263
-        },
-        "sub_class": {
-          "hex": "0001",
-          "name": "Ethernet",
-          "value": 1
-        },
-        "model": "Ethernet network interface",
-        "sysfs_id": "/class/net/wlp6s0",
-        "sysfs_device_link": "/devices/pci0000:00/0000:00:16.0/0000:06:00.0",
-        "unix_device_names": [
-          "wlp6s0"
-        ],
-        "resources": [
-          {
-            "type": "hwaddr",
-            "address": 97
-          },
-          {
-            "type": "phwaddr",
-            "address": 48
-          }
-        ],
-        "driver": "ath9k",
-        "driver_module": "ath9k",
-        "drivers": [
-          "ath9k"
-        ],
-        "driver_modules": [
-          "ath9k",
-          "ath9k"
-        ]
-      },
-      {
-        "index": 51,
         "attached_to": 0,
         "class_list": [
           "network_interface"
@@ -2658,7 +2614,7 @@
         ]
       },
       {
-        "index": 52,
+        "index": 51,
         "attached_to": 32,
         "class_list": [
           "network_interface"
@@ -2696,6 +2652,48 @@
         ],
         "driver_modules": [
           "forcedeth"
+        ]
+      },
+      {
+        "index": 52,
+        "attached_to": 19,
+        "class_list": [
+          "network_interface"
+        ],
+        "base_class": {
+          "hex": "0107",
+          "name": "Network Interface",
+          "value": 263
+        },
+        "sub_class": {
+          "hex": "0001",
+          "name": "Ethernet",
+          "value": 1
+        },
+        "model": "Ethernet network interface",
+        "sysfs_id": "/class/net/wlp6s0",
+        "sysfs_device_link": "/devices/pci0000:00/0000:00:16.0/0000:06:00.0",
+        "unix_device_names": [
+          "wlp6s0"
+        ],
+        "resources": [
+          {
+            "type": "hwaddr",
+            "address": 100
+          },
+          {
+            "type": "phwaddr",
+            "address": 48
+          }
+        ],
+        "driver": "ath9k",
+        "driver_module": "ath9k",
+        "drivers": [
+          "ath9k"
+        ],
+        "driver_modules": [
+          "ath9k",
+          "ath9k"
         ]
       }
     ],

@@ -4,30 +4,28 @@
     disk = {
       main = {
         type = "disk";
-        device = lib.mkDefault "/dev/sda"; # change this on per-machine basis where different
+        device = lib.mkDefault "/dev/sda"; # Allow to override on each machine config file
         content = {
           type = "gpt";
           partitions = {
-            # EFI System Partition (FAT32, ~512MB)
+            # EFI System Partition
             ESP = {
-              size = "512M";
-              type = "EF00"; # # EFI System Partition GUID
+              size = "500M";
+              type = "EF00";
               content = {
                 type = "filesystem";
                 format = "vfat";
                 mountpoint = "/boot";
-                mountOptions = [ "umask=0077" ];
+                mountOptions = [ "umask=0077" ]; # Tightens permissions so only root can read the contents
               };
             };
-            # Root partition (ext4, uses remaining space)
-            root = {
+            luks = {
               size = "100%";
               content = {
-                type = "luks"; # LUKS passphrase will be prompted interactively only
+                type = "luks";
                 name = "crypted";
-                settings = {
-                  allowDiscards = true; # TRIM support for SSDs
-                };
+                settings.allowDiscards = true;
+                passwordFile = "/tmp/secret.key"; # Not used at boot time — only during initial setup.
                 content = {
                   type = "filesystem";
                   format = "ext4";

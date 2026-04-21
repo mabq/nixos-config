@@ -1,15 +1,14 @@
-{ config, lib, pkgs, machine, user, ...}:
+{ config, lib, pkgs, machine, user, ... }:
 
 with lib;
 
 {
   imports = [
-    ../modules/mySystem/network/manager.nix
+    # Enable one of the following for network management or leave them disable
+    # for automatic DHCP configuration by facter.
+    ../modules/mySystem/network/networkd.nix
+    ../modules/mySystem/network/networkmanager.nix
   ];
-
-  mySystem.network.manager = mkDefault "networkd";
-
-  # ---
 
   # Use the latest stable linux kernel available in Nixpkgs
   boot.kernelPackages = mkDefault pkgs.linuxPackages_latest; # [1]
@@ -53,17 +52,14 @@ with lib;
 
   hardware.bluetooth.enable = mkDefault true;
 
-  hardware.facter = {
-    # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/hardware/facter/facter.md#what-gets-configured-module-hardware-facter-features
-    reportPath = ./${machine}/facter.json;
-    detected.dhcp.enable = mkDefault false; # do not create networkd config files
-  };
+  # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/hardware/facter/facter.md#what-gets-configured-module-hardware-facter-features
+  hardware.facter.reportPath = ./${machine}/facter.json;
 
   networking = {
     hostName = mkDefault machine;
     firewall.enable = mkDefault true;
   };
- 
+
   # Use the latest version of the `nix` CLI
   nix = {
     package = mkDefault pkgs.nixVersions.latest; # [2]
@@ -115,7 +111,7 @@ with lib;
   # No imperative changes of user accounts.
   users.mutableUsers = mkDefault false;
 
-  users.users.${user}.extraGroups = []
+  users.users.${user}.extraGroups = [ ]
     ++ optionals config.virtualisation.docker.enable [ "docker" ];
 
   virtualisation.docker.enable = mkDefault false;

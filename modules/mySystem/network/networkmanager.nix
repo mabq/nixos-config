@@ -6,6 +6,12 @@ with lib;
   options.mySystem.network.networkmanager.enable = mkEnableOption "Use NetworkManager as the network manager";
 
   config = mkIf config.mySystem.network.networkmanager.enable {
+    # # Make sure networkd is disabled
+    # mySystem.network.networkd.enable = mkForce false;
+
+    # Do not create DHCP configurations based on facter file
+    hardware.facter.detected.dhcp.enable = mkDefault false;
+
     networking.networkmanager = {
       enable = true;
     };

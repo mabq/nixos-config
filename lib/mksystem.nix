@@ -6,7 +6,8 @@ let
   machineConfig = ../machines/${machine}/configuration.nix;
   userNixOSConfig = ../users/${user}/nixos.nix;
   # homeManagerConfig = ../users/${user}/home-manager.nix;
-in nixpkgs.lib.nixosSystem {
+in
+nixpkgs.lib.nixosSystem {
   specialArgs = { inherit inputs machine user; }; # 1
   modules = [
     # { nixpkgs.overlays = overlays; }
