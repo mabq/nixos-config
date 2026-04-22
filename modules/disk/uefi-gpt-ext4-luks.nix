@@ -8,7 +8,6 @@
         content = {
           type = "gpt";
           partitions = {
-            # EFI System Partition
             ESP = {
               size = "500M";
               type = "EF00";
@@ -16,7 +15,7 @@
                 type = "filesystem";
                 format = "vfat";
                 mountpoint = "/boot";
-                mountOptions = [ "umask=0077" ]; # Tightens permissions so only root can read the contents
+                mountOptions = [ "umask=0077" ]; # Tightens permissions so only root can read the contents.
               };
             };
             luks = {
@@ -24,8 +23,7 @@
               content = {
                 type = "luks";
                 name = "crypted";
-                settings.allowDiscards = true;
-                passwordFile = "/tmp/secret.key"; # Not used at boot time — only during initial setup.
+                settings.allowDiscards = lib.mkDefault true;
                 content = {
                   type = "filesystem";
                   format = "ext4";
