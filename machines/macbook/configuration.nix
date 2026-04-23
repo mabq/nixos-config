@@ -1,15 +1,16 @@
-{ ... }:
+{ lib, ... }:
+with lib;
 {
   imports = [
     ../defaults.nix
-    ../../modules/disk/uefi-gpt-ext4-luks.nix
+    ../../modules/disko/uefi-gpt-ext4-luks.nix
   ];
 
-  mySystem.network.networkd.enable = true;
+  # Sometimes facter tries to use GRUB on UEFI systems, make sure it uses systemd-boot.
+  boot.loader.systemd-boot.enable = mkDefault true;
+  boot.loader.efi.canTouchEfiVariables = mkDefault true;
 
-  # Based on the facter report it tries to use GRUB, I want systemd-boot.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  mySystem.network.networkd.enable = true;
 
   system.stateVersion = "25.11"; # only update when reinstalling with a newer ISO
 }

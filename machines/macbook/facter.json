@@ -1318,7 +1318,7 @@
         "fpu_exception": false,
         "cpuid_level": 11,
         "write_protect": false,
-        "tlb_size": 32575,
+        "tlb_size": 32765,
         "clflush_size": 64,
         "cache_alignment": 64,
         "address_sizes": {
@@ -2948,7 +2948,7 @@
         "resources": [
           {
             "type": "hwaddr",
-            "address": 98
+            "address": 49
           },
           {
             "type": "phwaddr",
@@ -3226,7 +3226,7 @@
         "resources": [
           {
             "type": "hwaddr",
-            "address": 98
+            "address": 49
           },
           {
             "type": "phwaddr",

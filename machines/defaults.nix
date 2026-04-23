@@ -4,21 +4,27 @@ with lib;
 
 {
   imports = [
-    # Enable one of the following for network management or leave them disable
+    # On each machine config file enable one of these or leave them disable
     # for automatic DHCP configuration by facter.
     ../modules/mySystem/network/networkd.nix
     ../modules/mySystem/network/networkmanager.nix
   ];
 
-  # Use the latest stable linux kernel available in Nixpkgs
-  boot.kernelPackages = mkDefault pkgs.linuxPackages_latest; # [1]
+  boot = {
+    # Use the latest stable linux kernel available in Nixpkgs
+    kernelPackages = mkDefault pkgs.linuxPackages_latest; # 1
+    loader = {
+      # Limit the number of generations to keep
+      systemd-boot.configurationLimit = mkIf config.boot.loader.systemd-boot.enable (mkDefault 10);
+      grub.configurationLimit = mkIf config.boot.loader.grub.enable (mkDefault 10);
+    };
+  };
 
   environment.systemPackages = with pkgs; [
     # age # Modern encryption tool with small explicit keys
     # caligula # User-friendly, lightweight TUI for disk imaging
     # dnsutils # Domain name server - provides the `dig` command
     # iperf # Tool to measure IP bandwidth using UDP or TCP
-    # just # Handy way to save and run project-specific commands
     # ngrep # Network packet analyzer - use `sudo ngrep port <port>` to check if a port is being used
     # pciutils # Provides the `lspci` command
     bat # Cat clone with syntax highlighting and Git integration
@@ -28,6 +34,7 @@ with lib;
     fzf # Command-line fuzzy finder written in Go
     gh # GitHub CLI tool
     git # Distributed version control system
+    just # Handy way to save and run project-specific commands
     ncdu # Disk usage analyzer with an ncurses interface
     neovim # Vim text editor fork focused on extensibility and agility
     nix-tree # Interactively browse a Nix store paths dependencies
@@ -48,12 +55,11 @@ with lib;
     wiremix # Simple TUI mixer for PipeWire
   ];
 
-  # i18n.defaultLocale = mkDefault "en_US.UTF-8";
-
   hardware.bluetooth.enable = mkDefault true;
 
-  # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/hardware/facter/facter.md#what-gets-configured-module-hardware-facter-features
   hardware.facter.reportPath = ./${machine}/facter.json;
+
+  i18n.defaultLocale = mkDefault "en_US.UTF-8";
 
   networking = {
     hostName = mkDefault machine;
@@ -62,8 +68,16 @@ with lib;
 
   # Use the latest version of the `nix` CLI
   nix = {
-    package = mkDefault pkgs.nixVersions.latest; # [2]
-    settings.experimental-features = [ "nix-command" "flakes" ];
+    package = mkDefault pkgs.nixVersions.latest; # 2
+    settings = {
+      experimental-features = [ "nix-command" "flakes" ];
+      auto-optimise-store = mkDefault true; # 3
+    };
+    gc = {
+      automatic = mkDefault true;
+      dates = mkDefault "weekly";
+      options = mkDefault "--delete-older-than 15d";
+    };
   };
 
   nixpkgs.config.allowUnfree = mkDefault true;
@@ -129,3 +143,9 @@ with lib;
 #
 # [2] https://github.com/mitchellh/nixos-config/blob/0c42252d8951ac338fe9d80d45ea912e0b956993/machines/vm-shared.nix#L14
 #     https://nixos.org/manual/nixos/unstable/#sec-kernel-config
+#
+# [3] Optimize storage
+#     You can also manually optimize the store via: `nix-store --optimise`.
+#     Refer to the following link for more details: https://nixos.org/manual/nix/stable/command-ref/conf-file.html#conf-auto-optimise-store
+#
+# About mkDefault, mkForce and mkOverride - https://nixos-and-flakes.thiscute.world/nixos-with-flakes/modularize-the-configuration#lib-mkoverride-lib-mkdefault-and-lib-mkforce

@@ -6,12 +6,6 @@ with lib;
   options.mySystem.network.networkd.enable = mkEnableOption "Use systemd-networkd as the network manager";
 
   config = mkIf config.mySystem.network.networkd.enable {
-    # # Make sure NetworkManager is disabled
-    # mySystem.network.networkmanager.enable = mkForce false;
-
-    # Do not create DHCP configurations based on facter file
-    hardware.facter.detected.dhcp.enable = mkDefault false;
-
     # -------------------------------------------------------------------------
     # systemd-networkd
     # -------------------------------------------------------------------------
@@ -20,6 +14,9 @@ with lib;
     # with systemd-networkd.
     networking.useDHCP = false;
     networking.dhcpcd.enable = false;
+
+    # Do not create DHCP configurations based on facter file
+    hardware.facter.detected.dhcp.enable = mkDefault false;
 
     # Enable and configure systemd-networkd
     systemd.network = {

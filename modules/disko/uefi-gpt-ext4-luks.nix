@@ -1,4 +1,5 @@
 {lib, ...}:
+with lib;
 {
   disko.devices = {
     disk = {
@@ -23,7 +24,7 @@
               content = {
                 type = "luks";
                 name = "crypted";
-                settings.allowDiscards = lib.mkDefault true;
+                settings.allowDiscards = mkDefault true;
                 content = {
                   type = "filesystem";
                   format = "ext4";
