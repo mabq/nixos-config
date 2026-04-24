@@ -1,2 +1,2 @@
-source "./options.zsh"
-source "./aliases.zsh"
+source "$ZDOTDIR/aliases.zsh"
+source "$ZDOTDIR/options.zsh"
