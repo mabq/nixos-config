@@ -7,22 +7,24 @@
   machine,
   user
 }:let
+  specialArgs = { inherit inputs machine user; };
   machineConfig = ../machines/${machine}/configuration.nix;
   userNixOSConfig = ../users/${user}/nixos.nix;
-  # userHMConfig = ../users/${user}/home-manager.nix; # 1
+  userHMConfig = ../users/${user}/home-manager.nix; # 1
 in
 nixpkgs.lib.nixosSystem {
-  specialArgs = { inherit inputs machine user; }; # 2
+  specialArgs = specialArgs; # 2
   modules = [
     # { nixpkgs.overlays = overlays; }
     inputs.disko.nixosModules.disko
     machineConfig
     userNixOSConfig
-    # home-manager.nixosModules.home-manager {
-    #   home-manager.useGlobalPkgs = true;
-    #   home-manager.useUserPackages = true;
-    #   home-manager.users.${user} = import userHMConfig;
-    # }
+    home-manager.nixosModules.home-manager {
+      home-manager.useGlobalPkgs = true;
+      home-manager.useUserPackages = true;
+      home-manager.users.${user} = import userHMConfig;
+      home-manager.extraSpecialArgs = specialArgs;
+    }
   ];
 }
 
