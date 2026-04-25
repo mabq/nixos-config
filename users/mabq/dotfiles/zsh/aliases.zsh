@@ -1,0 +1,82 @@
+# Add options to core utils:
+# alias chgrp='chgrp --preserve-root'
+# alias chmod='chmod -c --preserve-root'
+# alias chown='chown -c --preserve-root'
+# alias cp='cp -iv'
+# alias ln='ln -iv'
+alias mkdir='mkdir -p'
+# alias mv='mv -iv'
+# alias rm='rm -iv --preserve-root'
+
+if command -v eza &> /dev/null; then
+  alias ls='eza -lh --group-directories-first --icons=auto'
+  alias lsa='ls -a'
+  # alias lt='eza --tree --level=2 --long --icons --git'
+  alias lt='eza --tree --long --icons --git'
+  alias lta='lt -a'
+fi
+
+if command -v zoxide &> /dev/null; then
+  alias cd="zd"
+  zd() {
+    if (( $# == 0 )); then
+      builtin cd ~ || return
+    elif [[ -d $1 ]]; then
+      builtin cd "$1" || return
+    else
+      if ! z "$@"; then
+        echo "Error: Directory not found"
+        return 1
+      fi
+
+      printf "\U000F17A9 "
+      pwd
+    fi
+  }
+fi
+
+open() (
+  xdg-open "$@" >/dev/null 2>&1 &
+)
+
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+
+alias c='opencode'
+# alias cx='printf "\033[2J\033[3J\033[H" && claude --allow-dangerously-skip-permissions'
+alias d='docker'
+alias t='tmux attach || tmux new -s Work'
+n() { if [ "$#" -eq 0 ]; then command nvim . ; else command nvim "$@"; fi; }
+
+# -----------------------------------------------------------------------------
+
+# Shortcuts/renames:
+# alias cpuinfo='bat /proc/cpuinfo'
+# alias drivers='lspci -k'
+# alias extip='curl icanhazip.com'
+# alias extipjson='curl https://ipapi.co/json/'
+# alias fontname="fc-query -f '%{family[0]}\n'" # pass the font path as argument
+# alias fonts='fc-list : family | sort | uniq | sk --layout=reverse'
+# alias fonts='ghostty +list-fonts | fzf'
+# alias fsck='echo "Never use file system repair software such as fsck directly on an encrypted volume, or it will destroy any means to recover the key used to decrypt your files. Such tools must be used on the decrypted (opened) device instead"'
+# alias gpuinfo='lspci | grep -E "VGA|3D"'
+# alias h='history -i 1'
+# alias keycodes="xev | awk -F '[ )]+' '/^KeyPress/ { a[NR+2] } NR in a { printf \"%-3s %s\n\", \$5, \$8 }'"
+# alias logout='loginctl terminate-user $USER'
+# alias mdserve='mdbook serve --open'
+# alias mousecodes='xev -event button | grep button'
+# alias nc='new-component' # https://www.joshwcomeau.com/react/file-structure/#more-boilerplate-11
+# alias nvim='NVIM_APPNAME="nvim-kickstart" nvim'
+# alias path='echo $PATH | tr ":" "\n"'
+# alias psbyuser='ps --no-headers -Leo user | sort | uniq --count'
+# alias reboot='systemctl reboot'
+# alias restart-spotifyd='systemctl --user restart spotifyd.service'
+# alias sha256='shasum -a 256'
+# alias shutdown='systemctl poweroff'
+# alias speedtest='curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -'
+# alias suspend='swaylock; systemctl suspend'
+# alias suspend='systemctl suspend' # hypridle will automatically run hyprlock on suspend
+# alias trash='trash-put'
+# alias weather='curl wttr.in'
+# alias y='yy'

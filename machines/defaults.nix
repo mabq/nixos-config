@@ -29,7 +29,6 @@ with lib;
     # pciutils # Provides the `lspci` command
     bat # Cat clone with syntax highlighting and Git integration
     btop # Monitor of resources
-    eza # Modern, maintained replacement for ls
     fd # Simple, fast and user-friendly alternative to find
     fzf # Command-line fuzzy finder written in Go
     gh # GitHub CLI tool
@@ -43,7 +42,6 @@ with lib;
     tmux # Termianl multiplexer
     wget # Tool for retrieving files using HTTP, HTTPS, and FTP
     yazi # Blazing fast terminal file manager written in Rust, based on async I/O
-    zoxide # Fast cd command that learns your habits
   ]
   ++ optionals config.hardware.bluetooth.enable [
     # NOTE: If you cannot connect Sony's Headphones is because the pipewire

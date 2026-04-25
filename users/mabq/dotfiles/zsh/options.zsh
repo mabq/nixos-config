@@ -51,4 +51,3 @@ setopt hist_reduce_blanks
 # show the recalled command on the command line for you to review
 setopt hist_verify
 
-
