@@ -22,6 +22,12 @@ in
   # changes in each release.
   home.stateVersion = "25.11";
 
+  programs = {
+    zsh = {
+      autosuggestion.enable = true;
+    };
+  };
+
   xdg = {
     enable = true;
     # Manage xdg directories, e.g.  ~/.config, ~/.local/share, etc.
