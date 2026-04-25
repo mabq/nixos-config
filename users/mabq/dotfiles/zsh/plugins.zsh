@@ -1,19 +1,18 @@
-
 # --- Load external plugins ----------------------------------------------------
 
 # ssh-agent is started as a service with systemd
 eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-eval "$(atuin init zsh)"
+# source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+# source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# eval "$(atuin init zsh)" # https://docs.atuin.sh/cli/guide/sync/#login
 # source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh # (replaced with atuin)
 
 # asdf (https://asdf-vm.com/guide/getting-started.html#_3-install-asdf)
 # (use the instructions of the "ZSH & Git" section, installation is done
 # by cloning the repo, not with pacman).
-source "$HOME/.asdf/asdf.sh"
-fpath=(${ASDF_DIR}/completions $fpath)
+# source "$HOME/.asdf/asdf.sh"
+# fpath=(${ASDF_DIR}/completions $fpath)
 
 
 # -- Basic auto/tab complete ---------------------------------------------------

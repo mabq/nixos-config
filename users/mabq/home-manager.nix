@@ -13,8 +13,9 @@ in
 
   home.packages = with pkgs; [
     eza # Modern, maintained replacement for ls
-    zoxide # Fast cd command that learns your habits
     opencode # AI coding agent built for the terminal
+    starship # Minimal, blazing fast, and extremely customizable prompt for any shell
+    zoxide # Fast cd command that learns your habits
   ];
 
   # You can update home Manager without changing this value. See
@@ -22,11 +23,17 @@ in
   # changes in each release.
   home.stateVersion = "25.11";
 
-  programs = {
-    zsh = {
-      autosuggestion.enable = true;
-    };
-  };
+  # programs.zsh = {
+  #   autosuggestion.enable = true;
+  # };
+  
+  # programs.atuin = {
+  #   enable = true;
+  #   enableZshIntegration = true;
+  #   settings = {
+  #     enter_accept = false;
+  #   };
+  # };
 
   xdg = {
     enable = true;
