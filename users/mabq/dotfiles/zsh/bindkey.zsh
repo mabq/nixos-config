@@ -1,11 +1,15 @@
 # Use vi mode instead of emacs (default)
 bindkey -v
 
+# Bind Ctrl+Left and Ctrl+Right to move by words
+bindkey ^[[1;5C forward-word
+bindkey ^[[1;5D backward-word
+
 # Zsh bug fix (https://github.com/spaceship-prompt/spaceship-prompt/issues/91#issuecomment-327996599)
 bindkey '^?' backward-delete-char
 
 # Launch tmux-sessionizer with Ctrl-/
-bindkey -s '^s' "$HOME/.config/tmux/scripts/tmux-sessionizer.sh\n"
+# bindkey -s '^s' "$HOME/.config/tmux/scripts/tmux-sessionizer.sh\n"
 #bindkey -s '^_' "$HOME/.config/zellij/scripts/zellij-sessioniner.sh\n"
 
 # History search up/down arrows (requires zsh-history-substring-search plugin)
