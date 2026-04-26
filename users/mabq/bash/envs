@@ -1,0 +1,8 @@
+# Editor used by CLI
+export EDITOR="nvim" # TODO: move this later to uswm
+export SUDO_EDITOR="$EDITOR"
+export BAT_THEME=ansi
+
+# Duplicated from .config/uwsm/env so SSH works too
+export NIXOS_CONFIG_PATH=$HOME/.local/share/nixos-config
+export PATH=$NIXOS_CONFIG_PATH/bin:$PATH:$HOME/.local/bin

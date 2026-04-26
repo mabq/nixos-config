@@ -30,7 +30,6 @@ with lib;
     bat # Cat clone with syntax highlighting and Git integration
     btop # Monitor of resources
     fd # Simple, fast and user-friendly alternative to find
-    fzf # Command-line fuzzy finder written in Go
     gh # GitHub CLI tool
     git # Distributed version control system
     just # Handy way to save and run project-specific commands

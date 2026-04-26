@@ -1,7 +1,4 @@
 { config, pkgs, user, ... }:
-let
-  repo = "${config.home.homeDirectory}/.local/share/nixos-config";
-in
 {
   home.username = user;
   home.homeDirectory = "/home/${user}";
@@ -9,27 +6,16 @@ in
   home.packages = with pkgs; [
     atuin
     eza
+    fzf
     starship
     tmux
     zoxide
-    zsh-autosuggestions
-    zsh-syntax-highlighting
-    zsh-history-substring-search
   ];
 
-  home.file.".zshenv".text = ''
-    setopt no_global_rcs
-    ZDOTDIR="${repo}/users/${user}/zsh"
-    source ${pkgs.zsh-autosuggestions}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-    source ${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-    source ${pkgs.zsh-history-substring-search}/share/zsh-history-substring-search/zsh-history-substring-search.zsh
-    bindkey '^[[A' history-substring-search-up    # up arrow
-    bindkey '^[[B' history-substring-search-down  # donw arrow
-  '';
-
-    #   enter_accept = false;
-    #   show_numeric_shortcuts = false;
-    # flags = [ "--disable-up-arrow" ];
+  home.file = {
+    ".bash_profile".source = ./bash/.bash_profile;
+    ".bashrc".source = ./bash/.bashrc;
+  };
 
   # You can update home Manager without changing this value. See
   # the home Manager release notes for a list of state version

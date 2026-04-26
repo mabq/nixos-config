@@ -1,0 +1,2 @@
+for f in $NIXOS_USER_PATH/bash/fns/*; do source "$f"; done
+
