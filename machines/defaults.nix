@@ -39,7 +39,6 @@ with lib;
     nix-tree # Interactively browse a Nix store paths dependencies
     ripgrep # Utility that combines the usability of The Silver Searcher with the raw speed of grep
     tldr # Simplified and community-driven man pages
-    tmux # Termianl multiplexer
     wget # Tool for retrieving files using HTTP, HTTPS, and FTP
     yazi # Blazing fast terminal file manager written in Rust, based on async I/O
   ]
@@ -79,13 +78,6 @@ with lib;
   };
 
   nixpkgs.config.allowUnfree = mkDefault true;
-
-  # Default shell is per-user
-  programs.zsh = {
-    enable = mkDefault true;
-    autosuggestions.enable = mkDefault true;
-    syntaxHighlighting.enable = mkDefault true;
-  };
 
   # swapDevices = [{
   #   device = "/var/lib/swapfile";

@@ -1,72 +1,41 @@
 { config, pkgs, user, ... }:
-# let
-#   repo = "${config.home.homeDirectory}/.local/share/nixos-config";
-# in
+let
+  repo = "${config.home.homeDirectory}/.local/share/nixos-config";
+in
 {
   home.username = user;
   home.homeDirectory = "/home/${user}";
 
-  # home.file = {
-  #   ".zshenv".text = ''ZDOTDIR="${repo}/users/${user}/zsh"'';
-  # };
+  home.packages = with pkgs; [
+    atuin
+    eza
+    starship
+    tmux
+    zoxide
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+    zsh-history-substring-search
+  ];
 
-  # home.packages = with pkgs; [
-    # opencode # AI coding agent built for the terminal
-  # ];
+  home.file.".zshenv".text = ''
+    ZDOTDIR="${repo}/users/${user}/zsh"
+    source ${pkgs.zsh-autosuggestions}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+    source ${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+    source ${pkgs.zsh-history-substring-search}/share/zsh-history-substring-search/zsh-history-substring-search.zsh
+    bindkey '^[[A' history-substring-search-up    # up arrow
+    bindkey '^[[B' history-substring-search-down  # donw arrow
+  '';
+
+    #   enter_accept = false;
+    #   show_numeric_shortcuts = false;
+    # flags = [ "--disable-up-arrow" ];
 
   # You can update home Manager without changing this value. See
   # the home Manager release notes for a list of state version
   # changes in each release.
   home.stateVersion = "25.11";
 
-  # programs.zsh = {
-  #   autosuggestion.enable = true;
-  # };
-  
-  programs = {
-    zsh = {
-      enable = true;
-      dotDir = "${config.xdg.configHome}/zsh";
-      setOptions = [ "NO_BEEP" ];
-      initContent = ''
-        # Bind Ctrl+Left and Ctrl+Right to move by words
-        bindkey '^[[1;5C' forward-word
-        bindkey '^[[1;5D' backward-word
-
-        # -- Delete word backward (Ctrl+Backspace)
-        bindkey '^H' backward-kill-word           # Common sequence for Ctrl+Backspace
-        bindkey '^[[3;5~' backward-kill-word      # Alternative sequence used by some terminals
-      '';
-      autosuggestion.enable = true;
-      syntaxHighlighting.enable = true;
-      # historySubstringSearch.enable = true;
-    };
-
-    zoxide = {
-      enable = true;
-      enableZshIntegration = true;
-    };
-
-    eza = {
-      enable = true;
-      enableZshIntegration = true;
-    };
-
-    starship = {
-      enable = true;
-      enableZshIntegration = true;
-    };
-
-    atuin = {
-      enable = true;
-      enableZshIntegration = true;
-      settings = {
-        enter_accept = false;
-        show_numeric_shortcuts = false;
-      };
-      # flags = [ "--disable-up-arrow" ];
-    };
-  };
+  # programs = {};
 
   xdg = {
     enable = true;
