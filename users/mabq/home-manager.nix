@@ -58,7 +58,7 @@
     };
 
     atuin = {
-      enable = true;
+      enable = false;
       enableZshIntegration = true;
       settings = {
         enter_accept = false;
