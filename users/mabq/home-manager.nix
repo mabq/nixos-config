@@ -40,8 +40,6 @@
       autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
       historySubstringSearch.enable = true;
-      # historySubstringSearch.searchDownKey = ["$terminfo[kcud1]"];
-      # historySubstringSearch.searchUpKey = ["$terminfo[kcuu1]"];
     };
 
     zoxide = {
@@ -57,6 +55,7 @@
     starship = {
       enable = true;
       enableZshIntegration = true;
+      presets = [ "pure-prompt" ];
     };
 
     atuin = {
