@@ -33,7 +33,7 @@ in
 
   programs.atuin = {
     enable = true;
-    # Do not enable zsh integration, it is initialized in `zsh/plugins` file
+    enableZshIntegration = true;
     settings = {
       enter_accept = false;
       show_numeric_shortcuts = false;
