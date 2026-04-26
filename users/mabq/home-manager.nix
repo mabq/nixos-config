@@ -14,7 +14,7 @@ in
     eza # Modern, maintained replacement for ls
     opencode # AI coding agent built for the terminal
     starship # Minimal, blazing fast, and extremely customizable prompt for any shell
-    zoxide # Fast cd command that learns your habits
+    # zoxide # Fast cd command that learns your habits
   ];
 
   # You can update home Manager without changing this value. See
@@ -25,6 +25,11 @@ in
   # programs.zsh = {
   #   autosuggestion.enable = true;
   # };
+  
+  programs.zoxide = {
+    enable = true;
+    enableZshIntegration = true;
+  };
 
   programs.atuin = {
     enable = true;
