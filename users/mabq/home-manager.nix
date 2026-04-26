@@ -9,7 +9,10 @@ in
 
   home.file = {
     ".zshenv".text = ''ZDOTDIR="${dotfiles}/zsh"'';
-    # ".config/atuin/config.toml".source = ./dotfiles/atuin/config.toml;
+    ".config/atuin/config.toml" = {
+      source = ./dotfiles/atuin/config.toml;
+      force = true;
+    };
   };
 
   home.packages = with pkgs; [

@@ -21,6 +21,5 @@ eval "$(atuin init zsh --disable-up-arrow)"
 #   (not actually a plugin but act as one)
 autoload -Uz compinit
 zstyle ":completion:*" menu select
-# zmodload zsh/complist
-compinit
+compinit -d "$ZSH_COMPDUMP"
 _comp_options+=(globdots)   # include hidden files

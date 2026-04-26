@@ -7,12 +7,15 @@
 # appendToPATH_fn "$HOME/.cargo/bin"
 #prependToPATH_fn "$HOME/.volta/bin"
 
-# History options:
-#   Export them so that atuin can see the variables content
-export HISTFILE=~/.local/share/zsh/history  # location of the history file
-[[ -d ${HISTFILE:h} ]] || mkdir -p ${HISTFILE:h} # create the history file if it doesn't exist
-export HISTSIZE=10000 # how many lines to keep in memory
-export SAVEHIST="${HISTSIZE}" # how many lines to save to history file
+# history file
+HISTFILE=~/.local/share/zsh/history  # location of the history file
+[[ -d ${HISTFILE:h} ]] || mkdir -p ${HISTFILE:h} # ensure the directory exists
+HISTSIZE=10000 # how many lines to keep in memory
+SAVEHIST="${HISTSIZE}" # how many lines to save to history file
+
+# zcommdump file
+ZSH_COMPDUMP=~/.local/share/zsh/zcompdump
+[[ -d $ZSH_COMPDUMP:h ]] || mkdir -p $ZSH_COMPDUMP:h # ensure the directory exists
 
 
 # SSH-agent:
