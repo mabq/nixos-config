@@ -28,15 +28,15 @@
       enable = true;
       dotDir = "${config.xdg.configHome}/zsh";
       setOptions = [ "NO_BEEP" ];
-      initContent = ''
-        # Bind Ctrl+Left and Ctrl+Right to move by words
-        bindkey '^[[1;5C' forward-word
-        bindkey '^[[1;5D' backward-word
-
-        # -- Delete word backward (Ctrl+Backspace)
-        bindkey '^H' backward-kill-word           # Common sequence for Ctrl+Backspace
-        bindkey '^[[3;5~' backward-kill-word      # Alternative sequence used by some terminals
-      '';
+      # initContent = ''
+      #   # Bind Ctrl+Left and Ctrl+Right to move by words
+      #   bindkey '^[[1;5C' forward-word
+      #   bindkey '^[[1;5D' backward-word
+      #
+      #   # -- Delete word backward (Ctrl+Backspace)
+      #   bindkey '^H' backward-kill-word           # Common sequence for Ctrl+Backspace
+      #   bindkey '^[[3;5~' backward-kill-word      # Alternative sequence used by some terminals
+      # '';
       autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
       historySubstringSearch.enable = true;
@@ -58,7 +58,7 @@
     };
 
     atuin = {
-      enable = true;
+      enable = false;
       enableZshIntegration = true;
       settings = {
         enter_accept = false;
