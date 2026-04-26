@@ -39,7 +39,7 @@
       '';
       autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
-      historySubstringSearch.enable = true;
+      # historySubstringSearch.enable = true;
     };
 
     zoxide = {
@@ -55,7 +55,6 @@
     starship = {
       enable = true;
       enableZshIntegration = true;
-      presets = [ "pure-prompt" ];
     };
 
     atuin = {
@@ -65,7 +64,7 @@
         enter_accept = false;
         show_numeric_shortcuts = false;
       };
-      flags = [ "--disable-up-arrow" ];
+      # flags = [ "--disable-up-arrow" ];
     };
   };
 
