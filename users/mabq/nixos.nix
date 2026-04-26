@@ -1,15 +1,26 @@
-{ pkgs, lib, ... }:
-with lib;
+{ pkgs, ... }:
 {
   # Add `~/.local/bin` to PATH
   environment.localBinInPath = true;
 
-  programs.zsh.enable = mkDefault true;
+  # Unfortunately, NixOS forces me to enable zsh at the NixOS level in order to set 
+  # programs.zsh = {
+  #   enable = true;
+  #   enableCompletion = false; # avoid the creation of `.zcompdump`
+  #   autosuggestions.enable = true;
+  #   syntaxHighlighting.enable = true;
+  #   histFile = "$HOME/.local/share/zsh/zsh_history";
+  #   histSize = 10000;
+  #   proptInit = "";
+  #   enableLsColors = false;
+  # };
+  
+  programs.fish.enable = true;
 
   users.users.mabq = {
     isNormalUser = true;
     home = "/home/mabq";
-    shell = pkgs.zsh;
+    shell = pkgs.fish;
 
     # Members of the `wheel` group can execute `sudo` without password.
     extraGroups = [ "wheel" ];

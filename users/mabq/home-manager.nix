@@ -18,6 +18,7 @@ in
   ];
 
   home.file.".zshenv".text = ''
+    setopt no_global_rcs
     ZDOTDIR="${repo}/users/${user}/zsh"
     source ${pkgs.zsh-autosuggestions}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
     source ${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
