@@ -37,28 +37,30 @@
         bindkey '^H' backward-kill-word           # Common sequence for Ctrl+Backspace
         bindkey '^[[3;5~' backward-kill-word      # Alternative sequence used by some terminals
       '';
-      autosuggestion.enable = false;
-      syntaxHighlighting.enable = false;
-      historySubstringSearch.enable = false;
+      autosuggestion.enable = true;
+      syntaxHighlighting.enable = true;
+      historySubstringSearch.enable = true;
+      # historySubstringSearch.searchDownKey = ["$terminfo[kcud1]"];
+      # historySubstringSearch.searchUpKey = ["$terminfo[kcuu1]"];
     };
 
     zoxide = {
-      enable = false;
+      enable = true;
       enableZshIntegration = true;
     };
 
     eza = {
-      enable = false;
+      enable = true;
       enableZshIntegration = true;
     };
 
     starship = {
-      enable = false;
+      enable = true;
       enableZshIntegration = true;
     };
 
     atuin = {
-      enable = false;
+      enable = true;
       enableZshIntegration = true;
       settings = {
         enter_accept = false;
