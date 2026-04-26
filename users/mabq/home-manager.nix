@@ -1,22 +1,16 @@
 { config, pkgs, user, ... }:
 let
   repo = "${config.home.homeDirectory}/.local/share/nixos-config";
-  dotfiles = "${repo}/users/${user}/dotfiles";
 in
 {
   home.username = user;
   home.homeDirectory = "/home/${user}";
 
   home.file = {
-    ".zshenv".text = ''ZDOTDIR="${dotfiles}/zsh"'';
-    ".config/atuin/config.toml" = {
-      source = ./dotfiles/atuin/config.toml;
-      force = true;
-    };
+    ".zshenv".text = ''ZDOTDIR="${repo}/users/${user}/zsh"'';
   };
 
   home.packages = with pkgs; [
-    atuin # Replacement for a shell history which records additional commands context with optional encrypted synchronization between machines
     eza # Modern, maintained replacement for ls
     opencode # AI coding agent built for the terminal
     starship # Minimal, blazing fast, and extremely customizable prompt for any shell
@@ -32,14 +26,14 @@ in
   #   autosuggestion.enable = true;
   # };
 
-  # programs.atuin = {
-  #   enable = true;
-  #   # Do not enable zsh integration, it is initialized in `zsh/plugins` file
-  #   settings = {
-  #     enter_accept = false;
-  #     show_numeric_shortcuts = false;
-  #   };
-  # };
+  programs.atuin = {
+    enable = true;
+    # Do not enable zsh integration, it is initialized in `zsh/plugins` file
+    settings = {
+      enter_accept = false;
+      show_numeric_shortcuts = false;
+    };
+  };
 
   xdg = {
     enable = true;

@@ -19,9 +19,7 @@ eval "$(atuin init zsh --disable-up-arrow)"
 
 #   Initialise completions with ZSH's compinit
 #   (not actually a plugin but act as one)
-ZSH_COMPDUMP="$HOME/.cache/zsh/zcompdump-$ZSH_VERSION"
-[[ -d "${ZSH_COMPDUMP:h}" ]] || mkdir -p "${ZSH_COMPDUMP:h}" # ensure the directory exists
 autoload -Uz compinit
 zstyle ":completion:*" menu select
-compinit -d "$ZSH_COMPDUMP"
+compinit
 _comp_options+=(globdots)   # include hidden files
