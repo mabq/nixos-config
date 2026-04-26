@@ -9,7 +9,7 @@
 
 # History options:
 #   Export them so that atuin can see the variables content
-export HISTFILE=~/.cache/zsh/history  # location of the history file
+export HISTFILE=~/.local/share/zsh/history  # location of the history file
 [[ -d ${HISTFILE:h} ]] || mkdir -p ${HISTFILE:h} # create the history file if it doesn't exist
 export HISTSIZE=10000 # how many lines to keep in memory
 export SAVEHIST="${HISTSIZE}" # how many lines to save to history file
