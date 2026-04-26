@@ -1,21 +1,18 @@
 { config, pkgs, user, ... }:
-let
-  repo = "${config.home.homeDirectory}/.local/share/nixos-config";
-in
+# let
+#   repo = "${config.home.homeDirectory}/.local/share/nixos-config";
+# in
 {
   home.username = user;
   home.homeDirectory = "/home/${user}";
 
-  home.file = {
-    ".zshenv".text = ''ZDOTDIR="${repo}/users/${user}/zsh"'';
-  };
+  # home.file = {
+  #   ".zshenv".text = ''ZDOTDIR="${repo}/users/${user}/zsh"'';
+  # };
 
-  home.packages = with pkgs; [
-    eza # Modern, maintained replacement for ls
-    opencode # AI coding agent built for the terminal
-    starship # Minimal, blazing fast, and extremely customizable prompt for any shell
-    # zoxide # Fast cd command that learns your habits
-  ];
+  # home.packages = with pkgs; [
+    # opencode # AI coding agent built for the terminal
+  # ];
 
   # You can update home Manager without changing this value. See
   # the home Manager release notes for a list of state version
@@ -26,17 +23,36 @@ in
   #   autosuggestion.enable = true;
   # };
   
-  programs.zoxide = {
-    enable = true;
-    enableZshIntegration = true;
-  };
+  programs = {
+    zsh = {
+      enable = true;
+      autosuggestion.enable = true;
+      syntaxHighlighting.enable = true;
+    };
 
-  programs.atuin = {
-    enable = true;
-    enableZshIntegration = true;
-    settings = {
-      enter_accept = false;
-      show_numeric_shortcuts = false;
+    zoxide = {
+      enable = true;
+      enableZshIntegration = true;
+    };
+
+    eza = {
+      enable = true;
+      enableZshIntegration = true;
+    };
+
+    starship = {
+      enable = true;
+      enableZshIntegration = true;
+    };
+
+    atuin = {
+      enable = true;
+      enableZshIntegration = true;
+      settings = {
+        enter_accept = false;
+        show_numeric_shortcuts = false;
+      };
+      flags = [ "--disable-up-arrow" ];
     };
   };
 
