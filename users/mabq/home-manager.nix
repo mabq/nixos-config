@@ -26,12 +26,12 @@ in
   # programs.zsh = {
   #   autosuggestion.enable = true;
   # };
-  
+
   programs.atuin = {
     enable = true;
+    # Do not enable zsh integration, it is initialized in `zsh/plugins` file
     settings = {
       enter_accept = false;
-      filter_mode_shell_up_key_binding = "none"; # disable the Up arrow trigger (use Ctrl+r)
     };
   };
 
