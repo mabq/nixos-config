@@ -27,13 +27,13 @@ in
   #   autosuggestion.enable = true;
   # };
   
-  # programs.atuin = {
-  #   enable = true;
-  #   enableZshIntegration = true;
-  #   settings = {
-  #     enter_accept = false;
-  #   };
-  # };
+  programs.atuin = {
+    enable = true;
+    settings = {
+      enter_accept = false;
+      filter_mode_shell_up_key_binding = "none"; # disable the Up arrow trigger (use Ctrl+r)
+    };
+  };
 
   xdg = {
     enable = true;

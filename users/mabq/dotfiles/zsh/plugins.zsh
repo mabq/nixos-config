@@ -5,7 +5,7 @@ eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"
 # source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 # source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-# eval "$(atuin init zsh)" # https://docs.atuin.sh/cli/guide/sync/#login
+eval "$(atuin init zsh)"
 # source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh # (replaced with atuin)
 
 # asdf (https://asdf-vm.com/guide/getting-started.html#_3-install-asdf)
