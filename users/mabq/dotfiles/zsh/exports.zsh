@@ -8,15 +8,10 @@
 #prependToPATH_fn "$HOME/.volta/bin"
 
 # history file
-HISTFILE=~/.local/share/zsh/history  # location of the history file
+HISTFILE="$HOME/.local/share/zsh/history"  # location of the history file
 [[ -d ${HISTFILE:h} ]] || mkdir -p ${HISTFILE:h} # ensure the directory exists
 HISTSIZE=10000 # how many lines to keep in memory
 SAVEHIST="${HISTSIZE}" # how many lines to save to history file
-
-# zcommdump file
-ZSH_COMPDUMP=~/.local/share/zsh/zcompdump
-[[ -d $ZSH_COMPDUMP:h ]] || mkdir -p $ZSH_COMPDUMP:h # ensure the directory exists
-
 
 # SSH-agent:
 #   Required for the ssh-agent to work across terminals
