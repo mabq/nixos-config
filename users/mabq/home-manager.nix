@@ -53,12 +53,12 @@
     };
 
     starship = {
-      enable = true;
+      enable = false;
       enableZshIntegration = true;
     };
 
     atuin = {
-      enable = false;
+      enable = true;
       enableZshIntegration = true;
       settings = {
         enter_accept = false;
