@@ -1,0 +1,97 @@
+# - Important:
+#   Inline comments are not supported!
+#   Included files must not contain an `[ids]` section.
+#   Included files must not include other files (inclusion is non-recursive).
+#   Included files must not end in `.conf`.
+
+# - Commands:
+#   Show keyboard ids and keystrokes, useful for debugging:
+#     `sudo keyd monitor`
+#   Enable/start the service:
+#     `sudo systemd enable/start keyd.service`
+#   Update changes on config files:
+#     `sudo keyd reload`
+#   Check for errors:
+#     `sudo journalctl -eu keyd`
+
+
+[global]
+# - Usefull when regret typing a modifier key, just hold it a little longer
+#   and nothing will by typed.
+overload_tap_timeout = 300
+
+
+[main]
+# - Capslock is used by XCompose to input frequently used unicode characters.
+capslock = overload(control, capslock)
+enter = overload(control, enter)
+f = overload(nav, f)
+; = overload(symbols, ;)
+' = overload(media, ')
+[ = -
+
+
+# -- Custom layers --
+
+[nav]
+# top row
+u = tab
+i = esc
+o = backspace
+p = macro(C-S-v)
+[ = +
+# home row
+h = left
+j = down
+k = up
+l = right
+; = ~
+' = `
+d = layer(nav2)
+# bottom row
+n = enter
+, = [
+. = ]
+/ = \
+
+
+[nav2]
+# top row
+u = capslock
+i = f2
+o = delete
+p = macro(C-S-tab)
+# home row
+h = home
+j = pagedown
+k = pageup
+l = end
+# bottom row
+n = macro(C-tab)
+
+[symbols]
+# top row
+q = !
+w = @
+e = #
+r = $
+t = %
+# home row
+capslock = ^
+a = (
+s = )
+d = {
+f = }
+g = =
+# bottom row
+v = |
+b = &
+
+[media]
+s = previoussong
+d = volumeup
+f = volumedown
+g = nextsong
+space = playpause
+
+

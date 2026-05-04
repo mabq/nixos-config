@@ -31,11 +31,15 @@ with lib; {
     };
   };
 
-  environment.systemPackages = with pkgs; [
-    gh # GitHub CLI tool (required for authentication)
-    git # Distributed version control system
-    just # Handy way to save and run project-specific commands
-  ];
+  environment = {
+    etc."keyd".source = ../config/keyd;
+
+    systemPackages = with pkgs; [
+      gh # GitHub CLI tool (required for authentication)
+      git # Distributed version control system
+      just # Handy way to save and run project-specific commands
+    ];
+  };
 
   hardware.facter.reportPath = ./${machine}/facter.json;
 
@@ -74,17 +78,24 @@ with lib; {
   # No sudo password for members of `wheel`
   security.sudo.wheelNeedsPassword = mkDefault false;
 
-  # Enable the OpenSSH daemon (in case you ever lose Tailscale access)
-  services.openssh = {
-    enable = mkDefault true;
-    settings = {
-      PasswordAuthentication = mkDefault false;
-      PermitRootLogin = mkDefault "no";
-    };
-  };
+  services = {
+    keyd.enable = mkDefault true;
 
-  # Enable Tailscale - must authenticate manually `sudo tailscale up`
-  services.tailscale.enable = mkDefault true;
+    # Enable the OpenSSH daemon (in case you ever lose Tailscale access)
+    openssh = {
+      enable = mkDefault true;
+      settings = {
+        PasswordAuthentication = mkDefault false;
+        PermitRootLogin = mkDefault "no";
+      };
+    };
+
+    # Enable Tailscale - must authenticate manually `sudo tailscale up`
+    tailscale.enable = mkDefault true;
+
+    # Update timezone automatically
+    tzupdate.enable = mkDefault true;
+  };
 
   time.timeZone = mkDefault "America/Guayaquil";
 
