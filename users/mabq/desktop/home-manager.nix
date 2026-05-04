@@ -47,14 +47,18 @@ in {
       bluetui # TUI for managing bluetooth on Linux [4]
       btop # Monitor of resources
       caligula # User-friendly, lightweight TUI for disk imaging
-      exfat # Free exFAT file system implementation
+      exfatprogs # exFAT filesystem userspace utilities
       eza # Modern, maintained replacement for ls
       fastfetch # Actively maintained, feature-rich and performance oriented, neofetch like system information tool
       fd # Simple, fast and user-friendly alternative to find
       ffmpeg # Complete, cross-platform solution to record, convert and stream audio and video
       fzf # Command-line fuzzy finder
+      gh # GitHub CLI tool
+      git # Distributed version control system
       imagemagick # Software suite to create, edit, compose, or convert bitmap images
       iperf # Tool to measure IP bandwidth using UDP or TCP
+      lazygit # Simple terminal UI for git commands
+      mpv # General-purpose media player, fork of MPlayer and mplayer2
       ncdu # Disk usage analyzer with an ncurses interface
       neovim # Vim text editor fork
       nix-tree # Interactively browse a Nix store paths dependencies
@@ -65,7 +69,9 @@ in {
       starship # Customizable prompt for any shell
       tldr # Simplified and community-driven man pages
       tmux # Terminal multiplexer
+      unzip # Extraction utility for archives compressed in .zip format
       wget # Tool for retrieving files using HTTP, HTTPS, and FTP
+      whois # Intelligent WHOIS client from Debian
       yazi # Blazing fast terminal file manager written in Rust, based on async I/O
       zoxide # Fast cd command that learns your habits
       zsh-autosuggestions # Fish shell autosuggestions for Zsh
@@ -74,40 +80,23 @@ in {
       # bitwarden-cli # Secure and free password manager for all of your devices
       # dnsutils # Domain name server - provides the `dig` command
       # ngrep # Network packet analyzer - use `sudo ngrep port <port>` to check if a port is being used
+      # inetutils # Collection of common network programs
+      # inxi # Full featured CLI system information tool
       # ------------------------------------------------------------------------
       # alacritty
-      # alsa-utils
       # avahi # mDNS/DNS-SD implementation (Bonjour)
-      # bluetui
-      # bolt
       # brightnessctl
-      # btop
       # chromium
-      # clang
-      # claude-code
       # cups
       # cups-browsed
       # cups-filters
       # cups-pdf
-      # docker
-      # docker-buildx
-      # docker-compose
-      # dosfstools
-      # dotnet-runtime-9.0
-      # dust
       # evince
-      # exfatprogs
-      # expac
-      # eza
-      # fastfetch
       # fcitx5
       # fcitx5-gtk
       # fcitx5-qt
-      # fd
       # ffmpegthumbnailer
       # fontconfig
-      # fzf
-      # github-cli
       # gnome-calculator
       # gnome-keyring
       # gnome-themes-extra
@@ -125,30 +114,20 @@ in {
       # hyprpicker
       # hyprsunset
       # imagemagick
-      # impala
       # imv
-      # inetutils
-      # inxi
-      # iwd
       # jq
       # kdenlive
       # kernel-modules-hook
       # kvantum-qt5
-      # lazydocker
-      # lazygit
-      # less
       # libsecret
       # libyaml
       # libqalculate
       # libreoffice-fresh
       # llvm
       # localsend
-      # luarocks
       # mako
-      # man-db
       # mariadb-libs
       # mise
-      # mpv
       # nautilus
       # nautilus-python
       # gnome-disk-utility
@@ -156,16 +135,13 @@ in {
       # noto-fonts-cjk
       # noto-fonts-emoji
       # nss-mdns
-      # nvim
       # obs-studio
       # obsidian
-      # omarchy-nvim
       # omarchy-walker
       # pamixer
       # pinta
       # playerctl
       # plocate
-      # plymouth
       # polkit-gnome
       # postgresql-libs
       # power-profiles-daemon
@@ -173,38 +149,27 @@ in {
       # python-poetry-core
       # python-terminaltexteffects
       # qt5-wayland
-      # ripgrep
       # ruby
       # rust
       # satty
-      # sddm
       # signal-desktop
       # slurp
       # spotify
       # socat
-      # starship
       # sushi
       # swaybg
       # swayosd
       # system-config-printer
-      # tldr
       # tree-sitter-cli
-      # tmux
       # tobi-try
       # ttf-ia-writer
       # ttf-jetbrains-mono-nerd
       # typora
-      # tzupdate
       # ufw
       # ufw-docker
-      # unzip
-      # usage
       # uwsm
       # waybar
-      # whois
       # wireless-regdb
-      # wiremix
-      # wireplumber
       # wl-clipboard
       # woff2-font-awesome
       # xdg-desktop-portal-gtk
@@ -214,8 +179,8 @@ in {
       # xournalpp
       # yaru-icon-theme
       # yay
-      # zoxide
     ];
+
     username = user; # TODO: check if needed
 
     # This value determines the Home Manager release that your
