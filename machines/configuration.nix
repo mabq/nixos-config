@@ -32,8 +32,6 @@ with lib; {
   };
 
   environment = {
-    etc."keyd".source = ../config/keyd;
-
     systemPackages = with pkgs; [
       gh # GitHub CLI tool (required for authentication)
       git # Distributed version control system
@@ -79,8 +77,6 @@ with lib; {
   security.sudo.wheelNeedsPassword = mkDefault false;
 
   services = {
-    keyd.enable = mkDefault true;
-
     # Enable the OpenSSH daemon (in case you ever lose Tailscale access)
     openssh = {
       enable = mkDefault true;
