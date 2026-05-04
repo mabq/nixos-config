@@ -2,6 +2,7 @@
   imports = [
     ../configuration.nix
     ../../modules/disko-uefi-ext4-encrypted.nix
+    ../../modules/keyd.nix
     ../../modules/network-networkd.nix
     ../../modules/pipewire.nix
   ];
