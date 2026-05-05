@@ -3,7 +3,7 @@ with lib; {
   disko.devices = {
     disk = {
       main = {
-        device = mkDefault "/dev/sda";
+        device = mkDefault "/dev/sda"; # Override this on each machine configuration file if necessary.
         type = "disk";
         content = {
           type = "gpt";

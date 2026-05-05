@@ -6,10 +6,14 @@
   user,
   profile,
 }: let
-  specialArgs = {inherit machine user profile;};
+  projectName = "nixos-config"; # 5
+  repoPath = "/home/${user}/.local/share/${projectName}"; # 6
+
+  specialArgs = {inherit machine user profile projectName repoPath;};
+
   machineConfig = ../machines/${machine}/configuration.nix;
-  userNixOSConfig = ../users/${user}/${profile}/nixos.nix;
-  userHMConfig = ../users/${user}/${profile}/home-manager.nix; # 1
+  userNixOSConfig = ../users/${user}/nixos.nix;
+  userHMConfig = ../users/${user}/${profile}.nix; # 1
 in
   inputs.nixpkgs.lib.nixosSystem {
     inherit specialArgs; # 2
@@ -36,4 +40,10 @@ in
 # 3. https://nix-community.github.io/home-manager/nixos-options.xhtml#nixos-opt-home-manager.useGlobalPkgs
 #
 # 4. https://nix-community.github.io/home-manager/nixos-options.xhtml#nixos-opt-home-manager.useUserPackages
+#
+# 5. Must be separate from `$repopath`. This variable is used to create paths in the system. E.g. `~/.config/<projectName>/current/theme`.
+#    If you ever decide to use other name change it here, it should update everything automatically.
+#
+# 6. This variable is used to create OutOfStore symlinks. Symlinks must point to absolute paths - things like `$HOME` or `~` are not allowed.
+#    Change this if you ever decide to place the repository in another location.
 

@@ -1,4 +1,5 @@
-# This file should only include system level tools and options, everything else should be managed in the `users` directory.
+# This file should only include system level stuff. User level stuff should be managed by home-manager.
+# You can disable anything enabled here in each machine configuration file.
 {
   config,
   lib,

@@ -1,9 +1,7 @@
 {
-  config,
   lib,
   pkgs,
   user,
-  profile,
   ...
 }:
 with lib; {
@@ -11,10 +9,12 @@ with lib; {
 
   environment = {
     systemPackages = [
-      pkgs.keyd # Key remapping daemon for Linux (required to have the `keyd` command)
+      # Required to install the `keyd` command.
+      pkgs.keyd # Key remapping daemon for Linux
     ];
 
-    etc."keyd".source = ../users/${user}/${profile}/config/keyd; # this a nixos module, we don't have the repo path here to create a outOfStore link.
+    # This a nixos module, mkOutOfStoreSymlink is a Home-manager function, so we cannot use it here.
+    etc."keyd".source = mkDefault ../users/${user}/config/keyd;
   };
 
   users.users.${user}.extraGroups = ["keyd"];

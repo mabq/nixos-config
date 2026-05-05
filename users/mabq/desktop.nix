@@ -1,19 +1,18 @@
 {
-  lib,
   config, # home-manager options, not NixOS options
+  lib,
   pkgs,
   user,
   profile,
+  projectName,
+  repoPath,
   ...
 }: let
   theme = "catppuccin"; # must match one of the directory names in the themes folder
 
-  repoName = "nixos-config"; # 1
-  repoPath = "/home/${user}/.local/share/${repoName}"; # 2
-  repoUserProfilePath = "${repoPath}/users/${user}/${profile}";
-  repoUserConfigPath = "${repoUserProfilePath}/config";
-
-  localCurrentThemePath = "/home/${user}/.config/${repoName}/current/theme";
+  repoUserPath = "${repoPath}/users/${user}";
+  configPath = "${repoUserPath}/config";
+  currentThemePath = "/home/${user}/.config/${projectName}/current/theme";
 
   mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
 
@@ -25,17 +24,19 @@ in {
       ".zshenv".text = ''
         # Be careful what you put in this file, it affects every zsh invocation (including scp, rsync, etc).
         setopt NO_GLOBAL_RCS # --- Ignore zsh global config files, except `/etc/zshenv` which is read before this file.
-        ZDOTDIR="${repoUserConfigPath}/zsh" # --- Source zsh config files directly from the repository. No need to export.
-        export REPO_USER_PROFILE_PATH="${repoUserProfilePath}" # --- Hard-coded into some files.
+        ZDOTDIR="${repoUserPath}/config/zsh" # --- Source zsh config files directly from the repository. No need to export.
+        export REPO_USER_PATH="${repoUserPath}" # --- Hard-coded into some config files.
       '';
+
       # Configurations in files created with mkOutOfStoreSymlink do not need a system rebuild
-      ".gitconfig".source = mkOutOfStoreSymlink "${repoUserConfigPath}/.gitconfig";
-      ".config/btop/btop.conf".source = mkOutOfStoreSymlink "${repoUserConfigPath}/btop.conf";
-      ".config/starship.toml".source = mkOutOfStoreSymlink "${repoUserConfigPath}/starship.toml";
-      ".config/tmux/tmux.conf".source = mkOutOfStoreSymlink "${repoUserConfigPath}/tmux.conf";
-      # Theme - just change the pointer of current theme.
-      ".config/${repoName}/current/theme".source = mkOutOfStoreSymlink "${repoPath}/themes/${theme}";
-      ".config/btop/themes/current.theme".source = mkOutOfStoreSymlink "${localCurrentThemePath}/btop.theme";
+      ".config/git/config".source = mkOutOfStoreSymlink "${configPath}/.gitconfig";
+      ".config/btop/btop.conf".source = mkOutOfStoreSymlink "${configPath}/btop.conf";
+      ".config/starship.toml".source = mkOutOfStoreSymlink "${configPath}/starship.toml";
+      ".config/tmux/tmux.conf".source = mkOutOfStoreSymlink "${configPath}/tmux.conf";
+
+      # Theme related files (change the theme by just updating the pointer).
+      ".config/${projectName}/current/theme".source = mkOutOfStoreSymlink "${repoPath}/themes/${theme}";
+      ".config/btop/themes/current.theme".source = mkOutOfStoreSymlink "${currentThemePath}/btop.theme";
     };
 
     homeDirectory = "/home/${user}"; # TODO: check if needed
@@ -237,11 +238,6 @@ in {
     };
   };
 }
-# 1. This name is used to refer to our configuration.
-#    Change it to match the name of the upstream repositoty.
-#
-# 2. Symlinks require absolute paths! Cannot contain `$HOME` or `~`.
-#    Change this if you ever decide to place the repository in another location.
 #
 # 3. This functions creates a symlink pointing to the given config file in the repository,
 #    instead of creating an inmutable copy of the file in the Nix Store and point to it.

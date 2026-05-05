@@ -3,7 +3,7 @@
   user,
   ...
 }: {
-  # Must enable zsh to be used as default shell.
+  # Must be enabled to be used as the default shell.
   programs.zsh.enable = true;
 
   users.users.${user} = {
