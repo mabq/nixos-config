@@ -1,4 +1,7 @@
 # See https://git-scm.com/docs/git-config
+[user]
+  email = "alejandro.banderas@me.com"
+  name = "mabq"
 [alias]
 	co = checkout
 	br = branch
