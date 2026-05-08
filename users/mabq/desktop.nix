@@ -29,6 +29,7 @@ in {
       '';
 
       # Configurations in files created with mkOutOfStoreSymlink do not need a system rebuild
+      ".config/nvim".source = mkOutOfStoreSymlink "${configPath}/nvim";
       ".config/git/config".source = mkOutOfStoreSymlink "${configPath}/.gitconfig";
       ".config/btop/btop.conf".source = mkOutOfStoreSymlink "${configPath}/btop.conf";
       ".config/starship.toml".source = mkOutOfStoreSymlink "${configPath}/starship.toml";
