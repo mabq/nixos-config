@@ -63,6 +63,7 @@ in {
       mpv # General-purpose media player, fork of MPlayer and mplayer2
       ncdu # Disk usage analyzer with an ncurses interface
       neovim # Vim text editor fork
+      nixd # Feature-rich Nix language server interoperating with C++ nix
       nix-tree # Interactively browse a Nix store paths dependencies
       opencode # AI coding agent built for the terminal
       parted # Create, destroy, resize, check, and copy partitions
