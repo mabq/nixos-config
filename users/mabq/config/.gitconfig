@@ -29,3 +29,11 @@
 	enabled = true            # Record and reuse conflict resolutions
 	autoupdate = true         # Apply stored conflict resolutions automatically
 
+# Use `gh` instead of ssh keys to login to GitHub.
+[credential "https://github.com"]
+	helper = # clear any existing helpers
+	helper = !/run/current-system/sw/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = # clear any existing helpers
+	helper = !/run/current-system/sw/bin/gh auth git-credential
+
