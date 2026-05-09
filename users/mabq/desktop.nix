@@ -3,7 +3,6 @@
   lib,
   pkgs,
   user,
-  profile,
   projectName,
   repoPath,
   ...
@@ -60,6 +59,7 @@ in {
       imagemagick # Software suite to create, edit, compose, or convert bitmap images
       iperf # Tool to measure IP bandwidth using UDP or TCP
       lazygit # Simple terminal UI for git commands
+      lua-language-server # Language server that offers Lua language support
       mpv # General-purpose media player, fork of MPlayer and mplayer2
       ncdu # Disk usage analyzer with an ncurses interface
       neovim # Vim text editor fork
