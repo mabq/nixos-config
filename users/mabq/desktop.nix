@@ -54,8 +54,10 @@ in {
       fd # Simple, fast and user-friendly alternative to find
       ffmpeg # Complete, cross-platform solution to record, convert and stream audio and video
       fzf # Command-line fuzzy finder
+      gcc # GNU Compiler Collection, version 15.2.0 (wrapper script) (neovim)
       gh # GitHub CLI tool
       git # Distributed version control system
+      gnumake # Tool to control the generation of non-source files from sources (neovim)
       imagemagick # Software suite to create, edit, compose, or convert bitmap images
       iperf # Tool to measure IP bandwidth using UDP or TCP
       lazygit # Simple terminal UI for git commands
@@ -72,7 +74,12 @@ in {
       starship # Customizable prompt for any shell
       tldr # Simplified and community-driven man pages
       tmux # Terminal multiplexer
+      tree-sitter # Parser generator tool and an incremental parsing library (neovim)
       unzip # Extraction utility for archives compressed in .zip format
+      vimPlugins.telescope-fzf-native-nvim # neovim plugin
+      vimPlugins.luasnip # Snippet Engine for Neovim written in Lua (already patched to include jsregex support)
+      # vimPlugins.nvim-treesitter-parsers.nix
+      # vimPlugins.nvim-treesitter-parsers.lua
       wget # Tool for retrieving files using HTTP, HTTPS, and FTP
       whois # Intelligent WHOIS client from Debian
       yazi # Blazing fast terminal file manager written in Rust, based on async I/O

@@ -1,35 +1,42 @@
-require("config.options")
+-- Learn about Lua (the language):
+--  https://learnxinyminutes.com/lua/
 
--- Plugins
-vim.pack.add{
-  { src = 'https://github.com/nvim-lua/plenary.nvim' }, -- Plenary, required by many plugins
-  { src = 'https://github.com/neovim/nvim-lspconfig' }, -- https://github.com/neovim/nvim-lspconfig#quickstart
-  { src = 'https://github.com/kdheepak/lazygit.nvim' }, -- Lazygit
-}
+-- Learn how Lua integrates with Neovim:
+--  `:help lua-guide`
+--  `:help lua-guide-modules`
 
--- LSP servers are installed via Mason or Nix
-vim.lsp.enable('nixd')
-vim.lsp.enable('lua_ls')
+-- Learn about runtime files:
+--  https://echasnovski.com/blog/2026-03-13-a-guide-to-vim-pack#runtime-files
 
--- vim.lsp.config('lua_ls', {
---   settings = {
---     Lua = {
---       runtime = 'LuaJIT',
---     },
---     diagnostics = {
---       globals = {
---         'vim',
---         'require'
---       }
---     },
---     workspace = {
---       library = vim.api.nvim_get_runtime_file("", true),
---     },
---     telemetry = {
---       enable = false,
---     },
---   },
--- })
+-------------------------------------------------------------------------------
 
-vim.keymap.set('n', '<leader>gg', ':LazyGit<CR>', { desc = 'Open LazyGit' })
+vim.loader.enable() -- enable faster startup by caching compiled Lua modules
 
+require("variables")
+require("options")
+require("keymaps")
+require("diagnostics")
+require("autocommands")
+
+-------------------------------------------------------------------------------
+
+--  Intro to `vim.pack`
+--
+--  `vim.pack` is a new plugin manager built into Neovim, which provides a Lua
+--  interface for installing and managing plugins.
+--
+--  See `:help vim.pack`, `:help vim.pack-examples` or the excellent blog post
+--  from the creator of vim.pack and mini.nvim:
+--    https://echasnovski.com/blog/2026-03-13-a-guide-to-vim-pack
+--
+--  To inspect plugin state and pending updates, run
+--    :lua vim.pack.update(nil, { offline = true })
+--
+--  To update plugins, run
+--    :lua vim.pack.update()
+
+-------------------------------------------------------------------------------
+-- friendly-snippets provides the "data" (the library of templates).
+-- LuaSnip provides the "engine" (the logic that expands the data and handles the jumping).
+-- nvim-cmp provides the "UI" (the menu you see while typing).
+-------------------------------------------------------------------------------
