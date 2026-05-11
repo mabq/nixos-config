@@ -54,32 +54,21 @@ in {
       fd # Simple, fast and user-friendly alternative to find
       ffmpeg # Complete, cross-platform solution to record, convert and stream audio and video
       fzf # Command-line fuzzy finder
-      gcc # GNU Compiler Collection, version 15.2.0 (wrapper script) (neovim)
       gh # GitHub CLI tool
       git # Distributed version control system
-      gnumake # Tool to control the generation of non-source files from sources (neovim)
       imagemagick # Software suite to create, edit, compose, or convert bitmap images
       iperf # Tool to measure IP bandwidth using UDP or TCP
-      lazygit # Simple terminal UI for git commands
-      lua-language-server # Language server that offers Lua language support
       mpv # General-purpose media player, fork of MPlayer and mplayer2
       ncdu # Disk usage analyzer with an ncurses interface
-      neovim # Vim text editor fork
       nixd # Feature-rich Nix language server interoperating with C++ nix
       nix-tree # Interactively browse a Nix store paths dependencies
-      opencode # AI coding agent built for the terminal
       parted # Create, destroy, resize, check, and copy partitions
       pciutils # Provides the `lspci` command
       ripgrep # Utility that combines the usability of The Silver Searcher with the raw speed of grep
       starship # Customizable prompt for any shell
       tldr # Simplified and community-driven man pages
       tmux # Terminal multiplexer
-      tree-sitter # Parser generator tool and an incremental parsing library (neovim)
       unzip # Extraction utility for archives compressed in .zip format
-      vimPlugins.telescope-fzf-native-nvim # neovim plugin
-      vimPlugins.luasnip # Snippet Engine for Neovim written in Lua (already patched to include jsregex support)
-      # vimPlugins.nvim-treesitter-parsers.nix
-      # vimPlugins.nvim-treesitter-parsers.lua
       wget # Tool for retrieving files using HTTP, HTTPS, and FTP
       whois # Intelligent WHOIS client from Debian
       yazi # Blazing fast terminal file manager written in Rust, based on async I/O
@@ -92,6 +81,23 @@ in {
       # ngrep # Network packet analyzer - use `sudo ngrep port <port>` to check if a port is being used
       # inetutils # Collection of common network programs
       # inxi # Full featured CLI system information tool
+      # ------------------------------------------------------------------------
+      # -- Neovim:
+      neovim # Vim text editor fork
+      lazygit # Simple terminal UI for git commands
+      opencode # AI coding agent built for the terminal
+      # --- Telescope:
+      gcc # GNU Compiler Collection, version 15.2.0 (wrapper script) (neovim)
+      gnumake # Tool to control the generation of non-source files from sources (neovim)
+      vimPlugins.telescope-fzf-native-nvim # neovim plugin
+      # --- Treesitter:
+      tree-sitter # Parser generator tool and an incremental parsing library (read notes in the tree-sitter plugin)
+      # vimPlugins.nvim-treesitter-parsers.lua
+      # vimPlugins.nvim-treesitter-parsers.nix
+      # --- LSPs:
+      lua-language-server # Language server that offers Lua language support
+      # --- Completion:
+      vimPlugins.luasnip # Snippet Engine for Neovim written in Lua (already patched to include jsregex support)
       # ------------------------------------------------------------------------
       # alacritty
       # avahi # mDNS/DNS-SD implementation (Bonjour)
