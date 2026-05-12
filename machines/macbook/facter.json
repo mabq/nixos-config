@@ -1533,27 +1533,28 @@
         },
         "vendor": {
           "hex": "0000",
-          "name": "KINGSTON",
+          "name": "Hitachi",
           "value": 0
         },
         "device": {
           "hex": "0000",
-          "name": "SA400S3",
+          "name": "HTS54503",
           "value": 0
         },
         "revision": {
           "hex": "0000",
-          "name": "B1H5",
+          "name": "C60W",
           "value": 0
         },
-        "serial": "50026B778493DE2E",
-        "model": "KINGSTON SA400S3",
+        "serial": "100810PBS300GTJD5PPS",
+        "model": "Hitachi HTS54503",
         "sysfs_id": "/class/block/sda",
         "sysfs_bus_id": "0:0:0:0",
         "sysfs_device_link": "/devices/pci0000:00/0000:00:1f.2/ata1/host0/target0:0:0/0:0:0:0",
         "unix_device_names": [
-          "/dev/disk/by-id/ata-KINGSTON_SA400S37240G_50026B778493DE2E",
-          "/dev/disk/by-id/wwn-0x50026b778493de2e",
+          "/dev/disk/by-id/ata-Hitachi_HTS545032B9SA02_100810PBS300GTJD5PPS",
+          "/dev/disk/by-id/wwn-0x5000cca61ee1b8db",
+          "/dev/disk/by-label/nixos-minimal-25.05-x86_64",
           "/dev/disk/by-path/pci-0000:00:1f.2-ata-1",
           "/dev/disk/by-path/pci-0000:00:1f.2-ata-1.0",
           "/dev/sda"
@@ -1561,7 +1562,7 @@
         "resources": [
           {
             "type": "disk_geo",
-            "cylinders": 29185,
+            "cylinders": 38913,
             "heads": 255,
             "sectors": 63,
             "size": "0x0",
@@ -1570,7 +1571,7 @@
           {
             "type": "size",
             "unit": "sectors",
-            "value_1": 468862128,
+            "value_1": 625142448,
             "value_2": 512
           }
         ],
@@ -2025,7 +2026,7 @@
         },
         "vendor": {
           "hex": "1d6b",
-          "name": "Linux 6.12.81 ehci_hcd",
+          "name": "Linux 6.12.87 ehci_hcd",
           "value": 7531
         },
         "device": {
@@ -2039,7 +2040,7 @@
           "value": 0
         },
         "serial": "0000:00:1a.7",
-        "model": "Linux 6.12.81 ehci_hcd EHCI Host Controller",
+        "model": "Linux 6.12.87 ehci_hcd EHCI Host Controller",
         "sysfs_id": "/devices/pci0000:00/0000:00:1a.7/usb1/1-0:1.0",
         "sysfs_bus_id": "1-0:1.0",
         "resources": [
@@ -2197,7 +2198,7 @@
         },
         "vendor": {
           "hex": "1d6b",
-          "name": "Linux 6.12.81 ehci_hcd",
+          "name": "Linux 6.12.87 ehci_hcd",
           "value": 7531
         },
         "device": {
@@ -2211,7 +2212,7 @@
           "value": 0
         },
         "serial": "0000:00:1d.7",
-        "model": "Linux 6.12.81 ehci_hcd EHCI Host Controller",
+        "model": "Linux 6.12.87 ehci_hcd EHCI Host Controller",
         "sysfs_id": "/devices/pci0000:00/0000:00:1d.7/usb2/2-0:1.0",
         "sysfs_bus_id": "2-0:1.0",
         "resources": [
@@ -2948,7 +2949,7 @@
         "resources": [
           {
             "type": "hwaddr",
-            "address": 49
+            "address": 48
           },
           {
             "type": "phwaddr",
@@ -3226,7 +3227,7 @@
         "resources": [
           {
             "type": "hwaddr",
-            "address": 49
+            "address": 48
           },
           {
             "type": "phwaddr",
