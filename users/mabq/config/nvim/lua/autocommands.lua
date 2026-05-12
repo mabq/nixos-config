@@ -3,55 +3,61 @@
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
 
-local myGroup = augroup('myGroup', { clear = true })
+local myGroup = augroup("myGroup", { clear = true })
 
-autocmd('TextYankPost', {
-  desc = 'Highlight when yanking',
-  group = augroup('highlightYank', {}),
-  callback = function()
-    (vim.hl or vim.highlight).on_yank()
-  end,
+vim.api.nvim_create_autocmd({ "FileType" }, {
+	callback = function(ev)
+		print(string.format("event fired: %s", vim.inspect(ev)))
+	end,
+})
+
+autocmd("TextYankPost", {
+	desc = "Highlight when yanking",
+	group = augroup("highlightYank", {}),
+	callback = function()
+		(vim.hl or vim.highlight).on_yank()
+	end,
 })
 
 -- Automatically remove all trailling spaces before saving
-autocmd({ 'BufWritePre' }, {
-  group = myGroup,
-  pattern = '*',
-  command = [[%s/\s\+$//e]],
+autocmd({ "BufWritePre" }, {
+	group = myGroup,
+	pattern = "*",
+	command = [[%s/\s\+$//e]],
 })
 
 -- Close these windows with q
-autocmd('FileType', {
-  group = myGroup,
-  pattern = {
-    'checkhealth',
-    'help',
-    'lspinfo',
-    'qf', -- quickfix list
-  },
-  callback = function(event)
-    vim.bo[event.buf].buflisted = false
-    vim.schedule(function()
-      vim.keymap.set('n', 'q', function()
-        vim.cmd 'close'
-        pcall(vim.api.nvim_buf_delete, event.buf, { force = true })
-      end, {
-        buffer = event.buf,
-        silent = true,
-        desc = 'Quit buffer',
-      })
-    end)
-  end,
+autocmd("FileType", {
+	group = myGroup,
+	pattern = {
+		"checkhealth",
+		"help",
+		"lspinfo",
+		"qf", -- quickfix list
+	},
+	callback = function(event)
+		vim.bo[event.buf].buflisted = false
+		vim.schedule(function()
+			vim.keymap.set("n", "q", function()
+				vim.cmd("close")
+				pcall(vim.api.nvim_buf_delete, event.buf, { force = true })
+			end, {
+				buffer = event.buf,
+				silent = true,
+				desc = "Quit buffer",
+			})
+		end)
+	end,
 })
 
 -- Automatically wrap and check for spell in text filetypes
-autocmd('FileType', {
-  group = myGroup,
-  pattern = { 'text', 'plaintex', 'typst', 'gitcommit', 'markdown' },
-  callback = function()
-    vim.opt_local.wrap = true
-    vim.opt_local.spell = true
-  end,
+autocmd("FileType", {
+	group = myGroup,
+	pattern = { "text", "plaintex", "typst", "gitcommit", "markdown" },
+	callback = function()
+		vim.opt_local.wrap = true
+		vim.opt_local.spell = true
+	end,
 })
 
 -- autocmd('BufEnter', {
