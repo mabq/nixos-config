@@ -30,6 +30,7 @@ autocmd("FileType", {
 		"help",
 		"lspinfo",
 		"qf", -- quickfix list
+		"nvim-undotree", -- builtin undotree
 	},
 	callback = function(event)
 		vim.bo[event.buf].buflisted = false

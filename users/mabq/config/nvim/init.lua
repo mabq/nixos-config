@@ -12,6 +12,10 @@
 
 vim.loader.enable() -- enable faster startup by caching compiled Lua modules
 
+-- Enable new core ui
+--   Adds syntax highlighting to command line
+--   Enter the message buffer with `g<`
+--   https://www.youtube.com/watch?v=h1sCwi0pNyM
 require("vim._core.ui2").enable({
 	enable = true,
 	msg = {
