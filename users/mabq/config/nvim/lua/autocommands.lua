@@ -26,6 +26,7 @@ autocmd({ "BufWritePre" }, {
 autocmd("FileType", {
 	group = myGroup,
 	pattern = {
+		-- Check filetype with `:=vim.bo.filetype`
 		"checkhealth",
 		"help",
 		"lspinfo",
