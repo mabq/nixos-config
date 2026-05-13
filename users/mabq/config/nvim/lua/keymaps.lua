@@ -16,8 +16,8 @@ vim.keymap.set("n", "J", "mzJ`z", { desc = "Join line (cursor in place)" })
 vim.keymap.set("x", "<", "<gv", { desc = "Decrease indentation (keep selection)" })
 vim.keymap.set("x", ">", ">gv", { desc = "Increase indentation (keep selection)" })
 
-vim.keymap.set("x", "<right>", "an", { remap = true, desc = "Select parent (outer) node" })
-vim.keymap.set("x", "<left>", "in", { remap = true, desc = "Select child (inner) node" })
+-- vim.keymap.set("x", "<right>", "an", { remap = true, desc = "Select parent (outer) node" })
+-- vim.keymap.set("x", "<left>", "in", { remap = true, desc = "Select child (inner) node" })
 
 -- vim.keymap.set('v', 'J', ":<C-u>execute \"'<,'>move '>+\" . v:count1<cr>gv=gv", { desc = 'Move line down' })
 -- vim.keymap.set('v', 'K', ":<C-u>execute \"'<,'>move '<-\" . (v:count1 + 1)<cr>gv=gv", { desc = 'Move line up' })
