@@ -1,15 +1,11 @@
 -- `:help lua-guide-autocommands`
+-- `:help nvim_create_autocmd()`
+-- `:help events`
 
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
 
-local myGroup = augroup("myGroup", { clear = true })
-
-vim.api.nvim_create_autocmd({ "FileType" }, {
-	callback = function(ev)
-		print(string.format("event fired: %s", vim.inspect(ev)))
-	end,
-})
+local myGroup = augroup("user_settings", { clear = true })
 
 autocmd("TextYankPost", {
 	desc = "Highlight when yanking",
