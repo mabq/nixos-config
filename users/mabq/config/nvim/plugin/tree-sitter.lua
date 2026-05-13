@@ -29,10 +29,10 @@
 --   and compatible queries for core features (highlighting, injections, folds,
 --   indents).
 --
---   Tree-sitter rules are called "grammars" and are written in JavaScript, the
---   `tree-sitter-cli` command compiles these to produce the final parsers used
---   to parse the code. This is why the plugin requires the following tools to
---   be available in the system path:
+--   Tree-sitter rules are called "grammars" and are written in JavaScript,
+--   these are compiled locally by the `tree-sitter-cli` tool to produce the
+--   final parsers used to parse the code. You must install the following
+--   tools with your package manager:
 --
 --     `curl`               To get files from the internet
 --     `tar`                To decompress any downloaded files
@@ -48,10 +48,10 @@
 --     [H]ighlights         Improved syntax coloring.
 --                          `:Inspect` - shows all currently applied highlights for text under cursor.
 --                          `:InspectTree` - shows the AST
---     [L]ocals             Defines the scope of variables and blocks (used for "inner" and "outer").
 --     [F]olds              Allows code folding based on the tree structure.
 --     [I]ndents            Provides logic for auto-indentation.
 --                          When you press Enter or use `=`.
+--     [L]ocals             Defines the scope of variables and blocks (used for "inner" and "outer").
 --     In[J]ections         Allows for languages nested inside others (e.g., CSS inside HTML).
 --
 --   Whenever you see `require('nvim-treesitter')` below it has to do with
@@ -66,6 +66,7 @@
 --------------------------------------------------------------------------------
 
 -- Install and require the plugin
+--   The `main` branch is a total rewrite for Nvim 0.12 and later. The 'master' branch is now deprecated.
 vim.pack.add({ { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" } })
 local nvim_treesitter = require("nvim-treesitter")
 
@@ -155,6 +156,7 @@ vim.api.nvim_create_autocmd("FileType", {
 	group = group,
 	callback = function(args)
 		local buf, filetype = args.buf, args.match
+
 		local language = vim.treesitter.language.get_lang(filetype) -- returns the language name to be used when loading a parser for the given filetype
 		if not language then
 			return
