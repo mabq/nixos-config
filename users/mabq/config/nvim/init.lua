@@ -8,30 +8,7 @@
 -- Learn about runtime files:
 --  https://echasnovski.com/blog/2026-03-13-a-guide-to-vim-pack#runtime-files
 
--------------------------------------------------------------------------------
-
-vim.loader.enable() -- enable faster startup by caching compiled Lua modules
-
--- Enable new core ui
---   Adds syntax highlighting to command line
---   Enter the message buffer with `g<`
---   https://www.youtube.com/watch?v=h1sCwi0pNyM
-require("vim._core.ui2").enable({
-	enable = true,
-	msg = {
-		target = "cmd",
-		pager = { height = 0.5 },
-		dialog = { height = 0.5 },
-		cmd = { height = 0.5 },
-		msg = { height = 0.5, timeout = 4500 },
-	},
-})
-
-require("variables")
-require("options")
-require("keymaps")
-require("diagnostics")
-require("autocommands")
+require("mabq")
 
 -------------------------------------------------------------------------------
 

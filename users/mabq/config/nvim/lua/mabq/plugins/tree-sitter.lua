@@ -67,7 +67,6 @@
 
 -- Install and require the plugin
 --   The `main` branch is a total rewrite for Nvim 0.12 and later. The 'master' branch is now deprecated.
-vim.pack.add({ { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" } })
 local nvim_treesitter = require("nvim-treesitter")
 
 -- Install the following basic parsers by default
