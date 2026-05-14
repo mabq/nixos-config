@@ -1,214 +1,177 @@
--- Enable faster startup by caching compiled Lua modules
-vim.loader.enable()
+vim.loader.enable() -- enable faster startup by caching compiled Lua modules
 
--- Enable new core ui
---   Adds syntax highlighting to command line
---   Enter the message buffer with `g<`
---   https://www.youtube.com/watch?v=h1sCwi0pNyM
-require("vim._core.ui2").enable({
-	enable = true,
-	msg = {
-		target = "cmd",
-		pager = { height = 0.5 },
-		dialog = { height = 0.5 },
-		cmd = { height = 0.5 },
-		msg = { height = 0.5, timeout = 4500 },
-	},
-})
-
---------------------------------------------------------------------------------
-
--- VARIABLES
---   `:help lua-guide-variables`
-
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
-
--- Set to true if you have a Nerd Font installed and selected in the terminal
-vim.g.have_nerd_font = false
-
-vim.g.netrw_browse_split = 0
-vim.g.netrw_banner = 0
-vim.g.netrw_winsize = 25
-
---------------------------------------------------------------------------------
-
--- OPTIONS
---   [Options and variables explained](https://www.youtube.com/watch?v=Cp0iap9u29c&list=PLx2ksyallYzW4WNYHD9xOFrPRYGlntAft&index=6)
---   [Configure Neovim Options](https://www.youtube.com/watch?v=F1CQVXA5gf0&list=PLep05UYkc6wTyBe7kPjQFWVXTlhKeQejM&index=5)
---   `:help lua-guide-options`
---   `:help vim.o`
---   `:option-list`
-
+-- VARIABLES -------------------------------------------------------------------
+--   `:h lua-guide-variables`
 do
-	vim.o.guicursor = ""
+	vim.g.mapleader = " " -- must happen before plugins are loaded, otherwise wrong leader will be used
+	vim.g.maplocalleader = " "
 
-	vim.o.number = true
-	vim.o.relativenumber = true
+	vim.g.have_nerd_font = false -- set to true if you have a Nerd Font installed and selected in the terminal
 
-	vim.o.mouse = "a"
+	vim.g.netrw_banner = 0 -- disable NetRW banner
+end
 
-	vim.o.showmode = false
+-- OPTIONS ---------------------------------------------------------------------
+--   `:h vim.o`
+--   `:h option-list`
+--   `:h lua-guide-options`
+--   Configure Neovim Options:
+--     https://www.youtube.com/watch?v=F1CQVXA5gf0&list=PLep05UYkc6wTyBe7kPjQFWVXTlhKeQejM&index=5
+--   Options and variables explained:
+--     https://www.youtube.com/watch?v=Cp0iap9u29c&list=PLx2ksyallYzW4WNYHD9xOFrPRYGlntAft&index=6
+do
+	vim.o.swapfile = false -- disable swap files
+	vim.o.backup = false -- do not keep a backup file after overwriting a file
 
-	-- Sync clipboard between OS and Neovim.
-	--  Schedule the setting after `UiEnter` because it can increase startup-time.
-	--  Remove this option if you want your OS clipboard to remain independent.
-	--  See `:help 'clipboard'`
-	-- vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
+	vim.o.undodir = vim.fn.stdpath("data") .. "/undo" -- set the directory path for undo file
+	vim.o.undofile = true -- make undo/redo work even after closing the file, see `:h undo-persistence`
 
-	vim.o.tabstop = 2 -- see GuessIndent plugin
-	vim.o.shiftwidth = 0 -- do not change!
-	vim.o.softtabstop = -1 -- do not change!
-	vim.o.expandtab = true
-	vim.o.shiftround = true
+	vim.o.ignorecase = true -- can be overruled by using `\c` or `\C` in the pattern
+	vim.o.smartcase = true -- case sensitive if the search pattern contains upper case characters
+	vim.o.hlsearch = true -- highlight matches
+	vim.o.incsearch = true -- highlight matches while typing
+	vim.o.inccommand = "split" -- preview substitutions live, as you type!
 
-	vim.o.smartindent = true
+	vim.o.tabstop = 2 -- number of spaces to use for tab
+	vim.o.shiftwidth = 0 -- use the value of 'tabstop'
+	vim.o.shiftround = true -- round indent to multiple of shiftwidth
+	vim.o.softtabstop = -1 -- use the value of 'shiftwidth'
+	vim.o.expandtab = true -- use spaces when <Tab> is inserted
+	vim.o.smartindent = false -- do not use smart autoindenting when starting a new line
 
-	vim.o.wrap = false
+	vim.o.list = true -- show <Tab> and <EOL>
+	vim.o.listchars = "tab:» ,trail:·,nbsp:␣" -- how to display these whitespace characters
+
+	vim.o.wrap = false -- do not wrap lines by default
 	vim.o.breakindent = true -- preserve indentation in wrapped text
 	vim.o.linebreak = true -- do not break words when wrapping
 
-	vim.o.swapfile = false
-	vim.o.backup = false
-	vim.o.undodir = vim.fn.stdpath("state") .. "/undo"
-	vim.o.undofile = true -- make undo persistent, see `:h undo-persistence`
+	vim.o.foldenable = false -- open all folds by default (toggle with `zi`)
 
-	vim.o.hlsearch = true
-	vim.o.incsearch = true
-	vim.o.ignorecase = true
-	vim.o.smartcase = true
+	vim.o.number = true
+	vim.o.relativenumber = true
+	vim.o.colorcolumn = "0" -- colums to highlight
+	vim.o.cursorline = true -- show which line the cursor is on
+	vim.o.guicursor = "" -- always show block cursor
+	vim.o.confirm = true -- raise a dialog when trying to quit an unsaved buffer
+	vim.o.mouse = "a" -- enable all mouse modes, can be useful for resizing splits
+	vim.o.laststatus = 3 -- must be set to 3 to show the horizontal split separator
+	vim.o.scrolloff = 8 -- minimal number of screen lines to keep above and below the cursor
+	vim.o.showmode = false -- do not show edit mode
+	vim.o.signcolumn = "yes" -- keep signcolumn on by default
+	vim.o.spelllang = "en_us,es_ec"
+	vim.o.splitbelow = true -- horizontal splits to the bottom
+	vim.o.splitright = true -- vertical splits to the right
+	vim.o.termguicolors = true -- enable 24-bit color in the TUI
+	vim.o.timeoutlen = 400 -- decrease mapped sequence wait time
+	vim.o.updatetime = 250 -- decrease update time
 
-	vim.o.inccommand = "split" -- preview substitutions live, as you type!
-
-	vim.o.termguicolors = true
-
-	vim.o.scrolloff = 8
-	vim.o.signcolumn = "yes"
-	vim.opt.isfname:append("@-@") -- add `@` as a valid filename character
-
-	vim.o.updatetime = 250
-	vim.o.timeoutlen = 300
-
-	vim.o.colorcolumn = "80"
-	vim.o.cursorline = true
-
-	vim.opt.spelllang = { "en", "es" }
-
-	vim.o.splitright = true
-	vim.o.splitbelow = true
-
-	vim.o.list = true
-	vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
-
-	-- If performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
-	--  instead raise a dialog asking if you wish to save the current file(s)
-	--  See `:help 'confirm'`
-	vim.o.confirm = true
+	-- vim.schedule(function() vim.o.clipboard = 'unnamedplus' end) -- sync clipboard between OS and Neovim (schedule the setting after `UiEnter` because it can increase startup-time)
 end
 
---------------------------------------------------------------------------------
+-- KEYMAPS ---------------------------------------------------------------------
+do
+	-- `:h default-mappings`
+	-- `:h lua-guide-mappings`
+	-- `:h vim-keymap-set()`
+	-- `:h map-table` - possible mods
+	-- `:Telescope keymaps`
+	-- `:map`
+	--
+	-- <leader>f    file/find
+	-- <leader>g    git
+	-- <leader>s    search
+	-- <leader>u    UI/toggles
+	-- <leader>x    diagnostics/trouble
+	-- <leader>c    code
 
--- KEYMAPS
---   `:h default-mappings`
---   `:h lua-guide-mappings`
---   `:h vim-keymap-set()`
---   `:h map-table` - possible mods
---   `:Telescope keymaps`         - list all keymaps
---   `:[verbose] map [keybind]`   - check all/specific keymap
+	-- Without modifier key --
 
--- Without modifier key --
+	vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search hightlights" })
 
-vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search hightlight" })
+	vim.keymap.set("n", "J", "mzJ`z", { desc = "Join line (cursor in place)" })
 
-vim.keymap.set("n", "J", "mzJ`z", { desc = "Join line (cursor in place)" })
--- vim.keymap.set('n', 'n', 'nzzzv', { desc = 'Next match (centered)' })
--- vim.keymap.set('n', 'N', 'Nzzzv', { desc = 'Previous match (centered)' })
+	vim.keymap.set("n", "Q", "<nop>", { desc = "Disable Q default behavior" })
 
--- vim.keymap.set('n', '<down>', '<C-e>', { desc = 'Scroll down (keep current line)' })
--- vim.keymap.set('n', '<up>', '<C-y>', { desc = 'Scroll up (keep current line)' })
+	vim.keymap.set("x", "<", "<gv", { desc = "Decrease indentation (keep selection)" })
+	vim.keymap.set("x", ">", ">gv", { desc = "Increase indentation (keep selection)" })
 
-vim.keymap.set("x", "<", "<gv", { desc = "Decrease indentation (keep selection)" })
-vim.keymap.set("x", ">", ">gv", { desc = "Increase indentation (keep selection)" })
+	-- With Ctrl --
 
--- vim.keymap.set("x", "<right>", "an", { remap = true, desc = "Select parent (outer) node" })
--- vim.keymap.set("x", "<left>", "in", { remap = true, desc = "Select child (inner) node" })
+	vim.keymap.set("n", "<C-f>", ":Ex<CR>", { desc = "Netrw" })
 
--- vim.keymap.set('v', 'J', ":<C-u>execute \"'<,'>move '>+\" . v:count1<cr>gv=gv", { desc = 'Move line down' })
--- vim.keymap.set('v', 'K', ":<C-u>execute \"'<,'>move '<-\" . (v:count1 + 1)<cr>gv=gv", { desc = 'Move line up' })
+	vim.keymap.set("n", "<C-s>", ":!tmux neww tmux-sessionizer<CR>", { desc = "Run tmux-sessionizer", silent = true })
 
--- vim.keymap.set('n', 'Q', '<nop>', { desc = 'Disable Q default behavior' })
+	vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
+	vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
+	vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
+	vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
 
--- vim.keymap.set('c', '<down>', function() if vim.fn.pumvisible() == 1 then return '<c-n>' end return '<down>' end, { expr = true, desc = 'Select next menu item' })
--- vim.keymap.set('c', '<up>', function() if vim.fn.pumvisible() == 1 then return '<c-p>' end return '<up>' end, { expr = true, desc = 'Select previous menu item' })
+	vim.keymap.set("n", "<C-Left>", ":vertical resize -4<CR>", { desc = "Decrease window width" })
+	vim.keymap.set("n", "<C-Right>", ":vertical resize +4<CR>", { desc = "Increase window width" })
+	vim.keymap.set("n", "<C-Down>", ":resize -4<CR>", { desc = "Decrease window height" })
+	vim.keymap.set("n", "<C-Up>", ":resize +4<CR>", { desc = "Increase window height" })
 
--- Ctrl --
+	vim.keymap.set("n", "<C-n>", "<cmd>cnext<CR>", { desc = "Quickfix next" })
+	vim.keymap.set("n", "<C-p>", "<cmd>cprev<CR>", { desc = "Quickfix previous" })
 
-vim.keymap.set("n", "<C-f>", ":Ex<CR>", { desc = "Netrw" })
+	-- With Leader --
 
-vim.keymap.set("n", "<C-s>", ":!tmux neww tmux-sessionizer<CR>", { desc = "Run tmux-sessionizer", silent = true })
+	vim.keymap.set("x", "<leader>p", [["_dP]], { desc = "Paste without yanking" })
+	vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]], { desc = "Yank to clipboard" })
+	vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]], { desc = "Delete withou yanking" })
 
---  See `:help wincmd` for a list of all window commands
-vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
-vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
-vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
-vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
+	vim.keymap.set("n", "<leader>gg", ":LazyGit<CR>", { desc = "Open LazyGit" })
 
-vim.keymap.set("n", "<C-Left>", ":vertical resize -4<CR>", { desc = "Decrease window width" })
-vim.keymap.set("n", "<C-Right>", ":vertical resize +4<CR>", { desc = "Increase window width" })
-vim.keymap.set("n", "<C-Down>", ":resize -4<CR>", { desc = "Decrease window height" })
-vim.keymap.set("n", "<C-Up>", ":resize +4<CR>", { desc = "Increase window height" })
+	vim.keymap.set("n", "<leader>su", ":Undotree<CR>", { desc = "Toggle builtin Undotree" })
 
-vim.keymap.set("n", "<C-n>", "<cmd>cnext<CR>", { desc = "Quickfix next" })
-vim.keymap.set("n", "<C-p>", "<cmd>cprev<CR>", { desc = "Quickfix previous" })
+	-- vim.keymap.set('n', '<leader>S', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]) -- remane all instances of word under cursor
 
--- Leader --
+	-- vim.keymap.set('n', '<leader>X', '<cmd>!chmod +x %<CR>', { silent = true }) -- make the current file executable
 
-vim.keymap.set("x", "<leader>p", [["_dP]], { desc = "Paste without yanking" })
-vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]], { desc = "Yank to clipboard" })
-vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]], { desc = "Delete withou yanking" })
+	-- vim.keymap.set('n', '<leader><leader>X', '<cmd>source %<CR>', { desc = 'Source file' }) -- refresh lua configurations
+end
 
-vim.keymap.set("n", "<leader>gg", ":LazyGit<CR>", { desc = "Open LazyGit" })
+-- DIAGNOSTICS -----------------------------------------------------------------
+--   `:h vim.diagnostic`
+--   `:h vim.diagnostic.Opts`
+--   `:h diagnostic-defaults` - default keybinds
+do
+	-- Diagnostics configuration --
+	vim.diagnostic.config({
+		underline = false,
+		virtual_text = true, -- show virtual at the end of the line
+		virtual_lines = false, -- show virtual text in new lines below
+		float = {
+			border = "rounded",
+			source = "if_many", -- only show sources if there is more than one source of diagnostics in the buffer
+		},
+		-- severity_sort = true, -- sort diagnostics by severity
+		jump = { -- auto open the diagnostic float when jumping with `]d` or `[d`
+			on_jump = function(_, bufnr)
+				vim.diagnostic.open_float({
+					bufnr = bufnr,
+					scope = "cursor",
+					focus = false,
+				})
+			end,
+		},
+	})
 
-vim.keymap.set("n", "<leader>u", ":Undotree<CR>", { desc = "Toggle builtin Undotree" })
+	-- Keymaps --
+	vim.keymap.set("n", "<leader>xl", vim.diagnostic.setloclist, {
+		-- quickfix list is shared by all buffers, location lists are per window
+		desc = "Open diagnostics [l]ocation list",
+	})
 
--- vim.keymap.set('n', '<leader>S', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]) -- remane all instances of word under cursor
+	vim.keymap.set("n", "<leader>ud", function()
+		local status = vim.diagnostic.is_enabled()
+		vim.diagnostic.enable(not status)
+		print((status and "Disabled" or "Enabled") .. " Diagnostics")
+	end, { desc = "Toggle diagnostics" })
+end
 
--- vim.keymap.set('n', '<leader>X', '<cmd>!chmod +x %<CR>', { silent = true }) -- make the current file executable
-
--- vim.keymap.set('n', '<leader><leader>X', '<cmd>source %<CR>', { desc = 'Source file' }) -- refresh lua configurations
-
---------------------------------------------------------------------------------
-
--- DIAGNOSTICS
---   `:help vim.diagnostic.Opts`
-
-vim.diagnostic.config({
-	update_in_insert = false,
-	severity_sort = true,
-	float = { border = "rounded", source = "if_many" },
-	underline = { severity = { min = vim.diagnostic.severity.WARN } },
-
-	-- Can switch between these as you prefer
-	virtual_text = true, -- Text shows up at the end of the line
-	virtual_lines = false, -- Text shows up underneath the line, with virtual lines
-
-	-- Auto open the float, so you can easily read the errors when jumping with `[d` and `]d`
-	jump = {
-		on_jump = function(_, bufnr)
-			vim.diagnostic.open_float({
-				bufnr = bufnr,
-				scope = "cursor",
-				focus = false,
-			})
-		end,
-	},
-})
-
-vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
-
---------------------------------------------------------------------------------
-
--- AUTOCOMMANDS
+-- AUTOCOMMANDS ----------------------------------------------------------------
 --   `:h default-autocmds`
 --   `:h lua-guide-autocommands`
 --   `:h nvim_create_autocmd()`
@@ -315,3 +278,20 @@ autocmd("FileType", {
 --   [Autocmds explanation in the context of LSP](https://youtu.be/HL7b63Hrc8U?si=CBt_Hz8IXrJAgear&t=926)
 --   `:h lua-guide-autocommands`
 --   `:h events`
+
+--------------------------------------------------------------------------------
+
+-- Enable new core ui
+--   Adds syntax highlighting to command line
+--   Enter the message buffer with `g<`
+--   https://www.youtube.com/watch?v=h1sCwi0pNyM
+require("vim._core.ui2").enable({
+	enable = true,
+	msg = {
+		target = "cmd",
+		pager = { height = 0.5 },
+		dialog = { height = 0.5 },
+		cmd = { height = 0.5 },
+		msg = { height = 0.5, timeout = 4500 },
+	},
+})

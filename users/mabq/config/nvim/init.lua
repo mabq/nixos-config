@@ -4,6 +4,7 @@
 -- Learn how Neovim integrates Lua:
 --   `:h lua-guide`
 --   `:h lua-guide-modules`
+--   `:=` is a shortcut for `:lua print(...)`
 
 -- Learn about Neovim initialization:
 --   `:h starting`
@@ -21,5 +22,4 @@
 
 require("core")
 require("plugins")
-
-vim.cmd.colorscheme("tokyonight-night")
+require("theme")
