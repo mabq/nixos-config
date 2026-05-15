@@ -29,7 +29,7 @@ vim.o.breakindent = true -- preserve indentation in wrapped text
 -- vim.opt.formatoptions:remove("o") -- no automatic comment continuation
 
 vim.o.list = true -- show <Tab> and <EOL>
-vim.o.listchars = "tab:» ,trail:·,nbsp:␣" -- how to display these whitespace characters
+vim.o.listchars = "tab:· ,trail:·,nbsp:␣" -- how to display these whitespace characters
 
 vim.o.tabstop = 2 -- column multiple used to display a horizontal Tab character
 vim.o.shiftwidth = 0 -- use tabstop value
@@ -45,12 +45,12 @@ vim.o.relativenumber = true
 vim.o.termguicolors = true -- enable 24-bit color in the TUI
 vim.o.guicursor = "" -- always show block cursor
 vim.o.signcolumn = "yes" -- keep signcolumn on by default
+
 -- vim.o.showmode = false -- do not show edit mode
 -- vim.o.scrolloff = 8 -- minimal number of screen lines to keep above and below the cursor
 -- vim.o.confirm = true -- raise a dialog when trying to quit an unsaved buffer
 
--- vim.o.colorcolumn = "0" -- colums to highlight
--- vim.o.cursorline = true -- show which line the cursor is on
+-- vim.o.colorcolumn = "80" -- colums to highlight
 
 vim.o.splitbelow = true -- horizontal splits to the bottom
 vim.o.splitright = true -- vertical splits to the right
@@ -59,4 +59,4 @@ vim.o.mouse = "a" -- enable all mouse modes, can be useful for resizing splits
 
 vim.o.spelllang = "en_us,es_ec"
 
--- vim.o.updatetime = 250 -- decrease update time
+vim.o.updatetime = 250 -- decrease update time

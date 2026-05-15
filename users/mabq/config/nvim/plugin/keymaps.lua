@@ -22,13 +22,32 @@
 --   `desc` - description of the keymap (default `nil`)
 --   `nowait` - whether to disable timeout delay if keys partially overlap (default: `false`)
 
--- Options ---------------------------------------------------------------------
+--------------------------------------------------------------------------------
+-- Options
+--------------------------------------------------------------------------------
 
 vim.o.timeoutlen = 400 -- decrease mapped sequence wait time
 
--- No modifire key keymaps -----------------------------------------------------
+--------------------------------------------------------------------------------
+-- Remove default keymaps
+--------------------------------------------------------------------------------
 
-vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search hightlights" })
+-- Disable Q
+vim.keymap.set("n", "Q", "<nop>", { desc = "(Disable 'Q' default behavior)" })
+
+--------------------------------------------------------------------------------
+-- Improve default keymaps
+--------------------------------------------------------------------------------
+
+-- Use display lines for j/k
+vim.keymap.set("n", "k", function()
+	local count = vim.v.count
+	if count == 0 then
+		return "gk"
+	else
+		return "k"
+	end
+end, { expr = true, desc = "Up (display line)" })
 
 vim.keymap.set("n", "j", function()
 	local count = vim.v.count
@@ -37,70 +56,77 @@ vim.keymap.set("n", "j", function()
 	else
 		return "j"
 	end
-end, { expr = true })
+end, { expr = true, desc = "Down (display line)" })
 
-vim.keymap.set("n", "k", function()
-	local count = vim.v.count
-	if count == 0 then
-		return "gk"
-	else
-		return "k"
-	end
-end, { expr = true })
-
-vim.keymap.set("n", "<down>", "<C-e>", { desc = "Scroll down (keep line focus)" })
-vim.keymap.set("n", "<up>", "<C-y>", { desc = "Scroll up (keep line focus)" })
-
-vim.keymap.set("n", "J", "mzJ`z", { desc = "Join line (cursor in place)" })
-
-vim.keymap.set("n", "Q", "<nop>", { desc = "Disable Q default behavior" })
-
--- make the default mappings automatically open the diagnostic float when jumping to it
-vim.keymap.set("n", "]d", function() -- TODO: move
-	vim.diagnostic.jump({ count = 1, float = true })
-end)
-vim.keymap.set("n", "[d", function() -- TODO: move
+-- Automatically open diagnostic message when jumping
+vim.keymap.set("n", "[d", function()
 	vim.diagnostic.jump({ count = -1, float = true })
-end)
+end, { desc = "Previous diagnotic (open float automatically)" })
 
-vim.keymap.set("n", "]]", "<cmd>cnext<CR>", { silent = true }) -- TODO: move
-vim.keymap.set("n", "[[", "<cmd>cprev<CR>", { silent = true }) -- TODO: move
+vim.keymap.set("n", "]d", function()
+	vim.diagnostic.jump({ count = 1, float = true })
+end, { desc = "Next diagnostic (open float automatically)" })
 
+-- Don't move cursor position
+vim.keymap.set("n", "J", "mzJ`z", { desc = "Join (without changing cursor position)" })
+
+-- Keep selection after indentation
 vim.keymap.set("x", "<", "<gv", { desc = "Decrease indentation (keep selection)" })
 vim.keymap.set("x", ">", ">gv", { desc = "Increase indentation (keep selection)" })
 
+--------------------------------------------------------------------------------
+-- Override default keymaps
+--------------------------------------------------------------------------------
+
+-- System clipboard / Default register --
+--   In visual mode `Y` yanks the whole line by default. Use `yy` in normal mode instead.
+--   We use it to yank the selected text to system clipboard.
+vim.keymap.set("x", "Y", [["+y]], { desc = "Yank to clipboard" })
+--   In visual mode `D` deletes the entire line by default. Use `dd` in normal mode instead.
+--   We use it to delete the selected text without affecting default register, so you can paste the same content again elsewhere.
+vim.keymap.set("x", "D", [["_d]], { desc = "Delete without yanking visual selection" })
+--   In visual mode `P` paste the content before cursor (never really used in visual mode)
+--   We use it to paste over the selected text without affecting the default register.
+vim.keymap.set("x", "P", [["_dP]], { desc = "Paste without yanking visual selection" })
+
+-- Easily move selected lines up/down
+--   In visual mode `J`/`K` do the same things that in normal mode. No reason to keep them.
+--   We use them to move selected lines up/down.
 vim.keymap.set("x", "J", ":<C-u>execute \"'<,'>move '>+\" . v:count1<cr>gv=gv", { desc = "Move line/s down" })
 vim.keymap.set("x", "K", ":<C-u>execute \"'<,'>move '<-\" . (v:count1 + 1)<cr>gv=gv", { desc = "Move line/s up" })
 
--- Control key keymaps ---------------------------------------------------------
+--------------------------------------------------------------------------------
+-- Create new keymaps
+--------------------------------------------------------------------------------
 
-vim.keymap.set("n", "<C-e>", ":Ex<CR>", { desc = "Netrw" })
+-- Clear matched hightlights on Esc
+vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search hightlights" })
 
-vim.keymap.set("n", "<C-s>", ":!tmux neww tmux-sessionizer<CR>", { desc = "Run tmux-sessionizer", silent = true }) -- TODO: Move
-
+-- Easier window management
+--   Move between windows
 vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Focus left window" })
 vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Focus right window" })
 vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Focus lower window" })
 vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Focus upper window" })
-
+--   Resize windows
 vim.keymap.set("n", "<C-Left>", "<c-w>5<", { desc = "Decrease window width" })
 vim.keymap.set("n", "<C-Right>", "<c-w>5>", { desc = "Increase window width" })
 vim.keymap.set("n", "<C-Down>", "<C-W>-", { desc = "Decrease window height" })
 vim.keymap.set("n", "<C-Up>", "<C-W>+", { desc = "Increase window height" })
 
--- vim.keymap.set("n", "<C-n>", "<cmd>cnext<CR>", { desc = "Quickfix next" })
--- vim.keymap.set("n", "<C-p>", "<cmd>cprev<CR>", { desc = "Quickfix previous" })
+-- Quickfix
+vim.keymap.set("n", "<C-n>", "<cmd>cnext<CR>", { desc = "Quickfix next", silent = true })
+vim.keymap.set("n", "<C-p>", "<cmd>cprev<CR>", { desc = "Quickfix previous", silent = true })
 
--- Meta keymaps ----------------------------------------------------------------
+-- Locklist
+vim.keymap.set("n", "]]", "<cmd>lnext<CR>", { desc = "Locklist next", silent = true })
+vim.keymap.set("n", "[[", "<cmd>lprev<CR>", { desc = "Locklist previous", silent = true })
 
-vim.keymap.set({ "n", "x" }, "<M-k>", "<cmd>m .-2<CR>==", { desc = "Move line up" })
-vim.keymap.set({ "n", "x" }, "<M-j>", "<cmd>m .+1<CR>==", { desc = "Move line down" })
+vim.keymap.set("n", "<C-s>", ":!tmux neww tmux-sessionizer<CR>", { desc = "Run tmux-sessionizer", silent = true })
 
--- Leader keymaps --------------------------------------------------------------
-
-vim.keymap.set("x", "<leader>p", [["_dP]], { desc = "Paste without yanking" })
-vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]], { desc = "Yank to clipboard" })
-vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]], { desc = "Delete withou yanking" })
+--------------------------------------------------------------------------------
+-- Leader keymaps
+--------------------------------------------------------------------------------
 
 -- vim.keymap.set("n", "<leader>gg", ":LazyGit<CR>", { desc = "Open LazyGit" }) -- TODO: Move
 
