@@ -133,20 +133,21 @@ do
 end
 
 -- DIAGNOSTICS -----------------------------------------------------------------
+--   Neovim framework for displaying errors or warnings from external tools,
+--   such as LSP servers or linters.
 --   `:h vim.diagnostic`
---   `:h vim.diagnostic.Opts`
---   `:h diagnostic-defaults` - default keybinds
 do
-	-- Diagnostics configuration --
+	-- Configuration --
+	--   `:h vim.diagnostic.Opts`
 	vim.diagnostic.config({
 		underline = false,
-		virtual_text = true, -- show virtual at the end of the line
-		virtual_lines = false, -- show virtual text in new lines below
+		virtual_text = true, -- show virtual at the end of the line, show float with `<C-w>d`
+		virtual_lines = false, -- feels kind of disorienting
 		float = {
 			border = "rounded",
-			source = "if_many", -- only show sources if there is more than one source of diagnostics in the buffer
+			source = "if_many", -- only show sources if there is more than one
 		},
-		-- severity_sort = true, -- sort diagnostics by severity
+		severity_sort = true, -- most significant diagnostics first
 		jump = { -- auto open the diagnostic float when jumping with `]d` or `[d`
 			on_jump = function(_, bufnr)
 				vim.diagnostic.open_float({
@@ -159,8 +160,8 @@ do
 	})
 
 	-- Keymaps --
+	--   `:h diagnostic-defaults`
 	vim.keymap.set("n", "<leader>xl", vim.diagnostic.setloclist, {
-		-- quickfix list is shared by all buffers, location lists are per window
 		desc = "Open diagnostics [l]ocation list",
 	})
 
