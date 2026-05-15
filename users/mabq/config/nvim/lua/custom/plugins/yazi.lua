@@ -1,4 +1,5 @@
 return {
+	enable = false,
 	"mikavilpas/yazi.nvim",
 	version = "*", -- use the latest stable version
 	event = "VeryLazy",
@@ -11,18 +12,6 @@ return {
 			"<leader>e",
 			"<cmd>Yazi<CR>",
 			desc = "Open yazi at the current file",
-		},
-		{
-			mode = { "n", "v" },
-			"<leader>E",
-			"<cmd>Yazi toggle<CR>",
-			desc = "Resume last yazi session",
-		},
-		{
-			mode = { "n", "v" },
-			"<leader><C-e>",
-			"<cmd>Yazi cwd<CR>",
-			desc = "Open yazi at the current working directory",
 		},
 	},
 	opts = {
