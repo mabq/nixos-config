@@ -41,30 +41,30 @@ vim.keymap.set("n", "Q", "<nop>", { desc = "(Disable 'Q' default behavior)" })
 
 -- Use display lines for j/k
 vim.keymap.set("n", "k", function()
-	local count = vim.v.count
-	if count == 0 then
-		return "gk"
-	else
-		return "k"
-	end
+  local count = vim.v.count
+  if count == 0 then
+    return "gk"
+  else
+    return "k"
+  end
 end, { expr = true, desc = "Up (display line)" })
 
 vim.keymap.set("n", "j", function()
-	local count = vim.v.count
-	if count == 0 then
-		return "gj"
-	else
-		return "j"
-	end
+  local count = vim.v.count
+  if count == 0 then
+    return "gj"
+  else
+    return "j"
+  end
 end, { expr = true, desc = "Down (display line)" })
 
 -- Automatically open diagnostic message when jumping
 vim.keymap.set("n", "[d", function()
-	vim.diagnostic.jump({ count = -1, float = true })
+  vim.diagnostic.jump { count = -1, float = true }
 end, { desc = "Previous diagnotic (open float automatically)" })
 
 vim.keymap.set("n", "]d", function()
-	vim.diagnostic.jump({ count = 1, float = true })
+  vim.diagnostic.jump { count = 1, float = true }
 end, { desc = "Next diagnostic (open float automatically)" })
 
 -- Don't move cursor position
@@ -115,12 +115,12 @@ vim.keymap.set("n", "<C-Down>", "<C-W>-", { desc = "Decrease window height" })
 vim.keymap.set("n", "<C-Up>", "<C-W>+", { desc = "Increase window height" })
 
 -- Quickfix
-vim.keymap.set("n", "<down>", "<cmd>cnext<CR>", { desc = "Quickfix next", silent = true })
-vim.keymap.set("n", "<up>", "<cmd>cprev<CR>", { desc = "Quickfix previous", silent = true })
+-- vim.keymap.set("n", "<down>", "<cmd>cnext<CR>", { desc = "Quickfix next", silent = true })
+-- vim.keymap.set("n", "<up>", "<cmd>cprev<CR>", { desc = "Quickfix previous", silent = true })
 
 -- Locklist
-vim.keymap.set("n", "<left>", "<cmd>lnext<CR>", { desc = "Locklist next", silent = true })
-vim.keymap.set("n", "<right>", "<cmd>lprev<CR>", { desc = "Locklist previous", silent = true })
+-- vim.keymap.set("n", "<left>", "<cmd>lnext<CR>", { desc = "Locklist next", silent = true })
+-- vim.keymap.set("n", "<right>", "<cmd>lprev<CR>", { desc = "Locklist previous", silent = true })
 
 vim.keymap.set("n", "<C-s>", ":!tmux neww tmux-sessionizer<CR>", { desc = "Run tmux-sessionizer", silent = true })
 
