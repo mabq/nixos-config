@@ -22,56 +22,64 @@
 
 --------------------------------------------------------------------------------
 return {
-	"nvim-telescope/telescope.nvim",
-	version = "*", -- use the latest stable version
-	dependencies = {
-		"nvim-lua/plenary.nvim",
-		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" }, -- much better sorting performance
-		"nvim-telescope/telescope-ui-select.nvim",
-		-- "nvim-tree/nvim-web-devicons",
-	},
-	config = function()
-		require("telescope").setup({
-			defaults = {
-				layout_strategy = "horizontal",
-				layout_config = {
-					horizontal = {
-						prompt_position = "top",
-					},
-				},
-				sorting_strategy = "ascending",
-			},
-			pickers = {
-				grep_string = {
-					use_regex = true, -- enable regex
-				},
-			},
-			extensions = {
-				fzf = {
-					-- https://github.com/nvim-telescope/telescope-fzf-native.nvim?tab=readme-ov-file#telescope-setup-and-configuration
-					fuzzy = false, -- exact matches by default
-				},
-				["ui-select"] = {
-					require("telescope.themes").get_dropdown({}),
-				},
-			},
-		})
+  "nvim-telescope/telescope.nvim",
+  version = "*", -- use the latest stable version
+  dependencies = {
+    "nvim-lua/plenary.nvim",
+    { "nvim-telescope/telescope-fzf-native.nvim", build = "make" }, -- much better sorting performance
+    "nvim-telescope/telescope-ui-select.nvim",
+    -- "nvim-tree/nvim-web-devicons",
+  },
+  config = function()
+    ----------------------------------------------------------------------------
+    -- Telescope setup
+    ----------------------------------------------------------------------------
+    require("telescope").setup {
+      -- defaults = {
+      -- layout_strategy = "horizontal",
+      -- layout_config = {
+      --   horizontal = {
+      --     prompt_position = "top",
+      --   },
+      -- },
+      -- sorting_strategy = "ascending",
+      -- },
+      pickers = {
+        grep_string = {
+          -- use_regex = true, -- enable regex NOTE: check this
+        },
+      },
+      extensions = {
+        fzf = {
+          -- https://github.com/nvim-telescope/telescope-fzf-native.nvim?tab=readme-ov-file#telescope-setup-and-configuration
+          -- fuzzy = false, -- exact matches by default
+        },
+        ["ui-select"] = {
+          require("telescope.themes").get_dropdown {},
+        },
+      },
+    }
 
-		pcall(require("telescope").load_extension, "fzf")
-		pcall(require("telescope").load_extension, "ui-select")
+    ----------------------------------------------------------------------------
+    -- Load extensions
+    ----------------------------------------------------------------------------
+    pcall(require("telescope").load_extension, "fzf")
+    pcall(require("telescope").load_extension, "ui-select")
 
-		local builtin = require("telescope.builtin")
-
-		vim.keymap.set("n", "<leader><leader>", builtin.resume, { desc = "Search Resume" })
-		vim.keymap.set("n", "<leader>sf", builtin.find_files, { desc = "Search Files" })
-		vim.keymap.set("n", "<leader>sg", builtin.git_files, { desc = "Search Git Files" })
-		vim.keymap.set("n", "<leader>sl", builtin.live_grep, { desc = "Search Live" })
-		vim.keymap.set("n", "<leader>ss", function()
-			builtin.grep_string({ search = vim.fn.input("Search: ") })
-		end, { desc = "Search String" }) -- big projects
-		vim.keymap.set("n", "<leader>st", builtin.builtin, { desc = "Search Telescope" })
-		vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "Search Diagnostics" })
-		vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "Search Help" })
-		vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "Search Keymaps" })
-	end,
+    ----------------------------------------------------------------------------
+    -- Keymaps
+    ----------------------------------------------------------------------------
+    local builtin = require "telescope.builtin"
+    vim.keymap.set("n", "<leader><leader>", builtin.resume, { desc = "[␣] Search Resume" })
+    vim.keymap.set("n", "<leader>/", function()
+      builtin.grep_string { search = vim.fn.input "Search: " }
+    end, { desc = "[/] Search Grep String" }) -- big projects
+    vim.keymap.set("n", "<leader>sl", builtin.live_grep, { desc = "[S]earch [l]ive grep" })
+    vim.keymap.set("n", "<leader>sf", builtin.find_files, { desc = "[S]earch [f]iles" })
+    vim.keymap.set("n", "<leader>sg", builtin.git_files, { desc = "[S]earch [g]it files" })
+    vim.keymap.set("n", "<leader>st", builtin.builtin, { desc = "[S]earch [t]elescope" })
+    vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "[S]earch [d]iagnostics" })
+    vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [h]elp" })
+    vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [k]eymaps" })
+  end,
 }
