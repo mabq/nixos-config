@@ -115,12 +115,12 @@ vim.keymap.set("n", "<C-Down>", "<C-W>-", { desc = "Decrease window height" })
 vim.keymap.set("n", "<C-Up>", "<C-W>+", { desc = "Increase window height" })
 
 -- Quickfix
-vim.keymap.set("n", "<C-n>", "<cmd>cnext<CR>", { desc = "Quickfix next", silent = true })
-vim.keymap.set("n", "<C-p>", "<cmd>cprev<CR>", { desc = "Quickfix previous", silent = true })
+vim.keymap.set("n", "<down>", "<cmd>cnext<CR>", { desc = "Quickfix next", silent = true })
+vim.keymap.set("n", "<up>", "<cmd>cprev<CR>", { desc = "Quickfix previous", silent = true })
 
 -- Locklist
-vim.keymap.set("n", "]]", "<cmd>lnext<CR>", { desc = "Locklist next", silent = true })
-vim.keymap.set("n", "[[", "<cmd>lprev<CR>", { desc = "Locklist previous", silent = true })
+vim.keymap.set("n", "<left>", "<cmd>lnext<CR>", { desc = "Locklist next", silent = true })
+vim.keymap.set("n", "<right>", "<cmd>lprev<CR>", { desc = "Locklist previous", silent = true })
 
 vim.keymap.set("n", "<C-s>", ":!tmux neww tmux-sessionizer<CR>", { desc = "Run tmux-sessionizer", silent = true })
 
