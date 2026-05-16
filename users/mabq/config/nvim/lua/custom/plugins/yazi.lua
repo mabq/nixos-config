@@ -1,5 +1,5 @@
 return {
-	enable = false,
+	enable = true,
 	"mikavilpas/yazi.nvim",
 	version = "*", -- use the latest stable version
 	event = "VeryLazy",
@@ -9,7 +9,7 @@ return {
 	keys = {
 		{
 			mode = { "n", "v" },
-			"<leader>e",
+			"<leader>E",
 			"<cmd>Yazi<CR>",
 			desc = "Open yazi at the current file",
 		},

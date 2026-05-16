@@ -10,15 +10,16 @@ return {
 			settings = { save_on_toggle = true },
 		})
 
+		-- Highlight current file in menu
 		local harpoon_extensions = require("harpoon.extensions")
 		harpoon:extend(harpoon_extensions.builtins.highlight_current_file())
 
 		-- Add to/Open harppon list
-		vim.keymap.set("n", "<leader>+", function()
-			harpoon:list():add()
-		end)
-		vim.keymap.set("n", "<leader>-", function()
+		vim.keymap.set("n", "<leader>e", function()
 			harpoon.ui:toggle_quick_menu(harpoon:list())
+		end)
+		vim.keymap.set("n", "<leader>a", function()
+			harpoon:list():add()
 		end)
 
 		-- Quickly move through the main 4 harppon files
