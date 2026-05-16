@@ -1,18 +1,25 @@
--- Help:
---  `:h vim.o`
---  `:h option-list`
---  `:h lua-guide-options`
---
--- Configure Neovim Options:
---   https://www.youtube.com/watch?v=F1CQVXA5gf0&list=PLep05UYkc6wTyBe7kPjQFWVXTlhKeQejM&index=5
---
--- Options and variables explained:
---   https://www.youtube.com/watch?v=Cp0iap9u29c&list=PLx2ksyallYzW4WNYHD9xOFrPRYGlntAft&index=6
+--[[
+
+Help:
+ `:h vim.o`
+ `:h option-list`
+ `:h lua-guide-options`
+
+Configure Neovim Options:
+  https://www.youtube.com/watch?v=F1CQVXA5gf0&list=PLep05UYkc6wTyBe7kPjQFWVXTlhKeQejM&index=5
+
+Options and variables explained:
+  https://www.youtube.com/watch?v=Cp0iap9u29c&list=PLx2ksyallYzW4WNYHD9xOFrPRYGlntAft&index=6
+
+--]]
+
+vim.g.mapleader = " " -- used for editor/workspace actions
+vim.g.maplocalleader = "," -- used for language/filetype actions
 
 vim.o.swapfile = false -- disable swap files
 
 vim.o.undofile = true -- make undo/redo work even after closing the file, see `:h undo-persistence`
-vim.o.undodir = vim.fn.stdpath("state") .. "/undo" -- set the directory path for undo file
+vim.o.undodir = vim.fn.stdpath "state" .. "/undo" -- set the directory path for undo file
 
 vim.opt.shada = { "'10", "<0", "s10", "h" } -- better settings for shada files
 
@@ -42,7 +49,6 @@ vim.o.foldmethod = "manual"
 vim.o.number = true
 vim.o.relativenumber = true
 
-vim.o.termguicolors = true -- enable 24-bit color in the TUI
 vim.o.guicursor = "" -- always show block cursor
 vim.o.signcolumn = "yes" -- keep signcolumn on by default
 

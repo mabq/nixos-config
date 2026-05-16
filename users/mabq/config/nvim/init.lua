@@ -1,61 +1,39 @@
---------------------------------------------------------------------------------
+--[[
 
--- Learn Lua
---   https://learnxinyminutes.com/lua
+Startup config files:
 
--- Learn how Neovim integrates Lua:
---   `:h lua-guide`
---   `:h lua-guide-modules`
---   `:=` is a shortcut for `:lua print(...)`
+  Everything inside the `lua` directory can be required by Lua, e.g. the
+  config files we require below.
 
--- Learn about Neovim initialization:
---   `:h starting`
---   `:h runtimepath`
---   `:h standard-path
---   `:h init.lua`
---   `:h base-directories`
---   `:h slow-start`
---   Everthing under `lua/custom/plugins` is sourced by lazy.nvim as instructed
---   in this file.
---   Everything under `plugin` is sourced automatically by Neovim by default.
+  Lazy.nvim automatically imports all plugin specs - the directory used
+  to contain all plugin specs is defined in `config/lazy.lua`.
 
--- Check for errors:
---   `:checkhealth`
+  There are some special directories (e.g. `after`) that Neovim automatically
+  sources at startup. See:
+    `:h starting`
+    `:h runtimepath`
+    `:h standard-path
+    `:h init.lua`
+    `:h base-directories`
+    `:h slow-start`
 
--- For help about everything else:
---   `:h`
+Learn Lua (the language):
+  https://learnxinyminutes.com/lua
 
---------------------------------------------------------------------------------
+Learn how Neovim integrates Lua:
+  `:h lua-guide`
+  `:h lua-guide-modules`
+  `:=` is a shortcut for `:lua print(...)`
 
--- Map leaders must be set before plugins are loaded
-vim.g.mapleader = " " -- used for editor/workspace actions
-vim.g.maplocalleader = "," -- used for language/filetype actions
+Learn about Neovim:
+  `:h`
 
---------------------------------------------------------------------------------
+Check for errors:
+  `:checkhealth`
 
--- Lazy.nvim
---   https://lazy.folke.io/installation
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not (vim.uv or vim.loop).fs_stat(lazypath) then
-	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-	local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
-	if vim.v.shell_error ~= 0 then
-		vim.api.nvim_echo({
-			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-			{ out, "WarningMsg" },
-			{ "\nPress any key to exit..." },
-		}, true, {})
-		vim.fn.getchar()
-		os.exit(1)
-	end
-end
--- Add lazy to the `runtimepath`, this allows us to `require` it.
-vim.opt.rtp:prepend(lazypath)
+--]]
 
--- Set up lazy, and load my `lua/custom/plugins/` folder
---   https://lazy.folke.io/configuration
-require("lazy").setup({ import = "custom/plugins" }, {
-	change_detection = { notify = false },
-})
-
---------------------------------------------------------------------------------
+require "config.options" -- 'mapleader' must be set before loading plugins
+require "config.keymaps"
+require "config.autocmds"
+require "config.lazy"

@@ -1,32 +1,35 @@
--- Help
---   `:h default-mappings`
---   `:h lua-guide-mappings`
---   `:h vim-keymap-set()`
---   `:h map-table` - possible mods
---   `:Telescope keymaps`
---   `:map`
+--[[
 
--- Lazy memonics
---   <leader>f    file/find
---   <leader>g    git
---   <leader>s    search
---   <leader>u    UI/toggles
---   <leader>x    diagnostics/trouble
---   <leader>c    code
+Help:
+  `:h default-mappings`
+  `:h lua-guide-mappings`
+  `:h vim-keymap-set()`
+  `:h map-table` - possible mods
+  `:Telescope keymaps`
+  `:map`
 
--- Map arguments:
---   `remap` - whether to allow the keymap to trigger other keymaps (default `false`)
---   `silent` - whether to show the command being executed in the command line (default `false`)
---   `expr` - whether to use the returned value of the RHS as the keymap (default `false`).
---   `buffer` - whether to restrict the keymap to a specific file or buffer (default `nil`)
---   `desc` - description of the keymap (default `nil`)
---   `nowait` - whether to disable timeout delay if keys partially overlap (default: `false`)
+What each map argument does?
+  `remap` - whether to allow the keymap to trigger other keymaps (default `false`)
+  `silent` - whether to show the command being executed in the command line (default `false`)
+  `expr` - whether to use the returned value of the RHS as the keymap (default `false`).
+  `buffer` - whether to restrict the keymap to a specific file or buffer (default `nil`)
+  `desc` - description of the keymap (default `nil`)
+  `nowait` - whether to disable timeout delay if keys partially overlap (default: `false`)
+
+NOTE: Use the following memonics:
+  <leader>s    search
+  <leader>g    git
+  <leader>u    UI/toggles
+  <leader>x    diagnostics/trouble
+  <leader>c    code
+
+--]]
 
 --------------------------------------------------------------------------------
 -- Options
 --------------------------------------------------------------------------------
 
--- vim.o.timeoutlen = 400 -- decrease mapped sequence wait time
+-- vim.o.timeoutlen = 400 -- edit mapped sequence wait time (default 1000)
 
 --------------------------------------------------------------------------------
 -- Remove default keymaps
