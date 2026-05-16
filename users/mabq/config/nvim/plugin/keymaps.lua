@@ -26,7 +26,7 @@
 -- Options
 --------------------------------------------------------------------------------
 
-vim.o.timeoutlen = 400 -- decrease mapped sequence wait time
+-- vim.o.timeoutlen = 400 -- decrease mapped sequence wait time
 
 --------------------------------------------------------------------------------
 -- Remove default keymaps
