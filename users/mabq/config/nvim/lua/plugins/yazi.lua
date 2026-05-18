@@ -8,8 +8,8 @@ return {
   keys = {
     {
       mode = { "n", "v" },
-      "<leader>E",
-      "<cmd>Yazi<CR>",
+      "<leader>e",
+      "<cmd>Yazi toggle<CR>",
       desc = "Yazi",
     },
   },
