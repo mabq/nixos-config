@@ -1,3 +1,5 @@
+-- Read notes at the bottom
+
 --------------------------------------------------------------------------------
 -- Default options
 --------------------------------------------------------------------------------
@@ -39,3 +41,58 @@ return {
     },
   },
 }
+
+--------------------------------------------------------------------------------
+
+--[[
+
+Default options:
+
+  The Neovim options set above determine how the editor behaves while you type,
+  not how the buffer is formatted!
+
+  We use 2 spaces as default, which is the most common convention for all languages.
+
+Global vs Buffer options:
+
+  Default options above are global, meaning they apply for all buffers.
+
+  Those same options can be set per-buffer, when these are set they override
+  the global ones.
+
+Guess-indent plugin:
+
+  This plugin will read the first hundred lines of a file and detect whether
+  spaces or tabs are used for indentation, and how many colums are used.
+
+  Then it adjusts the local buffer options to match what it sees.
+
+  The important thing is that it respects `.editorconfig` settings.
+
+Editor config:
+
+  `.editorconfig` is a project-level formatting convention file used by most
+  editors and IDEs to keep coding styles consistent across a team.
+
+  When you open a buffer, Neovim checks for an `.editorconfig` file, if it finds
+  one it sets the local buffer options accordingly:
+
+    .editorconfig               Neovim local buffer option
+    --------------------   ->   --------------------------
+    indent_style = space        expandtab = true
+    indent_style = tab          expandtab = false
+    indent_size = 4             shiftwidth = 4
+    tab_width = 4               tabstop = 4
+    end_of_line                 fileformat
+
+Formatters:
+
+  All the things described above only adjust editor behavior while you type.
+
+  When you run a formatter, it will use its own settings for indentation.
+
+  The cool thing is that some formatters, like stylua, also support editorconfig
+  files. When both files are present `.editorconfig` and `.stylua` the latter
+  takes presedence.
+
+--]]
