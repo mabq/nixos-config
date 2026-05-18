@@ -37,11 +37,6 @@ vim.o.breakindent = true -- preserve indentation in wrapped text
 vim.o.list = true -- show <Tab> and <EOL>
 vim.o.listchars = "tab:· ,trail:·,nbsp:␣" -- how to display these whitespace characters
 
-vim.o.tabstop = 2 -- column multiple used to display a horizontal Tab character
-vim.o.shiftwidth = 0 -- use tabstop value
-vim.o.softtabstop = -1 -- use shiftwidth value
-vim.o.expandtab = true -- in insert mode turn tab into spaces (does not convert existing tabs)
-
 vim.o.number = true
 vim.o.relativenumber = true
 

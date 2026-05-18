@@ -63,10 +63,10 @@ return {
 --[[
 
 Help:
+  `:checkhealth telescope`
   `:h telescope.setup()`
   `:h telescope.builtin`
   `:h telescope.default.mappings`
-  `:checkhealth telescope`
 
 Learn how to customize pickers:
    `:h telescope.builtin[.<picker-name>]`.
