@@ -1,26 +1,7 @@
---------------------------------------------------------------------------------
--- Required system packages:
+-- IMPORTANT! External packages required!
 --   ripgrep
 --   fd
---
---  Help:
---   `:h telescope.setup()`
---   `:h telescope.builtin`
---   `:h telescope.default.mappings`
---   `:checkhealth telescope`
---
---   Learn how to customize pickers:
---     `:h telescope.builtin[.<picker-name>]`.
---     E.g. `grep_string` is customized to use regex by default, see [Rust regex syntax](https://docs.rs/regex/1.11.1/regex/#syntax).
---
---   Learn about fzf syntax:
---     https://github.com/nvim-telescope/telescope-fzf-native.nvim?tab=readme-ov-file#telescope-fzf-nativenvim.
---
---   NOTE: Trouble integration can be really useful.
---   E.g. Use `grep_string` of `live_grep` to obtain a list of files with some specific text in them, refine the list with fzf, then maybe even mark only specific files with <Tab> and then export the list to Trouble.
---
 
---------------------------------------------------------------------------------
 return {
   "nvim-telescope/telescope.nvim",
   version = "*", -- use the latest stable version
@@ -31,9 +12,6 @@ return {
     -- "nvim-tree/nvim-web-devicons",
   },
   config = function()
-    ----------------------------------------------------------------------------
-    -- Telescope setup
-    ----------------------------------------------------------------------------
     require("telescope").setup {
       -- defaults = {
       -- layout_strategy = "horizontal",
@@ -52,7 +30,7 @@ return {
       extensions = {
         fzf = {
           -- https://github.com/nvim-telescope/telescope-fzf-native.nvim?tab=readme-ov-file#telescope-setup-and-configuration
-          -- fuzzy = false, -- exact matches by default
+          fuzzy = false, -- exact matches by default
         },
         ["ui-select"] = {
           require("telescope.themes").get_dropdown {},
@@ -60,15 +38,11 @@ return {
       },
     }
 
-    ----------------------------------------------------------------------------
     -- Load extensions
-    ----------------------------------------------------------------------------
     pcall(require("telescope").load_extension, "fzf")
     pcall(require("telescope").load_extension, "ui-select")
 
-    ----------------------------------------------------------------------------
     -- Keymaps
-    ----------------------------------------------------------------------------
     local builtin = require "telescope.builtin"
     vim.keymap.set("n", "<leader><leader>", builtin.find_files, { desc = "[ ] Search Files" })
     vim.keymap.set("n", "<leader>/", builtin.live_grep, { desc = "[/] Live grep" })
@@ -83,3 +57,25 @@ return {
     vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [k]eymaps" })
   end,
 }
+
+--------------------------------------------------------------------------------
+
+--[[
+
+Help:
+  `:h telescope.setup()`
+  `:h telescope.builtin`
+  `:h telescope.default.mappings`
+  `:checkhealth telescope`
+
+Learn how to customize pickers:
+   `:h telescope.builtin[.<picker-name>]`.
+   E.g. `grep_string` is customized to use regex by default, see [Rust regex syntax](https://docs.rs/regex/1.11.1/regex/#syntax).
+
+Learn about fzf syntax:
+   https://github.com/nvim-telescope/telescope-fzf-native.nvim?tab=readme-ov-file#telescope-fzf-nativenvim.
+
+ NOTE: Trouble integration can be really useful.
+ E.g. Use `grep_string` of `live_grep` to obtain a list of files with some specific text in them, refine the list with fzf, then maybe even mark only specific files with <Tab> and then export the list to Trouble.
+
+--]]

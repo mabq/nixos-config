@@ -31,7 +31,6 @@ vim.o.inccommand = "split" -- preview substitutions live, as you type!
 vim.o.wrap = false -- do not wrap lines by default
 vim.o.linebreak = true -- do not break words when wrapping
 vim.o.breakindent = true -- preserve indentation in wrapped text
--- vim.o.smartindent = true -- do smart autoindenting when starting a new line
 
 -- vim.opt.formatoptions:remove("o") -- no automatic comment continuation
 
@@ -42,9 +41,6 @@ vim.o.tabstop = 2 -- column multiple used to display a horizontal Tab character
 vim.o.shiftwidth = 0 -- use tabstop value
 vim.o.softtabstop = -1 -- use shiftwidth value
 vim.o.expandtab = true -- in insert mode turn tab into spaces (does not convert existing tabs)
-
-vim.o.foldmethod = "manual"
--- vim.o.foldenable = false -- open all folds by default (toggle with `zi`)
 
 vim.o.number = true
 vim.o.relativenumber = true

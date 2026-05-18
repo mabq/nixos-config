@@ -1,43 +1,4 @@
---[[
-
-Highlight groups:
-
-  Neovim does NOT directly color keywords, comments, strings or windows,
-  instead it colors "highlight groups".
-
-  Colorschemes define colors for many highlight groups.
-
-  Some color schemes just edit the default highlight groups, others also
-  add highlight groups to support many popular plugins.
-
-    `:h hi` - learn about highlight groups
-    `:hi` - show all currently available highlight groups
-
-  To define you own highlight groups, use:
-
-    vim.api.nvim_set_hl(0, "<group-name>", {
-      fg = "#5c6370", -- use a specific color
-      link = <highlight group>, -- or use an already defined highlight group
-    })
-
-Syntax highlighting:
-
-  Tools like Tree-sitter or LSPs determine what something is. For example, in
-  Lua the `local` token is recognized as a keyword.
-
-  Colorschemes decide how it looks. Neovim gets the highlight group assigned
-  to the "keyword" highlight group and applies styles accordingly.
-
-    `:Inspect` - shows the highlight group assigned to the token under cursor
-
-Not just syntax:
-
-  UI elements also use highlight groups.
-
-  For example you can use the "WinSeparator" highlight group to edit the styles
-  assigned to the window separator characters.
-
---]]
+-- Read notes at the bottom.
 
 --------------------------------------------------------------------------------
 -- Options
@@ -82,3 +43,58 @@ return {
   --   Only loaded when setting `:colorscheme <name>`.
   { "catppuccin/nvim", name = "catppuccin", lazy = true },
 }
+
+--------------------------------------------------------------------------------
+
+--[[
+
+Highlight groups:
+
+  Colors in Neovim are built around a system called highlight groups.
+
+    `:h hi` - learn about highlight groups
+    `:hi` - show all highlight groups currently available
+    `:hi <group>` - show styles for the given highlight group
+    `:h nvim_set_hl` - how to set highlight groups
+
+  Colorschemes define colors for many highlight groups. Some just edit the
+  default Neovim highlight groups. Others also add highlight groups to
+  support many popular plugins.
+
+
+Syntax highlighting:
+
+  Language tools define what a token is. The colorscheme defines how it looks.
+
+    `local` is a keyword in Lua (but not in other languages).
+    Keywords are styled with the `Keyword` highlight group.
+    The colorscheme defines the styles for the `Keyword` highlight group.
+    Neovim displays those colors.
+
+  Neovim can stack highlights from many systems simultaneously, each is
+  given a priority, the ones with higher priority win.
+
+    `:Inspect` - shows highlight sources and their priorities
+
+  Normally, the priorities are:
+
+    Syntax highlighting:    very low
+    Treesitter:             ~100
+    Semantic tokens:        ~125
+    Diagnostics:            ~150
+    Search highlights:      higher
+    Visual selection:       very high
+    Cursorline:             special handling
+
+  Note that higher priority layers do NOT necessarily erase lower layers
+  completely. For example, one highlight group may provide the foreground
+  color, another one the underline, and another one the italic style.
+
+Not just syntax:
+
+  UI elements also use highlight groups.
+
+  For example you can use the "WinSeparator" highlight group to edit the styles
+  assigned to the window separator characters.
+
+--]]

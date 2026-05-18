@@ -117,6 +117,10 @@ vim.keymap.set("n", "<C-Right>", "<c-w>5>", { desc = "Increase window width" })
 vim.keymap.set("n", "<C-Down>", "<C-W>-", { desc = "Decrease window height" })
 vim.keymap.set("n", "<C-Up>", "<C-W>+", { desc = "Increase window height" })
 
+-- Easier scope selection
+vim.keymap.set("x", "<right>", "an", { remap = true, desc = "Select around node" })
+vim.keymap.set("x", "<left>", "in", { remap = true, desc = "Select inner node" })
+
 -- Quickfix
 -- vim.keymap.set("n", "<down>", "<cmd>cnext<CR>", { desc = "Quickfix next", silent = true })
 -- vim.keymap.set("n", "<up>", "<cmd>cprev<CR>", { desc = "Quickfix previous", silent = true })
