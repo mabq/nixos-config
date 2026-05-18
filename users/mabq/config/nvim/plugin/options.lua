@@ -13,9 +13,6 @@ Options and variables explained:
 
 --]]
 
-vim.g.mapleader = " " -- used for editor/workspace actions
-vim.g.maplocalleader = "," -- used for language/filetype actions
-
 vim.o.swapfile = false -- disable swap files
 
 vim.o.undofile = true -- make undo/redo work even after closing the file, see `:h undo-persistence`

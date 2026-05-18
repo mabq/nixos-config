@@ -33,4 +33,9 @@ Check for errors:
 
 --]]
 
-require "config"
+-- These must be set before loading plugins
+vim.g.mapleader = " " -- used for editor/workspace actions
+vim.g.maplocalleader = "," -- used for language/filetype actions
+
+-- Require lazy config
+require "config.lazy"

@@ -16,4 +16,10 @@ This plugin tells Neovim:
   Which highlight group to use.
   What to display for folders vs symlinks vs gitignored files
 
+Then other plugins (like the following) can ask "What icon/color should I show for this file?"
+
+  nvim-tree.lua
+  telescope.nvim
+  lualine.nvim
+
 --]]
