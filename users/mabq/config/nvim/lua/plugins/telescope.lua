@@ -44,17 +44,17 @@ return {
 
     -- Keymaps
     local builtin = require "telescope.builtin"
-    vim.keymap.set("n", "<leader><leader>", builtin.find_files, { desc = "[ ] Search Files" })
-    vim.keymap.set("n", "<leader>/", builtin.live_grep, { desc = "[/] Live grep" })
-    vim.keymap.set("n", "<leader>sg", builtin.git_files, { desc = "[S]earch [g]it files" })
+    vim.keymap.set("n", "<leader><leader>", builtin.find_files, { desc = "Search Files" })
+    vim.keymap.set("n", "<leader>/", builtin.live_grep, { desc = "Live Grep" })
+    vim.keymap.set("n", "<leader>sg", builtin.git_files, { desc = "Search Git Files" })
     vim.keymap.set("n", "<leader>sG", function()
       builtin.grep_string { search = vim.fn.input "Search: " }
-    end, { desc = "[S]earch [G]rep" })
-    vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [r]esume" })
-    vim.keymap.set("n", "<leader>st", builtin.builtin, { desc = "[S]earch [t]elescope" })
-    vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "[S]earch [d]iagnostics" })
-    vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [h]elp" })
-    vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [k]eymaps" })
+    end, { desc = "Search Grep" })
+    vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "Search Resume" })
+    vim.keymap.set("n", "<leader>st", builtin.builtin, { desc = "Search Telescope" })
+    vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "Search Diagnostics" })
+    vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "Search Help" })
+    vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "Search Keymaps" })
   end,
 }
 

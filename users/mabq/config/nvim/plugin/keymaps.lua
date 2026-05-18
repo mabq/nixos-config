@@ -16,13 +16,6 @@ What each map argument does?
   `desc` - description of the keymap (default `nil`)
   `nowait` - whether to disable timeout delay if keys partially overlap (default: `false`)
 
-NOTE: Use the following memonics:
-  <leader>s    search
-  <leader>g    git
-  <leader>u    UI/toggles
-  <leader>x    diagnostics/trouble
-  <leader>c    code
-
 --]]
 
 --------------------------------------------------------------------------------
@@ -36,7 +29,7 @@ NOTE: Use the following memonics:
 --------------------------------------------------------------------------------
 
 -- Disable Q
-vim.keymap.set("n", "Q", "<nop>", { desc = "(Disable 'Q' default behavior)" })
+vim.keymap.set("n", "Q", "<nop>", { desc = "(Nothing)" })
 
 --------------------------------------------------------------------------------
 -- Improve default keymaps

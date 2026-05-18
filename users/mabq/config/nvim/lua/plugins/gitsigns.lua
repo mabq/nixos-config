@@ -3,7 +3,7 @@ return {
   opts = {
     on_attach = function() -- function provided by the plugin
       local gitsigns = require "gitsigns"
-      vim.keymap.set("n", "<leader>gs", gitsigns.toggle_signs, { desc = "Toggle gitsigns blame" })
+      vim.keymap.set("n", "<leader>gs", gitsigns.toggle_signs, { desc = "Toggle gitsigns" })
     end,
   },
 }
