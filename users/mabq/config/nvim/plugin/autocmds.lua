@@ -15,6 +15,7 @@ autocmd("FileType", {
     "lspinfo",
     "qf", -- quickfix list
     "nvim-undotree", -- builtin undotree
+    "gitsigns-blame", -- gitsigns plugin
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false

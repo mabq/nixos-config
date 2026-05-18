@@ -2,14 +2,11 @@
 
 Startup config files:
 
-  Everything inside the `lua` directory can be required by Lua, e.g. the
-  config files we require below.
+  Everything inside the `lua` directory can be required by Lua, e.g. `config.<name>`.
 
-  Lazy.nvim automatically imports all plugin specs - the directory used
-  to contain all plugin specs is defined in `config/lazy.lua`.
+  Lazy.nvim automatically sources all files in the specified `spec.import`.
 
-  There are some special directories (e.g. `after`) that Neovim automatically
-  sources at startup. See:
+  Neovim automatically sources all files in `nvim/plugin`, `nvim/after` as part of its startup sequence.
     `:h starting`
     `:h runtimepath`
     `:h standard-path
@@ -33,7 +30,7 @@ Check for errors:
 
 --]]
 
--- These must be set before loading plugins
+-- Must be set before loading plugins, otherwise the wrong mapleader is used
 vim.g.mapleader = " " -- used for editor/workspace actions
 vim.g.maplocalleader = "," -- used for language/filetype actions
 
