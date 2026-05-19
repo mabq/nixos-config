@@ -16,9 +16,10 @@ return {
     require("oil").setup {
       -- See options https://github.com/stevearc/oil.nvim#options
       delete_to_trash = true, -- `:h oil-trash`
-      cleanup_delay_ms = 500, -- decrese delay to clean oil buffer (default 2000) to avoid oil buffer appearing when pressing Ctrl-i/Ctrl-o
+      cleanup_delay_ms = 0, -- decrese delay to clean oil buffer (default 2000) to avoid oil buffer appearing when pressing Ctrl-i/Ctrl-o
       keymaps = {
-        ["q"] = { "actions.close", mode = "n", desc = "Close Oil" }, -- easier close
+        -- These keymaps only apply to the Oil buffer
+        ["q"] = { "actions.close", mode = "n", nowait = true }, -- easier close
         ["gd"] = {
           callback = toggle_file_details,
           mode = "n",

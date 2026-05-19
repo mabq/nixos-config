@@ -6,7 +6,7 @@ local autocmd = vim.api.nvim_create_autocmd
 --------------------------------------------------------------------------------
 -- Check filetype with `:=vim.bo.filetype`
 
--- Close with Ctrl-c
+-- Close with q
 autocmd("FileType", {
   group = userGroup,
   pattern = {
@@ -21,7 +21,7 @@ autocmd("FileType", {
   callback = function(event)
     vim.bo[event.buf].buflisted = false
     vim.schedule(function()
-      vim.keymap.set("n", "<C-c>", function()
+      vim.keymap.set("n", "q", function()
         vim.cmd "close"
         pcall(vim.api.nvim_buf_delete, event.buf, { force = true })
       end, {
