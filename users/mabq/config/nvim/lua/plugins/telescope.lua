@@ -42,34 +42,23 @@ return {
     pcall(require("telescope").load_extension, "fzf")
     pcall(require("telescope").load_extension, "ui-select")
 
-    -- Require buintins
-    local builtin = require "telescope.builtin"
-
-    -- Helper function
-    local function resume_or_find_files()
-      ---@diagnostic disable-next-line: undefined-global
-      if TelescopeGlobalState.global.cached_pickers == nil then
-        builtin.find_files()
-      else
-        builtin.resume()
-      end
-    end
-
     -- Keymaps
-    vim.keymap.set("n", "<leader><leader>", resume_or_find_files, { desc = "Search Resume" })
+    local builtin = require "telescope.builtin"
 
     vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find Files" })
     vim.keymap.set("n", "<leader>fg", builtin.git_files, { desc = "Find Git Files" })
 
-    vim.keymap.set("n", "<leader>/", builtin.live_grep, { desc = "Live Grep (Root Dir)" })
-    vim.keymap.set("n", "<leader>s/", function()
-      builtin.grep_string { search = vim.fn.input "Grep: " }
-    end, { desc = "Search Grep" })
+    vim.keymap.set("n", "<leader>sl", builtin.live_grep, { desc = "Search Live (Grep Root)" })
+    vim.keymap.set("n", "<leader>ss", function()
+      builtin.grep_string { search = vim.fn.input "Search string: " }
+    end, { desc = "Search String" })
 
+    vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "Search Resume" })
     vim.keymap.set("n", "<leader>st", builtin.builtin, { desc = "Search Telescope" })
     vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "Search Diagnostics" })
     vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "Search Help" })
     vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "Search Keymaps" })
+    vim.keymap.set("n", "<leader>sb", builtin.buffers, { desc = "Search buffers" })
   end,
 }
 

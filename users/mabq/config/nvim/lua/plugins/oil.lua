@@ -1,31 +1,35 @@
-local detail = false
-local toggleDetail = function()
-  detail = not detail
-  if detail then
-    require("oil").set_columns { "icon", "permissions", "size", "mtime" }
-  else
-    require("oil").set_columns { "icon" }
-  end
-end
-
 return {
   "stevearc/oil.nvim",
   dependencies = { "nvim-tree/nvim-web-devicons" },
   lazy = false, -- documentation strongly recommends loading at startup
   config = function()
-    -- Plugin options
-    --   https://github.com/stevearc/oil.nvim#options
+    local detail = false -- closure to keep show detail state
+    local toggle_file_details = function()
+      detail = not detail
+      if detail then
+        require("oil").set_columns { "icon", "permissions", "size", "mtime" }
+      else
+        require("oil").set_columns { "icon" }
+      end
+    end
+
     require("oil").setup {
+      -- See options https://github.com/stevearc/oil.nvim#options
       delete_to_trash = true, -- `:h oil-trash`
-      cleanup_delay_ms = 500, -- decrese delay to clean oil buffer (default 2000)
+      cleanup_delay_ms = 500, -- decrese delay to clean oil buffer (default 2000) to avoid oil buffer appearing when pressing Ctrl-i/Ctrl-o
       keymaps = {
-        ["q"] = { "actions.close", mode = "n" },
+        ["q"] = { "actions.close", mode = "n", desc = "Close Oil" }, -- easier close
+        ["gd"] = {
+          callback = toggle_file_details,
+          mode = "n",
+          desc = "Toggle file details",
+        },
       },
-      -- view_options = {
-      --   show_hidden = true,
-      -- },
+      view_options = {
+        show_hidden = true,
+      },
       -- confirmation = {
-      --   border = "rounded",
+      --   border = "rounded", -- more delimited
       -- },
       -- ssh = {
       --   border = "rounded",
