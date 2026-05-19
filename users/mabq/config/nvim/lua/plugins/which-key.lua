@@ -8,8 +8,24 @@ return {
   "folke/which-key.nvim",
   event = "VeryLazy",
   opts = {
-    preset = "modern",
+    preset = "helix",
     delay = 350,
+    icons = {
+      breadcrumb = "",
+      separator = "",
+      group = "",
+      mappings = false, -- no icons
+    },
+    spec = {
+      { '<leader>s', group = 'Search' },
+      { '<leader>h', group = 'Harpoon' },
+      { '<leader>g', group = 'Git' },
+      { '<leader>u', group = 'Ui' },
+    },
+    filter = function(mapping)
+      -- hide keymaps with this explicit description
+      return mapping.desc and mapping.desc ~= "(which-key-hide)"
+    end
   },
 }
 

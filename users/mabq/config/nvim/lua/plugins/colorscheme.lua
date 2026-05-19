@@ -38,6 +38,8 @@ return {
   -- Alternative themes:
   --   Only loaded when setting `:colorscheme <name>`.
   { "catppuccin/nvim", name = "catppuccin", lazy = true },
+  { "catppuccin/nvim", name = "catppuccin", lazy = true },
+  { "tjdevries/colorbuddy.nvim", lazy = true },
 }
 
 --------------------------------------------------------------------------------
@@ -52,6 +54,7 @@ Highlight groups:
     `:hi` - show all highlight groups currently available
     `:hi <group>` - show styles for the given highlight group
     `:h nvim_set_hl` - how to set highlight groups
+    You can also search Highlight groups with Telescope.
 
   Colorschemes define colors for many highlight groups. Some just edit the
   default Neovim highlight groups. Others also add highlight groups to

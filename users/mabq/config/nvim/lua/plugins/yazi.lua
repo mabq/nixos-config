@@ -14,7 +14,7 @@ return {
     },
   },
   keys = {
-    { mode = { "n", "v" }, "<leader>e", "<cmd>Yazi<CR>", desc = "Explorer (Yazi)" },
+    { mode = { "n", "v" }, "<leader>e", "<cmd>Yazi<CR>", desc = "Explore" },
   },
 }
 

@@ -25,8 +25,9 @@ Learn how Neovim integrates Lua:
 Learn about Neovim:
   `:h`
 
-Check for errors:
-  `:checkhealth`
+Help:
+  `<leader>sh` - search help with Telescope
+  `:checkhealth [<plugin-name>]`
 
 --]]
 
