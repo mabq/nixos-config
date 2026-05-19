@@ -12,6 +12,7 @@ return {
     -- "nvim-tree/nvim-web-devicons",
   },
   config = function()
+    -- TODO: layout
     require("telescope").setup {
       -- defaults = {
       -- layout_strategy = "horizontal",
@@ -45,6 +46,7 @@ return {
     -- Keymaps
     local builtin = require "telescope.builtin"
 
+    vim.keymap.set("n", "<leader><leader>", builtin.find_files, { desc = "Find Files" })
     vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find Files" })
     vim.keymap.set("n", "<leader>fg", builtin.git_files, { desc = "Find Git Files" })
 

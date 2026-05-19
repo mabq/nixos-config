@@ -30,6 +30,7 @@ What each map argument does?
 
 -- Disable Q
 vim.keymap.set("n", "Q", "<nop>", { desc = "(Nothing)" })
+vim.keymap.set("n", "q:", "<Nop>", { desc = "(Nothing)" }) -- avoid accidentally opening the command-line window when trying to close
 
 --------------------------------------------------------------------------------
 -- Improve default keymaps
