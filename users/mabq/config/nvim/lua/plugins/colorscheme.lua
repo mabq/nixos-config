@@ -14,15 +14,6 @@ vim.opt.fillchars.vert = "┆" -- vertial split separator character
 vim.opt.fillchars.horiz = "┄" -- horizontal split separator character
 
 --------------------------------------------------------------------------------
--- Edit highlight groups
---------------------------------------------------------------------------------
-
--- Make the separator character more visible
-vim.api.nvim_set_hl(0, "WinSeparator", {
-  link = "LineNr", -- use the same highlight group as the line numbers
-})
-
---------------------------------------------------------------------------------
 -- Install themes
 --------------------------------------------------------------------------------
 
@@ -36,6 +27,11 @@ return {
     priority = 1000, -- load it first, see https://lazy.folke.io/spec#spec-loading
     config = function()
       vim.cmd.colorscheme "tokyonight"
+
+      -- Make the separator character more visible
+      vim.api.nvim_set_hl(0, "WinSeparator", {
+        link = "LineNr", -- use the same highlight group as the line numbers
+      })
     end,
   },
 

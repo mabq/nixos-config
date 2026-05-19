@@ -6,21 +6,22 @@ local autocmd = vim.api.nvim_create_autocmd
 --------------------------------------------------------------------------------
 -- Check filetype with `:=vim.bo.filetype`
 
--- Close with q
+-- Close with Ctrl-c
 autocmd("FileType", {
   group = userGroup,
   pattern = {
     "checkhealth",
+    "gitsigns-blame", -- gitsigns plugin
     "help",
     "lspinfo",
-    "qf", -- quickfix list
     "nvim-undotree", -- builtin undotree
-    "gitsigns-blame", -- gitsigns plugin
+    "qf", -- quickfix list
+    "vim", -- the window that I keep opening accidentally when trying to quit
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
     vim.schedule(function()
-      vim.keymap.set("n", "q", function()
+      vim.keymap.set("n", "<C-c>", function()
         vim.cmd "close"
         pcall(vim.api.nvim_buf_delete, event.buf, { force = true })
       end, {
