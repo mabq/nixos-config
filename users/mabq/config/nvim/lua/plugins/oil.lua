@@ -1,6 +1,5 @@
 return {
   "stevearc/oil.nvim",
-  dependencies = { "nvim-tree/nvim-web-devicons" },
   lazy = false, -- documentation strongly recommends loading at startup
   config = function()
     local detail = false -- closure to keep show detail state

@@ -17,9 +17,8 @@ return {
       mappings = false, -- no icons
     },
     spec = {
-      { '<leader>s', group = 'Search' },
+      { '<leader>s', group = 'Search/Set' },
       { '<leader>h', group = 'Harpoon' },
-      { '<leader>f', group = 'Find/Files' },
       { '<leader>g', group = 'Git' },
       { '<leader>u', group = 'Ui' },
     },
