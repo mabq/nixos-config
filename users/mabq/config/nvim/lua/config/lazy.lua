@@ -48,3 +48,6 @@ require("lazy").setup {
     notify = false, -- do not notify when changes are found
   },
 }
+
+-- Keymap
+vim.keymap.set("n", "<leader>l", "<CMD>Lazy<CR>", { desc = "Lazy" })

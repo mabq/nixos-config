@@ -19,8 +19,7 @@ return {
     spec = {
       { '<leader>s', group = 'Search/Set' },
       { '<leader>h', group = 'Harpoon' },
-      { '<leader>g', group = 'Git' },
-      { '<leader>u', group = 'Ui' },
+      { '<leader>t', group = 'Toggle' },
     },
     filter = function(mapping)
       -- Use "(which-key-hide)" in the description of a keymap to hide it from which-key menu

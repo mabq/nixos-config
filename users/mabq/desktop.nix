@@ -49,64 +49,50 @@ in {
       btop # Monitor of resources
       caligula # User-friendly, lightweight TUI for disk imaging
       exfatprogs # exFAT filesystem userspace utilities
-      eza # Modern, maintained replacement for ls
+      eza # Modern, maintained replacement for ls (!zsh)
       fastfetch # Actively maintained, feature-rich and performance oriented, neofetch like system information tool
-      fd # Simple, fast and user-friendly alternative to find
+      fd # Simple, fast and user-friendly alternative to find (!neovim)
       ffmpeg # Complete, cross-platform solution to record, convert and stream audio and video
-      fzf # Command-line fuzzy finder
+      fzf # Command-line fuzzy finder (!yazi)
+      gcc # GNU Compiler Collection
       gh # GitHub CLI tool
       git # Distributed version control system
+      gnumake # Tool to control the generation of non-source files from sources (!neovim)
       imagemagick # Software suite to create, edit, compose, or convert bitmap images
       iperf # Tool to measure IP bandwidth using UDP or TCP
+      lazygit # Simple terminal UI for git commands (!neovim)
+      lua-language-server # Language server that offers Lua language support (!neovim)
       mpv # General-purpose media player, fork of MPlayer and mplayer2
       ncdu # Disk usage analyzer with an ncurses interface
-      nixd # Feature-rich Nix language server interoperating with C++ nix
+      neovim # Vim text editor fork
       nix-tree # Interactively browse a Nix store paths dependencies
-      parted # Create, destroy, resize, check, and copy partitions
+      nixd # Feature-rich Nix language server interoperating with C++ nix
+      parted # Create, destroy, resize, check, and copy partitions (!zsh fuctions)
       pciutils # Provides the `lspci` command
-      ripgrep # Utility that combines the usability of The Silver Searcher with the raw speed of grep
+      ripgrep # Utility that combines the usability of The Silver Searcher with the raw speed of grep (!neovim)
       starship # Customizable prompt for any shell
       tldr # Simplified and community-driven man pages
       tmux # Terminal multiplexer
+      tree-sitter # Parser generator tool and an incremental parsing library (!neovim)
       unzip # Extraction utility for archives compressed in .zip format
       wget # Tool for retrieving files using HTTP, HTTPS, and FTP
       whois # Intelligent WHOIS client from Debian
-      yazi # Blazing fast terminal file manager written in Rust, based on async I/O
-      zoxide # Fast cd command that learns your habits
+      yazi # Blazing fast terminal file manager written in Rust, based on async I/O (!neovim)
+      zoxide # Fast cd command that learns your habits (!zsh)
       zsh-autosuggestions # Fish shell autosuggestions for Zsh
       zsh-history-substring-search # Fish shell history-substring-search for Zsh
       zsh-syntax-highlighting # Fish shell like syntax highlighting for Zsh
-      # bitwarden-cli # Secure and free password manager for all of your devices
-      # dnsutils # Domain name server - provides the `dig` command
-      # ngrep # Network packet analyzer - use `sudo ngrep port <port>` to check if a port is being used
-      # inetutils # Collection of common network programs
-      # inxi # Full featured CLI system information tool
-      # ------------------------------------------------------------------------
-      # -- Neovim:
-      neovim # Vim text editor fork
-      lazygit # Simple terminal UI for git commands
-      opencode # AI coding agent built for the terminal
-      # --- Telescope:
-      gcc # GNU Compiler Collection, version 15.2.0 (wrapper script) (neovim)
-      gnumake # Tool to control the generation of non-source files from sources (neovim)
-      vimPlugins.telescope-fzf-native-nvim # neovim plugin
-      # --- Treesitter:
-      tree-sitter # Parser generator tool and an incremental parsing library (read notes in the tree-sitter plugin)
-      # vimPlugins.nvim-treesitter-parsers.lua
-      # vimPlugins.nvim-treesitter-parsers.nix
-      # --- LSPs:
-      lua-language-server # Language server that offers Lua language support
-      # --- Completion:
-      vimPlugins.luasnip # Snippet Engine for Neovim written in Lua (already patched to include jsregex support)
       # ------------------------------------------------------------------------
       # alacritty
       # avahi # mDNS/DNS-SD implementation (Bonjour)
+      # bitwarden-cli # Secure and free password manager for all of your devices
       # brightnessctl
       # chromium
       # cups
       # cups-browsed
       # cups-filters
       # cups-pdf
+      # dnsutils # Domain name server - provides the `dig` command
       # evince
       # fcitx5
       # fcitx5-gtk
@@ -114,10 +100,11 @@ in {
       # ffmpegthumbnailer
       # fontconfig
       # gnome-calculator
+      # gnome-disk-utility
       # gnome-keyring
       # gnome-themes-extra
-      # grim
       # gpu-screen-recorder
+      # grim
       # gum
       # gvfs-mtp
       # gvfs-nfs
@@ -131,14 +118,16 @@ in {
       # hyprsunset
       # imagemagick
       # imv
+      # inetutils # Collection of common network programs
+      # inxi # Full featured CLI system information tool
       # jq
       # kdenlive
       # kernel-modules-hook
       # kvantum-qt5
-      # libsecret
-      # libyaml
       # libqalculate
       # libreoffice-fresh
+      # libsecret
+      # libyaml
       # llvm
       # localsend
       # mako
@@ -146,7 +135,7 @@ in {
       # mise
       # nautilus
       # nautilus-python
-      # gnome-disk-utility
+      # ngrep # Network packet analyzer - use `sudo ngrep port <port>` to check if a port is being used
       # noto-fonts
       # noto-fonts-cjk
       # noto-fonts-emoji
@@ -170,14 +159,14 @@ in {
       # satty
       # signal-desktop
       # slurp
-      # spotify
       # socat
+      # spotify
       # sushi
       # swaybg
       # swayosd
       # system-config-printer
-      # tree-sitter-cli
       # tobi-try
+      # tree-sitter-cli
       # ttf-ia-writer
       # ttf-jetbrains-mono-nerd
       # typora
