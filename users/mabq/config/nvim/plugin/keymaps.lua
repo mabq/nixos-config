@@ -54,14 +54,15 @@ vim.keymap.set("n", "j", function()
   end
 end, { expr = true, desc = "Line down" })
 
+-- NOTE: Should not be needed, see diagnostics file
 -- Automatically open diagnostic message with next/previous
-vim.keymap.set("n", "[d", function()
-  vim.diagnostic.jump { count = -1, float = true }
-end, { desc = "Previous diagnotic" })
-
-vim.keymap.set("n", "]d", function()
-  vim.diagnostic.jump { count = 1, float = true }
-end, { desc = "Next diagnostic" })
+-- vim.keymap.set("n", "[d", function()
+--   vim.diagnostic.jump { count = -1, float = true }
+-- end, { desc = "Previous diagnotic" })
+--
+-- vim.keymap.set("n", "]d", function()
+--   vim.diagnostic.jump { count = 1, float = true }
+-- end, { desc = "Next diagnostic" })
 
 -- Don't move cursor position when joining lines
 vim.keymap.set("n", "J", "mzJ`z", { desc = "Join" })
