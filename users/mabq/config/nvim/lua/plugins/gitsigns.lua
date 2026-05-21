@@ -1,7 +1,7 @@
 return {
   "https://github.com/lewis6991/gitsigns.nvim",
   opts = {
-    signcolumn = false, -- gitsigns off by default
+    -- https://github.com/lewis6991/gitsigns.nvim#%EF%B8%8F-installation--usage
     current_line_blame_opts = {
       delay = 250, -- decrease delay time (default 1000)
     },

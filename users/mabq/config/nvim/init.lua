@@ -16,6 +16,7 @@ Startup config files:
 
 Learn Lua (the language):
   https://learnxinyminutes.com/lua
+  https://www.lua.org/manual/5.5/
 
 Learn how Neovim integrates Lua:
   `:h lua-guide`
