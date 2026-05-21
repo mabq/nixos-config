@@ -11,19 +11,20 @@ return {
     preset = "helix",
     delay = 350,
     icons = {
-      breadcrumb = "",
-      separator = "",
-      group = "",
+      -- breadcrumb = "",
+      -- separator = "",
+      -- group = "",
       mappings = false, -- no icons
     },
     spec = {
       { '<leader>s', group = 'Search' },
       { '<leader>h', group = 'Harpoon' },
+      { '<leader>f', group = 'Find/Files' },
       { '<leader>g', group = 'Git' },
       { '<leader>u', group = 'Ui' },
     },
     filter = function(mapping)
-      -- hide keymaps with this explicit description
+      -- Use "(which-key-hide)" in the description of a keymap to hide it from which-key menu
       return mapping.desc and mapping.desc ~= "(which-key-hide)"
     end
   },

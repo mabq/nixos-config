@@ -1,25 +1,24 @@
 -- External packages required!
 --   make         To build fzf-native
---   ripgrep      Used by live_grep and grep_string pickers, see `:h telescope.defaults.vimgrep_arguments`
---   fd           Used by find_files
+--   fd           Explicitly used by the `find_files` picker below
+--   ripgrep      Automatically used by `live_grep` and `grep_string` pickers, see `:h telescope.defaults.vimgrep_arguments`
 
 --------------------------------------------------------------------------------
 -- Helper functions
 --------------------------------------------------------------------------------
 
--- This function shows the dir part of the path dimmed, so that the filename is easier to locate
+-- This function applies a highlight group to the directory section of the path
+-- making it much easier to focus eyesight on the filename.
 --   `:h telescope.defaults.path_display`
-dimm_path = function(opts, path)
-  local dir = vim.fs.dirname(path)
-
-  if dir == "." then -- top level file, no need to apply optional highlights table
-    return path
-  end
-
-  local highlights = { -- a list of positions and highlight groups to set the highlighting of the returned path string
+local dimm_path = function(opts, path)
+  local dir = vim.fs.dirname(path) -- dir section of the path, returns `.` if the file is at the cwd
+  local highlights = { -- list of ranges and highlight groups
     {
-      { 0, #dir + 1 }, -- start/end highlight position (+1 for the trailing path separator)
-      "TelescopeResultsComment" -- highlight group to apply to the range
+      {
+        0, -- range start
+        (dir == ".") and -1 or #dir + 1 -- range end
+      },
+      "TelescopeResultsComment" -- highlight group to apply
     }
   }
   return path, highlights
@@ -35,7 +34,7 @@ return {
   dependencies = {
     "nvim-lua/plenary.nvim",
     "nvim-tree/nvim-web-devicons",
-    { "nvim-telescope/telescope-fzf-native.nvim", build = "make" }, -- much better sorting performance
+    { "nvim-telescope/telescope-fzf-native.nvim", build = "make" }, -- much faster filtering and ranking as you type!
     "nvim-telescope/telescope-ui-select.nvim",
   },
   config = function()
@@ -44,9 +43,11 @@ return {
     local utils = require "telescope.utils"
 
     require("telescope").setup {
-      defaults = { -- `:h telescope.setup`
+      -- Telescope defaults --
+      --   `:h telescope.setup`
+      defaults = {
+        preview = false, -- not needed for most pickers, enabled by picker where needed below
         results_title = "",
-        preview = false, -- make room for file paths, use Oil or Yazi for preview
         mappings = {
           i = { ["<C-y>"] = actions.select_default, }, -- follow the convention
           n = { ["<C-y>"] = actions.select_default, }, -- follow the convention
@@ -54,29 +55,35 @@ return {
         path_display = dimm_path,
       },
 
+      -- Pickers configs --
       pickers = {
-        live_grep = { -- `:h telescope.builtin.live_grep`
+        -- `:h telescope.builtin.live_grep`
+        live_grep = {
+          preview = true, -- required for this one!
           results_title = "Results",
-          prompt_title = "Grep",
-          preview = true,
         },
+        -- `:h telescope.builtin.find_files`
         find_files = {
-          prompt_title = "Files",
-          hidden = true, -- look for hidden files by default
-          find_command = { -- explicit command arguments to fd
+          find_command = {
+            -- Only used to produce the initial list, filtering and randing is
+            -- done by fzf-native.
+            -- Telescope uses `rg` if available by default. Here we explicitly
+            -- use `fd` to hide the `.git` dir while still showing our dotfiles.
+            -- `fd` respects `.gitignore` so it won't show those by default.
+            --   https://github.com/nvim-telescope/telescope.nvim/blob/7d324792b7943e4aa16ad007212e6acc6f9fe335/lua/telescope/builtin/__files.lua#L281
             "fd",
-            "--type", "f",          -- Find files only
-            "--strip-cwd-prefix",   -- Clean up the path prefixes
-            "--hidden",             -- Include hidden files (.env, etc.)
-            "--exclude", "node_modules", -- Exclude the heavy stuff
-            "--exclude", ".git",    -- Exclude git history directories
+            "--type", "f",           -- only files (no dirs, symlinks, etc.)
+            "--color", "never",      -- https://github.com/nvim-telescope/telescope.nvim/blob/7d324792b7943e4aa16ad007212e6acc6f9fe335/lua/telescope/builtin/__files.lua#L291
+            "--hidden",              -- include dotfiles
+            "--strip-cwd-prefix",    -- clean relative paths (no leading ./)
+            "--follow",              -- follow symlinks
+            "--exclude", ".git",     -- exclude .git explicitly
+            -- "--no-ignore",           -- don't respect .gitignore (telescope has its own filtering)
           },
         },
-        -- git_files = {
-        --   hidden = true,
-        -- },
       },
 
+      -- Extensions configs --
       extensions = {
         fzf = {
           -- https://github.com/nvim-telescope/telescope-fzf-native.nvim?tab=readme-ov-file#telescope-setup-and-configuration
@@ -89,28 +96,36 @@ return {
     }
 
     -- Load extensions
-    pcall(require("telescope").load_extension, "fzf") -- see `:h telescope.defaults.file_sorter`
+    pcall(require("telescope").load_extension, "fzf") -- fzf-native, verify with `:checkhealth telescope`
     pcall(require("telescope").load_extension, "ui-select")
 
-    -- Keymaps
-    vim.keymap.set("n", "<leader><leader>", builtin.find_files, { desc = "Files" })
-    vim.keymap.set("n", "<leader>/", builtin.live_grep, { desc = "Grep (root)" })
-    vim.keymap.set("n", "<leader>s/", function() builtin.live_grep({
-      cwd = utils.buffer_dir(), -- `:h telescope.builtin.live_grep`
-      prompt_title = "Grep (cwd)", -- `:h telescope.builtin.live_grep`
-    }) end, { desc = "Grep (cwd)" })
-    vim.keymap.set("n", "<leader>sf", builtin.find_files, { desc = "Files" })
-    vim.keymap.set("n", "<leader>sg", builtin.git_files, { desc = "Git Files" })
-    vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "Resume" })
-    vim.keymap.set("n", "<leader>st", builtin.builtin, { desc = "Telescope" })
+    -- Keymaps --
+    vim.keymap.set("n", "<leader><leader>", builtin.resume, { desc = "Telescope Resume" })
+
+    --   find keymaps
+    vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Files" })
+    vim.keymap.set("n", "<leader>fF", function() builtin.find_files({
+      cwd = utils.buffer_dir(), -- relative to the current buffer
+      prompt_title = "Find Files (bufdir)",
+    }) end, { desc = "Files (bufdir)" })
+    vim.keymap.set("n", "<leader>fg", builtin.git_files, { desc = "Git Files" })
+
+    --   search keymaps
+    vim.keymap.set("n", "<leader>sl", builtin.live_grep, { desc = "Live Grep" })
+    vim.keymap.set("n", "<leader>sL", function() builtin.live_grep({
+      cwd = utils.buffer_dir(),
+      prompt_title = "Live Grep (bufdir)",
+    }) end, { desc = "Live Grep (bufdir)" })
+    vim.keymap.set("n", "<leader>sa", builtin.autocommands, { desc = "Autocommands" })
+    vim.keymap.set("n", "<leader>sb", builtin.buffers, { desc = "Buffers" })
+    vim.keymap.set("n", "<leader>sc", builtin.colorscheme, { desc = "Colorschemes" })
     vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "Diagnostics" })
     vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "Help" })
+    vim.keymap.set("n", "<leader>sH", builtin.highlights, { desc = "Highlights" })
     vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "Keymaps" })
-    vim.keymap.set("n", "<leader>sb", builtin.buffers, { desc = "Buffers" })
     vim.keymap.set("n", "<leader>so", builtin.vim_options, { desc = "Options" })
-    vim.keymap.set("n", "<leader>sc", builtin.colorscheme, { desc = "Colorschemes" })
-    vim.keymap.set("n", "<leader>sH", builtin.colorscheme, { desc = "Highlights" })
-    vim.keymap.set("n", "<leader>sa", builtin.autocommands, { desc = "Autocommands" })
+    vim.keymap.set("n", "<leader>ss", builtin.spell_suggest, { desc = "Spell Suggest" })
+    vim.keymap.set("n", "<leader>st", builtin.builtin, { desc = "Telescope" })
   end,
 }
 
