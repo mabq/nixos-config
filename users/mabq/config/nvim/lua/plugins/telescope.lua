@@ -100,9 +100,9 @@ return {
     pcall(require("telescope").load_extension, "ui-select")
 
     -- Keymaps --
-    vim.keymap.set("n", "<leader><leader>", builtin.resume, { desc = "Telescope Resume" })
 
     --   find keymaps
+    vim.keymap.set("n", "<leader><leader>", builtin.find_files, { desc = "Find Files" })
     vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Files" })
     vim.keymap.set("n", "<leader>fF", function() builtin.find_files({
       cwd = utils.buffer_dir(), -- relative to the current buffer
@@ -111,6 +111,8 @@ return {
     vim.keymap.set("n", "<leader>fg", builtin.git_files, { desc = "Git Files" })
 
     --   search keymaps
+    -- vim.keymap.set("n", "<leader>/", builtin.live_grep, { desc = "Live Grep" })
+    vim.keymap.set("n", "<leader>/", builtin.resume, { desc = "Resume Telescope" })
     vim.keymap.set("n", "<leader>sl", builtin.live_grep, { desc = "Live Grep" })
     vim.keymap.set("n", "<leader>sL", function() builtin.live_grep({
       cwd = utils.buffer_dir(),
@@ -121,11 +123,12 @@ return {
     vim.keymap.set("n", "<leader>sc", builtin.colorscheme, { desc = "Colorschemes" })
     vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "Diagnostics" })
     vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "Help" })
-    vim.keymap.set("n", "<leader>sH", builtin.highlights, { desc = "Highlights" })
+    vim.keymap.set("n", "<leader>sH", builtin.highlights, { desc = "Highlight Groups" })
     vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "Keymaps" })
     vim.keymap.set("n", "<leader>so", builtin.vim_options, { desc = "Options" })
+    vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "Resume" })
     vim.keymap.set("n", "<leader>ss", builtin.spell_suggest, { desc = "Spell Suggest" })
-    vim.keymap.set("n", "<leader>st", builtin.builtin, { desc = "Telescope" })
+    vim.keymap.set("n", "<leader>st", builtin.builtin, { desc = "Telescope Builtins" })
   end,
 }
 
