@@ -20,4 +20,4 @@ vim.diagnostic.config {
   },
 }
 
-vim.keymap.set('n', '<leader>d', vim.diagnostic.setloclist, { desc = 'Diagnostics loclist' })
+-- vim.keymap.set('n', '<leader>d', vim.diagnostic.setloclist, { desc = 'Diagnostics loclist' })

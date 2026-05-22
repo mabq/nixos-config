@@ -1,9 +1,8 @@
--- Read notes at the bottom.
+-- Read notes at the bottom
 
 --------------------------------------------------------------------------------
 -- Options
 --------------------------------------------------------------------------------
-
 vim.opt.termguicolors = true -- enable 24-bit colors
 
 vim.opt.cursorline = true -- whether to highlight cursor line
@@ -14,9 +13,23 @@ vim.opt.fillchars.vert = "┆" -- vertial split separator character
 vim.opt.fillchars.horiz = "┄" -- horizontal split separator character
 
 --------------------------------------------------------------------------------
+-- Helper function
+--------------------------------------------------------------------------------
+set_colorscheme = function(colorscheme)
+  return function()
+    vim.cmd.colorscheme(colorscheme)
+
+    -- Make the separator character more visible
+    -- Must be set after setting the theme to pick the correct highlight group
+    vim.api.nvim_set_hl(0, "WinSeparator", {
+      link = "LineNr", -- use the same highlight group as the line numbers
+    })
+  end
+end
+
+--------------------------------------------------------------------------------
 -- Install themes
 --------------------------------------------------------------------------------
-
 return {
   -- Default theme --
   --   Only this theme is automatically loaded at startup.
@@ -25,15 +38,8 @@ return {
   {
     "folke/tokyonight.nvim",
     priority = 1000, -- load it first, see https://lazy.folke.io/spec#spec-loading
-    opts = { style = "moon" },
-    config = function()
-      vim.cmd.colorscheme "tokyonight"
-
-      -- Make the separator character more visible
-      vim.api.nvim_set_hl(0, "WinSeparator", {
-        link = "LineNr", -- use the same highlight group as the line numbers
-      })
-    end,
+    opts = { style = "moon" }, -- https://github.com/folke/tokyonight.nvim#%EF%B8%8F-configuration
+    config = set_colorscheme("tokyonight")
   },
 
   -- Alternative themes --

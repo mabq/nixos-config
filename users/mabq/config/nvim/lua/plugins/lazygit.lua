@@ -3,6 +3,6 @@ return {
   "kdheepak/lazygit.nvim",
   dependencies = { "nvim-lua/plenary.nvim" },
   keys = {
-    { "<leader>g", "<cmd>LazyGit<CR>", desc = "LazyGit" },
+    { "<leader>ol", "<cmd>LazyGit<CR>", desc = "LazyGit" },
   },
 }

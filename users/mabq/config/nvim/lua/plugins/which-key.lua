@@ -7,14 +7,18 @@ return {
     icons = {
       -- breadcrumb = "",
       -- separator = "",
-      -- group = "",
+      group = "",
       mappings = false, -- no icons
     },
     spec = {
-      { '<leader>s', group = 'Search/Set' },
-      { '<leader>h', group = 'Harpoon' },
+      { '<leader>o', group = 'Open' },
+      { '<leader>s', group = 'Search' },
+      { '<leader>sn', group = 'Neovim' },
       { '<leader>t', group = 'Toggle' },
-      { 'gr', group = 'LSP', mode = { 'n' } },
+
+      -- Give names to Neovim Groups
+      -- { 'gr', group = 'LSP', mode = { 'n' } },
+
     },
     filter = function(mapping)
       -- Use "(which-key-hide)" in the description of a keymap to hide it from which-key menu

@@ -14,9 +14,12 @@ return {
           cursorline = false,
         },
       },
+      plugins = {
+        twilight = { enabled = false }, -- whether to enable Twilight when zen mode opens
+      },
     }
 
     -- Keybinds
-    vim.keymap.set("n", "<leader>z", "<CMD>ZenMode<CR>", { desc = "Zen Mode" })
+    vim.keymap.set("n", "<leader>tz", "<CMD>ZenMode<CR>", { desc = "Zen Mode" })
   end,
 }

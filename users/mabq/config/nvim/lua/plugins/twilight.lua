@@ -7,6 +7,6 @@ return {
     }
 
     -- Keybinds
-    vim.keymap.set("n", "<leader>tt", "<CMD>Twilight<CR>", { desc = "Twilight" })
+    vim.keymap.set("n", "<leader>tf", "<CMD>Twilight<CR>", { desc = "Focus" })
   end,
 }

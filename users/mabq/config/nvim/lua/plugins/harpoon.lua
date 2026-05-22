@@ -15,10 +15,10 @@ return {
     harpoon:extend(harpoon_extensions.builtins.highlight_current_file())
 
     -- Add to/Open harppon list
-    vim.keymap.set("n", "<leader>hh", function()
+    vim.keymap.set("n", "<leader>oh", function()
       harpoon.ui:toggle_quick_menu(harpoon:list())
-    end, { desc = "Harpoon list" })
-    vim.keymap.set("n", "<leader>ha", function()
+    end, { desc = "Harpoon" })
+    vim.keymap.set("n", "+", function()
       harpoon:list():add()
     end, { desc = "Add file" })
 
