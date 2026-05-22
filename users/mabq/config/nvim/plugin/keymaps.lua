@@ -125,7 +125,7 @@ vim.keymap.set("n", "<C-p>", "<cmd>cprev<CR>", { desc = "Quickfix previous", sil
 
 -- Locklist
 vim.keymap.set("n", "]]", "<cmd>lnext<CR>", { desc = "Locklist next", silent = true })
-vim.keymap.set("n", "]]", "<cmd>lprev<CR>", { desc = "Locklist previous", silent = true })
+vim.keymap.set("n", "[[", "<cmd>lprev<CR>", { desc = "Locklist previous", silent = true })
 
 -- Tmux-sessionizer from Neovim
 vim.keymap.set("n", "<C-s>", ":!tmux neww tmux-sessionizer<CR>", { desc = "Tmux-sessionizer", silent = true })
