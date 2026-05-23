@@ -24,7 +24,7 @@ Learn how Neovim integrates Lua:
   `:=` is a shortcut for `:lua print(...)`
 
 Learn about Neovim:
-  `:h`
+  `:h` - use `gO` to see sections of the help pages
   Restart to apply new configs with `ZR`
 
 Help:

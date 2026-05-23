@@ -133,6 +133,18 @@ return {
 
 --[[
 
+`:h lsp-quickstart`
+  Explains the steps required to setup a language server.
+
+`:h lsp-defaults`
+  Default features and keymaps set by Neovim for LSP usage and how you can
+  disable them.
+
+`:h lsp-commands`
+  Commands to enable, disable, restart and stop language servers.
+
+--------------------------------------------------------------------------------
+
 LSP is just a protocol that defines how a client and a server communicate.
 
 The client (Neovim)
