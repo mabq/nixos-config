@@ -16,7 +16,7 @@ return {
     -- This function applies a highlight group to dimm the directory section of
     -- the path in all pickers that show files.
     --   `:h telescope.defaults.path_display`
-    local dimm_dir = function(opts, path)
+    local dimm_dir = function(_, path)
       local dir = vim.fs.dirname(path) -- get the path without the filename (returns `.` for files in the cwd)
       local highlights = { -- list of ranges and highlight groups
         {
@@ -100,6 +100,10 @@ return {
         vim_options = {
           prompt_title = "Options",
         },
+        lsp_references = {
+          preview = true,
+          theme = "ivy"
+        },
       },
 
       -- Extensions configs
@@ -121,76 +125,80 @@ return {
 
 
     -- Keymaps --
-    local builtin = require "telescope.builtin"
+    local builtins = require "telescope.builtin"
 
-    vim.keymap.set("n", "<leader>sf", builtin.find_files, { desc = "Files" })
-    vim.keymap.set("n", "<leader>sF", function() builtin.find_files({
+    vim.keymap.set("n", "<leader>sf", builtins.find_files, { desc = "Files" })
+    vim.keymap.set("n", "<leader>sF", function() builtins.find_files({
       cwd = require("telescope.utils").buffer_dir(),
       prompt_title = "Files (bufdir)",
     }) end, { desc = "Files (bufdir)" })
 
-    vim.keymap.set("n", "<leader>sg", builtin.git_files, { desc = "Git Files" })
-    vim.keymap.set("n", "<leader>sb", builtin.buffers, { desc = "Buffers" })
-    vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "Resume" })
-    vim.keymap.set("n", "<leader>sl", builtin.live_grep, { desc = "Live Grep" })
-    vim.keymap.set("n", "<leader>sL", function() builtin.live_grep({
+    vim.keymap.set("n", "<leader>sg", builtins.git_files, { desc = "Git Files" })
+    vim.keymap.set("n", "<leader>sb", builtins.buffers, { desc = "Buffers" })
+    vim.keymap.set("n", "<leader>sr", builtins.resume, { desc = "Resume" })
+    vim.keymap.set("n", "<leader>sl", builtins.live_grep, { desc = "Live Grep" })
+    vim.keymap.set("n", "<leader>sL", function() builtins.live_grep({
       cwd = require("telescope.utils").buffer_dir(),
       prompt_title = "Live Grep (bufdir)",
     }) end, { desc = "Live Grep (bufdir)" })
-    vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "Diagnostics" })
-    vim.keymap.set("n", "<leader>ss", builtin.spell_suggest, { desc = "Spelling Suggestions" })
-    vim.keymap.set("n", "<leader>sa", builtin.builtin, { desc = "Telescope (all)" })
+    vim.keymap.set("n", "<leader>sd", builtins.diagnostics, { desc = "Diagnostics" })
+    vim.keymap.set("n", "<leader>ss", builtins.spell_suggest, { desc = "Spelling Suggestions" })
+    vim.keymap.set("n", "<leader>sa", builtins.builtin, { desc = "Telescope (all)" })
     -- sh: search harpoon
     -- st: search todo
 
-    vim.keymap.set("n", "<leader>sna", builtin.autocommands, { desc = "Autocommands" })
-    vim.keymap.set("n", "<leader>sng", builtin.highlights, { desc = "Highlight Groups" })
-    vim.keymap.set("n", "<leader>snh", builtin.help_tags, { desc = "Help" })
-    vim.keymap.set("n", "<leader>snk", builtin.keymaps, { desc = "Keymaps" })
-    vim.keymap.set("n", "<leader>snc", builtin.colorscheme, { desc = "Colorscheme" })
-    vim.keymap.set('n', '<leader>sn.', function() builtin.find_files {
+    vim.keymap.set("n", "<leader>sna", builtins.autocommands, { desc = "Autocommands" })
+    vim.keymap.set("n", "<leader>sng", builtins.highlights, { desc = "Highlight Groups" })
+    vim.keymap.set("n", "<leader>snh", builtins.help_tags, { desc = "Help" })
+    vim.keymap.set("n", "<leader>snk", builtins.keymaps, { desc = "Keymaps" })
+    vim.keymap.set("n", "<leader>snc", builtins.colorscheme, { desc = "Colorscheme" })
+    vim.keymap.set('n', '<leader>sn.', function() builtins.find_files {
       cwd = vim.fn.stdpath 'config',
       prompt_title = "Config Files (Neovim)",
     } end, { desc = 'Config Files' })
-    vim.keymap.set("n", "<leader>sno", builtin.vim_options, { desc = "Options" })
+    vim.keymap.set("n", "<leader>sno", builtins.vim_options, { desc = "Options" })
 
-    -- -- Add Telescope-based LSP pickers when an LSP attaches to a buffer.
-    -- vim.api.nvim_create_autocmd('LspAttach', {
-    --   group = vim.api.nvim_create_augroup('telescope-lsp-attach', { clear = true }), -- clear to avoid duplication
-    --   callback = function(event)
-    --     local buf = event.buf
-    --
-    --     -- We use the same keymaps used by Neovim by default, see `:h lsp-defaults`.
-    --     --
-    --     -- These are LSP actions are related with pickers, which is why Telescope is useful,
-    --     -- once you find what you want you can send the results to Quickfix with `<C-q>`.
-    --
-    --     -- Find references for the word under your cursor.
-    --     vim.keymap.set('n', 'grr', builtin.lsp_references, { buffer = buf, desc = 'Goto References' })
-    --
-    --     -- Jump to the implementation of the word under your cursor.
-    --     -- Useful when your language has ways of declaring types without an actual implementation.
-    --     vim.keymap.set('n', 'gri', builtin.lsp_implementations, { buffer = buf, desc = 'Goto Implementation' })
-    --
-    --     -- Jump to the definition of the word under your cursor.
-    --     -- This is where a variable was first declared, or where a function is defined, etc.
-    --     -- To jump back, press <C-t>.
-    --     vim.keymap.set('n', 'grd', builtin.lsp_definitions, { buffer = buf, desc = 'Goto Definition' })
-    --
-    --     -- Fuzzy find all the symbols in your current document.
-    --     -- Symbols are things like variables, functions, types, etc.
-    --     vim.keymap.set('n', 'gO', builtin.lsp_document_symbols, { buffer = buf, desc = 'Open Document Symbols' })
-    --
-    --     -- Fuzzy find all the symbols in your current workspace.
-    --     -- Similar to document symbols, except searches over your entire project.
-    --     vim.keymap.set('n', 'gW', builtin.lsp_dynamic_workspace_symbols, { buffer = buf, desc = 'Open Workspace Symbols' })
-    --
-    --     -- Jump to the type of the word under your cursor.
-    --     -- Useful when you're not sure what type a variable is and you want to see
-    --     -- the definition of its *type*, not where it was *defined*.
-    --     vim.keymap.set('n', 'grt', builtin.lsp_type_definitions, { buffer = buf, desc = '[G]oto [T]ype Definition' })
-    --   end,
-    -- })
+    -- Add Telescope-based LSP pickers when an LSP attaches to a buffer.
+    vim.api.nvim_create_autocmd('LspAttach', {
+      group = vim.api.nvim_create_augroup('telescope-lsp-attach', { clear = true }), -- clear to avoid duplication
+      callback = function(event)
+        local buf = event.buf
+
+        -- We use the same keymaps used by Neovim by default, see `:h lsp-defaults`.
+        --
+        -- Opening the results in Telescope first can be useful to filter down
+        -- the results first and then send only those to quickfix with <C-q> to
+        -- operate.
+
+        -- Find references for the word under your cursor.
+        --  You can move through references without changin buffers, filter results down
+        --  and send those to quickfix.
+        vim.keymap.set('n', 'grr', builtins.lsp_references, { buffer = buf, desc = 'References' })
+
+        -- Jump to the implementation of the word under your cursor.
+        --  Opens Telescope only if there is more than one result.
+        --  Useful when your language has ways of declaring types without an actual implementation.
+        vim.keymap.set('n', 'gri', builtins.lsp_implementations, { buffer = buf, desc = 'Implementation' })
+
+        -- Jump to the definition of the word under your cursor.
+        --  This is where a variable was first declared, or where a function is defined, etc.
+        --  To jump back, press <C-t>.
+        vim.keymap.set('n', 'grd', builtins.lsp_definitions, { buffer = buf, desc = 'Definition' })
+
+        -- Fuzzy find all the symbols in your current document.
+        --  Symbols are things like variables, functions, types, etc.
+        vim.keymap.set('n', 'gO', builtins.lsp_document_symbols, { buffer = buf, desc = 'Open Document Symbols' })
+
+        -- Fuzzy find all the symbols in your current workspace.
+        --  Similar to document symbols, except searches over your entire project.
+        vim.keymap.set('n', 'gW', builtins.lsp_dynamic_workspace_symbols, { buffer = buf, desc = 'Open Workspace Symbols' })
+
+        -- Jump to the type of the word under your cursor.
+        --  Useful when you're not sure what type a variable is and you want to see
+        --  the definition of its *type*, not where it was *defined*.
+        vim.keymap.set('n', 'grt', builtins.lsp_type_definitions, { buffer = buf, desc = 'Type Definition' })
+      end,
+    })
 
   end
 }
@@ -210,11 +218,5 @@ Help:
 Learn how to customize pickers:
    `:h telescope.builtin[.<picker-name>]`.
    E.g. `grep_string` is customized to use regex by default, see [Rust regex syntax](https://docs.rs/regex/1.11.1/regex/#syntax).
-
-Learn about fzf syntax:
-   https://github.com/nvim-telescope/telescope-fzf-native.nvim?tab=readme-ov-file#telescope-fzf-nativenvim.
-
- NOTE: Trouble integration can be really useful.
- E.g. Use `grep_string` of `live_grep` to obtain a list of files with some specific text in them, refine the list with fzf, then maybe even mark only specific files with <Tab> and then export the list to Trouble.
 
 --]]

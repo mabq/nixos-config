@@ -15,7 +15,7 @@ vim.opt.fillchars.horiz = "┄" -- horizontal split separator character
 --------------------------------------------------------------------------------
 -- Helper function
 --------------------------------------------------------------------------------
-set_colorscheme = function(colorscheme)
+local set_colorscheme = function(colorscheme)
   return function()
     vim.cmd.colorscheme(colorscheme)
 

@@ -3,6 +3,36 @@
 --   example, opening `main.rs` is associated with `rust_analyzer`) this
 --   function will be executed to configure the current buffer
 
+--------------------------------------------------------------------------------
+-- Diagnostics config
+--------------------------------------------------------------------------------
+vim.diagnostic.config {
+  update_in_insert = false,
+  severity_sort = true,
+  float = { border = 'rounded', source = 'if_many' },
+  underline = { severity = { min = vim.diagnostic.severity.WARN } },
+
+  -- Can switch between these as you prefer
+  virtual_text = true, -- Text shows up at the end of the line
+  virtual_lines = false, -- Text shows up underneath the line, with virtual lines
+
+  -- Auto open the float, so you can easily read the errors when jumping with `[d` and `]d`
+  jump = {
+    on_jump = function(_, bufnr)
+      vim.diagnostic.open_float {
+        bufnr = bufnr,
+        scope = 'cursor',
+        focus = false,
+      }
+    end,
+  },
+}
+
+-- vim.keymap.set('n', '<leader>d', vim.diagnostic.setloclist, { desc = 'Diagnostics loclist' })
+
+--------------------------------------------------------------------------------
+-- Autocommands
+--------------------------------------------------------------------------------
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('lsp-attach', { clear = true }), -- clear to avoid duplications
   callback = function(event)
@@ -16,7 +46,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     -- Execute a code action, usually your cursor needs to be on top of an error
     -- or a suggestion from your LSP for this to activate.
-    vim.keymap.set({'n', 'x'}, 'gra', vim.lsp.buf.code_action, { buffer = buf, desc = 'Goto Code Action' })
+    vim.keymap.set({ 'n', 'x' }, 'gra', vim.lsp.buf.code_action, { buffer = buf, desc = 'Goto Code Action' })
 
     -- This is not Goto Definition, this is Goto Declaration.
     --  For example, in C this would take you to the header.
@@ -51,56 +81,54 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- end
 
     -- Create a keymap to toggle inlay hints, if the language server supports them.
+    -- Inlay hints are virtual text, not real text.
     if client and client:supports_method('textDocument/inlayHint', event.buf) then
       vim.keymap.set('n', '<leader>th', function()
-        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled)
-      end, { buffer = buf, desc = 'LSP Inline Hints' })
+        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+      end, { buffer = buf, desc = 'Inlay Hints (LSP)' })
     end
   end,
 })
 
+--------------------------------------------------------------------------------
+-- Lua
+--   https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#lua_ls
+--------------------------------------------------------------------------------
+-- vim.lsp.config['lua'] =
+
+-- Enable lua_ls
+vim.lsp.enable('lua') -- pass the config name
+
+--------------------------------------------------------------------------------
+
 return {
   {
-    'neovim/nvim-lspconfig',
-    config = function()
-      local servers = {
-        lua_ls = {},
-        bashls = {},
-      }
-
-      for name, setup in pairs(servers) do
-        require('lspconfig')[name].setup(setup)
-      end
-    end,
+    enabled = false,
+    "j-hui/fidget.nvim", -- Useful status updates for LSP
+    opts = {},
   },
-  -- {
-  --   "j-hui/fidget.nvim", -- Useful status updates for LSP
-  --   opts = {},
-  -- },
-
-  -- {
-  -- JavaScript / TypeScript: Replaced `typescript-language-server` (`ts_ls`)
-  -- with 'pmizio/typescript-tools.nvim'. `ts_ls` does not support
-  -- Styled-Components and is supposed to be awefully slow on big projects.
-  -- `typescript-tools` has more commands than the ones binded to keymaps, use
-  -- `:TSTools<Tab>` to see them.
-  --
-  --   'pmizio/typescript-tools.nvim',
-  --   dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
-  --   opts = {
-  --     tsserver_plugins = { '@styled/typescript-styled-plugin' },
-  --   },
-  -- },
-  ------------------------------------------------------------------------------
   {
-    'folke/lazydev.nvim', -- lsp for Neovim configuration
-    ft = 'lua',
+    -- JavaScript / TypeScript: Replaced `typescript-language-server` (`ts_ls`)
+    -- with 'pmizio/typescript-tools.nvim'. `ts_ls` does not support
+    -- Styled-Components and is supposed to be awefully slow on big projects.
+    -- `typescript-tools` has more commands than the ones binded to keymaps,
+    -- use `:TSTools<Tab>` to see them.
+    enabled = false,
+    'pmizio/typescript-tools.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
     opts = {
-      library = {
-        { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
-      },
+      tsserver_plugins = { '@styled/typescript-styled-plugin' },
     },
   },
+  -- {
+  --   'folke/lazydev.nvim', -- lsp for Neovim configuration
+  --   ft = 'lua',
+  --   opts = {
+  --     library = {
+  --       { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
+  --     },
+  --   },
+  -- },
 }
 
 --[[
@@ -156,6 +184,7 @@ Language servers
     The nvim-lspconfig plugin provides a set of default configurations for most
     language servers available. You can use those or configure some language
     servers manually.
+      `h lspconfig-all`
       https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
 
 --]]
