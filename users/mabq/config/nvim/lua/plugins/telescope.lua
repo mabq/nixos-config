@@ -158,48 +158,6 @@ return {
     } end, { desc = 'Config Files' })
     vim.keymap.set("n", "<leader>sno", builtins.vim_options, { desc = "Options" })
 
-    -- Add Telescope-based LSP pickers when an LSP attaches to a buffer.
-    vim.api.nvim_create_autocmd('LspAttach', {
-      group = vim.api.nvim_create_augroup('telescope-lsp-attach', { clear = true }), -- clear to avoid duplication
-      callback = function(event)
-        local buf = event.buf
-
-        -- We use the same keymaps used by Neovim by default, see `:h lsp-defaults`.
-        --
-        -- Opening the results in Telescope first can be useful to filter down
-        -- the results first and then send only those to quickfix with <C-q> to
-        -- operate.
-
-        -- Find references for the word under your cursor.
-        --  You can move through references without changin buffers, filter results down
-        --  and send those to quickfix.
-        vim.keymap.set('n', 'grr', builtins.lsp_references, { buffer = buf, desc = 'References' })
-
-        -- Jump to the implementation of the word under your cursor.
-        --  Opens Telescope only if there is more than one result.
-        --  Useful when your language has ways of declaring types without an actual implementation.
-        vim.keymap.set('n', 'gri', builtins.lsp_implementations, { buffer = buf, desc = 'Implementation' })
-
-        -- Jump to the definition of the word under your cursor.
-        --  This is where a variable was first declared, or where a function is defined, etc.
-        --  To jump back, press <C-t>.
-        vim.keymap.set('n', 'grd', builtins.lsp_definitions, { buffer = buf, desc = 'Definition' })
-
-        -- Fuzzy find all the symbols in your current document.
-        --  Symbols are things like variables, functions, types, etc.
-        vim.keymap.set('n', 'gO', builtins.lsp_document_symbols, { buffer = buf, desc = 'Open Document Symbols' })
-
-        -- Fuzzy find all the symbols in your current workspace.
-        --  Similar to document symbols, except searches over your entire project.
-        vim.keymap.set('n', 'gW', builtins.lsp_dynamic_workspace_symbols, { buffer = buf, desc = 'Open Workspace Symbols' })
-
-        -- Jump to the type of the word under your cursor.
-        --  Useful when you're not sure what type a variable is and you want to see
-        --  the definition of its *type*, not where it was *defined*.
-        vim.keymap.set('n', 'grt', builtins.lsp_type_definitions, { buffer = buf, desc = 'Type Definition' })
-      end,
-    })
-
   end
 }
 

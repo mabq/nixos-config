@@ -14,7 +14,7 @@ return {
     },
   },
   keys = {
-    { mode = { "n", "v" }, "<leader>of", "<cmd>Yazi<CR>", desc = "File Explorer" },
+    { mode = { "n", "v" }, "-", "<cmd>Yazi<CR>", desc = "File Explorer" },
   },
 }
 

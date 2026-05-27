@@ -130,6 +130,10 @@ vim.keymap.set("n", "[[", "<cmd>lprev<CR>", { desc = "Locklist previous", silent
 -- Tmux-sessionizer from Neovim
 vim.keymap.set("n", "<C-s>", ":!tmux neww tmux-sessionizer<CR>", { desc = "Tmux-sessionizer", silent = true })
 
+-- Remove later
+vim.keymap.set("n", "<leader>x", "<cmd>.lua<CR>", { desc = "Execute current line", silent = true })
+vim.keymap.set("n", "<leader>X", "<cmd>source %<CR>", { desc = "Execute current file", silent = true })
+
 
 --------------------------------------------------------------------------------
 -- Leader keymaps
