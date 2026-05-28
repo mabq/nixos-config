@@ -77,6 +77,8 @@ in {
       unzip # Extraction utility for archives compressed in .zip format
       wget # Tool for retrieving files using HTTP, HTTPS, and FTP
       whois # Intelligent WHOIS client from Debian
+      wl-clip-persist # Keep Wayland clipboard even after programs close
+      wl-clipboard # Command-line copy/paste utilities for Wayland
       yazi # Blazing fast terminal file manager written in Rust, based on async I/O (!neovim)
       zoxide # Fast cd command that learns your habits (!zsh)
       zsh-autosuggestions # Fish shell autosuggestions for Zsh
