@@ -62,6 +62,8 @@ in {
       iperf # Tool to measure IP bandwidth using UDP or TCP
       lazygit # Simple terminal UI for git commands (!neovim)
       lua-language-server # Language server that offers Lua language support (!neovim)
+      # luajit # High-performance JIT compiler for Lua 5.1 (!neovim)
+      # luarocks # A package manager for Lua modules (!neovim)
       mpv # General-purpose media player, fork of MPlayer and mplayer2
       ncdu # Disk usage analyzer with an ncurses interface
       neovim # Vim text editor fork
