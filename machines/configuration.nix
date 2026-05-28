@@ -49,7 +49,7 @@ with lib; {
 
   networking = {
     hostName = mkDefault machine;
-    firewall.enable = mkDefault true;
+    firewall.enable = mkDefault false;
   };
 
   nix = {

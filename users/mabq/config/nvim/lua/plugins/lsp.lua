@@ -46,27 +46,6 @@ return {
 
     config = function()
       local servers = {
-        -- bashls = true,
-
-        -- gopls = {
-        --   manual_install = true,
-        --   settings = {
-        --     gopls = {
-        --       hints = {
-        --         assignVariableTypes = true,
-        --         compositeLiteralFields = true,
-        --         compositeLiteralTypes = true,
-        --         constantValues = true,
-        --         functionTypeParameters = true,
-        --         parameterNames = true,
-        --         rangeVariableTypes = true,
-        --       },
-        --     },
-        --   },
-        -- },
-
-        -- glsl_analyzer = true,
-
         lua_ls = true,
         -- lua_ls = {
           -- cmd = { "lua-language-server" },
@@ -113,154 +92,6 @@ return {
           --   })
           -- end,
         -- },
-
-        -- rust_analyzer = true,
-        -- svelte = true,
-        -- templ = true,
-        -- taplo = true,
-        -- intelephense = {
-        --   settings = {
-        --     intelephense = {
-        --       format = {
-        --         braces = "k&r",
-        --       },
-        --     },
-        --   },
-        -- },
-
-        -- pyright = true,
-        -- ruff = { manual_install = true },
-        -- mojo = { manual_install = true },
-
-        -- Enabled biome formatting, turn off all the other ones generally
-        -- biome = true,
-        -- astro = true,
-
-        -- ts_ls = {
-        --   root_dir = require("lspconfig").util.root_pattern "package.json",
-        --   single_file = false,
-        --   server_capabilities = {
-        --     documentFormattingProvider = false,
-        --   },
-        -- },
-        -- vtsls = {
-        --   server_capabilities = {
-        --     documentFormattingProvider = false,
-        --   },
-        -- },
-        -- denols = true,
-
-        -- jsonls = {
-        --   server_capabilities = {
-        --     documentFormattingProvider = false,
-        --   },
-        --   settings = {
-        --     json = {
-        --       schemas = require("schemastore").json.schemas(),
-        --       validate = { enable = true },
-        --     },
-        --   },
-        -- },
-
-        -- cssls = {
-        --   server_capabilities = {
-        --     documentFormattingProvider = false,
-        --   },
-        -- },
-
-        -- yamlls = {
-        --   settings = {
-        --     yaml = {
-        --       schemaStore = {
-        --         enable = false,
-        --         url = "",
-        --       },
-        --       -- schemas = require("schemastore").yaml.schemas(),
-        --     },
-        --   },
-        -- },
-
-        -- ols = {},
-        -- racket_langserver = { manual_install = true },
-        -- roc_ls = { manual_install = true },
-
-        -- ocamllsp = {
-        --   manual_install = true,
-        --   -- cmd = { "dune", "tools", "exec", "ocamllsp" },
-        --   -- cmd = { "dune", "exec", "ocamllsp" },
-        --   cmd = { "ocamllsp" },
-        --   settings = {
-        --     codelens = { enable = true },
-        --     inlayHints = { enable = true },
-        --     syntaxDocumentation = { enable = true },
-        --   },
-        --
-        --   server_capabilities = { semanticTokensProvider = false },
-        --
-        --   -- TODO: Check if i still need the filtypes stuff i had before
-        -- },
-
-        -- gleam = {
-        --   manual_install = true,
-        -- },
-
-        -- elixirls = {
-        --   cmd = { "/home/tjdevries/.local/share/nvim/mason/bin/elixir-ls" },
-        --   root_markers = { "mix.exs" },
-        -- },
-
-        -- lexical = {
-        --   cmd = { "/home/tjdevries/.local/share/nvim/mason/bin/lexical", "server" },
-        --   root_dir = require("lspconfig.util").root_pattern { "mix.exs" },
-        --   server_capabilities = {
-        --     completionProvider = vim.NIL,
-        --     definitionProvider = true,
-        --   },
-        -- },
-
-        -- clangd = {
-        --   -- cmd = { "clangd", unpack(require("custom.clangd").flags) },
-        --   -- TODO: Could include cmd, but not sure those were all relevant flags.
-        --   --    looks like something i would have added while i was floundering
-        --   init_options = { clangdFileStatus = true },
-        --
-        --   filetypes = { "c" },
-        -- },
-
-        -- tailwindcss = {
-        --   init_options = {
-        --     userLanguages = {
-        --       elixir = "phoenix-heex",
-        --       eruby = "erb",
-        --       heex = "phoenix-heex",
-        --     },
-        --   },
-        --   filetypes = {
-        --     "html",
-        --     "css",
-        --     "scss",
-        --     "javascript",
-        --     "javascriptreact",
-        --     "typescript",
-        --     "typescriptreact",
-        --     "vue",
-        --     "svelte",
-        --     "ocaml.mlx",
-        --   },
-        --   settings = {
-        --     tailwindCSS = {
-        --       experimental = {
-        --         classRegex = {
-        --           [[class: "([^"]*)]],
-        --           [[className="([^"]*)]],
-        --         },
-        --       },
-        --       includeLanguages = {
-        --         ["ocaml.mlx"] = "html",
-        --       },
-        --     },
-        --   },
-        -- },
       }
 
       --------------------------------------------------------------------------
@@ -294,7 +125,7 @@ return {
 
       --------------------------------------------------------------------------
 
-      require("lsp_lines").setup()
+      -- require("lsp_lines").setup()
 
       vim.diagnostic.config({
         virtual_text = true, -- avoid pointless duplication
@@ -318,7 +149,7 @@ return {
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('LspAttach', { clear = true }), -- clear to avoid duplication
 
-        callback = function(args)
+        callback = function()
           -- local bufnr = args.buf
           -- local client = assert(vim.lsp.get_client_by_id(args.data.client_id), "must have valid client")
 
