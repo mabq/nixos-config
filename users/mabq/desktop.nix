@@ -47,7 +47,7 @@ in {
       age # Modern encryption tool with small explicit keys
       atuin # Replacement for a shell history
       bat # Cat clone with syntax highlighting and Git integration
-      biome # Toolchain of the web
+      biome # Toolchain of the web (!neovim)
       bluetui # TUI for managing bluetooth on Linux [4]
       btop # Monitor of resources
       caligula # User-friendly, lightweight TUI for disk imaging
@@ -73,8 +73,9 @@ in {
       parted # Create, destroy, resize, check, and copy partitions (!zsh fuctions)
       pciutils # Provides the `lspci` command
       ripgrep # Utility that combines the usability of The Silver Searcher with the raw speed of grep (!neovim)
+      shfmt # Shell parser and formatter (!neovim)
       starship # Customizable prompt for any shell
-      stylua # Opinionated Lua code formatter
+      stylua # Opinionated Lua code formatter (!neovim)
       tldr # Simplified and community-driven man pages
       tmux # Terminal multiplexer
       tree-sitter # Parser generator tool and an incremental parsing library (!neovim)
