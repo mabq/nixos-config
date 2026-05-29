@@ -73,6 +73,7 @@ in {
       pciutils # Provides the `lspci` command
       ripgrep # Utility that combines the usability of The Silver Searcher with the raw speed of grep (!neovim)
       starship # Customizable prompt for any shell
+      stylua # Opinionated Lua code formatter
       tldr # Simplified and community-driven man pages
       tmux # Terminal multiplexer
       tree-sitter # Parser generator tool and an incremental parsing library (!neovim)

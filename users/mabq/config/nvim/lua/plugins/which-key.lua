@@ -11,6 +11,7 @@ return {
       mappings = false, -- no icons
     },
     spec = {
+      { '<leader>c', group = 'Code' },
       { '<leader>o', group = 'Open' },
       { '<leader>s', group = 'Search' },
       { '<leader>sn', group = 'Neovim' },

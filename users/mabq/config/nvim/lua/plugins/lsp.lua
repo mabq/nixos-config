@@ -1,46 +1,7 @@
 return {
   {
     "neovim/nvim-lspconfig",
-    dependencies = {
-      {
-        -- Lazydev teached the Lua LSP about Neovim plugins only when needed
-        "folke/lazydev.nvim",
-        ft = "lua", -- lazy-load on filetype
-        opts = {
-          library = {
-            { path = "luvit-meta/library", words = { "vim%.uv" } }, -- load luvit types when the `vim.uv` word is found
-            { path = "/usr/share/awesome/lib/", words = { "awesome" } },
-          },
-        },
-      },
-      {
-        -- Autocompletion and type information for Neovim's `vim.uv` API, see `:h luvref`
-        "Bilal2453/luvit-meta",
-        lazy = true,
-      },
-      -- { "b0o/SchemaStore.nvim", },
-      -- { "j-hui/fidget.nvim", opts = {} },
-      -- {
-      --   "dmmulroy/tsc.nvim",
-      --   config = function()
-      --     require("tsc").setup {
-      --       run_as_monorepo = true,
-      --     }
-      --   end,
-      -- },
-      -- {
-      --   "pmizio/typescript-tools.nvim",
-      --   dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-      -- },
-
-      --  Schema is a file that describes the shape of another file — what
-      --  fields exist, what types they are, which are required, what the valid
-      --  values are. SchemaStore is simply a central place where thousands of
-      --  these descriptions are maintained for common tools.
-    },
-
     config = function()
-
       -- local capabilities = nil
       -- if pcall(require, "cmp_nvim_lsp") then
       --   capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -54,7 +15,13 @@ return {
       --------------------------------------------------------------------------
 
       local servers = {
-        lua_ls = true,
+        lua_ls = {
+          settings = {
+            Lua = {
+              format = { enable = false }, -- formatting is done by stylua
+            },
+          },
+        },
       }
 
       for name, config in pairs(servers) do
@@ -143,6 +110,41 @@ return {
 
     end
   },
+  {
+    -- Lazydev teached the Lua LSP about Neovim plugins only when needed
+    "folke/lazydev.nvim",
+    ft = "lua", -- lazy-load on filetype
+    opts = {
+      library = {
+        { path = "luvit-meta/library", words = { "vim%.uv" } }, -- load luvit types when the `vim.uv` word is found
+        { path = "/usr/share/awesome/lib/", words = { "awesome" } },
+      },
+    },
+  },
+  {
+    -- Autocompletion and type information for Neovim's `vim.uv` API, see `:h luvref`
+    "Bilal2453/luvit-meta",
+    lazy = true,
+  },
+  -- { "b0o/SchemaStore.nvim", },
+  -- { "j-hui/fidget.nvim", opts = {} },
+  -- {
+  --   "dmmulroy/tsc.nvim",
+  --   config = function()
+  --     require("tsc").setup {
+  --       run_as_monorepo = true,
+  --     }
+  --   end,
+  -- },
+  -- {
+  --   "pmizio/typescript-tools.nvim",
+  --   dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+  -- },
+
+  --  Schema is a file that describes the shape of another file — what
+  --  fields exist, what types they are, which are required, what the valid
+  --  values are. SchemaStore is simply a central place where thousands of
+  --  these descriptions are maintained for common tools.
 }
 
 --[[
