@@ -42,9 +42,12 @@ in {
     homeDirectory = "/home/${user}"; # TODO: check if needed
 
     packages = with pkgs; [
+      # luajit # High-performance JIT compiler for Lua 5.1 (!neovim)
+      # luarocks # A package manager for Lua modules (!neovim)
       age # Modern encryption tool with small explicit keys
       atuin # Replacement for a shell history
       bat # Cat clone with syntax highlighting and Git integration
+      biome # Toolchain of the web
       bluetui # TUI for managing bluetooth on Linux [4]
       btop # Monitor of resources
       caligula # User-friendly, lightweight TUI for disk imaging
@@ -62,8 +65,6 @@ in {
       iperf # Tool to measure IP bandwidth using UDP or TCP
       lazygit # Simple terminal UI for git commands (!neovim)
       lua-language-server # Language server that offers Lua language support (!neovim)
-      # luajit # High-performance JIT compiler for Lua 5.1 (!neovim)
-      # luarocks # A package manager for Lua modules (!neovim)
       mpv # General-purpose media player, fork of MPlayer and mplayer2
       ncdu # Disk usage analyzer with an ncurses interface
       neovim # Vim text editor fork

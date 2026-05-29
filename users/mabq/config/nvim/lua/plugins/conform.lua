@@ -1,38 +1,33 @@
 return {
-  'stevearc/conform.nvim',
-  event = { 'BufWritePre' },
-  cmd = { 'ConformInfo' },
-  keys = {
-    {
-      '<leader>cf',
-      function()
-        require('conform').format()
-      end,
-      mode = '',
-      desc = 'Format (Conform)',
-    },
-  },
+  "stevearc/conform.nvim",
+  event = { "BufWritePre" },
+  cmd = { "ConformInfo" },
+  keys = { {
+    "<leader>cf",
+    function()
+      require("conform").format()
+    end,
+    desc = "Format (Conform)",
+  } },
   opts = {
+    -- `:h conform.setup`
     formatters_by_ft = {
-      -- Add more than one to run them sequentially.
-      -- For customization options see `:h conform.format`
-      lua = { 'stylua', lsp_format = false },
-      css = { 'biome', stop_after_first = true },
-      javascript = { 'biome' },
-      typescript = { 'biome' },
-      json = { 'biome' },
-      jsonc = { 'biome' },
-      markdown = { 'biome' },
-      sh = { 'shfmt' },
+      lua = { "stylua" },
+      markdown = { "biome" },
+      css = { "biome" },
+      javascript = { "biome" },
+      typescript = { "biome" },
+      json = { "biome" },
+      jsonc = { "biome" },
+      -- go = { lsp_format = "prefer" },
+      sh = { "shfmt", lsp_format = "fallback" },
     },
     default_format_opts = {
-      async = true,
-      lsp_format = 'fallback',
+      async = true, -- do not block
+      lsp_format = "never", -- never, fallback, prefer, first, last
+      stop_after_first = true,
     },
-    format_on_save = {
-      timeout_ms = 500,
-      lsp_format = "fallback",
-    },
+    format_on_save = true,
     notify_on_error = true,
     notify_no_formatters = true,
   },
@@ -41,12 +36,12 @@ return {
 --[[
 
 Install formatters using you package manager. For a list of formatters see:
-  https://github.com/stevearc/conform.nvim?tab=readme-ov-file#formatters
   `:h conform-formatters`
+  https://github.com/stevearc/conform.nvim?tab=readme-ov-file#formatters
 
 Options to customize a formatter:
-  https://github.com/stevearc/conform.nvim#options
   `:h conform.format`
+  https://github.com/stevearc/conform.nvim#options
 
 Verify:
   `:checkhealth conform`
