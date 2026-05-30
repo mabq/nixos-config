@@ -1,24 +1,14 @@
--- Read notes at the bottom
-
---------------------------------------------------------------------------------
--- Options
---------------------------------------------------------------------------------
-vim.opt.termguicolors = true -- enable 24-bit colors
-
-vim.opt.cursorline = true -- whether to highlight cursor line
-
-vim.opt.laststatus = 3 -- must be set to `3` to display the horizontal split separator character
-
+-- Options ---------------------------------------------------------------------
+vim.o.termguicolors = true -- enable 24-bit colors
+vim.o.cursorline = true -- whether to highlight cursor line
+vim.o.laststatus = 3 -- must be set to `3` to display the horizontal split separator character
 vim.opt.fillchars.vert = "┆" -- vertial split separator character
 vim.opt.fillchars.horiz = "┄" -- horizontal split separator character
 
---------------------------------------------------------------------------------
--- Helper function
---------------------------------------------------------------------------------
+-- Helper function -------------------------------------------------------------
 local set_colorscheme = function(colorscheme)
   return function()
     vim.cmd.colorscheme(colorscheme)
-
     -- Make the separator character more visible
     -- Must be set after setting the theme to pick the correct highlight group
     vim.api.nvim_set_hl(0, "WinSeparator", {
@@ -27,9 +17,7 @@ local set_colorscheme = function(colorscheme)
   end
 end
 
---------------------------------------------------------------------------------
--- Install themes
---------------------------------------------------------------------------------
+-- Install themes --------------------------------------------------------------
 return {
   -- Default theme --
   --   Only this theme is automatically loaded at startup.
@@ -39,13 +27,13 @@ return {
     "folke/tokyonight.nvim",
     priority = 1000, -- load it first, see https://lazy.folke.io/spec#spec-loading
     opts = { style = "moon" }, -- https://github.com/folke/tokyonight.nvim#%EF%B8%8F-configuration
-    config = set_colorscheme("tokyonight")
+    config = set_colorscheme "tokyonight",
   },
 
   -- Alternative themes --
   --   Only loaded when setting `:colorscheme <name>`.
-  --
-  --   Catppuccin
+
+  -- Catppuccin
   {
     "catppuccin/nvim",
     lazy = true,
@@ -91,16 +79,14 @@ return {
         "akinsho/bufferline.nvim",
         optional = true,
         opts = function(_, opts)
-          if (vim.g.colors_name or ""):find("catppuccin") then
+          if (vim.g.colors_name or ""):find "catppuccin" then
             opts.highlights = require("catppuccin.special.bufferline").get_theme()
           end
         end,
       },
     },
-  }
+  },
 }
-
---------------------------------------------------------------------------------
 
 --[[
 
@@ -118,7 +104,6 @@ Highlight groups:
   Colorschemes define colors for many highlight groups. Some just edit the
   default Neovim highlight groups. Others also add highlight groups to
   support many popular plugins.
-
 
 Syntax highlighting:
 
