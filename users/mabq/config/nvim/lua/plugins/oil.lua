@@ -32,8 +32,8 @@ return {
       },
     }
 
-    -- Global keybinds
-    vim.keymap.set("n", "<leader>Oil", "<CMD>Oil<CR>", { desc = "Oil" })
+   -- Global keybinds
+    vim.keymap.set("n", "<leader>oi", "<CMD>Oil<CR>", { desc = "Oil" })
   end,
 }
 
