@@ -132,8 +132,8 @@ return {
       cwd = require("telescope.utils").buffer_dir(),
       prompt_title = "Files (bufdir)",
     }) end, { desc = "Files (bufdir)" })
-
     vim.keymap.set("n", "<leader>sg", builtins.git_files, { desc = "Git Files" })
+
     vim.keymap.set("n", "<leader>sb", builtins.buffers, { desc = "Buffers" })
     vim.keymap.set("n", "<leader>sr", builtins.resume, { desc = "Resume" })
     vim.keymap.set("n", "<leader>sl", builtins.live_grep, { desc = "Live Grep" })
@@ -143,13 +143,13 @@ return {
     }) end, { desc = "Live Grep (bufdir)" })
     vim.keymap.set("n", "<leader>sd", builtins.diagnostics, { desc = "Diagnostics" })
     vim.keymap.set("n", "<leader>ss", builtins.spell_suggest, { desc = "Spelling Suggestions" })
-    vim.keymap.set("n", "<leader>sa", builtins.builtin, { desc = "Telescope (all)" })
-    -- sh: search harpoon
-    -- st: search todo
+    vim.keymap.set("n", "<leader>st", builtins.builtin, { desc = "Telescope" })
+    --                  "<leader>sT: search todo
+
+    vim.keymap.set("n", "<leader>sh", builtins.help_tags, { desc = "Help" }) -- commonly used
 
     vim.keymap.set("n", "<leader>sna", builtins.autocommands, { desc = "Autocommands" })
     vim.keymap.set("n", "<leader>sng", builtins.highlights, { desc = "Highlight Groups" })
-    vim.keymap.set("n", "<leader>snh", builtins.help_tags, { desc = "Help" })
     vim.keymap.set("n", "<leader>snk", builtins.keymaps, { desc = "Keymaps" })
     vim.keymap.set("n", "<leader>snc", builtins.colorscheme, { desc = "Colorscheme" })
     vim.keymap.set('n', '<leader>sn.', function() builtins.find_files {

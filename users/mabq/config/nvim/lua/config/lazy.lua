@@ -50,4 +50,4 @@ require("lazy").setup {
 }
 
 -- Keymap
-vim.keymap.set("n", "<leader>oL", "<CMD>Lazy<CR>", { desc = "Lazy" })
+vim.keymap.set("n", "<leader>ol", "<CMD>Lazy<CR>", { desc = "Lazy" })
