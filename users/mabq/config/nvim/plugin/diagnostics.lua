@@ -21,13 +21,13 @@ vim.diagnostic.config({
 })
 
 -- Keymaps --
-vim.keymap.set("", "<leader>tv", function()
+vim.keymap.set("", "<leader>td", function()
   local config = vim.diagnostic.config() or {}
   if config.virtual_text then
     vim.diagnostic.config { virtual_text = false, virtual_lines = true }
   else
     vim.diagnostic.config { virtual_text = true, virtual_lines = false }
   end
-end, { desc = "Diagnostic Virtual Lines" })
+end, { desc = "Diagnostic Lines" })
 
 -- vim.keymap.set('n', '<leader>d', vim.diagnostic.setloclist, { desc = 'Diagnostics loclist' })

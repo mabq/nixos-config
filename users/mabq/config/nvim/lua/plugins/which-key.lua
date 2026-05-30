@@ -16,6 +16,7 @@ return {
       { '<leader>s', group = 'Search' },
       { '<leader>sn', group = 'Neovim' },
       { '<leader>t', group = 'Toggle' },
+      { '<leader>tg', group = 'Git' },
 
       -- Give names to Neovim Groups
       -- { 'gr', group = 'LSP', mode = { 'n' } },

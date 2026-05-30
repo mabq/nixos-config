@@ -33,7 +33,7 @@ return {
     }
 
    -- Global keybinds
-    vim.keymap.set("n", "<leader>oi", "<CMD>Oil<CR>", { desc = "Oil" })
+    vim.keymap.set("n", "<leader>oo", "<CMD>Oil<CR>", { desc = "Oil" })
   end,
 }
 
