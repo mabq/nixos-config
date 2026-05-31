@@ -1,0 +1,6 @@
+# https://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default
+
+# Use delta to show diffs
+git:
+  pagers:
+    - pager: delta --dark --paging=never
