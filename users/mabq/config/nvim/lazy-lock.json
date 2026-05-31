@@ -1,4 +1,5 @@
 {
+  "LazyVim": { "branch": "main", "commit": "35f56b9189f2536c806f488c5d889a6000d3eb5f" },
   "blink-emoji.nvim": { "branch": "master", "commit": "dff709139ad5389fb55ebab026e75278a12b325a" },
   "blink.cmp": { "branch": "main", "commit": "78336bc89ee5365633bcf754d93df01678b5c08f" },
   "catppuccin": { "branch": "main", "commit": "426dbebe06b5c69fd846ceb17b42e12f890aedf1" },

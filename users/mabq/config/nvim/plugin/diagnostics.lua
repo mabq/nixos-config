@@ -30,4 +30,4 @@ vim.keymap.set("", "<leader>td", function()
   end
 end, { desc = "Diagnostic Lines" })
 
--- vim.keymap.set('n', '<leader>d', vim.diagnostic.setloclist, { desc = 'Diagnostics loclist' })
+vim.keymap.set('n', '<leader>d', vim.diagnostic.setqflist, { desc = 'Diagnostics' })

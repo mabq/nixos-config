@@ -12,7 +12,7 @@ local set_colorscheme = function(colorscheme)
   return function()
     vim.cmd.colorscheme(colorscheme)
     -- Make the separator character more visible
-    -- Must be set after setting the theme to pick the correct highlight group
+    --  Must be set after setting the theme to pick the correct highlight group
     vim.api.nvim_set_hl(0, "WinSeparator", {
       link = "LineNr", -- use the same highlight group as the line numbers
     })
@@ -22,18 +22,21 @@ end
 -- Install themes --------------------------------------------------------------
 
 return {
-  -- Default theme --
+  -- Default theme
+  -- -------------
   --   Only this theme is automatically loaded at startup.
   --   Must be loaded before all other plugins, the highlight groups it sets are
   --   used by some of those plugins.
   {
     "folke/tokyonight.nvim",
+    lazy = false,
     priority = 1000, -- load it first, see https://lazy.folke.io/spec#spec-loading
     opts = { style = "moon" }, -- https://github.com/folke/tokyonight.nvim#%EF%B8%8F-configuration
     config = set_colorscheme "tokyonight",
   },
 
-  -- Alternative themes --
+  -- Alternative themes
+  -- ------------------
   --   Only loaded when setting `:colorscheme <name>`
 
   -- Catppuccin

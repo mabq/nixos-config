@@ -10,7 +10,7 @@ return {
         -- {
         --   "L3MON4D3/LuaSnip", -- Snippet engine
         --   version = "v2.*",
-        --   -- build = "make install_jsregexp", -- Install jsregexp (optional)
+        --   build = "make install_jsregexp", -- Install jsregexp (optional)
         --   config = function()
         --     require("luasnip.loaders.from_vscode").lazy_load() -- load friendly-snippets
         --   end,
@@ -18,16 +18,21 @@ return {
         { "rafamadriz/friendly-snippets" }, -- snippet source
         { "moyiz/blink-emoji.nvim" }, -- emoji source
         {
-          "folke/lazydev.nvim", -- neovim configuration source
+          "folke/lazydev.nvim", -- configures LuaLS to support auto-completion and type checking while editing your Neovim configuration.
           dependencies = {
             "Bilal2453/luvit-meta", -- autocompletion and type information for Neovim's `vim.uv` API, see `:h luvref`
             lazy = true,
           },
           ft = "lua", -- lazy-load on filetype
+          cmd = "LazyDev",
           opts = {
             library = {
               { path = "luvit-meta/library", words = { "vim%.uv" } }, -- Load luvit types when the `vim.uv` word is found
-              { path = "/usr/share/awesome/lib/", words = { "awesome" } },
+              -- { path = "/usr/share/awesome/lib/", words = { "awesome" } },
+              { path = "LazyVim", words = { "LazyVim" } },
+              -- { path = "snacks.nvim", words = { "Snacks" } },
+              { path = "lazy.nvim", words = { "LazyVim" } },
+              { path = "nvim-lspconfig", words = { "lspconfig.settings" } },
             },
           },
         },
