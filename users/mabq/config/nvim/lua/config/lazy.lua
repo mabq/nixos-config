@@ -11,13 +11,11 @@ Plugin spec:
 
 --]]
 
+-- Bootstrap lazy.nvim in new setups -------------------------------------------
+--   https://lazy.folke.io/installation
+
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 
---------------------------------------------------------------------------------
--- Bootstrap lazy.nvim in new setups
---------------------------------------------------------------------------------
-
--- https://lazy.folke.io/installation
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = "https://github.com/folke/lazy.nvim.git"
   local out = vim.fn.system { "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath }
@@ -32,14 +30,11 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   end
 end
 
---------------------------------------------------------------------------------
--- Load and configure Lazy.nvim
---------------------------------------------------------------------------------
+vim.opt.rtp:prepend(lazypath) -- include path in the `runtimepath` so we can `require` it
 
--- Include path in the `runtimepath` so we can `require` it
-vim.opt.rtp:prepend(lazypath)
 
--- Load and configure
+-- Load and configure Lazy.nvim ------------------------------------------------
+
 require("lazy").setup {
   spec = {
     { import = "plugins" }, -- this is where lazy.nvim looks for plugin specs
@@ -49,5 +44,7 @@ require("lazy").setup {
   },
 }
 
--- Keymap
+-- Keymaps ---------------------------------------------------------------------
+
 vim.keymap.set("n", "<leader>ol", "<CMD>Lazy<CR>", { desc = "Lazy" })
+

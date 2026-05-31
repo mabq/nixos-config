@@ -27,7 +27,7 @@ vim.o.signcolumn = "yes" -- keep signcolumn on by default
 
 -- vim.o.showmode = false -- do not show edit mode
 -- vim.o.scrolloff = 8 -- minimal number of screen lines to keep above and below the cursor
--- vim.o.confirm = true -- raise a dialog when trying to quit an unsaved buffer
+vim.o.confirm = true -- raise a dialog when trying to quit an unsaved buffer
 
 -- vim.o.colorcolumn = "80" -- colums to highlight
 
