@@ -1,6 +1,6 @@
 -- Must be set before loading plugins, otherwise the wrong mapleader is used.
 vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+-- vim.g.maplocalleader = " "
 
 -- Enable new core ui.
 --   Adds syntax highlighting to command line.
@@ -51,5 +51,8 @@ Learn about Neovim:
 Help:
   `<leader>sh` - search help with Telescope
   `:checkhealth [<plugin-name>]`
+
+Tips:
+  Use `NVIM_APPNAME=<configDir> nvim` to open Neovim with a specific configuration directory.
 
 --]]

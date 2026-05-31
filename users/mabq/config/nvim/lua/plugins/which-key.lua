@@ -12,11 +12,13 @@ return {
     },
     spec = {
       { '<leader>c', group = 'Code' },
+      { '<leader>d', group = 'Diagnostics' },
       { '<leader>o', group = 'Open' },
       { '<leader>s', group = 'Search' },
       { '<leader>sn', group = 'Neovim' },
       { '<leader>t', group = 'Toggle' },
       { '<leader>tg', group = 'Git' },
+      { '<leader>x', group = 'Command' },
 
       -- Give names to Neovim Groups
       -- { 'gr', group = 'LSP', mode = { 'n' } },

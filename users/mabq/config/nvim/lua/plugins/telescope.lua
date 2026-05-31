@@ -141,7 +141,7 @@ return {
       cwd = require("telescope.utils").buffer_dir(),
       prompt_title = "Live Grep (bufdir)",
     }) end, { desc = "Live Grep (bufdir)" })
-    vim.keymap.set("n", "<leader>sd", builtins.diagnostics, { desc = "Diagnostics" })
+    -- vim.keymap.set("n", "<leader>sd", builtins.diagnostics, { desc = "Diagnostics" })
     vim.keymap.set("n", "<leader>ss", builtins.spell_suggest, { desc = "Spelling Suggestions" })
     vim.keymap.set("n", "<leader>st", builtins.builtin, { desc = "Telescope" })
     --                  "<leader>sT: search todo

@@ -142,14 +142,6 @@ return {
         --   Use telescope to show found references
         vim.keymap.set("n", "grr", telescope.lsp_references, { buffer = bufnr, desc = "Go to References (LSP)" })
 
-        --   Use telescope to show symbols of the current document
-        vim.keymap.set(
-          "n",
-          "gO",
-          telescope.lsp_document_symbols,
-          { buffer = bufnr, desc = "Open Document Symbols (LSP)" }
-        )
-
         -- Go to the definition of the word under your cursor.
         --  This is where a variable was first declared, or where a function is defined, etc.
         --  To jump back, press <C-t>.
@@ -158,6 +150,14 @@ return {
         -- Go to Declaration.
         --  For example, in C this would take you to the header.
         vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { buffer = bufnr, desc = "Go to Declaration (LSP)" })
+
+        --   Use telescope to show symbols of the current document
+        vim.keymap.set(
+          "n",
+          "gO",
+          telescope.lsp_document_symbols,
+          { buffer = bufnr, desc = "Open Document Symbols (LSP)" }
+        )
 
         -- Fuzzy find all the symbols in your current workspace.
         --  Similar to document symbols, except searches over your entire project.

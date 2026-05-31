@@ -94,11 +94,10 @@ vim.keymap.set("n", "[[", "<cmd>lprev<CR>", { desc = "Locklist previous", silent
 -- Tmux-sessionizer from Neovim
 vim.keymap.set("n", "<C-s>", ":!tmux neww tmux-sessionizer<CR>", { desc = "Tmux-sessionizer", silent = true })
 
-vim.keymap.set("n", "<leader>X", "<cmd>!chmod +x %<CR>", { silent = true, desc = "Make current file executable" })
-
--- Remove later
--- vim.keymap.set("n", "<leader><leader>x", "<cmd>.lua<CR>", { desc = "Execute current line", silent = true })
--- vim.keymap.set("n", "<leader><leader>X", "<cmd>source %<CR>", { desc = "Execute current file", silent = true })
+-- Execute lua
+vim.keymap.set("n", "<leader>xl", "<cmd>.lua<CR>", { desc = "Source line", silent = true })
+vim.keymap.set("n", "<leader>xf", "<cmd>source %<CR>", { desc = "Source file", silent = true })
+vim.keymap.set("n", "<leader>xa", "<cmd>!chmod +x %<CR>", { silent = true, desc = "Add execution permissions" })
 
 -- Remane all instances of word under cursor
 -- vim.keymap.set('n', '<leader>S', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])

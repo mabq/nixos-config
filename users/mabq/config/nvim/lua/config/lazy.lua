@@ -32,7 +32,6 @@ end
 
 vim.opt.rtp:prepend(lazypath) -- include path in the `runtimepath` so we can `require` it
 
-
 -- Load and configure Lazy.nvim ------------------------------------------------
 
 require("lazy").setup {
@@ -46,5 +45,4 @@ require("lazy").setup {
 
 -- Keymaps ---------------------------------------------------------------------
 
-vim.keymap.set("n", "<leader>ol", "<CMD>Lazy<CR>", { desc = "Lazy" })
-
+vim.keymap.set("n", "<leader>oL", "<CMD>Lazy<CR>", { desc = "Lazy" })

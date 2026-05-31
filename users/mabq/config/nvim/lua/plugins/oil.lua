@@ -1,5 +1,6 @@
 return {
   "stevearc/oil.nvim",
+  dependencies = { "folke/snacks.nvim" },
   lazy = false, -- documentation strongly recommends loading at startup
   config = function()
     local detail = false -- closure to keep show detail state
@@ -32,8 +33,20 @@ return {
       },
     }
 
-   -- Global keybinds
+    -- Global keybinds
     vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Oil" })
+
+    -- Rename files with LSP
+    --   https://github.com/folke/snacks.nvim/blob/main/docs/rename.md
+    vim.api.nvim_create_autocmd("User", {
+      group = vim.api.nvim_create_augroup("plugins_oil", { clear = true }),
+      pattern = "OilActionsPost",
+      callback = function(event)
+        if event.data.actions[1].type == "move" then
+          Snacks.rename.on_rename_file(event.data.actions[1].src_url, event.data.actions[1].dest_url)
+        end
+      end,
+    })
   end,
 }
 
