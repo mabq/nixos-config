@@ -1,11 +1,13 @@
 -- Options ---------------------------------------------------------------------
+
 vim.o.termguicolors = true -- enable 24-bit colors
 vim.o.cursorline = true -- whether to highlight cursor line
 vim.o.laststatus = 3 -- must be set to `3` to display the horizontal split separator character
 vim.opt.fillchars.vert = "┆" -- vertial split separator character
 vim.opt.fillchars.horiz = "┄" -- horizontal split separator character
 
--- Helper function -------------------------------------------------------------
+-- Helper functions ------------------------------------------------------------
+
 local set_colorscheme = function(colorscheme)
   return function()
     vim.cmd.colorscheme(colorscheme)
@@ -18,6 +20,7 @@ local set_colorscheme = function(colorscheme)
 end
 
 -- Install themes --------------------------------------------------------------
+
 return {
   -- Default theme --
   --   Only this theme is automatically loaded at startup.
@@ -31,7 +34,7 @@ return {
   },
 
   -- Alternative themes --
-  --   Only loaded when setting `:colorscheme <name>`.
+  --   Only loaded when setting `:colorscheme <name>`
 
   -- Catppuccin
   {

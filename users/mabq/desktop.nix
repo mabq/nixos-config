@@ -51,6 +51,7 @@ in {
       bluetui # TUI for managing bluetooth on Linux [4]
       btop # Monitor of resources
       caligula # User-friendly, lightweight TUI for disk imaging
+      delta # Syntax-highlighting pager for git
       exfatprogs # exFAT filesystem userspace utilities
       eza # Modern, maintained replacement for ls (!zsh)
       fastfetch # Actively maintained, feature-rich and performance oriented, neofetch like system information tool
