@@ -1,23 +1,3 @@
---[[
-
-Help:
-  `:h default-mappings`
-  `:h lua-guide-mappings`
-  `:h vim-keymap-set()`
-  `:h map-table` - possible mods
-  `:Telescope keymaps`
-  `:checkhealth which-key` - let you check if there are duplicated keymaps
-
-What each map argument does?
-  `remap` - whether to allow the keymap to trigger other keymaps (default `false`)
-  `silent` - whether to show the command being executed in the command line (default `false`)
-  `expr` - whether to use the returned value of the RHS as the keymap (default `false`).
-  `buffer` - whether to restrict the keymap to a specific file or buffer (default `nil`)
-  `desc` - description of the keymap (default `nil`)
-  `nowait` - whether to disable timeout delay if keys partially overlap (default: `false`)
-
---]]
-
 --------------------------------------------------------------------------------
 -- Options
 --------------------------------------------------------------------------------
@@ -76,8 +56,8 @@ vim.keymap.set("x", ">", ">gv", { desc = "Indent less" })
 --------------------------------------------------------------------------------
 
 -- Scroll window without losing line focus
-vim.keymap.set('n', '<down>', '<C-e>', { desc = 'Scroll down' })
-vim.keymap.set('n', '<up>', '<C-y>', { desc = 'Scroll up' })
+vim.keymap.set("n", "<down>", "<C-e>", { desc = "Scroll down" })
+vim.keymap.set("n", "<up>", "<C-y>", { desc = "Scroll up" })
 
 -- System clipboard / Default register --
 --   In visual mode `Y` yanks the whole line by default. Use `yy` in normal mode instead.
@@ -134,16 +114,33 @@ vim.keymap.set("n", "<C-s>", ":!tmux neww tmux-sessionizer<CR>", { desc = "Tmux-
 -- vim.keymap.set("n", "<leader><leader>x", "<cmd>.lua<CR>", { desc = "Execute current line", silent = true })
 -- vim.keymap.set("n", "<leader><leader>X", "<cmd>source %<CR>", { desc = "Execute current file", silent = true })
 
-
 --------------------------------------------------------------------------------
 -- Leader keymaps
 --------------------------------------------------------------------------------
 
--- vim.keymap.set("n", "<leader>gg", ":LazyGit<CR>", { desc = "Open LazyGit" }) -- TODO: Move
-
 -- vim.keymap.set("n", "<leader>su", ":Undotree<CR>", { desc = "Toggle builtin Undotree" }) -- TODO: move
 
 -- vim.keymap.set('n', '<leader>S', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]) -- remane all instances of word under cursor
--- vim.keymap.set("n", "<leader>x", "<cmd>.lua<CR>", { desc = "Execute the current line" })
--- vim.keymap.set("n", "<leader><leader>x", "<cmd>source %<CR>", { desc = "Source current file (refresh Lua configurations)" })
 -- vim.keymap.set("n", "<leader>X", "<cmd>!chmod +x %<CR>", { silent = true, desc = "Make current file executable" })
+
+--------------------------------------------------------------------------------
+
+--[[
+
+Help:
+  `:h default-mappings`
+  `:h lua-guide-mappings`
+  `:h vim-keymap-set()`
+  `:h map-table` - possible mods
+  `:Telescope keymaps`
+  `:checkhealth which-key` - let you check if there are duplicated keymaps
+
+What each map argument does?
+  `remap` - whether to allow the keymap to trigger other keymaps (default `false`)
+  `silent` - whether to show the command being executed in the command line (default `false`)
+  `expr` - whether to use the returned value of the RHS as the keymap (default `false`).
+  `buffer` - whether to restrict the keymap to a specific file or buffer (default `nil`)
+  `desc` - description of the keymap (default `nil`)
+  `nowait` - whether to disable timeout delay if keys partially overlap (default: `false`)
+
+--]]
