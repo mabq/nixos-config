@@ -1,14 +1,13 @@
-local userGroup = vim.api.nvim_create_augroup("user_settings", { clear = true }) -- clear to avoid duplication when reloading
-local autocmd = vim.api.nvim_create_autocmd
+local group = vim.api.nvim_create_augroup("general_autocommands", { clear = true }) -- clean autocommands before recreating them
 
 --------------------------------------------------------------------------------
--- On filetype
+-- Based on filetype
+--   Check filetype with `:=vim.bo.filetype`
 --------------------------------------------------------------------------------
--- Check filetype with `:=vim.bo.filetype`
 
 -- Close with q
-autocmd("FileType", {
-  group = userGroup,
+vim.api.nvim_create_autocmd("FileType", {
+  group = group,
   pattern = {
     "checkhealth",
     "gitsigns-blame", -- gitsigns plugin
@@ -34,9 +33,15 @@ autocmd("FileType", {
 })
 
 -- Automatically wrap and spellcheck
-autocmd("FileType", {
-  group = userGroup,
-  pattern = { "text", "plaintex", "typst", "gitcommit", "markdown" },
+vim.api.nvim_create_autocmd("FileType", {
+  group = group,
+  pattern = {
+    "text",
+    "plaintex",
+    "typst",
+    "gitcommit",
+    "markdown",
+  },
   callback = function()
     vim.opt_local.wrap = true
     vim.opt_local.spell = true
@@ -44,12 +49,12 @@ autocmd("FileType", {
 })
 
 --------------------------------------------------------------------------------
--- On buffer write
+-- On buffer pre-write
 --------------------------------------------------------------------------------
 
--- Automatically remove all trailling spaces before saving
-autocmd({ "BufWritePre" }, {
-  group = userGroup,
+-- Remove all trailling spaces before saving
+vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+  group = group,
   pattern = "*",
   command = [[%s/\s\+$//e]],
 })
@@ -57,9 +62,9 @@ autocmd({ "BufWritePre" }, {
 --------------------------------------------------------------------------------
 -- On yank
 --------------------------------------------------------------------------------
-autocmd("TextYankPost", {
+vim.api.nvim_create_autocmd("TextYankPost", {
   desc = "Highlight when yanking",
-  group = userGroup,
+  group = group,
   callback = function()
     (vim.hl or vim.highlight).on_yank()
   end,

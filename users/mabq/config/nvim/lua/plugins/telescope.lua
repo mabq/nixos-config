@@ -1,4 +1,4 @@
--- External packages required!
+-- External dependencies
 --   ripgrep      Required by `live_grep` and `grep_string` pickers to search inside files
 --   fd           Required by the `find_files` picker to create the initial list
 --   make         Required to build fzf-native

@@ -1,18 +1,3 @@
---[[
-
-Help:
- `:h vim.o`
- `:h option-list`
- `:h lua-guide-options`
-
-Configure Neovim Options:
-  https://www.youtube.com/watch?v=F1CQVXA5gf0&list=PLep05UYkc6wTyBe7kPjQFWVXTlhKeQejM&index=5
-
-Options and variables explained:
-  https://www.youtube.com/watch?v=Cp0iap9u29c&list=PLx2ksyallYzW4WNYHD9xOFrPRYGlntAft&index=6
-
---]]
-
 vim.o.swapfile = false -- disable swap files
 
 vim.o.undofile = true -- make undo/redo work even after closing the file, see `:h undo-persistence`
@@ -54,3 +39,19 @@ vim.o.mouse = "a" -- enable all mouse modes, can be useful for resizing splits
 vim.o.spelllang = "en_us,es_ec"
 
 vim.o.updatetime = 250 -- decrease update time
+
+--[[
+
+Help:
+ `:h vim.o`
+ `:h option-list`
+ `:h lua-guide-options`
+
+Configure Neovim Options:
+  https://www.youtube.com/watch?v=F1CQVXA5gf0&list=PLep05UYkc6wTyBe7kPjQFWVXTlhKeQejM&index=5
+
+Options and variables explained:
+  https://www.youtube.com/watch?v=Cp0iap9u29c&list=PLx2ksyallYzW4WNYHD9xOFrPRYGlntAft&index=6
+
+--]]
+
