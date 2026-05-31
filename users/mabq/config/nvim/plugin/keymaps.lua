@@ -1,19 +1,15 @@
---------------------------------------------------------------------------------
--- Options
---------------------------------------------------------------------------------
+-- Options ---------------------------------------------------------------------
 
 -- vim.o.timeoutlen = 400 -- edit mapped sequence wait time (default 1000)
 
---------------------------------------------------------------------------------
--- Remove default keymaps
---------------------------------------------------------------------------------
+
+-- Remove default keymaps ------------------------------------------------------
 
 -- Disable Q
 vim.keymap.set("n", "Q", "<nop>", { desc = "(which-key-hide)" })
 
---------------------------------------------------------------------------------
--- Improve default keymaps
---------------------------------------------------------------------------------
+
+-- Improve default keymaps -----------------------------------------------------
 
 -- Use display lines (not real lines) to move up/down
 vim.keymap.set("n", "k", function()
@@ -34,16 +30,6 @@ vim.keymap.set("n", "j", function()
   end
 end, { expr = true, desc = "Line down" })
 
--- NOTE: Should not be needed, see diagnostics file
--- Automatically open diagnostic message with next/previous
--- vim.keymap.set("n", "[d", function()
---   vim.diagnostic.jump { count = -1, float = true }
--- end, { desc = "Previous diagnotic" })
---
--- vim.keymap.set("n", "]d", function()
---   vim.diagnostic.jump { count = 1, float = true }
--- end, { desc = "Next diagnostic" })
-
 -- Don't move cursor position when joining lines
 vim.keymap.set("n", "J", "mzJ`z", { desc = "Join" })
 
@@ -51,9 +37,8 @@ vim.keymap.set("n", "J", "mzJ`z", { desc = "Join" })
 vim.keymap.set("x", "<", "<gv", { desc = "Indent more" })
 vim.keymap.set("x", ">", ">gv", { desc = "Indent less" })
 
---------------------------------------------------------------------------------
--- Override default keymaps
---------------------------------------------------------------------------------
+
+-- Override default keymaps ----------------------------------------------------
 
 -- Scroll window without losing line focus
 vim.keymap.set("n", "<down>", "<C-e>", { desc = "Scroll down" })
@@ -76,9 +61,8 @@ vim.keymap.set("x", "P", [["_dP]], { desc = "Paste without yanking" })
 vim.keymap.set("x", "K", ":<C-u>execute \"'<,'>move '<-\" . (v:count1 + 1)<cr>gv=gv", { desc = "Move line/s up" })
 vim.keymap.set("x", "J", ":<C-u>execute \"'<,'>move '>+\" . v:count1<cr>gv=gv", { desc = "Move line/s down" })
 
---------------------------------------------------------------------------------
--- Create new keymaps
---------------------------------------------------------------------------------
+
+-- Create new keymaps ----------------------------------------------------------
 
 -- Clear matched hightlights on Esc
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search" })
@@ -110,20 +94,14 @@ vim.keymap.set("n", "[[", "<cmd>lprev<CR>", { desc = "Locklist previous", silent
 -- Tmux-sessionizer from Neovim
 vim.keymap.set("n", "<C-s>", ":!tmux neww tmux-sessionizer<CR>", { desc = "Tmux-sessionizer", silent = true })
 
+vim.keymap.set("n", "<leader>X", "<cmd>!chmod +x %<CR>", { silent = true, desc = "Make current file executable" })
+
 -- Remove later
 -- vim.keymap.set("n", "<leader><leader>x", "<cmd>.lua<CR>", { desc = "Execute current line", silent = true })
 -- vim.keymap.set("n", "<leader><leader>X", "<cmd>source %<CR>", { desc = "Execute current file", silent = true })
 
---------------------------------------------------------------------------------
--- Leader keymaps
---------------------------------------------------------------------------------
-
--- vim.keymap.set("n", "<leader>su", ":Undotree<CR>", { desc = "Toggle builtin Undotree" }) -- TODO: move
-
--- vim.keymap.set('n', '<leader>S', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]) -- remane all instances of word under cursor
--- vim.keymap.set("n", "<leader>X", "<cmd>!chmod +x %<CR>", { silent = true, desc = "Make current file executable" })
-
---------------------------------------------------------------------------------
+-- Remane all instances of word under cursor
+-- vim.keymap.set('n', '<leader>S', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 
 --[[
 
