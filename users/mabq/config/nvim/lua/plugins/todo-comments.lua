@@ -10,7 +10,7 @@ return {
     }
 
     -- Keymaps
-    vim.keymap.set("n", "<leader>sT", "<CMD>TodoTelescope<CR>", { desc = "Todo marks" }) -- from here you can send results to quickfix list
+    vim.keymap.set("n", "<leader>sT", "<CMD>TodoTelescope<CR>", { desc = "Todo comments" }) -- from here you can send results to quickfix list
   end
 }
 
