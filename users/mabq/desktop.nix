@@ -6,18 +6,20 @@
   projectName,
   repoPath,
   ...
-}: let
+}:
+let
   theme = "catppuccin"; # must match one of the directory names in the themes folder
 
   repoUserPath = "${repoPath}/users/${user}";
   configPath = "${repoUserPath}/config";
   currentThemePath = "/home/${user}/.config/${projectName}/current/theme";
 
- mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
+  mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
 
   # Helper function to force-enable all files in an attribute set
-  forceFiles = fileSet: lib.mapAttrs (name: value: value // {force = true;}) fileSet;
-in {
+  forceFiles = fileSet: lib.mapAttrs (name: value: value // { force = true; }) fileSet;
+in
+{
   home = {
     file = forceFiles {
       ".zshenv".text = ''
@@ -261,4 +263,3 @@ in {
 #
 # 4. In order for bluetui to work the pipewire user service must be active, try executing
 #    `wiremix` to start it.
-
