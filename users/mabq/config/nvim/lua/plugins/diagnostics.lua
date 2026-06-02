@@ -46,12 +46,12 @@ return {
     },
   },
   keys = {
-    { "<leader>od", "<cmd>Trouble diagnostics toggle<cr>", desc = "Diagnostics" },
-    { "<leader>oD", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Diagnostics (buffer)" },
+    -- { "<leader>od", "<cmd>Trouble diagnostics toggle<cr>", desc = "Diagnostics" },
+    -- { "<leader>oD", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Diagnostics (buffer)" },
     -- { "<leader>ds", "<cmd>Trouble symbols toggle<cr>", desc = "Symbols" },
     -- { "<leader>dS", "<cmd>Trouble lsp toggle<cr>", desc = "Symbols (LSP)" },
-    { "<leader>ol", "<cmd>Trouble loclist toggle<cr>", desc = "Location List" },
-    { "<leader>oq", "<cmd>Trouble qflist toggle<cr>", desc = "Quickfix List" },
+    -- { "<leader>dl", "<cmd>Trouble loclist toggle<cr>", desc = "Location List" },
+    -- { "<leader>dq", "<cmd>Trouble qflist toggle<cr>", desc = "Quickfix List" },
     -- {
     --   "[q",
     --   function()

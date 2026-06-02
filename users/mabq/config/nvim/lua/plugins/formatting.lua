@@ -35,6 +35,7 @@ return {
 
   {
     "stevearc/conform.nvim", ---------------------------------------------------
+    lazy = false,
     keys = {
       {
         "<leader>cf",
