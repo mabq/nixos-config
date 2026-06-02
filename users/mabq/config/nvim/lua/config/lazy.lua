@@ -1,21 +1,6 @@
---[[
-
-Lazy.nvim configuration:
-  https://lazy.folke.io/configuration
-
-Plugin spec:
-  https://lazy.folke.io/spec
-
-  A plugin is considered lazy-loaded if ANY of the following attributes exist
-  on the spec: `event`, `cmd`, `ft`, `keys`, `lazy = true`.
-
---]]
-
 -- Bootstrap lazy.nvim in new setups -------------------------------------------
 --   https://lazy.folke.io/installation
-
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
-
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = "https://github.com/folke/lazy.nvim.git"
   local out = vim.fn.system { "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath }
@@ -29,11 +14,9 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
     os.exit(1)
   end
 end
-
 vim.opt.rtp:prepend(lazypath) -- include path in the `runtimepath` so we can `require` it
 
 -- Load and configure Lazy.nvim ------------------------------------------------
-
 require("lazy").setup {
   spec = {
     { import = "plugins" }, -- this is where lazy.nvim looks for plugin specs
@@ -44,5 +27,17 @@ require("lazy").setup {
 }
 
 -- Keymaps ---------------------------------------------------------------------
-
 vim.keymap.set("n", "<leader>ol", "<CMD>Lazy<CR>", { desc = "Lazy" })
+
+--[[
+
+Lazy.nvim configuration:
+  https://lazy.folke.io/configuration
+
+Plugin spec:
+  https://lazy.folke.io/spec
+
+  A plugin is considered lazy-loaded if ANY of the following attributes exist
+  on the spec: `event`, `cmd`, `ft`, `keys`, `lazy = true`.
+
+--]]
