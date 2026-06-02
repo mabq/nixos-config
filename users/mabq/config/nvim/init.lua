@@ -1,6 +1,6 @@
 -- Must be set before loading plugins, otherwise the wrong mapleader is used
 vim.g.mapleader = " "
-vim.g.maplocalleader = "," -- not needed because of flash plugin
+vim.g.maplocalleader = "," -- use flash instead to jump
 
 -- Enable new core ui
 --   Adds syntax highlighting to command line.
@@ -25,27 +25,42 @@ require "config.lazy"
 
 Default config directory:
 
-  `~/.config/nvim/` is the default config directory, in there Neovim will look
-  for a file called `init.lua`.
+  `~/.config/nvim/` is the default config directory - to use a different
+  directory start Neovim like this:
+   `NVIM_APPNAME=<directory> nvim`
 
-  Use `NVIM_APPNAME=<directory> nvim` to instruct Neovim to look for `init.lua`
-  in a different directory.
+  Inside that directory, Neovim will look for the `init.lua` file.
 
 Requering other files:
 
-  You can require any file that is inside a `<runtimepath>/lua/` directory.
+  Neovim can require any file that is inside a `lua` directory in the
+  runtimepath. Check which directories are in the runtimepath with:
+   `:echo nvim_list_runtime_paths()`
 
-  The runtimepath is simply a list of directories where Neovim will look for
-  lua files. Use the following command to check the runtimepath:
-    `:echo nvim_list_runtime_paths()`
+Direct startup directories:
 
-Startup sequence:
+  Files placed inside these directories are executed automatically by Neovim
+  during initialization:
 
-  This is the first file sourced at startup, from here we source
-  `./lua/config/lazy.lua` which will source all plugin files.
+  `plugin/`
+    All directories in the runtimepath will be searched for the `plugin`
+    sub-directory and all files ending in `.vim` or `.lua` will be sourced (in
+    alphabetical order per directory), also in subdirectories.
+     `:h load-plugins`
 
-  All files inside `~/.config/nvim/plugin/..` are automatically sourced by
-  Neovim as part of the startup sequence.
+  `ftplugin/`
+    Special files that are only sourced for buffers of the given filetype.
+    For example: `ftplugin/go.lua` is sourced when the filetype is `go`.
+    https://www.youtube.com/watch?v=F1CQVXA5gf0&list=PLep05UYkc6wTyBe7kPjQFWVXTlhKeQejM&index=5
+
+  `after/`
+    This directory mimics the entire runtime structure (`after/plugin/`,
+    `after/ftplugin/`), but Neovim processes it at the absolute end of startup,
+    after all standard scripts and plugins have loaded.
+    Best for overriding a setting or keymap that a third-party plugin keeps
+    trying to overwrite during startup.
+
+  To learn more about special directories, see:
     `:h starting`
     `:h runtimepath`
     `:h standard-path

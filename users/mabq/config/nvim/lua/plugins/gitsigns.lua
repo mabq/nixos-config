@@ -7,8 +7,8 @@ return {
     },
     on_attach = function() -- function provided by the plugin
       local gitsigns = require "gitsigns"
-      vim.keymap.set("n", "<leader>tgs", gitsigns.toggle_signs, { desc = "Gitsigns" })
-      vim.keymap.set("n", "<leader>tgb", gitsigns.toggle_current_line_blame, { desc = "Blame" })
+      vim.keymap.set("n", "<leader>ts", gitsigns.toggle_signs, { desc = "Gitsigns" })
+      vim.keymap.set("n", "<leader>tb", gitsigns.toggle_current_line_blame, { desc = "Blame" })
     end,
   },
 }

@@ -13,7 +13,7 @@
   configPath = "${repoUserPath}/config";
   currentThemePath = "/home/${user}/.config/${projectName}/current/theme";
 
-  mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
+ mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
 
   # Helper function to force-enable all files in an attribute set
   forceFiles = fileSet: lib.mapAttrs (name: value: value // {force = true;}) fileSet;
@@ -71,7 +71,8 @@ in {
       ncdu # Disk usage analyzer with an ncurses interface
       neovim # Vim text editor fork
       nix-tree # Interactively browse a Nix store paths dependencies
-      nixd # Feature-rich Nix language server interoperating with C++ nix
+      nixd # Feature-rich Nix language server interoperating with C++ nix (!neovim)
+      nixfmt # Official formatter for Nix code (!neovim)
       parted # Create, destroy, resize, check, and copy partitions (!zsh fuctions)
       pciutils # Provides the `lspci` command
       ripgrep # Utility that combines the usability of The Silver Searcher with the raw speed of grep (!neovim)

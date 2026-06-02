@@ -22,11 +22,11 @@ local function try_attach(buf, language)
   -- vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 
   -- Indentation
-  local has_indent_query = vim.treesitter.query.get(language, "indents") ~= nil
-  if has_indent_query then
-    -- 'indentexpr' takes precedence over 'smartindent'
-    vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-  end
+  -- local has_indent_query = vim.treesitter.query.get(language, "indents") ~= nil
+  -- if has_indent_query then
+  --   -- 'indentexpr' takes precedence over 'smartindent'
+  --   vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+  -- end
 end
 
 --------------------------------------------------------------------------------

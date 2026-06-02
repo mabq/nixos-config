@@ -109,6 +109,7 @@ return {
   config = function()
     -- Customizations to language servers
     --   These will be merged with the ones provided by nvim-lspconfig
+    --   See `:h lspconfig-all`
     local servers = {
       lua_ls = {
         settings = {
@@ -117,6 +118,7 @@ return {
           },
         },
       },
+      nixd = {},
     }
 
     -- Configure and enable

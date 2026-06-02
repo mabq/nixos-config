@@ -5,70 +5,70 @@ vim.o.softtabstop = -1 -- Columns multiple for Tab in insert mode (`-1` == `shif
 vim.o.expandtab = true -- Whether to insert spaces instead of a Tab character (does not convert existing tabs)
 
 return {
-  {
-    "nmac427/guess-indent.nvim", -----------------------------------------------
-    opts = {
-      -- https://github.com/NMAC427/guess-indent.nvim#configuration
-      auto_cmd = true, -- whether to automatically execute when openning a buffer (a few milliseconds top) - toggle manually with `:Guess-indent`
-      override_editorconfig = false, -- whether to override settings set by `.editorconfig`
-      filetype_exclude = { -- filetypes for which the auto command gets disabled
-        "netrw",
-        "tutor",
-      },
-      buftype_exclude = { -- buffer types for which the auto-command gets disabled
-        "help",
-        "nofile",
-        "terminal",
-        "prompt",
-      },
-      on_tab_options = { -- config when tabs are detected
-        expandtab = false,
-      },
-      on_space_options = { -- config when spaces are detected
-        expandtab = true,
-        tabstop = "detected", -- if the option value is 'detected', the value is set to the automatically detected indent size
-        softtabstop = "detected",
-        shiftwidth = "detected",
-      },
-    },
-  },
+	{
+		"nmac427/guess-indent.nvim", -----------------------------------------------
+		opts = {
+			-- https://github.com/NMAC427/guess-indent.nvim#configuration
+			auto_cmd = true, -- whether to automatically execute when openning a buffer (a few milliseconds top) - toggle manually with `:Guess-indent`
+			override_editorconfig = false, -- whether to override settings set by `.editorconfig`
+			filetype_exclude = { -- filetypes for which the auto command gets disabled
+				"netrw",
+				"tutor",
+			},
+			buftype_exclude = { -- buffer types for which the auto-command gets disabled
+				"help",
+				"nofile",
+				"terminal",
+				"prompt",
+			},
+			on_tab_options = { -- config when tabs are detected
+				expandtab = false,
+			},
+			on_space_options = { -- config when spaces are detected
+				expandtab = true,
+				tabstop = "detected", -- if the option value is 'detected', the value is set to the automatically detected indent size
+				softtabstop = "detected",
+				shiftwidth = "detected",
+			},
+		},
+	},
 
-  {
-    "stevearc/conform.nvim", ---------------------------------------------------
-    lazy = false,
-    keys = {
-      {
-        "<leader>cf",
-        function()
-          require("conform").format()
-        end,
-        mode = { "n", "x" },
-        desc = "Format (Conform)",
-      },
-    },
-    opts = {
-      -- Make sure these tools are available in the system, check with `:h checkhealth conform`
-      -- For configuration options, see `:h conform.setup`
-      formatters_by_ft = {
-        lua = { "stylua", lsp_format = "never" },
-        markdown = { "biome" },
-        css = { "biome" },
-        javascript = { "biome" },
-        typescript = { "biome" },
-        json = { "biome" },
-        jsonc = { "biome" },
-        sh = { "shfmt" },
-      },
-      default_format_opts = {
-        async = true, -- do not block
-        lsp_format = "fallback", -- only used when no other formatters are available
-        stop_after_first = true, -- by default only apply one, not all in sequence
-      },
-      format_on_save = true,
-      notify_on_error = true,
-      notify_no_formatters = true,
-    },
-  },
+	{
+		"stevearc/conform.nvim", ---------------------------------------------------
+		lazy = false,
+		keys = {
+			{
+				"<leader>cf",
+				function()
+					require("conform").format()
+				end,
+				mode = { "n", "x" },
+				desc = "Format (Conform)",
+			},
+		},
+		opts = {
+			-- Make sure these tools are available in the system, check with `:h checkhealth conform`
+			-- For configuration options, see `:h conform.setup`
+			formatters_by_ft = {
+				lua = { "stylua", lsp_format = "never" },
+				markdown = { "biome" },
+				css = { "biome" },
+				javascript = { "biome" },
+				typescript = { "biome" },
+				json = { "biome" },
+				jsonc = { "biome" },
+				sh = { "shfmt" },
+			},
+			default_format_opts = {
+				async = true, -- do not block
+				lsp_format = "fallback", -- only used when no other formatters are available
+				stop_after_first = true, -- by default only apply one, not all in sequence
+			},
+			format_on_save = true,
+			notify_on_error = true,
+			notify_no_formatters = true,
+		},
+	},
 }
 
 --[[
