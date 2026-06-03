@@ -22,6 +22,8 @@ vim.o.listchars = "tab:· ,trail:·,nbsp:␣" -- how to display these whitespace
 vim.o.number = true
 vim.o.relativenumber = true
 
+vim.o.termguicolors = true -- enable 24-bit colors
+
 vim.o.guicursor = "" -- always show block cursor
 vim.o.signcolumn = "yes" -- keep signcolumn on by default
 
@@ -30,6 +32,7 @@ vim.o.scrolloff = 4 -- minimal number of screen lines to keep above and below th
 vim.o.confirm = true -- raise a dialog when trying to quit an unsaved buffer
 
 -- vim.o.colorcolumn = "80" -- colums to highlight
+vim.o.cursorline = true -- whether to highlight cursor line
 
 vim.o.splitbelow = true -- horizontal splits to the bottom
 vim.o.splitright = true -- vertical splits to the right
@@ -54,4 +57,3 @@ Options and variables explained:
   https://www.youtube.com/watch?v=Cp0iap9u29c&list=PLx2ksyallYzW4WNYHD9xOFrPRYGlntAft&index=6
 
 --]]
-

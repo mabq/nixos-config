@@ -2,13 +2,14 @@
 
 local set_colorscheme = function(colorscheme)
   return function()
-    vim.cmd.colorscheme(colorscheme)
-
     vim.o.laststatus = 3 -- must be set to `3` to display the horizontal split separator character
-    vim.opt.fillchars.vert = "┆" -- vertial split separator character
-    vim.opt.fillchars.horiz = "┄" -- horizontal split separator character
-    vim.o.termguicolors = true -- enable 24-bit colors
-    vim.o.cursorline = true -- whether to highlight cursor line
+    vim.opt.fillchars = {
+      vert = "┆",
+      horiz = "╌", -- horizontal split separator character
+      eob = " ", -- hide tildes at the end of buffer
+    }
+
+    vim.cmd.colorscheme(colorscheme)
 
     -- Make the separator character more visible
     --  Must be set after setting the theme to pick the correct highlight group
