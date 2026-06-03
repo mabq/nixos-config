@@ -30,4 +30,4 @@ vim.keymap.set("", "<leader>tl", function()
   end
 end, { desc = "Virtual Lines" })
 
-vim.keymap.set("n", "<leader>d", vim.diagnostic.setqflist, { desc = "Diagnostics" })
+vim.keymap.set("n", "<leader>d", vim.diagnostic.setqflist, { desc = "Diagnostics" }) -- add all diagnostics to the quickfix list

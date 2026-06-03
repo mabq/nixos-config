@@ -59,6 +59,7 @@ in
       eza # Modern, maintained replacement for ls (!zsh)
       fastfetch # Actively maintained, feature-rich and performance oriented, neofetch like system information tool
       fd # Simple, fast and user-friendly alternative to find (!neovim)
+      fff # Fucking Fast File-Manager
       ffmpeg # Complete, cross-platform solution to record, convert and stream audio and video
       fzf # Command-line fuzzy finder (!yazi)
       gcc # GNU Compiler Collection
