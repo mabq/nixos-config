@@ -1,185 +1,186 @@
+-- See notes at the bottom --
+
 return {
-  "neovim/nvim-lspconfig",
-  dependencies = {
-    {
-      -- Auto-completion configuration -----------------------------------------
-
-      "saghen/blink.cmp", -- completion plugin with support for LSPs, cmdline, signature help and snippets
-      version = "1.*", -- use a release tag to download pre-built binaries
-      dependencies = {
-        -- {
-        --   "L3MON4D3/LuaSnip", -- Snippet engine
-        --   version = "v2.*",
-        --   build = "make install_jsregexp", -- Install jsregexp (optional)
-        --   config = function()
-        --     require("luasnip.loaders.from_vscode").lazy_load() -- load friendly-snippets
-        --   end,
-        -- },
-        { "rafamadriz/friendly-snippets" }, -- snippet source
-        { "moyiz/blink-emoji.nvim" }, -- emoji source
-        {
-          "folke/lazydev.nvim", -- configures LuaLS to support auto-completion and type checking while editing your Neovim configuration.
-          dependencies = {
-            "Bilal2453/luvit-meta", -- autocompletion and type information for Neovim's `vim.uv` API, see `:h luvref`
-            lazy = true,
-          },
-          ft = "lua", -- lazy-load on filetype
-          cmd = "LazyDev",
-          opts = {
-            library = {
-              { path = "luvit-meta/library", words = { "vim%.uv" } }, -- Load luvit types when the `vim.uv` word is found
-              -- { path = "/usr/share/awesome/lib/", words = { "awesome" } },
-              { path = "LazyVim", words = { "LazyVim" } },
-              -- { path = "snacks.nvim", words = { "Snacks" } },
-              { path = "lazy.nvim", words = { "LazyVim" } },
-              { path = "nvim-lspconfig", words = { "lspconfig.settings" } },
-            },
-          },
-        },
-        -- { "b0o/SchemaStore.nvim", },
-        -- { "j-hui/fidget.nvim", opts = {} },
-        -- {
-        --   "dmmulroy/tsc.nvim",
-        --   config = function()
-        --     require("tsc").setup {
-        --       run_as_monorepo = true,
-        --     }
-        --   end,
-        -- },
-        -- {
-        --   "pmizio/typescript-tools.nvim",
-        --   dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-        -- },
-
-        --  Schema is a file that describes the shape of another file — what
-        --  fields exist, what types they are, which are required, what the valid
-        --  values are. SchemaStore is simply a central place where thousands of
-        --  these descriptions are maintained for common tools.
-      },
-      opts = {
-        keymap = {
-          preset = "default", -- use same built-in completions
-          --  <c-space>                   Open menu or open docs if already open
-          --  <c-e>                       Hide menu
-          --  <c-y>                       Accept
-          --  <tab>/<s-tab>               Move to right/left of your snippet expansion
-          --  <c-n>/<c-p> or <up>/<down>  Select next/previous item
-          --  <c-k>                       Toggle signature help
-          -- See :h blink-cmp-config-keymap for defining your own keymap
-        },
-        appearance = {
-          -- Adjusts spacing to ensure icons are aligned
-          nerd_font_variant = "mono", -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
-        },
-        completion = {
-          documentation = {
-            auto_show = false, -- only show the documentation popup when manually triggered
-          },
-        },
-        sources = {
-          -- Default list of enabled providers defined so that you can extend it
-          -- elsewhere in your config, without redefining it, due to `opts_extend`
-          default = { "lazydev", "lsp", "path", "snippets", "buffer", "emoji" },
-          providers = {
-            lazydev = {
-              name = "LazyDev",
-              module = "lazydev.integrations.blink",
-              score_offset = 100, -- make lazydev top priority (`:h blink.cmp`)
-            },
-            emoji = {
-              name = "Emoji",
-              module = "blink-emoji",
-            },
-          },
-        },
-        -- (Default) Rust fuzzy matcher for typo resistance and significantly
-        -- better performance You may use a lua implementation instead by using
-        -- `implementation = "lua"` or fallback to the lua implementation, when
-        -- the Rust fuzzy matcher is not available, by using `implementation =
-        -- "prefer_rust"`
-        -- See the fuzzy documentation for more information
-        fuzzy = { implementation = "prefer_rust_with_warning" },
-      },
-      opts_extend = { "sources.default" },
+  {
+    -- Auto-completion ---------------------------------------------------------
+    --   Supports LSPs, cmdline, signature help and snippets
+    "saghen/blink.cmp",
+    version = "1.*", -- use a release tag to download pre-built binaries
+    dependencies = {
+      { "rafamadriz/friendly-snippets" }, -- snippet source
+      { "moyiz/blink-emoji.nvim" }, -- emoji source
     },
+    opts = {
+      keymap = { preset = "default" }, -- see https://cmp.saghen.dev/configuration/keymap.html#default
+      appearance = {
+        nerd_font_variant = "mono", -- adjusts spacing to ensure icons are aligned
+      },
+      completion = {
+        documentation = {
+          auto_show = false, -- only show the documentation popup when manually triggered
+        },
+      },
+      sources = {
+        default = { "lsp", "path", "snippets", "buffer", "emoji" },
+        providers = {
+          emoji = {
+            name = "Emoji",
+            module = "blink-emoji",
+          },
+        },
+      },
+      fuzzy = { implementation = "prefer_rust_with_warning" }, -- https://cmp.saghen.dev/configuration/fuzzy.html
+    },
+    opts_extend = { "sources.default" },
   },
 
-  -- LSP configuration -------------------------------------------------------
-
-  config = function()
-    -- Customizations to language servers
-    --   These will be merged with the ones provided by nvim-lspconfig
-    --   See `:h lspconfig-all`
-    local servers = {
-      lua_ls = {
-        settings = {
-          Lua = {
-            format = { enable = false }, -- formatting is done by stylua
+  {
+    -- LSP config --------------------------------------------------------------
+    "neovim/nvim-lspconfig",
+    config = function()
+      -- Configure LSPs:
+      --   These customized configurations will be merged with the ones
+      --   provided by nvim-lspconfig. Pass an emtpy table `{}` to use the
+      --   default config.
+      --
+      --   Use `:h lspconfig-all` to search the configuration of the desired
+      --   LSP.
+      --
+      --   Make sure the command described in the configuration is available in
+      --   the system with `:echo executable(<command>)`. For example, the
+      --   `lua_ls` configuration expects to find the `lua-language-server`
+      --   command.
+      local servers = {
+        -- Lua (lua_ls requires `lua-language-server`)
+        lua_ls = {
+          on_init = function(client)
+            if client.workspace_folders then
+              local path = client.workspace_folders[1].name
+              if
+                path ~= vim.fn.stdpath "config"
+                and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
+              then
+                return
+              end
+            end
+            client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
+              runtime = {
+                -- Tell the language server which version of Lua you're using (most
+                -- likely LuaJIT in the case of Neovim)
+                version = "LuaJIT",
+                -- Tell the language server how to find Lua modules same way as Neovim
+                -- (see `:h lua-module-load`)
+                path = {
+                  "lua/?.lua",
+                  "lua/?/init.lua",
+                },
+              },
+              -- Make the server aware of Neovim runtime files
+              workspace = {
+                checkThirdParty = false,
+                library = {
+                  vim.env.VIMRUNTIME,
+                  -- For LSP Settings Type Annotations: https://github.com/neovim/nvim-lspconfig#lsp-settings-type-annotations
+                  vim.api.nvim_get_runtime_file("lua/lspconfig", false)[1],
+                },
+                -- Or pull in all of 'runtimepath'.
+                -- NOTE: this is a lot slower and will cause issues when working on
+                -- your own configuration.
+                -- See https://github.com/neovim/nvim-lspconfig/issues/3189
+                -- library = vim.api.nvim_get_runtime_file('', true),
+              },
+            })
+          end,
+          settings = {
+            Lua = {},
           },
         },
-      },
-      nixd = {},
-    }
 
-    -- Configure and enable
-    for name, config in pairs(servers) do
-      config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities) -- add LSP capabilities provided by Blink
-      vim.lsp.config(name, config)
-      vim.lsp.enable(name)
-    end
+        -- Nix (nixd required `nixd`)
+        nixd = {},
+      }
 
-    -- Add keymaps to the buffer when an LSP is attached
-    vim.api.nvim_create_autocmd("LspAttach", {
-      group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }), -- clear to avoid duplication
-      callback = function(event)
-        local bufnr = event.buf
-        local client = assert(vim.lsp.get_client_by_id(event.data.client_id), "Must have valid client (LSP)")
-        local telescope = require "telescope.builtin"
+      -- Configure and enable
+      for name, config in pairs(servers) do
+        config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities) -- add LSP capabilities provided by Blink
+        vim.lsp.config(name, config)
+        vim.lsp.enable(name)
+      end
 
-        vim.opt_local.omnifunc = "v:lua.vim.lsp.omnifunc"
+      -- Add keymaps to the buffer when an LSP is attached
+      vim.api.nvim_create_autocmd("LspAttach", {
+        group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }), -- clear to avoid duplication
+        callback = function(event)
+          local bufnr = event.buf
+          local client = assert(vim.lsp.get_client_by_id(event.data.client_id), "Must have valid client (LSP)")
+          local telescope = require "telescope.builtin"
 
-        -- Customize default lsp keymaps (see `:h lsp-defaults`) -------------
-        --   K is not listed in the documentation but it works
+          vim.opt_local.omnifunc = "v:lua.vim.lsp.omnifunc"
 
-        --   Use telescope to show found references
-        vim.keymap.set("n", "grr", telescope.lsp_references, { buffer = bufnr, desc = "Go to References (LSP)" })
+          -- Customize default lsp keymaps (see `:h lsp-defaults`) -------------
+          --   K is not listed in the documentation but it works
 
-        -- Go to the definition of the word under your cursor.
-        --  This is where a variable was first declared, or where a function is defined, etc.
-        --  To jump back, press <C-t>.
-        vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = bufnr, desc = "Go to Definition (LSP)" })
+          --   Use telescope to show found references
+          vim.keymap.set("n", "grr", telescope.lsp_references, { buffer = bufnr, desc = "Go to References (LSP)" })
 
-        -- Go to Declaration.
-        --  For example, in C this would take you to the header.
-        vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { buffer = bufnr, desc = "Go to Declaration (LSP)" })
+          -- Go to the definition of the word under your cursor.
+          --  This is where a variable was first declared, or where a function is defined, etc.
+          --  To jump back, press <C-t>.
+          vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = bufnr, desc = "Go to Definition (LSP)" })
 
-        --   Use telescope to show symbols of the current document
-        vim.keymap.set(
-          "n",
-          "gO",
-          telescope.lsp_document_symbols,
-          { buffer = bufnr, desc = "Open Document Symbols (LSP)" }
-        )
+          -- Go to Declaration.
+          --  For example, in C this would take you to the header.
+          vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { buffer = bufnr, desc = "Go to Declaration (LSP)" })
 
-        -- Fuzzy find all the symbols in your current workspace.
-        --  Similar to document symbols, except searches over your entire project.
-        vim.keymap.set(
-          "n",
-          "gW",
-          telescope.lsp_dynamic_workspace_symbols,
-          { buffer = bufnr, desc = "Open Workspace Symbols (LSP)" }
-        )
+          --   Use telescope to show symbols of the current document
+          vim.keymap.set(
+            "n",
+            "gO",
+            telescope.lsp_document_symbols,
+            { buffer = bufnr, desc = "Open Document Symbols (LSP)" }
+          )
 
-        -- Create a keymap to toggle inlay hints (if the language server supports them)
-        --  This may be unwanted, since they displace some of your code
-        if client and client:supports_method("textDocument/inlayHint", bufnr) then
-          vim.keymap.set("n", "<leader>ti", function()
-            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = bufnr })
-          end, { buffer = bufnr, desc = "Inlay Hints (LSP)" })
-        end
-      end,
-    })
-  end,
+          -- Fuzzy find all the symbols in your current workspace.
+          --  Similar to document symbols, except searches over your entire project.
+          vim.keymap.set(
+            "n",
+            "gW",
+            telescope.lsp_dynamic_workspace_symbols,
+            { buffer = bufnr, desc = "Open Workspace Symbols (LSP)" }
+          )
+
+          -- Create a keymap to toggle inlay hints (if the language server supports them)
+          --  This may be unwanted, since they displace some of your code
+          if client and client:supports_method("textDocument/inlayHint", bufnr) then
+            vim.keymap.set("n", "<leader>ti", function()
+              vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = bufnr })
+            end, { buffer = bufnr, desc = "Inlay Hints (LSP)" })
+          end
+        end,
+      })
+    end,
+  },
+
+  --  Schema is a file that describes the shape of another file — what
+  --  fields exist, what types they are, which are required, what the valid
+  --  values are. SchemaStore is simply a central place where thousands of
+  --  these descriptions are maintained for common tools.
+  -- { "b0o/SchemaStore.nvim", },
+  --
+  -- { "j-hui/fidget.nvim", opts = {} },
+  --
+  -- {
+  --   "dmmulroy/tsc.nvim",
+  --   config = function()
+  --     require("tsc").setup {
+  --       run_as_monorepo = true,
+  --     }
+  --   end,
+  -- },
+  -- {
+  --   "pmizio/typescript-tools.nvim",
+  --   dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+  -- },
 }
 
 --[[
