@@ -16,6 +16,9 @@ return {
       --   `lua_ls` configuration expects to find the `lua-language-server`
       --   command.
       local servers = {
+        -- Bash (bashls requires `bash-language-server`)
+        bashls = {},
+
         -- Lua (lua_ls requires `lua-language-server`)
         lua_ls = {
           on_init = function(client)

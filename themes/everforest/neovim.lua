@@ -3,7 +3,7 @@ return {
   lazy = false,
   priority = 1000,
   config = function()
-    vim.cmd.colorscheme "everforest-nvim"
+    vim.cmd.colorscheme "everforest"
 
     -- Make the separator character more visible
     --  Must be set after setting the theme to pick the correct highlight group

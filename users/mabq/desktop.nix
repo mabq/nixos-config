@@ -52,6 +52,7 @@ in
       age # Modern encryption tool with small explicit keys
       atuin # Replacement for a shell history
       bat # Cat clone with syntax highlighting and Git integration
+      bash-language-server # Language server for Bash
       biome # Toolchain of the web (!neovim)
       bluetui # TUI for managing bluetooth on Linux [4]
       btop # Monitor of resources
