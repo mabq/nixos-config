@@ -27,6 +27,13 @@ vim.o.termguicolors = true -- enable 24-bit colors
 vim.o.guicursor = "" -- always show block cursor
 vim.o.signcolumn = "yes" -- keep signcolumn on by default
 
+vim.opt.fillchars = {
+  vert = "┆",
+  horiz = "╌", -- horizontal split separator character
+  eob = " ", -- hide tildes at the end of buffer
+}
+vim.o.laststatus = 3 -- must be set to `3` to display the horizontal split separator character
+
 vim.o.showmode = false -- do not show edit mode
 vim.o.scrolloff = 4 -- minimal number of screen lines to keep above and below the cursor
 vim.o.confirm = true -- raise a dialog when trying to quit an unsaved buffer

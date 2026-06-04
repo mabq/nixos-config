@@ -3,10 +3,10 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = "," -- use flash instead to jump
 
 -- Enable new core ui
---   Adds syntax highlighting to command line.
---   Enter the message buffer with `g<`.
---   `:h ui2`
---   https://www.youtube.com/watch?v=h1sCwi0pNyM
+--  Adds syntax highlighting to command line.
+--  Enter the message buffer with `g<`.
+--  `:h ui2`
+--  https://www.youtube.com/watch?v=h1sCwi0pNyM
 require("vim._core.ui2").enable {
   enable = true,
   msg = {

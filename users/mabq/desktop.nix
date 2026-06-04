@@ -40,6 +40,7 @@ in
       # Theme related files (change the theme by just updating the pointer).
       ".config/${projectName}/current/theme".source = mkOutOfStoreSymlink "${repoPath}/themes/${theme}";
       ".config/btop/themes/current.theme".source = mkOutOfStoreSymlink "${currentThemePath}/btop.theme";
+      ".config/nvim/lua/plugins/theme.lua".source = mkOutOfStoreSymlink "${currentThemePath}/neovim.lua";
     };
 
     homeDirectory = "/home/${user}"; # TODO: check if needed

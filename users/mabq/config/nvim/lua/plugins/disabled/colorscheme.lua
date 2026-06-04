@@ -2,13 +2,6 @@
 
 local set_colorscheme = function(colorscheme)
   return function()
-    vim.o.laststatus = 3 -- must be set to `3` to display the horizontal split separator character
-    vim.opt.fillchars = {
-      vert = "┆",
-      horiz = "╌", -- horizontal split separator character
-      eob = " ", -- hide tildes at the end of buffer
-    }
-
     vim.cmd.colorscheme(colorscheme)
 
     -- Make the separator character more visible
