@@ -8,7 +8,7 @@
   ...
 }:
 let
-  theme = "catppuccin"; # must match one of the directory names in the themes folder
+  theme = "tokyo-night"; # must match one of the directory names in the themes folder
 
   repoUserPath = "${repoPath}/users/${user}";
   configPath = "${repoUserPath}/config";
