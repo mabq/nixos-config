@@ -51,13 +51,13 @@ in
       # luarocks # A package manager for Lua modules (!neovim)
       age # Modern encryption tool with small explicit keys
       atuin # Replacement for a shell history
-      bat # Cat clone with syntax highlighting and Git integration
       bash-language-server # Language server for Bash
+      bat # Cat clone with syntax highlighting and Git integration
       biome # Toolchain of the web (!neovim)
       bluetui # TUI for managing bluetooth on Linux [4]
       btop # Monitor of resources
       caligula # User-friendly, lightweight TUI for disk imaging
-      delta # Syntax-highlighting pager for git
+      delta # Syntax-highlighting pager for git (!lazygit)
       exfatprogs # exFAT filesystem userspace utilities
       eza # Modern, maintained replacement for ls (!zsh)
       fastfetch # Actively maintained, feature-rich and performance oriented, neofetch like system information tool
@@ -257,12 +257,6 @@ in
     };
   };
 }
-#
-# 3. This functions creates a symlink pointing to the given config file in the repository,
-#    instead of creating an inmutable copy of the file in the Nix Store and point to it.
-#    This way you can make edits to those files in the local machine and see those changes
-#    inmediately, without needing to rebuild NixOS or even fetch the repository.
-#    If you like the changes, commit and push. Otherwise just reset.
-#
-# 4. In order for bluetui to work the pipewire user service must be active, try executing
-#    `wiremix` to start it.
+
+# [4] In order for bluetui to work the pipewire user service must be active,
+# try executing `wiremix` to start it.

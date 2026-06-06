@@ -1,41 +1,41 @@
 # See https://git-scm.com/docs/git-config
 [user]
-	email = "alejandro.banderas@me.com"
-	name = "mabq"
+	email = alejandro.banderas@me.com
+  name = mabq
 [alias]
-	co = checkout
-	br = branch
-	ci = commit
-	st = status
+  co = checkout
+  br = branch
+  ci = commit
+  st = status
 [init]
-	defaultBranch = master
+  defaultBranch = master
 [pull]
-	rebase = true             # Rebase (instead of merge) on pull
+  rebase = true             # Rebase (instead of merge) on pull
 [push]
-	autoSetupRemote = true    # Automatically set upstream branch on push
+  autoSetupRemote = true    # Automatically set upstream branch on push
 [diff]
-	algorithm = histogram     # Clearer diffs on moved/edited lines
-	colorMoved = plain        # Highlight moved blocks in diffs
-	mnemonicPrefix = true     # More intuitive refs in diff output
+  algorithm = histogram     # Clearer diffs on moved/edited lines
+  colorMoved = plain        # Highlight moved blocks in diffs
+  mnemonicPrefix = true     # More intuitive refs in diff output
 [commit]
-	verbose = true            # Include diff comment in commit message template
+  verbose = true            # Include diff comment in commit message template
 [column]
-	ui = auto                 # Output in columns when possible
+  ui = auto                 # Output in columns when possible
 [branch]
-	sort = -committerdate     # Sort branches by most recent commit first
+  sort = -committerdate     # Sort branches by most recent commit first
 [tag]
-	sort = -version:refname   # Sort version numbers as you would expect
+  sort = -version:refname   # Sort version numbers as you would expect
 [rerere]
-	enabled = true            # Record and reuse conflict resolutions
-	autoupdate = true         # Apply stored conflict resolutions automatically
+  enabled = true            # Record and reuse conflict resolutions
+  autoupdate = true         # Apply stored conflict resolutions automatically
 
 # Use `gh` instead of ssh keys to login to GitHub.
 [credential "https://github.com"]
-	helper = # clear any existing helpers
-	helper = !/run/current-system/sw/bin/gh auth git-credential
+  helper = # clear any existing helpers
+  helper = !/run/current-system/sw/bin/gh auth git-credential
 [credential "https://gist.github.com"]
-	helper = # clear any existing helpers
-	helper = !/run/current-system/sw/bin/gh auth git-credential
+  helper = # clear any existing helpers
+  helper = !/run/current-system/sw/bin/gh auth git-credential
 
 # ------------------------------------------------------------------------------
 
@@ -43,16 +43,15 @@
 #   https://github.com/dandavison/delta#get-started
 
 [core]
-	pager = delta
+  pager = delta
 
 [interactive]
-	diffFilter = delta --color-only
+  diffFilter = delta --color-only
 
 [delta]
-	navigate = true  # use n and N to move between diff sections
-	; side-by-side = true
-	dark = true      # or light = true, or omit for auto-detection
+  navigate = true  # use n and N to move between diff sections
+  # side-by-side = true
+  dark = true      # or light = true, or omit for auto-detection
 
 [merge]
-	conflictStyle = zdiff3
-
+  conflictStyle = zdiff3
