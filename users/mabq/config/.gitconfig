@@ -2,13 +2,8 @@
 [user]
 	email = alejandro.banderas@me.com
   name = mabq
-[alias]
-  co = checkout
-  br = branch
-  ci = commit
-  st = status
 [init]
-  defaultBranch = master
+  defaultBranch = master    # Instead of main
 [pull]
   rebase = true             # Rebase (instead of merge) on pull
 [push]
@@ -29,6 +24,8 @@
   enabled = true            # Record and reuse conflict resolutions
   autoupdate = true         # Apply stored conflict resolutions automatically
 
+# ------------------------------------------------------------------------------
+
 # Use `gh` instead of ssh keys to login to GitHub.
 [credential "https://github.com"]
   helper = # clear any existing helpers
@@ -41,17 +38,13 @@
 
 # Git delta
 #   https://github.com/dandavison/delta#get-started
-
 [core]
   pager = delta
-
 [interactive]
   diffFilter = delta --color-only
-
 [delta]
   navigate = true  # use n and N to move between diff sections
   # side-by-side = true
   dark = true      # or light = true, or omit for auto-detection
-
 [merge]
   conflictStyle = zdiff3
