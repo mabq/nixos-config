@@ -1,6 +1,6 @@
 # See https://git-scm.com/docs/git-config
 [user]
-	email = alejandro.banderas@me.com
+  email = alejandro.banderas@me.com
   name = mabq
 [init]
   defaultBranch = master    # Instead of main
