@@ -2,9 +2,12 @@
   pkgs,
   user,
   ...
-}: {
+}:
+{
   # Must be enabled to be used as the default shell.
   programs.zsh.enable = true;
+
+  programs.hyprland.enable = true;
 
   users.users.${user} = {
     isNormalUser = true;
@@ -12,12 +15,14 @@
     shell = pkgs.zsh;
 
     # Members of the `wheel` group can execute `sudo` without password.
-    extraGroups = ["wheel"];
+    extraGroups = [ "wheel" ];
 
     # Use `mkpasswd -m sha-512` to create a passwork hash.
     hashedPassword = "$6$slFKhHBtWmrAa8NN$dZD4TelNDAISrLJHAM.35K31m/0MszqHJ.7kuLdNC444FwprmHxvgU3SAcIgIeDpCFhO2EfWbU43JPnSrLGA01";
 
     # No need to check whether the service is enabled, if it is not the file exist without being used.
-    openssh.authorizedKeys.keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINjOlPls0gNkjBTOvXIbmm7HbSUOHM+erfwE4tdNVMLn"];
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINjOlPls0gNkjBTOvXIbmm7HbSUOHM+erfwE4tdNVMLn"
+    ];
   };
 }
