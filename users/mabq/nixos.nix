@@ -7,7 +7,8 @@
   # Must be enabled to be used as the default shell.
   programs.zsh.enable = true;
 
-  programs.hyprland.enable = true;
+  # programs.hyprland.enable = true;
+  services.xserver.desktopManager.xfce.enable = true;
 
   users.users.${user} = {
     isNormalUser = true;
