@@ -49,6 +49,7 @@ in
     packages = with pkgs; [
       kitty # Fast, feature-rich, GPU based terminal emulator
       foot # Fast, lightweight and minimalistic Wayland terminal emulator
+      niri # Scrollable-tiling Wayland compositor
       # luajit # High-performance JIT compiler for Lua 5.1 (!neovim)
       # luarocks # A package manager for Lua modules (!neovim)
       age # Modern encryption tool with small explicit keys
