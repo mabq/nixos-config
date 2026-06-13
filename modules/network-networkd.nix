@@ -1,10 +1,5 @@
 # Import this module if you want to use systemd-networkd as the network manager and install tools to help you manage Wi-Fi. Read notes at the bottom.
-{
-  lib,
-  pkgs,
-  user,
-  ...
-}:
+{ lib, pkgs, user, ... }:
 with lib; {
   # Disable conflicting services - these are enabled by default and conflict with systemd-networkd.
   networking.useDHCP = mkDefault false;
@@ -13,7 +8,10 @@ with lib; {
   # Do not create DHCP .network config files based on facter interfaces.
   hardware.facter.detected.dhcp.enable = mkDefault false;
 
-  # --- systemd-networkd ---
+
+  # ----------------------------------------------------------------------------
+  # systemd-networkd
+  # ----------------------------------------------------------------------------
 
   # Enable and configure systemd-networkd.
   systemd.network = {
@@ -103,7 +101,10 @@ with lib; {
   # [2] https://man.archlinux.org/man/systemd.network.5#%5BMATCH%5D_SECTION_OPTIONS
   # [3] See https://bugs.archlinux.org/task/70892
 
-  # --- systemd-resolved ---
+
+  # ----------------------------------------------------------------------------
+  # systemd-resolved
+  # ----------------------------------------------------------------------------
 
   # Disable conflicting services [5]
   networking.resolvconf.enable = mkDefault false;
@@ -159,7 +160,10 @@ with lib; {
   #     https://www.freedesktop.org/software/systemd/man/latest/resolved.conf.html#MulticastDNS=
   # [5] https://tailscale.com/blog/sisyphean-dns-client-linux
 
-  # --- Wi-Fi authentication ---
+
+  # ----------------------------------------------------------------------------
+  # Wi-Fi
+  # ----------------------------------------------------------------------------
 
   # Iwd brings the wireless link up (scans, authenticates, associates).
   # Systemd-networkd configures IP/DNS after iwd has brought the link up. [1]

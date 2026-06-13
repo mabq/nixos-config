@@ -1,9 +1,4 @@
-{
-  lib,
-  pkgs,
-  user,
-  ...
-}:
+{ lib, pkgs, user, ... }:
 with lib; {
   services.keyd.enable = mkDefault true;
 

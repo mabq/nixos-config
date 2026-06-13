@@ -1,6 +1,6 @@
 { lib, pkgs, ... }: {
   imports = [
-    ../configuration.nix
+    ../shared-config.nix
     ../../modules/disko-uefi-ext4-encrypted.nix
     ../../modules/keyd.nix
     ../../modules/network-networkd.nix

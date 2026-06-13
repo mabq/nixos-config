@@ -1,6 +1,6 @@
 {...}: {
   imports = [
-    ../configuration.nix
+    ../shared-config.nix
     ../../modules/disko-bios-ext4.nix
   ];
 
