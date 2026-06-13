@@ -1,0 +1,6 @@
+// Autocompletion for hypr configs
+{
+  "workspace": {
+    "library": ["/usr/share/hypr/stubs"]
+  }
+}

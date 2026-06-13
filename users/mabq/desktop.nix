@@ -30,13 +30,13 @@ in
       '';
 
       # Configurations in files created with mkOutOfStoreSymlink do not need a system rebuild
-      ".config/nvim".source = mkOutOfStoreSymlink "${configPath}/nvim";
+      ".config/nvim".source = mkOutOfStoreSymlink "${configPath}/nvim"; # -- whole dir
       ".config/git/config".source = mkOutOfStoreSymlink "${configPath}/.gitconfig";
       ".config/lazygit/config.yml".source = mkOutOfStoreSymlink "${configPath}/lazygit.yml";
       ".config/btop/btop.conf".source = mkOutOfStoreSymlink "${configPath}/btop.conf";
       ".config/starship.toml".source = mkOutOfStoreSymlink "${configPath}/starship.toml";
       ".config/tmux/tmux.conf".source = mkOutOfStoreSymlink "${configPath}/tmux.conf";
-      ".config/hypr/hyprland.lua".source = mkOutOfStoreSymlink "${configPath}/hypr/hyprland.lua";
+      ".config/hypr".source = mkOutOfStoreSymlink "${configPath}/hypr"; # -- whole dir
       ".config/foot/foot.ini".source = mkOutOfStoreSymlink "${configPath}/foot.ini";
 
       # Theme files (should work by just changing a single symlink).
@@ -79,6 +79,7 @@ in
       lazygit # Simple terminal UI for git commands (!neovim)
       lua-language-server # Language server that offers Lua language support (!neovim)
       mpv # General-purpose media player, fork of MPlayer and mplayer2
+      nautilus # File manager for GNOME
       ncdu # Disk usage analyzer with an ncurses interface
       neovim # Vim text editor fork
       nix-tree # Interactively browse a Nix store paths dependencies
