@@ -58,6 +58,7 @@ in
       bat # Cat clone with syntax highlighting and Git integration
       biome # Toolchain of the web (!neovim)
       bluetui # TUI for managing bluetooth on Linux [4]
+      brave # Privacy-oriented browser for Desktop and Laptop computers
       btop # Monitor of resources
       caligula # User-friendly, lightweight TUI for disk imaging
       delta # Syntax-highlighting pager for git (!lazygit)
