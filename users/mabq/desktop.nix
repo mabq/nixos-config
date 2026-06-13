@@ -37,6 +37,7 @@ in
       ".config/starship.toml".source = mkOutOfStoreSymlink "${configPath}/starship.toml";
       ".config/tmux/tmux.conf".source = mkOutOfStoreSymlink "${configPath}/tmux.conf";
       ".config/hypr/hyprland.lua".source = mkOutOfStoreSymlink "${configPath}/hypr/hyprland.lua";
+      ".config/foot/foot.ini".source = mkOutOfStoreSymlink "${configPath}/foot.ini";
 
       # Theme files (should work by just changing a single symlink).
       ".config/${projectName}/current/theme".source = mkOutOfStoreSymlink "${repoPath}/themes/${theme}";
