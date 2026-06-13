@@ -36,6 +36,7 @@ in
       ".config/btop/btop.conf".source = mkOutOfStoreSymlink "${configPath}/btop.conf";
       ".config/starship.toml".source = mkOutOfStoreSymlink "${configPath}/starship.toml";
       ".config/tmux/tmux.conf".source = mkOutOfStoreSymlink "${configPath}/tmux.conf";
+      ".config/hypr/hyprland.lua".source = mkOutOfStoreSymlink "${configPath}/hypr/hyprland.lua";
 
       # Theme files (should work by just changing a single symlink).
       ".config/${projectName}/current/theme".source = mkOutOfStoreSymlink "${repoPath}/themes/${theme}";
