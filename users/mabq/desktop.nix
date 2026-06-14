@@ -102,6 +102,7 @@ in
       # ------------------------------------------------------------------------
       brave # Privacy-oriented browser for Desktop and Laptop computers
       foot # Fast, lightweight and minimalistic Wayland terminal emulator
+      hyprlauncher # A multipurpose and versatile launcher / picker for Hyprland
       kitty # Fast, feature-rich, GPU based terminal emulator
       nautilus # File manager for GNOME
       niri # Scrollable-tiling Wayland compositor
