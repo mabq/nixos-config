@@ -3,30 +3,31 @@ return {
   dependencies = { "folke/snacks.nvim" },
   lazy = false, -- documentation strongly recommends loading at startup
   config = function()
-    local detail = false -- closure to keep show detail state
-    local toggle_permissions = function()
-      detail = not detail
-      if detail then
-        require("oil").set_columns { "icon", "permissions", "size", "mtime" }
-      else
-        require("oil").set_columns { "icon" }
-      end
-    end
-
     require("oil").setup {
-      -- See options https://github.com/stevearc/oil.nvim#options
+      -- https://github.com/stevearc/oil.nvim#options
       delete_to_trash = true, -- `:h oil-trash`
       cleanup_delay_ms = 500, -- decrese delay to clean oil buffer (default 2000) to avoid oil buffer appearing when pressing Ctrl-i/Ctrl-o
+      use_default_keymaps = false, -- default keymaps conflict with window navigation
       keymaps = {
-        -- Plugin keybinds
+        -- Default plugin keymaps
+        ["g?"] = { "actions.show_help", mode = "n" },
+        ["<CR>"] = "actions.select",
+        ["<C-t>"] = { "actions.select", opts = { tab = true } },
+        ["<C-p>"] = "actions.preview",
+        ["<C-c>"] = { "actions.close", mode = "n" },
+        ["-"] = { "actions.parent", mode = "n" },
+        ["_"] = { "actions.open_cwd", mode = "n" },
+        ["`"] = { "actions.cd", mode = "n" },
+        ["g~"] = { "actions.cd", opts = { scope = "tab" }, mode = "n" },
+        ["gs"] = { "actions.change_sort", mode = "n" },
+        ["gx"] = "actions.open_external",
+        ["g."] = { "actions.toggle_hidden", mode = "n" },
+        ["g\\"] = { "actions.toggle_trash", mode = "n" },
+        -- Custom keymaps
         ["q"] = { "actions.close", mode = "n", nowait = true }, -- easier close
-        ["gp"] = {
-          callback = toggle_permissions,
-          mode = "n",
-          desc = "Show/hide permissions",
-        },
-        ["gd"] = { "actions.cd", mode = "n" },
-        ["gt"] = { "actions.toggle_trash", mode = "n" },
+        ["gv"] = { "actions.select", opts = { vertical = true } },
+        ["gh"] = { "actions.select", opts = { horizontal = true } },
+        ["<C-r>"] = "actions.refresh",
       },
       view_options = {
         show_hidden = true,

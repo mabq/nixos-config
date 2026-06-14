@@ -2,12 +2,10 @@
 
 -- vim.o.timeoutlen = 400 -- edit mapped sequence wait time (default 1000)
 
-
 -- Remove default keymaps ------------------------------------------------------
 
 -- Disable Q
 vim.keymap.set("n", "Q", "<nop>", { desc = "(which-key-hide)" })
-
 
 -- Improve default keymaps -----------------------------------------------------
 
@@ -37,12 +35,11 @@ vim.keymap.set("n", "J", "mzJ`z", { desc = "Join" })
 vim.keymap.set("x", "<", "<gv", { desc = "Indent more" })
 vim.keymap.set("x", ">", ">gv", { desc = "Indent less" })
 
-
 -- Override default keymaps ----------------------------------------------------
 
 -- Scroll window without losing line focus
-vim.keymap.set("n", "<down>", "<C-e>", { desc = "Scroll down" })
-vim.keymap.set("n", "<up>", "<C-y>", { desc = "Scroll up" })
+vim.keymap.set({ "n", "x" }, "<down>", "<C-e>", { desc = "Scroll down" })
+vim.keymap.set({ "n", "x" }, "<up>", "<C-y>", { desc = "Scroll up" })
 
 -- System clipboard / Default register --
 --   In visual mode `Y` yanks the whole line by default. Use `yy` in normal mode instead.
@@ -60,7 +57,6 @@ vim.keymap.set("x", "P", [["_dP]], { desc = "Paste without yanking" })
 --   We use them to move selected lines up/down.
 vim.keymap.set("x", "K", ":<C-u>execute \"'<,'>move '<-\" . (v:count1 + 1)<cr>gv=gv", { desc = "Move line/s up" })
 vim.keymap.set("x", "J", ":<C-u>execute \"'<,'>move '>+\" . v:count1<cr>gv=gv", { desc = "Move line/s down" })
-
 
 -- Create new keymaps ----------------------------------------------------------
 
