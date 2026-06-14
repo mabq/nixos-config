@@ -49,9 +49,6 @@ in
     homeDirectory = "/home/${user}"; # TODO: check if needed
 
     packages = with pkgs; [
-      kitty # Fast, feature-rich, GPU based terminal emulator
-      foot # Fast, lightweight and minimalistic Wayland terminal emulator
-      niri # Scrollable-tiling Wayland compositor
       # luajit # High-performance JIT compiler for Lua 5.1 (!neovim)
       # luarocks # A package manager for Lua modules (!neovim)
       age # Modern encryption tool with small explicit keys
@@ -60,7 +57,6 @@ in
       bat # Cat clone with syntax highlighting and Git integration
       biome # Toolchain of the web (!neovim)
       bluetui # TUI for managing bluetooth on Linux [4]
-      brave # Privacy-oriented browser for Desktop and Laptop computers
       btop # Monitor of resources
       caligula # User-friendly, lightweight TUI for disk imaging
       delta # Syntax-highlighting pager for git (!lazygit)
@@ -79,7 +75,6 @@ in
       lazygit # Simple terminal UI for git commands (!neovim)
       lua-language-server # Language server that offers Lua language support (!neovim)
       mpv # General-purpose media player, fork of MPlayer and mplayer2
-      nautilus # File manager for GNOME
       ncdu # Disk usage analyzer with an ncurses interface
       neovim # Vim text editor fork
       nix-tree # Interactively browse a Nix store paths dependencies
@@ -97,13 +92,24 @@ in
       unzip # Extraction utility for archives compressed in .zip format
       wget # Tool for retrieving files using HTTP, HTTPS, and FTP
       whois # Intelligent WHOIS client from Debian
-      wl-clip-persist # Keep Wayland clipboard even after programs close
-      wl-clipboard # Command-line copy/paste utilities for Wayland
       yazi # Blazing fast terminal file manager written in Rust, based on async I/O (!neovim)
       zoxide # Fast cd command that learns your habits (!zsh)
       zsh-autosuggestions # Fish shell autosuggestions for Zsh
       zsh-history-substring-search # Fish shell history-substring-search for Zsh
       zsh-syntax-highlighting # Fish shell like syntax highlighting for Zsh
+      # ------------------------------------------------------------------------
+      # Desktop
+      # ------------------------------------------------------------------------
+      brave # Privacy-oriented browser for Desktop and Laptop computers
+      foot # Fast, lightweight and minimalistic Wayland terminal emulator
+      kitty # Fast, feature-rich, GPU based terminal emulator
+      nautilus # File manager for GNOME
+      niri # Scrollable-tiling Wayland compositor
+      wev # Wayland event viewer (keycodes)
+      wl-clip-persist # Keep Wayland clipboard even after programs close
+      wl-clipboard # Command-line copy/paste utilities for Wayland
+      # ------------------------------------------------------------------------
+      # Later
       # ------------------------------------------------------------------------
       # alacritty
       # avahi # mDNS/DNS-SD implementation (Bonjour)

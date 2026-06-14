@@ -10,6 +10,7 @@ hl.config {
   -------------------------------------------------------------------------------
 
   input = {
+    -- See https://wiki.hypr.land/Configuring/Basics/Binds/#switchable-keyboard-layouts
     kb_layout = "us,us",
     kb_variant = ",intl",
     kb_options = "grp:alt_space_toggle, compose:caps",
