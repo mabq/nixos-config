@@ -6,6 +6,26 @@ local inactive_border_color = "rgba(595959aa)"
 hl.config {
 
   -------------------------------------------------------------------------------
+  -- Input
+  -------------------------------------------------------------------------------
+
+  input = {
+    kb_layout = "us,us",
+    kb_variant = ",intl",
+    kb_options = "grp:alt_space_toggle, compose:caps",
+
+    numlock_by_default = true,
+
+    repeat_rate = 32,
+    repeat_delay = 250,
+
+    touchpad = {
+      scroll_factor = 0.4,
+      clickfinger_behavior = true, -- use two-finger clicks for right-click instead of lower-right corner.
+    },
+  },
+
+  -------------------------------------------------------------------------------
   -- General
   -------------------------------------------------------------------------------
 
@@ -19,6 +39,17 @@ hl.config {
     },
 
     layout = "scrolling",
+  },
+
+  -------------------------------------------------------------------------------
+  -- Group
+  -------------------------------------------------------------------------------
+
+  group = {
+    col = {
+      border_active = active_border_color,
+      border_inactive = inactive_border_color,
+    },
   },
 
   -------------------------------------------------------------------------------
@@ -45,37 +76,6 @@ hl.config {
 
   animations = {
     enabled = false,
-  },
-
-  -------------------------------------------------------------------------------
-  -- Input
-  -------------------------------------------------------------------------------
-
-  input = {
-    kb_layout = "us,us",
-    kb_variant = ",intl",
-    kb_options = "grp:alt_space_toggle, compose:caps",
-
-    numlock_by_default = true,
-
-    repeat_rate = 32,
-    repeat_delay = 250,
-
-    touchpad = {
-      scroll_factor = 0.4,
-      clickfinger_behavior = true, -- use two-finger clicks for right-click instead of lower-right corner.
-    },
-  },
-
-  -------------------------------------------------------------------------------
-  -- Group
-  -------------------------------------------------------------------------------
-
-  group = {
-    col = {
-      border_active = active_border_color,
-      border_inactive = inactive_border_color,
-    },
   },
 
   -------------------------------------------------------------------------------
