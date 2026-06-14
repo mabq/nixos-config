@@ -1,6 +1,12 @@
 // Autocompletion for hypr configs
 {
   "workspace": {
-    "library": ["/usr/share/hypr/stubs"]
+    "library": [
+      "/usr/share/hypr/stubs"
+    ],
+    "checkThidParty": false
+  },
+  "diagnostics": {
+    "globals": [ "hl", "o" ]
   }
 }
