@@ -1,1 +1,1 @@
-/nix/store/ylik4g7i323ahvs6y14x2jz8k445lmiv-home-manager-files/.local/share/nixos-config/users/mabq/config/nvim/lua/plugins/theme.lua
+/nix/store/z3h7dfsakpnr284z2ady63k94rzcycmp-home-manager-files/.local/share/nixos-config/users/mabq/config/nvim/lua/plugins/theme.lua

@@ -5,7 +5,7 @@ local mainMod = "SUPER"
 ---------------------------------------------------------------------------------
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd "foot")
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd "nautilus")
-hl.bind(mainMod .. " + R", hl.dsp.exec_cmd "hyprlauncher")
+hl.bind(mainMod .. " + Space", hl.dsp.exec_cmd "hyprlauncher")
 
 hl.bind(mainMod .. " + w", hl.dsp.window.close())
 hl.bind(
