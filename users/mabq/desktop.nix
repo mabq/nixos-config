@@ -45,6 +45,7 @@ in
       ".config/btop/themes/current.theme".source = mkOutOfStoreSymlink "${currentThemePath}/btop.theme";
       "${configPath}/nvim/lua/plugins/theme.lua".source =
         mkOutOfStoreSymlink "${currentThemePath}/neovim.lua";
+      # TODO: launcher theme once we decide which launcher we are going to use
     };
 
     homeDirectory = "/home/${user}"; # TODO: check if needed
@@ -108,6 +109,7 @@ in
       kitty # Fast, feature-rich, GPU based terminal emulator
       nautilus # File manager for GNOME
       niri # Scrollable-tiling Wayland compositor
+      walker # Wayland-native application runner
       wev # Wayland event viewer (keycodes)
       wl-clip-persist # Keep Wayland clipboard even after programs close
       wl-clipboard # Command-line copy/paste utilities for Wayland
