@@ -1,0 +1,26 @@
+# Default config:
+#   https://raw.githubusercontent.com/abenz1267/walker/refs/heads/master/resources/config.toml
+
+force_keyboard_focus = true     # forces keyboard forcus to stay in Walker
+selection_wrap = true           # wrap list if at bottom or top
+theme = "default"               # theme to use
+hide_action_hints = true        # globally hide the action hints
+
+[columns]
+"symbols" = 4 # show this amount of symbols per row
+
+[keybinds]
+quick_activate = [] # remove F quick keys
+
+[providers]
+max_results = 256 # should be enough for any use case
+default = [
+  "desktopapplications",
+  "calc",
+] # providers to be queried by default
+
+[[providers.prefixes]]
+prefix = "?"
+provider = "providerlist"
+
+[providers.actions] # This will be MERGED/OVERWRITTEN with what the user specifies

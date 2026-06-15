@@ -30,15 +30,16 @@ in
       '';
 
       # Configurations in files created with mkOutOfStoreSymlink do not need a system rebuild
-      ".config/fontconfig/fonts.conf".source = mkOutOfStoreSymlink "${configPath}/fonts.conf";
-      ".config/nvim".source = mkOutOfStoreSymlink "${configPath}/nvim"; # -- whole dir
-      ".config/git/config".source = mkOutOfStoreSymlink "${configPath}/.gitconfig";
-      ".config/lazygit/config.yml".source = mkOutOfStoreSymlink "${configPath}/lazygit.yml";
       ".config/btop/btop.conf".source = mkOutOfStoreSymlink "${configPath}/btop.conf";
+      ".config/fontconfig/fonts.conf".source = mkOutOfStoreSymlink "${configPath}/fonts.conf";
+      ".config/foot/foot.ini".source = mkOutOfStoreSymlink "${configPath}/foot.ini";
+      ".config/git/config".source = mkOutOfStoreSymlink "${configPath}/.gitconfig";
+      ".config/hypr".source = mkOutOfStoreSymlink "${configPath}/hypr"; # -- whole dir
+      ".config/lazygit/config.yml".source = mkOutOfStoreSymlink "${configPath}/lazygit.yml";
+      ".config/nvim".source = mkOutOfStoreSymlink "${configPath}/nvim"; # -- whole dir
       ".config/starship.toml".source = mkOutOfStoreSymlink "${configPath}/starship.toml";
       ".config/tmux/tmux.conf".source = mkOutOfStoreSymlink "${configPath}/tmux.conf";
-      ".config/hypr".source = mkOutOfStoreSymlink "${configPath}/hypr"; # -- whole dir
-      ".config/foot/foot.ini".source = mkOutOfStoreSymlink "${configPath}/foot.ini";
+      # ".config/walker/config.toml".source = mkOutOfStoreSymlink "${configPath}/walker.toml";
 
       # Theme files (should work by just changing a single symlink).
       ".config/${projectName}/current/theme".source = mkOutOfStoreSymlink "${repoPath}/themes/${theme}";
@@ -114,7 +115,7 @@ in
       wl-clipboard # Command-line copy/paste utilities for Wayland
       nerd-fonts.jetbrains-mono # Nerd Fonts: JetBrains officially created font for developers
       # -- App launcher
-      walker # Wayland-native application runner
+      # walker # Wayland-native application runner
       # elephant # Data provider service and backend for building custom application launchers (!walker) (Via home-manager options, must enable systemd service)
       # ------------------------------------------------------------------------
       # Later
@@ -237,18 +238,10 @@ in
   services = {
     elephant = {
       enable = true;
-      settings = {
-        providers = {
-          default = [
-            "desktopapplications"
-            "runner"
-            "symbols"
-            "clipboard"
-            "unicode"
-            "calc"
-          ];
-        };
-      };
+    };
+    walker = {
+      enable = true;
+      systemd.enable = true;
     };
   };
 
