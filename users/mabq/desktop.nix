@@ -30,6 +30,7 @@ in
       '';
 
       # Configurations in files created with mkOutOfStoreSymlink do not need a system rebuild
+      ".config/fontconfig/fonts.conf".source = mkOutOfStoreSymlink "${configPath}/fonts.conf";
       ".config/nvim".source = mkOutOfStoreSymlink "${configPath}/nvim"; # -- whole dir
       ".config/git/config".source = mkOutOfStoreSymlink "${configPath}/.gitconfig";
       ".config/lazygit/config.yml".source = mkOutOfStoreSymlink "${configPath}/lazygit.yml";
@@ -38,7 +39,6 @@ in
       ".config/tmux/tmux.conf".source = mkOutOfStoreSymlink "${configPath}/tmux.conf";
       ".config/hypr".source = mkOutOfStoreSymlink "${configPath}/hypr"; # -- whole dir
       ".config/foot/foot.ini".source = mkOutOfStoreSymlink "${configPath}/foot.ini";
-      ".config/fontconfig/fonts.conf".source = mkOutOfStoreSymlink "${configPath}/fontconfig/fonts.conf";
 
       # Theme files (should work by just changing a single symlink).
       ".config/${projectName}/current/theme".source = mkOutOfStoreSymlink "${repoPath}/themes/${theme}";
