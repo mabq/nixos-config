@@ -109,11 +109,13 @@ in
       kitty # Fast, feature-rich, GPU based terminal emulator
       nautilus # File manager for GNOME
       niri # Scrollable-tiling Wayland compositor
-      walker # Wayland-native application runner
       wev # Wayland event viewer (keycodes)
       wl-clip-persist # Keep Wayland clipboard even after programs close
       wl-clipboard # Command-line copy/paste utilities for Wayland
       nerd-fonts.jetbrains-mono # Nerd Fonts: JetBrains officially created font for developers
+      # -- App launcher
+      walker # Wayland-native application runner
+      elephant # Data provider service and backend for building custom application launchers (!walker)
       # ------------------------------------------------------------------------
       # Later
       # ------------------------------------------------------------------------
