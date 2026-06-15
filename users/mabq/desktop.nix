@@ -115,7 +115,7 @@ in
       nerd-fonts.jetbrains-mono # Nerd Fonts: JetBrains officially created font for developers
       # -- App launcher
       walker # Wayland-native application runner
-      elephant # Data provider service and backend for building custom application launchers (!walker)
+      # elephant # Data provider service and backend for building custom application launchers (!walker) (Via home-manager options, must enable systemd service)
       # ------------------------------------------------------------------------
       # Later
       # ------------------------------------------------------------------------
@@ -232,6 +232,24 @@ in
     # the Home Manager release notes for a list of state version
     # changes in each release.
     stateVersion = "25.11";
+  };
+
+  services = {
+    elephant = {
+      enable = true;
+      settings = {
+        providers = {
+          default = [
+            "desktopapplications"
+            "runner"
+            "symbols"
+            "clipboard"
+            "unicode"
+            "calc"
+          ];
+        };
+      };
+    };
   };
 
   xdg = {
