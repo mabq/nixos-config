@@ -1,4 +1,5 @@
 -- https://wiki.hypr.land/Configuring/Start/#require
+require "config.autostart"
 require "config.variables"
 require "config.animations"
 require "config.monitors"

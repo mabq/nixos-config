@@ -39,7 +39,12 @@ in
       ".config/nvim".source = mkOutOfStoreSymlink "${configPath}/nvim"; # -- whole dir
       ".config/starship.toml".source = mkOutOfStoreSymlink "${configPath}/starship.toml";
       ".config/tmux/tmux.conf".source = mkOutOfStoreSymlink "${configPath}/tmux.conf";
-      # ".config/walker/config.toml".source = mkOutOfStoreSymlink "${configPath}/walker.toml";
+      ".config/elephant".source = mkOutOfStoreSymlink "${configPath}/elephant";
+      ".config/walker/config.toml".source = mkOutOfStoreSymlink "${configPath}/walker/walker.toml";
+      ".config/systemd/user/walker.service".source =
+        mkOutOfStoreSymlink "${configPath}/walker/walker.service";
+      ".config/systemd/user/graphical-session.target.wants/walker.service".source =
+        mkOutOfStoreSymlink "${configPath}/walker/walker.service";
 
       # Theme files (should work by just changing a single symlink).
       ".config/${projectName}/current/theme".source = mkOutOfStoreSymlink "${repoPath}/themes/${theme}";
@@ -73,7 +78,7 @@ in
       gh # GitHub CLI tool
       git # Distributed version control system
       gnumake # Tool to control the generation of non-source files from sources (!neovim)
-      imagemagick # Software suite to create, edit, compose, or convert bitmap images
+      imagemagick # Software suite to create, edit, compose, or convert bitmap images (!elephant)
       iperf # Tool to measure IP bandwidth using UDP or TCP
       lazygit # Simple terminal UI for git commands (!neovim)
       lua-language-server # Language server that offers Lua language support (!neovim)
@@ -114,9 +119,10 @@ in
       wl-clip-persist # Keep Wayland clipboard even after programs close
       wl-clipboard # Command-line copy/paste utilities for Wayland
       nerd-fonts.jetbrains-mono # Nerd Fonts: JetBrains officially created font for developers
-      # -- App launcher
-      # walker # Wayland-native application runner
-      # elephant # Data provider service and backend for building custom application launchers (!walker) (Via home-manager options, must enable systemd service)
+      # Launcher
+      walker # Wayland-native application runner
+      elephant # Data provider service and backend for building custom application launchers (!walker) (Via home-manager options, must enable systemd service)
+      libqalculate # Advanced calculator library (!elephant)
       # ------------------------------------------------------------------------
       # Later
       # ------------------------------------------------------------------------

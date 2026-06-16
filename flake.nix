@@ -13,50 +13,58 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-  };
-
-  outputs = {self, ...} @ inputs: let
-    overlays = []; # 3
-    mkSystem = import ./lib/mksystem.nix { inherit inputs overlays; };
-  in {
-    nixosConfigurations = {
-      macbook = mkSystem { # 4
-        machine = "macbook"; # 5
-        user = "mabq";
-        profile = "desktop";
-      };
-      nuc = mkSystem {
-        machine = "nuc";
-        user = "mabq";
-        profile = "desktop";
-      };
-      xps = mkSystem {
-        machine = "xps";
-        user = "mabq";
-        profile = "plex";
-      };
+    elephant = {
+      url = "github:abenz1267/elephant";
+    };
+    walker = {
+      url = "github:abenz1267/walker";
+      inputs.elephant.follows = "elephant";
     };
   };
+
+  outputs =
+    { self, ... }@inputs:
+    let
+      overlays = [ ]; # 3
+      mkSystem = import ./lib/mksystem.nix { inherit inputs overlays; };
+    in
+    {
+      nixosConfigurations = {
+        macbook = mkSystem {
+          # 4
+          machine = "macbook"; # 5
+          user = "mabq";
+          profile = "desktop";
+        };
+        nuc = mkSystem {
+          machine = "nuc";
+          user = "mabq";
+          profile = "desktop";
+        };
+        xps = mkSystem {
+          machine = "xps";
+          user = "mabq";
+          profile = "plex";
+        };
+      };
+    };
 }
 
 /*
+  1. Or use `nixos-XX.YY` for stable releases.
 
-1. Or use `nixos-XX.YY` for stable releases.
+  2. Instruct home-manager to use our version of nixpkgs (home-manager is
+     designed to expect this).
 
-2. Instruct home-manager to use our version of nixpkgs (home-manager is
-   designed to expect this).
+  3. Only use overlays to correct bugs in packages being used by other packages.
+     For upgrading/downgrading specific packages always prefer multiple nixpkgs
+     inputs - lighter and no compilation from source required.
+     https://nixos-and-flakes.thiscute.world/nixos-with-flakes/downgrade-or-upgrade-packages
 
-3. Only use overlays to correct bugs in packages being used by other packages.
-   For upgrading/downgrading specific packages always prefer multiple nixpkgs
-   inputs - lighter and no compilation from source required.
-   https://nixos-and-flakes.thiscute.world/nixos-with-flakes/downgrade-or-upgrade-packages
+  4. NixOS configuration name - cannot be accessed in NixOS modules.
 
-4. NixOS configuration name - cannot be accessed in NixOS modules.
-
-5. Machine configuration name - can be accessed in NixOS modules via special
-   arguments. Use the same name as the NixOS configuration name - this will be
-   set as the default hostname and `nixos-rebuild` command uses the hostname
-   when no NixOS configuration name is passed.
-
+  5. Machine configuration name - can be accessed in NixOS modules via special
+     arguments. Use the same name as the NixOS configuration name - this will be
+     set as the default hostname and `nixos-rebuild` command uses the hostname
+     when no NixOS configuration name is passed.
 */
-

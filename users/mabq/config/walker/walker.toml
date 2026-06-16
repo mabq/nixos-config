@@ -1,0 +1,30 @@
+# Config:
+#   https://walkerlauncher.com/docs/configuration
+#   https://github.com/abenz1267/walker/blob/master/resources/config.toml
+
+# Use:
+#   `;` to see all available providers and their symbols
+#   `walker --debug` to check for config syntax errors
+
+# Provider specific keybindings
+#   https://walkerlauncher.com/docs/keybindings#provider-specific-keybindings
+
+# Calculator examples:
+#   https://github.com/Qalculate/libqalculate#examples-expressions
+
+force_keyboard_focus = true # forces keyboard forcus to stay in Walker
+selection_wrap = true # wrap list if at bottom or top
+theme = "default" # theme to use
+hide_action_hints = true # globally hide the action hints
+hide_return_action = true
+
+[columns]
+"symbols" = 3 # show this amount of symbols per row
+
+[keybinds]
+quick_activate = [] # remove F quick keys
+
+[providers]
+default = [ "desktopapplications" ] # the provider to show by default when launching
+max_results = 100 # does not affect searching
+
