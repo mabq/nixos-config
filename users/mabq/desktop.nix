@@ -235,16 +235,6 @@ in
     stateVersion = "25.11";
   };
 
-  services = {
-    elephant = {
-      enable = true;
-    };
-    walker = {
-      enable = true;
-      systemd.enable = true;
-    };
-  };
-
   xdg = {
     enable = true;
     # Manage xdg directories, e.g.  ~/.config, ~/.local/share, etc.
