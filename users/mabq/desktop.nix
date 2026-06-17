@@ -78,6 +78,7 @@ in
       gh # GitHub CLI tool
       git # Distributed version control system
       gnumake # Tool to control the generation of non-source files from sources (!neovim)
+      hyprland # Dynamic tiling Wayland compositor that doesn't sacrifice on its looks
       imagemagick # Software suite to create, edit, compose, or convert bitmap images (!elephant)
       iperf # Tool to measure IP bandwidth using UDP or TCP
       lazygit # Simple terminal UI for git commands (!neovim)
