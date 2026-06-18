@@ -41,11 +41,7 @@ in
       ".config/starship.toml".source = mkOutOfStoreSymlink "${configPath}/starship.toml";
       ".config/tmux/tmux.conf".source = mkOutOfStoreSymlink "${configPath}/tmux.conf";
       ".config/elephant".source = mkOutOfStoreSymlink "${configPath}/elephant";
-      ".config/walker/config.toml".source = mkOutOfStoreSymlink "${configPath}/walker/walker.toml";
-      ".config/systemd/user/walker.service".source =
-        mkOutOfStoreSymlink "${configPath}/walker/walker.service";
-      ".config/systemd/user/graphical-session.target.wants/walker.service".source =
-        mkOutOfStoreSymlink "${configPath}/walker/walker.service";
+      ".config/walker/config.toml".source = mkOutOfStoreSymlink "${configPath}/walker.toml";
 
       # Theme files (should work by just changing a single symlink).
       ".config/${projectName}/current/theme".source = mkOutOfStoreSymlink "${repoPath}/themes/${theme}";
@@ -123,9 +119,6 @@ in
       wev # Wayland event viewer (keycodes)
       wl-clip-persist # Keep Wayland clipboard even after programs close
       wl-clipboard # Command-line copy/paste utilities for Wayland
-      # -- Launcher
-      walker # Wayland-native application runner
-      elephant # Data provider service and backend for building custom application launchers (!walker) (Via home-manager options, must enable systemd service)
       libqalculate # Advanced calculator library (!elephant)
       # ------------------------------------------------------------------------
       # Later
@@ -242,6 +235,14 @@ in
     # the Home Manager release notes for a list of state version
     # changes in each release.
     stateVersion = "25.11";
+  };
+
+  services = {
+    elephant.enable = true;
+    walker = {
+      enable = true;
+      systemd.enable = true;
+    };
   };
 
   xdg = {
