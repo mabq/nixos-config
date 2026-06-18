@@ -1,5 +1,14 @@
-{ pkgs, user, ... }:
 {
+  self,
+  pkgs,
+  user,
+  ...
+}:
+{
+  imports = [
+    ../../modules/keyd.nix
+  ];
+
   programs.zsh.enable = true; # must be enabled to be used as the default shell.
 
   programs.hyprland = {

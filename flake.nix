@@ -16,10 +16,10 @@
   };
 
   outputs =
-    { ... }@inputs:
+    { self, ... }@inputs:
     let
       overlays = [ ]; # 3
-      mkSystem = import ./lib/mksystem.nix { inherit inputs overlays; };
+      mkSystem = import ./lib/mksystem.nix { inherit self inputs overlays; };
     in
     {
       nixosConfigurations = {

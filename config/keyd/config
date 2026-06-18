@@ -1,0 +1,101 @@
+# Read the README file!
+
+[global]
+# When you regret typing a modifier key just hold it a little longer and
+# nothing will by typed.
+overload_tap_timeout = 300
+
+# ------------------------------------------------------------------------------
+# Main modifier keys
+# ------------------------------------------------------------------------------
+
+[main]
+# Capslock is used by XCompose to input frequently used unicode characters
+capslock = overload(control, capslock)
+enter = overload(control, enter)
+f = overload(nav, f)
+; = overload(symbols, ;)
+# ' = overload(media, ')
+[ = -
+
+# ------------------------------------------------------------------------------
+# Nav
+# ------------------------------------------------------------------------------
+
+[nav]
+
+u = tab
+i = esc
+o = backspace
+p = macro(C-S-v)
+[ = +
+
+d = layer(nav2)
+
+h = left
+j = down
+k = up
+l = right
+; = ~
+' = `
+
+n = enter
+, = [
+. = ]
+/ = \
+
+# ------------------------------------------------------------------------------
+# Nav2
+# ------------------------------------------------------------------------------
+
+[nav2]
+
+u = capslock
+i = f2
+o = delete
+p = macro(C-S-tab)
+
+h = home
+j = pagedown
+k = pageup
+l = end
+
+n = macro(C-tab)
+
+# ------------------------------------------------------------------------------
+# Symbols
+# ------------------------------------------------------------------------------
+
+[symbols]
+
+q = !
+w = @
+e = #
+r = $
+t = %
+
+capslock = ^
+a = (
+s = )
+d = {
+f = }
+
+g = =
+
+v = |
+
+b = &
+
+# ------------------------------------------------------------------------------
+# Media
+# ------------------------------------------------------------------------------
+
+# [media]
+
+# s = previoussong
+# d = volumeup
+# f = volumedown
+# g = nextsong
+
+# space = playpause
+

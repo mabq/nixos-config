@@ -1,11 +1,12 @@
 { lib, pkgs, ... }: {
   imports = [
-    ./all.nix
+    ./defaults.nix
     ../modules/disko-uefi-ext4-encrypted.nix
-    ../modules/keyd.nix
     ../modules/network-networkd.nix
     ../modules/pipewire.nix
   ];
+
+  disko.devices.disk.main.device = "/dev/sda";
 
   # Sometimes facter tries to use GRUB on UEFI systems, make sure it uses systemd-boot.
   boot.loader.systemd-boot.enable = true;

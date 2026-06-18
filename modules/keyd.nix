@@ -1,16 +1,23 @@
-{ lib, pkgs, user, ... }:
-with lib; {
+{
+  lib,
+  pkgs,
+  user,
+  ...
+}:
+with lib;
+{
   services.keyd.enable = mkDefault true;
+
+  # User must be a member of this group
+  users.users.${user}.extraGroups = [ "keyd" ];
 
   environment = {
     systemPackages = [
-      # Required to install the `keyd` command.
-      pkgs.keyd # Key remapping daemon for Linux
+      pkgs.keyd # Key remapping daemon for Linux (required to use the `keyd` command)
     ];
 
-    # This a nixos module, mkOutOfStoreSymlink is a Home-manager function, so we cannot use it here.
-    etc."keyd".source = mkDefault ../users/${user}/config/keyd;
+    # Keyd config files cannot be put in the user's home directory.
+    # `mkOutOfStoreSymlink` is a Home-manager function (cannot use it here).
+    etc."keyd".source = mkDefault ../config/keyd;
   };
-
-  users.users.${user}.extraGroups = ["keyd"];
 }

@@ -20,13 +20,13 @@ let
 
   machineConfig = ../machines/${machine}.nix;
   userConfig = ../users/${user}/${profile}.nix;
-  # userHMConfig = ../users/${user}/${profile}.nix; # 3
+  userHMConfig = ../users/${user}/home.nix; # 3
 in
 inputs.nixpkgs.lib.nixosSystem {
   inherit specialArgs; # 4
   modules = [
-    { nixpkgs.overlays = overlays; }
     inputs.disko.nixosModules.disko
+    { nixpkgs.overlays = overlays; }
     machineConfig
     userConfig
     inputs.home-manager.nixosModules.home-manager
