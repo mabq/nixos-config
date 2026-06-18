@@ -26,5 +26,5 @@ quick_activate = [] # remove F quick keys
 
 [providers]
 default = [ "desktopapplications" ] # the provider to show by default when launching
-max_results = 100 # does not affect searching
+max_results = 50 # does not affect searching
 

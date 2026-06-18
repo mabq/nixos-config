@@ -13,31 +13,24 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    elephant = {
-      url = "github:abenz1267/elephant";
-    };
-    walker = {
-      url = "github:abenz1267/walker";
-      inputs.elephant.follows = "elephant";
-    };
   };
 
   outputs =
-    { self, ... }@inputs:
+    { ... }@inputs:
     let
       overlays = [ ]; # 3
       mkSystem = import ./lib/mksystem.nix { inherit inputs overlays; };
     in
     {
       nixosConfigurations = {
-        macbook = mkSystem {
-          # 4
-          machine = "macbook"; # 5
+        # 4
+        nuc = mkSystem {
+          machine = "nuc"; # 5
           user = "mabq";
           profile = "desktop";
         };
-        nuc = mkSystem {
-          machine = "nuc";
+        macbook = mkSystem {
+          machine = "macbook";
           user = "mabq";
           profile = "desktop";
         };
