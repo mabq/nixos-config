@@ -5,31 +5,17 @@
   user,
   projectName,
   repoPath,
+  repoUserPath,
+  configPath,
+  currentThemePath,
+  theme,
+  forceFiles,
+  mkOutOfStoreSymlink,
   ...
 }:
-let
-  theme = "tokyo-night"; # must match one of the directory names in the themes folder
-
-  repoUserPath = "${repoPath}/users/${user}";
-  configPath = "${repoUserPath}/config";
-  currentThemePath = "/home/${user}/.config/${projectName}/current/theme";
-
-  mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
-
-  # Helper function to force-enable all files in an attribute set
-  forceFiles = fileSet: lib.mapAttrs (name: value: value // { force = true; }) fileSet;
-in
 {
   home = {
     file = forceFiles {
-      ".zshenv".text = ''
-        # Be careful what you put in this file, it affects every zsh invocation (including scp, rsync, etc).
-        setopt NO_GLOBAL_RCS # --- Ignore zsh global config files, except `/etc/zshenv` which is read before this file.
-        ZDOTDIR="${repoUserPath}/config/zsh" # --- Source zsh config files directly from the repository. No need to export.
-        export REPO_USER_PATH="${repoUserPath}" # --- Hard-coded into some config files.
-      '';
-      ".zprofile".source = mkOutOfStoreSymlink "${configPath}/zsh/.zprofile";
-
       # Configurations in files created with mkOutOfStoreSymlink do not need a system rebuild
       ".config/btop/btop.conf".source = mkOutOfStoreSymlink "${configPath}/btop.conf";
       ".config/fontconfig/fonts.conf".source = mkOutOfStoreSymlink "${configPath}/fonts.conf";
@@ -99,9 +85,6 @@ in
       whois # Intelligent WHOIS client from Debian
       yazi # Blazing fast terminal file manager written in Rust, based on async I/O (!neovim)
       zoxide # Fast cd command that learns your habits (!zsh)
-      zsh-autosuggestions # Fish shell autosuggestions for Zsh
-      zsh-history-substring-search # Fish shell history-substring-search for Zsh
-      zsh-syntax-highlighting # Fish shell like syntax highlighting for Zsh
       # ------------------------------------------------------------------------
       # Desktop
       # ------------------------------------------------------------------------

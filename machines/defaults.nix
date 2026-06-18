@@ -1,6 +1,5 @@
 # This file only contains default system-level configs.
 # These are default values (`mkDefault`), you can override them in per-host configuration files.
-
 {
   lib,
   pkgs,

@@ -1,4 +1,8 @@
-{ inputs, overlays }:
+{
+  self,
+  inputs,
+  overlays,
+}:
 {
   machine,
   user,
@@ -8,13 +12,29 @@ let
   projectName = "nixos-config"; # 1
   repoPath = "/home/${user}/.local/share/${projectName}"; # 2
 
+  repoUserPath = "${repoPath}/users/${user}";
+  configPath = "${repoUserPath}/config";
+
+  theme = "tokyo-night"; # must match one of the directory names in the themes folder
+  currentThemePath = "/home/${user}/.config/${projectName}/current/theme";
+
+  # Helper functions
+  forceFiles = fileSet: inputs.nixpkgs.lib.mapAttrs (name: value: value // { force = true; }) fileSet;
+
   specialArgs = {
     inherit
+      self
+      inputs
       machine
       user
       profile
       projectName
       repoPath
+      repoUserPath
+      configPath
+      currentThemePath
+      theme
+      forceFiles
       ;
   };
 

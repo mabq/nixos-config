@@ -1,9 +1,6 @@
+{ lib, pkgs, ... }:
+with lib;
 {
-  lib,
-  pkgs,
-  ...
-}:
-with lib; {
   environment.systemPackages = with pkgs; [
     wiremix # Simple TUI mixer for PipeWire
   ];

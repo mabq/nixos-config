@@ -1,15 +1,11 @@
-{
-  self,
-  pkgs,
-  user,
-  ...
-}:
+{ pkgs, user, ... }:
 {
   imports = [
+    ../../modules/network-networkd.nix
+    ../../modules/audio-pipewire.nix
     ../../modules/keyd.nix
+    ../../modules/zsh.nix
   ];
-
-  programs.zsh.enable = true; # must be enabled to be used as the default shell.
 
   programs.hyprland = {
     enable = true;
@@ -19,7 +15,6 @@
   users.users.${user} = {
     isNormalUser = true;
     home = "/home/${user}";
-    shell = pkgs.zsh;
 
     # Members of the `wheel` group can execute `sudo` without password.
     extraGroups = [ "wheel" ];

@@ -1,9 +1,7 @@
-{ pkgs, ... }: {
+{ ... }: {
   imports = [
     ./defaults.nix
     ../modules/disko-uefi-ext4-encrypted.nix
-    ../modules/network-networkd.nix
-    ../modules/pipewire.nix
   ];
 
   disko.devices.disk.main.device = "/dev/sda";
