@@ -28,6 +28,7 @@ in
         ZDOTDIR="${repoUserPath}/config/zsh" # --- Source zsh config files directly from the repository. No need to export.
         export REPO_USER_PATH="${repoUserPath}" # --- Hard-coded into some config files.
       '';
+      ".zprofile".source = mkOutOfStoreSymlink "${configPath}/zsh/.zprofile";
 
       # Configurations in files created with mkOutOfStoreSymlink do not need a system rebuild
       ".config/btop/btop.conf".source = mkOutOfStoreSymlink "${configPath}/btop.conf";

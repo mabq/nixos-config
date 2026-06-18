@@ -1,14 +1,10 @@
-{
-  pkgs,
-  user,
-  ...
-}:
+{ pkgs, user, ... }:
 {
   programs.zsh.enable = true; # must be enabled to be used as the default shell.
 
   programs.hyprland = {
     enable = true;
-    withUWSM = true;
+    withUWSM = true; # https://wiki.hypr.land/Useful-Utilities/Systemd-start/#uwsm
   };
 
   users.users.${user} = {
