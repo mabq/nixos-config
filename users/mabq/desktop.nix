@@ -78,7 +78,6 @@ in
       gh # GitHub CLI tool
       git # Distributed version control system
       gnumake # Tool to control the generation of non-source files from sources (!neovim)
-      hyprland # Dynamic tiling Wayland compositor that doesn't sacrifice on its looks
       imagemagick # Software suite to create, edit, compose, or convert bitmap images (!elephant)
       iperf # Tool to measure IP bandwidth using UDP or TCP
       lazygit # Simple terminal UI for git commands (!neovim)
@@ -109,18 +108,21 @@ in
       # ------------------------------------------------------------------------
       # Desktop
       # ------------------------------------------------------------------------
+      # hyprland # Dynamic tiling Wayland compositor that doesn't sacrifice on its looks
+      # uwsm # Universal wayland session manager
       brave # Privacy-oriented browser for Desktop and Laptop computers
       foot # Fast, lightweight and minimalistic Wayland terminal emulator
       hyprlauncher # A multipurpose and versatile launcher / picker for Hyprland
       hyprtoolkit # A modern C++ Wayland-native GUI toolkit
+      jetbrains-mono # Typeface made for developers
       kitty # Fast, feature-rich, GPU based terminal emulator
       nautilus # File manager for GNOME
+      nerd-fonts.symbols-only # Just the Nerd Font Icons
       niri # Scrollable-tiling Wayland compositor
       wev # Wayland event viewer (keycodes)
       wl-clip-persist # Keep Wayland clipboard even after programs close
       wl-clipboard # Command-line copy/paste utilities for Wayland
-      nerd-fonts.jetbrains-mono # Nerd Fonts: JetBrains officially created font for developers
-      # Launcher
+      # -- Launcher
       walker # Wayland-native application runner
       elephant # Data provider service and backend for building custom application launchers (!walker) (Via home-manager options, must enable systemd service)
       libqalculate # Advanced calculator library (!elephant)
@@ -216,7 +218,6 @@ in
       # typora
       # ufw
       # ufw-docker
-      # uwsm
       # waybar
       # wireless-regdb
       # wl-clipboard

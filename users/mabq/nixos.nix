@@ -4,10 +4,12 @@
   ...
 }:
 {
-  # Must be enabled to be used as the default shell.
-  programs.zsh.enable = true;
+  programs.zsh.enable = true; # must be enabled to be used as the default shell.
 
-  # programs.hyprland.enable = true;
+  programs.hyprland = {
+    enable = true;
+    withUWSM = true;
+  };
 
   users.users.${user} = {
     isNormalUser = true;
