@@ -1,10 +1,10 @@
 { lib, pkgs, ... }: {
   imports = [
-    ../shared-config.nix
-    ../../modules/disko-uefi-ext4-encrypted.nix
-    ../../modules/keyd.nix
-    ../../modules/network-networkd.nix
-    ../../modules/pipewire.nix
+    ./all.nix
+    ../modules/disko-uefi-ext4-encrypted.nix
+    ../modules/keyd.nix
+    ../modules/network-networkd.nix
+    ../modules/pipewire.nix
   ];
 
   # Sometimes facter tries to use GRUB on UEFI systems, make sure it uses systemd-boot.

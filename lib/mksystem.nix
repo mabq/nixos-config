@@ -18,17 +18,17 @@ let
       ;
   };
 
-  machineConfig = ../machines/${machine}/configuration.nix;
-  userNixOSConfig = ../users/${user}/nixos.nix;
-  userHMConfig = ../users/${user}/${profile}.nix; # 3
+  machineConfig = ../machines/${machine}.nix;
+  userConfig = ../users/${user}/${profile}.nix;
+  # userHMConfig = ../users/${user}/${profile}.nix; # 3
 in
 inputs.nixpkgs.lib.nixosSystem {
   inherit specialArgs; # 4
   modules = [
-    # { nixpkgs.overlays = overlays; }
+    { nixpkgs.overlays = overlays; }
     inputs.disko.nixosModules.disko
     machineConfig
-    userNixOSConfig
+    userConfig
     inputs.home-manager.nixosModules.home-manager
     {
       home-manager.useGlobalPkgs = true; # 5
