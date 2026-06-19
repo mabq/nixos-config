@@ -25,7 +25,6 @@ in
       ".config/lazygit/config.yml".source = mkOutOfStoreSymlink "${configPath}/lazygit.yml";
       ".config/nvim".source = mkOutOfStoreSymlink "${configPath}/nvim"; # -- whole dir
       ".config/starship.toml".source = mkOutOfStoreSymlink "${configPath}/starship.toml";
-      ".config/tmux/tmux.conf".source = mkOutOfStoreSymlink "${configPath}/tmux.conf";
       ".config/elephant".source = mkOutOfStoreSymlink "${configPath}/elephant";
       ".config/walker/config.toml".source = mkOutOfStoreSymlink "${configPath}/walker.toml";
 
@@ -55,7 +54,6 @@ in
       shfmt # Shell parser and formatter (!neovim)
       starship # Customizable prompt for any shell
       stylua # Opinionated Lua code formatter (!neovim)
-      tmux # Terminal multiplexer
       tree-sitter # Parser generator tool and an incremental parsing library (!neovim)
       yazi # Blazing fast terminal file manager written in Rust, based on async I/O (!neovim)
       # ------------------------------------------------------------------------
