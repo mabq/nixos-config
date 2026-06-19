@@ -1,10 +1,15 @@
-# Zsh config files explained
+# Zsh
+
+If you move the config files location you must also edit the ZSH module.
+
+## Zsh config files explained
+-----------------------------
 
 Zsh sources different files depending on the shell type.
 
 Invariably the first file to be sourced is `/etc/zshenv` regardless of the shell type. NixOS puts only necessary stuff in there, it sets some global variables and configures the `fpath` variable to show zsh where it can find all files for autocomplition in the Nix Store. We cannot avoid this file from being sourced but it does not matter since nothing there affects our config.
 
-Right after that `~/.zshenv` is sourced regardless of the shell type, so we must only include very specific stuff in there. Its content is produced by the user's `home-manager.nix` file. There we show zsh where to look for its config files via the `ZDOTDIR` variable, and also set the `REPO_USER_PATH` which can be used inside zsh config files to find the cloned repository files. More importantly we set the option `NO_GLOBAL_RCS` which instructs zsh not to load other global zsh config files, like `/etc/zshrc` which includes things we dont need (slowing down the init process) and has some weird keybinds that mess up out configs.
+Right after that `~/.zshenv` is sourced regardless of the shell type, so we must only include very specific stuff in there. Its content is produced by the user's `home-manager.nix` file. There we show zsh where to look for its config files via the `ZDOTDIR` variable, and also set the `REPO_PATH` which can be used inside zsh config files to find the cloned repository files. More importantly we set the option `NO_GLOBAL_RCS` which instructs zsh not to load other global zsh config files, like `/etc/zshrc` which includes things we dont need (slowing down the init process) and has some weird keybinds that mess up out configs.
 
 `/etc/zshrc` will be ignored and our `~/.zshrc` file will source our config files.
 

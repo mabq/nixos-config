@@ -1,9 +1,11 @@
 # vim: filetype=sh
 
-export EDITOR="nvim" # TODO: check uswm later
+# TODO: UWSM: Do I need to move these variables to UWSM?
+
+export EDITOR="nvim"
 
 export BAT_THEME=ansi
-export PATH="$HOME/.local/bin:$REPO_USER_PATH/bin:$PATH"
+export PATH="$HOME/.local/bin:$REPO_PATH/bin:$PATH"
 export SUDO_EDITOR=$EDITOR
 
 # export GPG_TTY="${TTY:-$(tty)}"

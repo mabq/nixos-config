@@ -11,3 +11,5 @@ if [[ -z "$TMUX" ]]; then
     fi
   fi
 fi
+
+# TODO: Should I move this file to hyprland module?

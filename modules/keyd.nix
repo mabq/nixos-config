@@ -1,3 +1,4 @@
+# Read the README file in the configuration files!
 {
   lib,
   pkgs,

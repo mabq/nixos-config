@@ -5,14 +5,16 @@
   user,
   projectName,
   repoPath,
-  repoUserPath,
   configPath,
   currentThemePath,
   theme,
   forceFiles,
-  mkOutOfStoreSymlink,
   ...
 }:
+let
+  # TODO: can I access directly under lib?
+  mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
+in
 {
   home = {
     file = forceFiles {
@@ -43,25 +45,19 @@
       # luajit # High-performance JIT compiler for Lua 5.1 (!neovim)
       # luarocks # A package manager for Lua modules (!neovim)
       age # Modern encryption tool with small explicit keys
-      atuin # Replacement for a shell history
       bash-language-server # Language server for Bash
-      bat # Cat clone with syntax highlighting and Git integration
       biome # Toolchain of the web (!neovim)
+      # TODO: Bluetooth: Move this package to a module with bluetooth system config
       bluetui # TUI for managing bluetooth on Linux [4]
       btop # Monitor of resources
       caligula # User-friendly, lightweight TUI for disk imaging
       delta # Syntax-highlighting pager for git (!lazygit)
       exfatprogs # exFAT filesystem userspace utilities
-      eza # Modern, maintained replacement for ls (!zsh)
       fastfetch # Actively maintained, feature-rich and performance oriented, neofetch like system information tool
-      fd # Simple, fast and user-friendly alternative to find (!neovim)
-      ffmpeg # Complete, cross-platform solution to record, convert and stream audio and video
-      fzf # Command-line fuzzy finder (!yazi)
       gcc # GNU Compiler Collection
       gh # GitHub CLI tool
       git # Distributed version control system
       gnumake # Tool to control the generation of non-source files from sources (!neovim)
-      imagemagick # Software suite to create, edit, compose, or convert bitmap images (!elephant)
       iperf # Tool to measure IP bandwidth using UDP or TCP
       lazygit # Simple terminal UI for git commands (!neovim)
       lua-language-server # Language server that offers Lua language support (!neovim)
@@ -71,9 +67,7 @@
       nix-tree # Interactively browse a Nix store paths dependencies
       nixd # Feature-rich Nix language server interoperating with C++ nix (!neovim)
       nixfmt # Official formatter for Nix code (!neovim)
-      parted # Create, destroy, resize, check, and copy partitions (!zsh fuctions)
       pciutils # Provides the `lspci` command
-      ripgrep # Utility that combines the usability of The Silver Searcher with the raw speed of grep (!neovim)
       shfmt # Shell parser and formatter (!neovim)
       starship # Customizable prompt for any shell
       stylua # Opinionated Lua code formatter (!neovim)
@@ -84,7 +78,6 @@
       wget # Tool for retrieving files using HTTP, HTTPS, and FTP
       whois # Intelligent WHOIS client from Debian
       yazi # Blazing fast terminal file manager written in Rust, based on async I/O (!neovim)
-      zoxide # Fast cd command that learns your habits (!zsh)
       # ------------------------------------------------------------------------
       # Desktop
       # ------------------------------------------------------------------------
@@ -98,7 +91,6 @@
       kitty # Fast, feature-rich, GPU based terminal emulator
       nautilus # File manager for GNOME
       nerd-fonts.symbols-only # Just the Nerd Font Icons
-      niri # Scrollable-tiling Wayland compositor
       wev # Wayland event viewer (keycodes)
       wl-clip-persist # Keep Wayland clipboard even after programs close
       wl-clipboard # Command-line copy/paste utilities for Wayland

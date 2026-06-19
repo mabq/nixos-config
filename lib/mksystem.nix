@@ -12,8 +12,7 @@ let
   projectName = "nixos-config"; # 1
   repoPath = "/home/${user}/.local/share/${projectName}"; # 2
 
-  repoUserPath = "${repoPath}/users/${user}";
-  configPath = "${repoUserPath}/config";
+  configPath = "${repoPath}/users/${user}/config";
 
   theme = "tokyo-night"; # must match one of the directory names in the themes folder
   currentThemePath = "/home/${user}/.config/${projectName}/current/theme";
@@ -30,16 +29,16 @@ let
       profile
       projectName
       repoPath
-      repoUserPath
       configPath
-      currentThemePath
       theme
+      currentThemePath
       forceFiles
       ;
   };
 
   machineConfig = ../machines/${machine}.nix;
-  userConfig = ../users/${user}/${profile}.nix;
+  userProfile = ../users/${user}/${profile}.nix;
+  # TODO: Rewrite everything in home to nixos modules
   userHMConfig = ../users/${user}/home.nix; # 3
 in
 inputs.nixpkgs.lib.nixosSystem {
@@ -48,7 +47,7 @@ inputs.nixpkgs.lib.nixosSystem {
     inputs.disko.nixosModules.disko
     { nixpkgs.overlays = overlays; }
     machineConfig
-    userConfig
+    userProfile
     inputs.home-manager.nixosModules.home-manager
     {
       home-manager.useGlobalPkgs = true; # 5
