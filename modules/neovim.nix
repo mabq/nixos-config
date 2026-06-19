@@ -2,7 +2,6 @@
   user,
   repoPath,
   forceFiles,
-  currentThemePath,
   ...
 }:
 {

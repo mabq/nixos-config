@@ -12,8 +12,7 @@
   # User default shell
   users.users.${user}.shell = pkgs.zsh;
 
-  # ----------------------------------------------------------------------------
-
+  # Home-manager
   home-manager.users.${user} =
     { pkgs, config, ... }:
     let

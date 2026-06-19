@@ -13,11 +13,11 @@
     {
       home = {
         packages = with pkgs; [
-          starship # Customizable prompt for any shell
+          yazi # Blazing fast terminal file manager written in Rust, based on async I/O
         ];
 
         file = forceFiles {
-          ".config/starship.toml".source = mkOutOfStoreSymlink "${repoPath}/config/starship/starship.toml";
+          ".config/yazi/yazi.toml".source = mkOutOfStoreSymlink "${repoPath}/config/yazi/yazi.toml";
         };
       };
     };

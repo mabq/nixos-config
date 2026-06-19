@@ -68,6 +68,11 @@ Direct startup directories:
     `:h base-directories`
     `:h slow-start`
 
+Theme file:
+
+  Is loaded by the `lazy.nvim` file directly from:
+   `~/.config/nixos-config/current/theme/neovim.lua`
+
 To learn about Lua (the language), see:
 
   https://learnxinyminutes.com/lua
