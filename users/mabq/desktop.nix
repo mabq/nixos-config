@@ -4,10 +4,13 @@
     ../../modules/networkd.nix
     ../../modules/pipewire.nix
     ../../modules/keyd.nix
+
     ../../modules/zsh.nix
     ../../modules/starship.nix
     ../../modules/tmux.nix
     ../../modules/btop.nix
+
+    ../../modules/git.nix
   ];
 
   programs.hyprland = {
@@ -35,13 +38,13 @@
     { pkgs, ... }:
     {
       home.packages = with pkgs; [
-        # -- CLI ---------------------------------------------------------------
+        # CLI
         age # Modern encryption tool with small explicit keys
         caligula # User-friendly, lightweight TUI for disk imaging
         fastfetch # Actively maintained, feature-rich and performance oriented, neofetch like system information tool
         gcc # GNU Compiler Collection
-        gnumake # Tool to control the generation of non-source files from sources (!neovim)
         iperf # Tool to measure IP bandwidth using UDP or TCP
+        just # Handy way to save and run project-specific commands
         mpv # General-purpose media player, fork of MPlayer and mplayer2
         ncdu # Disk usage analyzer with an ncurses interface
         nix-tree # Interactively browse a Nix store paths dependencies

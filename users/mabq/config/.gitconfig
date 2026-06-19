@@ -24,8 +24,6 @@
   enabled = true            # Record and reuse conflict resolutions
   autoupdate = true         # Apply stored conflict resolutions automatically
 
-# ------------------------------------------------------------------------------
-
 # Use `gh` instead of ssh keys to login to GitHub.
 [credential "https://github.com"]
   helper = # clear any existing helpers
@@ -34,10 +32,8 @@
   helper = # clear any existing helpers
   helper = !/run/current-system/sw/bin/gh auth git-credential
 
-# ------------------------------------------------------------------------------
-
 # Git delta
-#   https://github.com/dandavison/delta#get-started
+#  https://github.com/dandavison/delta#get-started
 [core]
   pager = delta
 [interactive]
@@ -48,3 +44,4 @@
   dark = true      # or light = true, or omit for auto-detection
 [merge]
   conflictStyle = zdiff3
+

@@ -1,3 +1,4 @@
+# If a file isn't tracked by Git, Nix doesn't believe it exists!
 {
   description = "My NixOS config";
 

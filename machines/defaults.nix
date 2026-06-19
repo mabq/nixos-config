@@ -71,16 +71,11 @@ with lib;
   # ----------------------------------------------------------------------------
 
   environment = {
-    systemPackages = with pkgs; [
-      # TODO: move these packages to home-manger
-      gh # GitHub CLI tool (required to clone private repos without ssh key)
-      git # Distributed version control system
-      just # Handy way to save and run project-specific commands
-    ];
+    systemPackages = with pkgs; [ ];
   };
 
   # ----------------------------------------------------------------------------
-  # System services
+  # OpenSSH and Tailscale
   # ----------------------------------------------------------------------------
 
   services = {
@@ -93,8 +88,6 @@ with lib;
     };
 
     tailscale.enable = mkDefault true; # must authenticate manually with `sudo tailscale up`
-
-    tzupdate.enable = mkDefault true; # update timezone automatically
   };
 
   # ----------------------------------------------------------------------------
@@ -118,6 +111,7 @@ with lib;
   # ----------------------------------------------------------------------------
 
   time.timeZone = mkDefault "America/Guayaquil";
+  services.tzupdate.enable = mkDefault true; # update timezone automatically
 
   i18n = {
     defaultLocale = mkDefault "en_US.UTF-8";

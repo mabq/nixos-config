@@ -1,12 +1,10 @@
 {
   config, # home-manager options, not NixOS options
-  lib,
   pkgs,
   user,
   projectName,
   repoPath,
   configPath,
-  currentThemePath,
   theme,
   forceFiles,
   ...
@@ -20,39 +18,19 @@ in
     file = forceFiles {
       ".config/fontconfig/fonts.conf".source = mkOutOfStoreSymlink "${configPath}/fonts.conf";
       ".config/foot/foot.ini".source = mkOutOfStoreSymlink "${configPath}/foot.ini";
-      ".config/git/config".source = mkOutOfStoreSymlink "${configPath}/.gitconfig";
       ".config/hypr".source = mkOutOfStoreSymlink "${configPath}/hypr"; # -- whole dir
-      ".config/lazygit/config.yml".source = mkOutOfStoreSymlink "${configPath}/lazygit.yml";
-      ".config/nvim".source = mkOutOfStoreSymlink "${configPath}/nvim"; # -- whole dir
       ".config/elephant".source = mkOutOfStoreSymlink "${configPath}/elephant";
       ".config/walker/config.toml".source = mkOutOfStoreSymlink "${configPath}/walker.toml";
 
       # Theme files (should work by just changing a single symlink).
       ".config/${projectName}/current/theme".source = mkOutOfStoreSymlink "${repoPath}/themes/${theme}";
-      "${configPath}/nvim/lua/plugins/theme.lua".source =
-        mkOutOfStoreSymlink "${currentThemePath}/neovim.lua";
     };
 
     homeDirectory = "/home/${user}"; # TODO: check if needed
 
     packages = with pkgs; [
-      # luajit # High-performance JIT compiler for Lua 5.1 (!neovim)
-      # luarocks # A package manager for Lua modules (!neovim)
-      bash-language-server # Language server for Bash
-      biome # Toolchain of the web (!neovim)
       # TODO: Bluetooth: Move this package to a module with bluetooth system config
       bluetui # TUI for managing bluetooth on Linux [4]
-      delta # Syntax-highlighting pager for git (!lazygit)
-      gh # GitHub CLI tool
-      git # Distributed version control system
-      lazygit # Simple terminal UI for git commands (!neovim)
-      lua-language-server # Language server that offers Lua language support (!neovim)
-      neovim # Vim text editor fork
-      nixd # Feature-rich Nix language server interoperating with C++ nix (!neovim)
-      nixfmt # Official formatter for Nix code (!neovim)
-      shfmt # Shell parser and formatter (!neovim)
-      stylua # Opinionated Lua code formatter (!neovim)
-      tree-sitter # Parser generator tool and an incremental parsing library (!neovim)
       yazi # Blazing fast terminal file manager written in Rust, based on async I/O (!neovim)
       # ------------------------------------------------------------------------
       # Desktop

@@ -27,12 +27,12 @@
           bat # Cat clone with syntax highlighting and Git integration
           exfatprogs # exFAT filesystem userspace utilities
           eza # Modern, maintained replacement for ls
-          fd # Simple, fast and user-friendly alternative to find (!neovim)
+          fd # Simple, fast and user-friendly alternative to find
           ffmpeg # Complete, cross-platform solution to record, convert and stream audio and video
           fzf # Command-line fuzzy finder (!yazi)
           imagemagick # Software suite to create, edit, compose, or convert bitmap images (!elephant)
           parted # Create, destroy, resize, check, and copy partitions
-          ripgrep # Utility that combines the usability of The Silver Searcher with the raw speed of grep (!neovim)
+          ripgrep # Utility that combines the usability of The Silver Searcher with the raw speed of grep
           zoxide # Fast cd command that learns your habits
           zsh-autosuggestions # Fish shell autosuggestions for Zsh
           zsh-history-substring-search # Fish shell history-substring-search for Zsh

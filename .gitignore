@@ -4,3 +4,7 @@ result-*
 
 # Ignore automatically generated direnv output
 .direnv
+
+# Ignore the neovim theme symlink that is changed on every rebuild
+# We give it this very peculiar name to avoid matching other files accidentally.
+nvim_theme_ignored.lua
