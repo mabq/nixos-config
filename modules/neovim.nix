@@ -6,9 +6,6 @@
   ...
 }:
 {
-
-  # ----------------------------------------------------------------------------
-
   home-manager.users.${user} =
     { pkgs, config, ... }:
     let
@@ -48,12 +45,8 @@
 
         file = forceFiles {
           ".config/nvim".source = mkOutOfStoreSymlink "${repoPath}/config/nvim";
-          # Here we adding a symlink to the nvim directory, which is actually a
-          # symlink to this same repository. This means that the file will
-          # appear as changed right after executing a rebuild. To avoid that we
-          # give it a very specific name in order to ignore it with `.gitignore`.
-          # ".config/nvim/lua/plugins/nvim_theme_ignored.lua".source =
-          #   mkOutOfStoreSymlink "${currentThemePath}/neovim.lua";
+          # The `lazy.lua` file sources the theme plugin file directly from:
+          #  `~/.config/nixos-config/current/theme/neovim.lua`
         };
       };
     };
