@@ -1,7 +1,7 @@
 { ... }: {
   imports = [
     ./defaults.nix
-    ../modules/disko-uefi-ext4-encrypted.nix
+    ../modules/disko/uefi-ext4-encrypted.nix
   ];
 
   # Make the disk descriptor explicit, otherwise you will forget to change it on new machines.

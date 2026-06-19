@@ -12,7 +12,7 @@
   # User default shell
   users.users.${user}.shell = pkgs.zsh;
 
-  # -- Home-manager ------------------------------------------------------------
+  # ----------------------------------------------------------------------------
 
   home-manager.users.${user} =
     { pkgs, config, ... }:
@@ -22,16 +22,18 @@
     {
       home = {
         packages = with pkgs; [
+          # These packages are used in zsh config files
           atuin # Replacement for a shell history
           bat # Cat clone with syntax highlighting and Git integration
-          eza # Modern, maintained replacement for ls (!zsh)
+          exfatprogs # exFAT filesystem userspace utilities
+          eza # Modern, maintained replacement for ls
           fd # Simple, fast and user-friendly alternative to find (!neovim)
           ffmpeg # Complete, cross-platform solution to record, convert and stream audio and video
           fzf # Command-line fuzzy finder (!yazi)
           imagemagick # Software suite to create, edit, compose, or convert bitmap images (!elephant)
-          parted # Create, destroy, resize, check, and copy partitions (!zsh fuctions)
+          parted # Create, destroy, resize, check, and copy partitions
           ripgrep # Utility that combines the usability of The Silver Searcher with the raw speed of grep (!neovim)
-          zoxide # Fast cd command that learns your habits (!zsh)
+          zoxide # Fast cd command that learns your habits
           zsh-autosuggestions # Fish shell autosuggestions for Zsh
           zsh-history-substring-search # Fish shell history-substring-search for Zsh
           zsh-syntax-highlighting # Fish shell like syntax highlighting for Zsh

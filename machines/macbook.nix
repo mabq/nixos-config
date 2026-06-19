@@ -1,7 +1,7 @@
 { ... }: {
   imports = [
     ./defaults.nix
-    ../modules/disko-uefi-ext4-encrypted.nix
+    ../modules/disko/uefi-ext4-encrypted.nix
   ];
 
   disko.devices.disk.main.device = "/dev/sda";

@@ -1,6 +1,5 @@
 # vim: filetype=sh
 
-# -- File system
 if command -v eza &>/dev/null; then
   alias ls='eza -lh --group-directories-first --icons=auto'
   alias lsa='ls -a'
@@ -26,9 +25,32 @@ if command -v zoxide &>/dev/null; then
   }
 fi
 
-open() (
-  xdg-open "$@" >/dev/null 2>&1 &
-)
+if command -v git &>/dev/null; then
+  alias gl='git log --graph --oneline --all --decorate'
+fi
+
+if command -v tmux &>/dev/null; then
+  alias t='tmux attach || tmux new -s Work'
+fi
+
+if command -v nvim &>/dev/null; then
+  n() { if [ "$#" -eq 0 ]; then command nvim .; else command nvim "$@"; fi; }
+fi
+
+if command -v yazi &>/dev/null; then
+  # https://yazi-rs.github.io/docs/quick-start/#shell-wrapper
+  function y() {
+    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+    command yazi "$@" --cwd-file="$tmp"
+    IFS= read -r -d '' cwd <"$tmp"
+    [ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
+    rm -f -- "$tmp"
+  }
+fi
+
+# open() (
+#   xdg-open "$@" >/dev/null 2>&1 &
+# )
 
 # -- Directories
 alias ..='cd ..'
@@ -36,15 +58,10 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 
 # -- Tools
-alias c='opencode'
+# alias c='opencode'
 # alias cx='printf "\033[2J\033[3J\033[H" && claude --allow-dangerously-skip-permissions'
-alias d='docker'
+# alias d='docker'
 # alias r='rails'
-alias t='tmux attach || tmux new -s Work'
-n() { if [ "$" -eq 0 ]; then command nvim .; else command nvim "$@"; fi; }
-
-# -- Git
-alias gl='git log --graph --oneline --all --decorate'
 
 # --- Others
 # alias mkdir='mkdir -p'

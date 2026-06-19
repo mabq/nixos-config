@@ -18,8 +18,6 @@ in
 {
   home = {
     file = forceFiles {
-      # Configurations in files created with mkOutOfStoreSymlink do not need a system rebuild
-      ".config/btop/btop.conf".source = mkOutOfStoreSymlink "${configPath}/btop.conf";
       ".config/fontconfig/fonts.conf".source = mkOutOfStoreSymlink "${configPath}/fonts.conf";
       ".config/foot/foot.ini".source = mkOutOfStoreSymlink "${configPath}/foot.ini";
       ".config/git/config".source = mkOutOfStoreSymlink "${configPath}/.gitconfig";
@@ -33,10 +31,8 @@ in
 
       # Theme files (should work by just changing a single symlink).
       ".config/${projectName}/current/theme".source = mkOutOfStoreSymlink "${repoPath}/themes/${theme}";
-      ".config/btop/themes/current.theme".source = mkOutOfStoreSymlink "${currentThemePath}/btop.theme";
       "${configPath}/nvim/lua/plugins/theme.lua".source =
         mkOutOfStoreSymlink "${currentThemePath}/neovim.lua";
-      # TODO: launcher theme once we decide which launcher we are going to use
     };
 
     homeDirectory = "/home/${user}"; # TODO: check if needed
@@ -44,39 +40,23 @@ in
     packages = with pkgs; [
       # luajit # High-performance JIT compiler for Lua 5.1 (!neovim)
       # luarocks # A package manager for Lua modules (!neovim)
-      age # Modern encryption tool with small explicit keys
       bash-language-server # Language server for Bash
       biome # Toolchain of the web (!neovim)
       # TODO: Bluetooth: Move this package to a module with bluetooth system config
       bluetui # TUI for managing bluetooth on Linux [4]
-      btop # Monitor of resources
-      caligula # User-friendly, lightweight TUI for disk imaging
       delta # Syntax-highlighting pager for git (!lazygit)
-      exfatprogs # exFAT filesystem userspace utilities
-      fastfetch # Actively maintained, feature-rich and performance oriented, neofetch like system information tool
-      gcc # GNU Compiler Collection
       gh # GitHub CLI tool
       git # Distributed version control system
-      gnumake # Tool to control the generation of non-source files from sources (!neovim)
-      iperf # Tool to measure IP bandwidth using UDP or TCP
       lazygit # Simple terminal UI for git commands (!neovim)
       lua-language-server # Language server that offers Lua language support (!neovim)
-      mpv # General-purpose media player, fork of MPlayer and mplayer2
-      ncdu # Disk usage analyzer with an ncurses interface
       neovim # Vim text editor fork
-      nix-tree # Interactively browse a Nix store paths dependencies
       nixd # Feature-rich Nix language server interoperating with C++ nix (!neovim)
       nixfmt # Official formatter for Nix code (!neovim)
-      pciutils # Provides the `lspci` command
       shfmt # Shell parser and formatter (!neovim)
       starship # Customizable prompt for any shell
       stylua # Opinionated Lua code formatter (!neovim)
-      tldr # Simplified and community-driven man pages
       tmux # Terminal multiplexer
       tree-sitter # Parser generator tool and an incremental parsing library (!neovim)
-      unzip # Extraction utility for archives compressed in .zip format
-      wget # Tool for retrieving files using HTTP, HTTPS, and FTP
-      whois # Intelligent WHOIS client from Debian
       yazi # Blazing fast terminal file manager written in Rust, based on async I/O (!neovim)
       # ------------------------------------------------------------------------
       # Desktop
