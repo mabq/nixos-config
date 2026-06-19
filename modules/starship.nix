@@ -15,11 +15,11 @@
     {
       home = {
         packages = with pkgs; [
-          tmux # Terminal multiplexer
+          starship # Customizable prompt for any shell
         ];
 
         file = forceFiles {
-          ".config/tmux/tmux.conf".source = mkOutOfStoreSymlink "${repoPath}/config/tmux/tmux.conf";
+          ".config/starship.toml".source = mkOutOfStoreSymlink "${repoPath}/config/starship/starship.toml";
         };
       };
     };

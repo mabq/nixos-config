@@ -5,6 +5,7 @@
     ../../modules/pipewire.nix
     ../../modules/keyd.nix
     ../../modules/zsh.nix
+    ../../modules/starship.nix
     ../../modules/tmux.nix
     ../../modules/btop.nix
   ];
