@@ -9,6 +9,7 @@
     ../../modules/starship.nix
     ../../modules/tmux.nix
     ../../modules/btop.nix
+    ../../modules/neovim.nix
 
     ../../modules/git.nix
   ];

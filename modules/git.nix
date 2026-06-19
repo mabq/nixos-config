@@ -22,7 +22,7 @@
         ];
 
         file = forceFiles {
-          ".config/git/config".source = mkOutOfStoreSymlink "${repoPath}/users/${user}/config/git/.gitconfig";
+          ".config/git/config".source = mkOutOfStoreSymlink "${repoPath}/users/${user}/config/.gitconfig";
           ".config/lazygit/config.yml".source = mkOutOfStoreSymlink "${repoPath}/config/lazygit/lazygit.yml";
         };
       };

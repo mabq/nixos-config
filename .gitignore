@@ -7,4 +7,4 @@ result-*
 
 # Ignore the neovim theme symlink that is changed on every rebuild
 # We give it this very peculiar name to avoid matching other files accidentally.
-nvim_theme_ignored.lua
+# nvim_theme_ignored.lua
