@@ -17,7 +17,7 @@
         ];
 
         file = forceFiles {
-          ".config/tmux/tmux.conf".source = mkOutOfStoreSymlink "${repoPath}/config/tmux/tmux.conf";
+          ".config/tmux/tmux.conf".source = mkOutOfStoreSymlink "${repoPath}/config/tmux.conf";
         };
       };
     };

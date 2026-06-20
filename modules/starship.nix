@@ -17,7 +17,7 @@
         ];
 
         file = forceFiles {
-          ".config/starship.toml".source = mkOutOfStoreSymlink "${repoPath}/config/starship/starship.toml";
+          ".config/starship.toml".source = mkOutOfStoreSymlink "${repoPath}/config/starship.toml";
         };
       };
     };

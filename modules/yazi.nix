@@ -17,7 +17,7 @@
         ];
 
         file = forceFiles {
-          ".config/yazi/yazi.toml".source = mkOutOfStoreSymlink "${repoPath}/config/yazi/yazi.toml";
+          ".config/yazi/yazi.toml".source = mkOutOfStoreSymlink "${repoPath}/config/yazi.toml";
         };
       };
     };

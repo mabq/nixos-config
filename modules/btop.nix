@@ -18,7 +18,7 @@
         ];
 
         file = forceFiles {
-          ".config/btop/btop.conf".source = mkOutOfStoreSymlink "${repoPath}/config/btop/btop.conf";
+          ".config/btop/btop.conf".source = mkOutOfStoreSymlink "${repoPath}/config/btop.conf";
           ".config/btop/themes/current.theme".source = mkOutOfStoreSymlink "${currentThemePath}/btop.theme";
         };
       };
