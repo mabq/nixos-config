@@ -2,7 +2,7 @@
   config, # home-manager options, not NixOS options
   pkgs,
   user,
-  projectName,
+  repoName,
   repoPath,
   configPath,
   theme,
@@ -23,7 +23,7 @@ in
       ".config/walker/config.toml".source = mkOutOfStoreSymlink "${configPath}/walker.toml";
 
       # Theme files (should work by just changing a single symlink).
-      ".config/${projectName}/current/theme".source = mkOutOfStoreSymlink "${repoPath}/themes/${theme}";
+      ".config/${repoName}/current/theme".source = mkOutOfStoreSymlink "${repoPath}/themes/${theme}";
     };
 
     homeDirectory = "/home/${user}"; # TODO: check if needed
@@ -31,7 +31,6 @@ in
     packages = with pkgs; [
       # TODO: Bluetooth: Move this package to a module with bluetooth system config
       bluetui # TUI for managing bluetooth on Linux [4]
-      yazi # Blazing fast terminal file manager written in Rust, based on async I/O (!neovim)
       # ------------------------------------------------------------------------
       # Desktop
       # ------------------------------------------------------------------------

@@ -1,6 +1,7 @@
 {
   pkgs,
   user,
+  repoName,
   repoPath,
   forceFiles,
   ...
@@ -44,6 +45,7 @@
             setopt NO_GLOBAL_RCS # --- Ignore zsh global config files, except `/etc/zshenv` which is read before this file.
             ZDOTDIR="${repoPath}/config/zsh" # --- Source zsh config files directly from the repository. No need to export.
             export REPO_PATH="${repoPath}" # --- Hard-coded into some config files.
+            export REPO_NAME="${repoName}" # --- Hard-coded into some config files.
           '';
           ".zprofile".source = mkOutOfStoreSymlink "${repoPath}/config/zsh/.zprofile";
         };

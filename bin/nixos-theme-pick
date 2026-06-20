@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-themes_dir="$HOME/.local/share/nixos-config/themes/"
+themes_dir="$HOME/.local/share/$REPO_NAME/themes/"
 
 target_theme=$(fd --hidden --no-ignore --exact-depth 1 --type directory . $themes_dir | fzf)
 
@@ -9,6 +9,6 @@ if [[ -z $target_theme ]]; then
 fi
 
 # Create the session (if necessary) in detached mode
-link_path="$HOME/.config/nixos-config/current/theme"
+link_path="$HOME/.config/$REPO_NAME/current/theme"
 rm -rf "$link_path"
 ln -s "$target_theme" "$link_path"

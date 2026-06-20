@@ -9,13 +9,13 @@
   profile,
 }:
 let
-  projectName = "nixos-config"; # 1
-  repoPath = "/home/${user}/.local/share/${projectName}"; # 2
+  repoName = "nixos-config"; # 1
+  repoPath = "/home/${user}/.local/share/${repoName}"; # 2
 
   configPath = "${repoPath}/users/${user}/config";
 
   theme = "tokyo-night"; # must match one of the directory names in the themes folder
-  currentThemePath = "/home/${user}/.config/${projectName}/current/theme";
+  currentThemePath = "/home/${user}/.config/${repoName}/current/theme";
 
   # Helper functions
   forceFiles = fileSet: inputs.nixpkgs.lib.mapAttrs (name: value: value // { force = true; }) fileSet;
@@ -27,7 +27,7 @@ let
       machine
       user
       profile
-      projectName
+      repoName
       repoPath
       configPath
       theme
@@ -59,9 +59,8 @@ inputs.nixpkgs.lib.nixosSystem {
 }
 
 /*
-  1. Must be separate from `$repopath`. This variable is used to create paths,
-     e.g. `~/.config/<projectName>/current/theme`. If you ever decide to use
-     other name change it here, it should update everything automatically.
+  1. If you ever decide to change the name of the repository, update this
+     variable, it should update everything automatically.
 
   2. This variable is used to create OutOfStore symlinks. Symlinks must point to
      absolute paths - things like `$HOME` or `~` are not allowed. Change this if
