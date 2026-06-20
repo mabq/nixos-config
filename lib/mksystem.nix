@@ -16,7 +16,7 @@ let
 
   configPath = "${repoPath}/users/${user}/config";
 
-  # Helper functions
+  # Make our symlinks override any existing file instead of throwing an error
   forceFiles = fileSet: inputs.nixpkgs.lib.mapAttrs (name: value: value // { force = true; }) fileSet;
 
   specialArgs = {

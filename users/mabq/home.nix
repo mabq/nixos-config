@@ -23,11 +23,6 @@ in
     homeDirectory = "/home/${user}"; # TODO: check if needed
 
     packages = with pkgs; [
-      # TODO: Bluetooth: Move this package to a module with bluetooth system config
-      bluetui # TUI for managing bluetooth on Linux [4]
-      # ------------------------------------------------------------------------
-      # Desktop
-      # ------------------------------------------------------------------------
       # hyprland # Dynamic tiling Wayland compositor that doesn't sacrifice on its looks
       # uwsm # Universal wayland session manager
       brave # Privacy-oriented browser for Desktop and Laptop computers

@@ -2,6 +2,7 @@
 {
   imports = [
     ../../modules/networkd.nix
+    ../../modules/bluetooth.nix
     ../../modules/keyd.nix
 
     ../../modules/theme.nix

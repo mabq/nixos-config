@@ -31,20 +31,6 @@ with lib;
     facter = {
       reportPath = ./facter/${machine}.json; # configure hardware based on facter report
     };
-
-    bluetooth = {
-      enable = mkDefault true;
-      powerOnBoot = mkDefault true; # ensure Bluetooth is powered on after reboot
-      settings = {
-        General = {
-          Experimental = mkDefault true; # required for some newer codecs like LDAC
-          FastConnectable = mkDefault true; # for faster connections (may increase power usage)
-        };
-        Policy = {
-          AutoEnable = mkDefault true; # automatically enable all controllers when found
-        };
-      };
-    };
   };
 
   # ----------------------------------------------------------------------------
