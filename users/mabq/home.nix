@@ -2,10 +2,7 @@
   config, # home-manager options, not NixOS options
   pkgs,
   user,
-  repoName,
-  repoPath,
   configPath,
-  theme,
   forceFiles,
   ...
 }:
@@ -21,9 +18,6 @@ in
       ".config/hypr".source = mkOutOfStoreSymlink "${configPath}/hypr"; # -- whole dir
       ".config/elephant".source = mkOutOfStoreSymlink "${configPath}/elephant";
       ".config/walker/config.toml".source = mkOutOfStoreSymlink "${configPath}/walker.toml";
-
-      # Theme files (should work by just changing a single symlink).
-      ".config/${repoName}/current/theme".source = mkOutOfStoreSymlink "${repoPath}/themes/${theme}";
     };
 
     homeDirectory = "/home/${user}"; # TODO: check if needed

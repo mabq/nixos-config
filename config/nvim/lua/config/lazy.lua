@@ -21,7 +21,7 @@ require("lazy").setup {
   spec = {
     { import = "plugins" }, -- this is where lazy.nvim looks for plugin specs
     -- Source the theme file directly
-    dofile(vim.fn.expand "~/.config/$REPO_NAME/current/theme/neovim.lua") or nil,
+    dofile(vim.fn.expand "$NC_CURRENT_THEME_PATH/neovim.lua") or nil,
   },
   change_detection = {
     notify = false, -- do not notify when changes are found

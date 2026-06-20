@@ -2,8 +2,9 @@
 {
   imports = [
     ../../modules/networkd.nix
-    ../../modules/pipewire.nix
     ../../modules/keyd.nix
+
+    ../../modules/theme.nix
 
     ../../modules/zsh.nix
     ../../modules/starship.nix
@@ -13,6 +14,8 @@
     ../../modules/neovim.nix
 
     ../../modules/git.nix
+
+    ../../modules/pipewire.nix
   ];
 
   programs.hyprland = {
@@ -55,7 +58,6 @@
         unzip # Extraction utility for archives compressed in .zip format
         wget # Tool for retrieving files using HTTP, HTTPS, and FTP
         whois # Intelligent WHOIS client from Debian
-        # -- GUI ---------------------------------------------------------------
       ];
     };
 }

@@ -7,15 +7,14 @@
   machine,
   user,
   profile,
+  theme ? "tokyo-night", # must be one of the themes in the theme directory
 }:
 let
   repoName = "nixos-config"; # 1
   repoPath = "/home/${user}/.local/share/${repoName}"; # 2
+  currentThemePath = "/home/${user}/.config/${repoName}/current/theme"; # 3
 
   configPath = "${repoPath}/users/${user}/config";
-
-  theme = "tokyo-night"; # must match one of the directory names in the themes folder
-  currentThemePath = "/home/${user}/.config/${repoName}/current/theme";
 
   # Helper functions
   forceFiles = fileSet: inputs.nixpkgs.lib.mapAttrs (name: value: value // { force = true; }) fileSet;
@@ -27,11 +26,10 @@ let
       machine
       user
       profile
-      repoName
-      repoPath
-      configPath
       theme
+      repoPath
       currentThemePath
+      configPath
       forceFiles
       ;
   };
@@ -62,17 +60,24 @@ inputs.nixpkgs.lib.nixosSystem {
   1. If you ever decide to change the name of the repository, update this
      variable, it should update everything automatically.
 
-  2. This variable is used to create OutOfStore symlinks. Symlinks must point to
-     absolute paths - things like `$HOME` or `~` are not allowed. Change this if
-     you ever decide to place the repository in another location.
+  2. This is the path where you need to clone the repository.
+     The variable is used to create OutOfStore symlinks pointing to the cloned
+     repository files.
+     Must be an absolute path because symlinks do not expand things like `$HOME`
+     or `~`.
+     If you ever decide to clone the repository somewhere else, update this
+     variable, it should update everything automatically.
 
-  3. https://nixos-and-flakes.thiscute.world/nixos-with-flakes/start-using-home-manager#home-manager-vs-nixos
+  3. A symlink pointing to the selected theme in the repository.
+     To change a theme all you need to do is change this symlink.
 
-  4. Must use `specialArgs`, `_module.args` causes infinite recursion when any of
+  4. https://nixos-and-flakes.thiscute.world/nixos-with-flakes/start-using-home-manager#home-manager-vs-nixos
+
+  5. Must use `specialArgs`, `_module.args` causes infinite recursion when any of
      the passed arguments is used in the `imports` section of other modules.
      https://nixos-and-flakes.thiscute.world/nixos-with-flakes/nixos-flake-and-module-system#pass-non-default-parameters-to-submodules
 
-  5. https://nix-community.github.io/home-manager/nixos-options.xhtml#nixos-opt-home-manager.useGlobalPkgs
+  6. https://nix-community.github.io/home-manager/nixos-options.xhtml#nixos-opt-home-manager.useGlobalPkgs
 
-  6. https://nix-community.github.io/home-manager/nixos-options.xhtml#nixos-opt-home-manager.useUserPackages
+  7. https://nix-community.github.io/home-manager/nixos-options.xhtml#nixos-opt-home-manager.useUserPackages
 */
