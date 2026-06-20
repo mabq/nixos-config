@@ -1,13 +1,6 @@
 { lib, pkgs, ... }:
 with lib;
 {
-  environment.systemPackages = with pkgs; [
-    wiremix # Simple TUI mixer for PipeWire
-  ];
-
-  # Required by pipewire
-  security.rtkit.enable = mkDefault true;
-
   services.pipewire = {
     enable = mkDefault true;
     alsa.enable = mkDefault true;
@@ -15,4 +8,10 @@ with lib;
     # Enable WirePlumber, a modular session / policy manager for PipeWire.
     wireplumber.enable = mkDefault true;
   };
+
+  security.rtkit.enable = mkDefault true; # required by pipewire
+
+  environment.systemPackages = with pkgs; [
+    wiremix # Simple TUI mixer for PipeWire
+  ];
 }

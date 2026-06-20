@@ -44,8 +44,7 @@
 
         file = forceFiles {
           ".config/nvim".source = mkOutOfStoreSymlink "${repoPath}/config/nvim";
-          # The `lazy.lua` file sources the theme plugin file directly from:
-          #  `$NC_CURRENT_THEME_PATH/neovim.lua`
+          # `$NC_CURRENT_THEME_PATH/neovim.lua` is sourced directly by `lazy.nvim`
         };
       };
     };
