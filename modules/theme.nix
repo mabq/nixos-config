@@ -3,7 +3,6 @@
   repoPath,
   currentThemePath,
   theme,
-  forceFiles,
   ...
 }:
 {
@@ -16,9 +15,10 @@
       _currentThemePath = pkgs.lib.removePrefix "/home/${user}" currentThemePath;
     in
     {
-      home.file = forceFiles {
-        # Theme files (should work by just changing a single symlink).
-        "${_currentThemePath}".source = mkOutOfStoreSymlink "${repoPath}/themes/${theme}";
+      # Theme files (should work by just changing a single symlink).
+      home.file."${_currentThemePath}" = {
+        source = mkOutOfStoreSymlink "${repoPath}/themes/${theme}";
+        force = true;
       };
     };
 }
