@@ -18,6 +18,7 @@
 
     ../../modules/pipewire.nix
     ../../modules/foot.nix
+    ../../modules/fonts.nix
   ];
 
   programs.hyprland = {
