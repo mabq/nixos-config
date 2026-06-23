@@ -7,7 +7,7 @@
   machine,
   user,
   profile,
-  theme ? "tokyo-night", # must be one of the themes in the theme directory
+  theme ? "tokyo-night-moon", # must be one of the themes in the theme directory
 }:
 let
   repoName = "nixos-config"; # 1
