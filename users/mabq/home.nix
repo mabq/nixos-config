@@ -7,13 +7,11 @@
   ...
 }:
 let
-  # TODO: can I access directly under lib?
   mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
 in
 {
   home = {
     file = forceFiles {
-      ".config/fontconfig/fonts.conf".source = mkOutOfStoreSymlink "${configPath}/fonts.conf";
       ".config/hypr".source = mkOutOfStoreSymlink "${configPath}/hypr"; # -- whole dir
       ".config/elephant".source = mkOutOfStoreSymlink "${configPath}/elephant";
       ".config/walker/config.toml".source = mkOutOfStoreSymlink "${configPath}/walker.toml";
@@ -27,9 +25,7 @@ in
       brave # Privacy-oriented browser for Desktop and Laptop computers
       hyprlauncher # A multipurpose and versatile launcher / picker for Hyprland
       hyprtoolkit # A modern C++ Wayland-native GUI toolkit
-      jetbrains-mono # Typeface made for developers
       nautilus # File manager for GNOME
-      nerd-fonts.symbols-only # Just the Nerd Font Icons
       wev # Wayland event viewer (keycodes)
       wl-clip-persist # Keep Wayland clipboard even after programs close
       wl-clipboard # Command-line copy/paste utilities for Wayland
