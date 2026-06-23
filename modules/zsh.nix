@@ -3,7 +3,6 @@
   user,
   repoPath,
   currentThemePath,
-  forceFiles,
   ...
 }:
 {
@@ -39,15 +38,22 @@
           zsh-syntax-highlighting # Fish shell like syntax highlighting for Zsh
         ];
 
-        file = forceFiles {
-          ".zshenv".text = ''
-            # Be careful what you put in this file, it affects every zsh invocation (including scp, rsync, etc).
-            setopt NO_GLOBAL_RCS # --- Ignore zsh global config files, except `/etc/zshenv` which is read before this file.
-            ZDOTDIR="${repoPath}/config/zsh" # --- Source zsh config files directly from the repository. No need to export.
-            export NC_REPO_PATH="${repoPath}" # --- Used to include binaries of this repo to PATH
-            export NC_CURRENT_THEME_PATH="${currentThemePath}" # --- Used to point config files to current theme
-          '';
-          ".zprofile".source = mkOutOfStoreSymlink "${repoPath}/config/zsh/.zprofile";
+        file = {
+          ".zshenv" = {
+            text = ''
+              # Be careful what you put in this file, it affects every zsh invocation (including scp, rsync, etc).
+              setopt NO_GLOBAL_RCS # --- Ignore zsh global config files, except `/etc/zshenv` which is read before this file.
+              ZDOTDIR="${repoPath}/config/zsh" # --- Source zsh config files directly from the repository. No need to export.
+              export NC_REPO_PATH="${repoPath}" # --- Used to include binaries of this repo to PATH
+              export NC_CURRENT_THEME_PATH="${currentThemePath}" # --- Used to point config files to current theme
+            '';
+            force = true;
+          };
+
+          ".zprofile" = {
+            source = mkOutOfStoreSymlink "${repoPath}/config/zsh/.zprofile";
+            force = true;
+          };
         };
       };
     };

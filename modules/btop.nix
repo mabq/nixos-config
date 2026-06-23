@@ -2,7 +2,6 @@
   user,
   repoPath,
   currentThemePath,
-  forceFiles,
   ...
 }:
 {
@@ -17,9 +16,15 @@
           btop # Monitor of resources
         ];
 
-        file = forceFiles {
-          ".config/btop/btop.conf".source = mkOutOfStoreSymlink "${repoPath}/config/btop.conf";
-          ".config/btop/themes/current.theme".source = mkOutOfStoreSymlink "${currentThemePath}/btop.theme";
+        file = {
+          ".config/btop/btop.conf" = {
+            source = mkOutOfStoreSymlink "${repoPath}/config/btop.conf";
+            force = true;
+          };
+          ".config/btop/themes/current.theme" = {
+            source = mkOutOfStoreSymlink "${currentThemePath}/btop.theme";
+            force = true;
+          };
         };
       };
     };

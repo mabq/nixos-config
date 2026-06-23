@@ -1,7 +1,6 @@
 {
   user,
   repoPath,
-  forceFiles,
   ...
 }:
 {
@@ -16,8 +15,11 @@
           tmux # Terminal multiplexer
         ];
 
-        file = forceFiles {
-          ".config/tmux/tmux.conf".source = mkOutOfStoreSymlink "${repoPath}/config/tmux.conf";
+        file = {
+          ".config/tmux/tmux.conf" = {
+            source = mkOutOfStoreSymlink "${repoPath}/config/tmux.conf";
+            force = true;
+          };
         };
       };
     };

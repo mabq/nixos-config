@@ -1,7 +1,6 @@
 {
   user,
   repoPath,
-  forceFiles,
   ...
 }:
 {
@@ -42,8 +41,11 @@
           # luarocks # A package manager for Lua modules
         ];
 
-        file = forceFiles {
-          ".config/nvim".source = mkOutOfStoreSymlink "${repoPath}/config/nvim";
+        file = {
+          ".config/nvim" = {
+            source = mkOutOfStoreSymlink "${repoPath}/config/nvim";
+            force = true;
+          };
           # `$NC_CURRENT_THEME_PATH/neovim.lua` is sourced directly by `lazy.nvim`
         };
       };

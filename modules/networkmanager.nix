@@ -1,11 +1,11 @@
 # Import this module if you want to use NetworkManager as the network manager.
 {
-  config,
   lib,
   user,
   ...
 }:
-with lib; {
+with lib;
+{
   # Do not create DHCP configurations based on facter file
   hardware.facter.detected.dhcp.enable = mkDefault false;
 
@@ -17,7 +17,7 @@ with lib; {
   networking.networkmanager.enable = mkDefault true;
 
   # Only members of the `networkmanager` group can use `nmtui` or `nmcli`
-  users.users.${user}.extraGroups = ["networkmanager"];
+  users.users.${user}.extraGroups = [ "networkmanager" ];
 }
 # ---
 #
@@ -54,4 +54,3 @@ with lib; {
 # [5] https://networkmanager.dev/docs/api/latest/settings-ipv4.html
 # [6] `resolvectl status`
 # [7] https://search.nixos.org/options?channel=unstable&query=networking.networkmanager
-

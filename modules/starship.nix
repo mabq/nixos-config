@@ -1,9 +1,4 @@
-{
-  user,
-  repoPath,
-  forceFiles,
-  ...
-}:
+{ user, repoPath, ... }:
 {
   home-manager.users.${user} =
     { pkgs, config, ... }:
@@ -16,8 +11,11 @@
           starship # Customizable prompt for any shell
         ];
 
-        file = forceFiles {
-          ".config/starship.toml".source = mkOutOfStoreSymlink "${repoPath}/config/starship.toml";
+        file = {
+          ".config/starship.toml" = {
+            source = mkOutOfStoreSymlink "${repoPath}/config/starship.toml";
+            force = true;
+          };
         };
       };
     };

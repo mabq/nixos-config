@@ -1,7 +1,6 @@
 {
   user,
   repoPath,
-  forceFiles,
   ...
 }:
 {
@@ -16,8 +15,11 @@
           yazi # Blazing fast terminal file manager written in Rust, based on async I/O
         ];
 
-        file = forceFiles {
-          ".config/yazi/yazi.toml".source = mkOutOfStoreSymlink "${repoPath}/config/yazi.toml";
+        file = {
+          ".config/yazi/yazi.toml" = {
+            source = mkOutOfStoreSymlink "${repoPath}/config/yazi.toml";
+            force = true;
+          };
         };
       };
     };

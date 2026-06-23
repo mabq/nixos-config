@@ -3,7 +3,6 @@
   pkgs,
   user,
   configPath,
-  forceFiles,
   ...
 }:
 let
@@ -11,10 +10,19 @@ let
 in
 {
   home = {
-    file = forceFiles {
-      ".config/hypr".source = mkOutOfStoreSymlink "${configPath}/hypr"; # -- whole dir
-      ".config/elephant".source = mkOutOfStoreSymlink "${configPath}/elephant";
-      ".config/walker/config.toml".source = mkOutOfStoreSymlink "${configPath}/walker.toml";
+    file = {
+      ".config/hypr" = {
+        source = mkOutOfStoreSymlink "${configPath}/hypr"; # -- whole dir
+        force = true;
+      };
+      ".config/elephant" = {
+        source = mkOutOfStoreSymlink "${configPath}/elephant";
+        force = true;
+      };
+      ".config/walker/config.toml" = {
+        source = mkOutOfStoreSymlink "${configPath}/walker.toml";
+        force = true;
+      };
     };
 
     homeDirectory = "/home/${user}"; # TODO: check if needed

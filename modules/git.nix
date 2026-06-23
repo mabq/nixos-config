@@ -1,7 +1,6 @@
 {
   user,
   repoPath,
-  forceFiles,
   ...
 }:
 {
@@ -19,9 +18,15 @@
           lazygit # Simple terminal UI for git commands
         ];
 
-        file = forceFiles {
-          ".config/git/config".source = mkOutOfStoreSymlink "${repoPath}/users/${user}/config/.gitconfig";
-          ".config/lazygit/config.yml".source = mkOutOfStoreSymlink "${repoPath}/config/lazygit.yml";
+        file = {
+          ".config/git/config" = {
+            source = mkOutOfStoreSymlink "${repoPath}/users/${user}/config/.gitconfig";
+            force = true;
+          };
+          ".config/lazygit/config.yml" = {
+            source = mkOutOfStoreSymlink "${repoPath}/config/lazygit.yml";
+            force = true;
+          };
         };
       };
     };

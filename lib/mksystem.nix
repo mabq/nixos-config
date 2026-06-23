@@ -16,9 +16,6 @@ let
 
   configPath = "${repoPath}/users/${user}/config";
 
-  # Make our symlinks override any existing file instead of throwing an error
-  forceFiles = fileSet: inputs.nixpkgs.lib.mapAttrs (name: value: value // { force = true; }) fileSet;
-
   specialArgs = {
     inherit
       self
@@ -30,7 +27,6 @@ let
       repoPath
       currentThemePath
       configPath
-      forceFiles
       ;
   };
 
