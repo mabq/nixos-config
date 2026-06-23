@@ -21,7 +21,6 @@
     {
       home = {
         packages = with pkgs; [
-          # These packages are used in zsh config files
           atuin # Replacement for a shell history
           bat # Cat clone with syntax highlighting and Git integration
           exfatprogs # exFAT filesystem userspace utilities

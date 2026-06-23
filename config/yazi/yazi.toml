@@ -12,3 +12,9 @@ show_hidden = true
 # [tasks]
 # image_alloc = 0 # show images of any size
 # image_bound = [ 0, 0 ] # show images of any size
+
+# Linux: Hyprland + Hyprpaper
+[[opener.set-wallpaper]]
+desc = "Set as wallpaper"
+for  = "linux"
+run  = "hyprctl hyprpaper wallpaper ,%s1"

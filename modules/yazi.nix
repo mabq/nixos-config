@@ -17,7 +17,11 @@
 
         file = {
           ".config/yazi/yazi.toml" = {
-            source = mkOutOfStoreSymlink "${repoPath}/config/yazi.toml";
+            source = mkOutOfStoreSymlink "${repoPath}/config/yazi/yazi.toml";
+            force = true;
+          };
+          ".config/yazi/init.lua" = {
+            source = mkOutOfStoreSymlink "${repoPath}/config/yazi/init.lua";
             force = true;
           };
         };
