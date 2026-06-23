@@ -6,7 +6,7 @@ if [[ -z "$selected_theme" ]]; then
   exit 1
 fi
 
-TEMPLATES_DIR="$NC_REPO_PATH/themes/_templates"
+TEMPLATES_DIR="$NC_REPO_PATH/config/theme_templates"
 THEME_DIR="$NC_REPO_PATH/themes/${selected_theme}"
 COLORS_FILE="$THEME_DIR/colors.toml"
 
