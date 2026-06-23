@@ -14,7 +14,6 @@ in
   home = {
     file = forceFiles {
       ".config/fontconfig/fonts.conf".source = mkOutOfStoreSymlink "${configPath}/fonts.conf";
-      ".config/foot/foot.ini".source = mkOutOfStoreSymlink "${configPath}/foot.ini";
       ".config/hypr".source = mkOutOfStoreSymlink "${configPath}/hypr"; # -- whole dir
       ".config/elephant".source = mkOutOfStoreSymlink "${configPath}/elephant";
       ".config/walker/config.toml".source = mkOutOfStoreSymlink "${configPath}/walker.toml";
@@ -26,11 +25,9 @@ in
       # hyprland # Dynamic tiling Wayland compositor that doesn't sacrifice on its looks
       # uwsm # Universal wayland session manager
       brave # Privacy-oriented browser for Desktop and Laptop computers
-      foot # Fast, lightweight and minimalistic Wayland terminal emulator
       hyprlauncher # A multipurpose and versatile launcher / picker for Hyprland
       hyprtoolkit # A modern C++ Wayland-native GUI toolkit
       jetbrains-mono # Typeface made for developers
-      kitty # Fast, feature-rich, GPU based terminal emulator
       nautilus # File manager for GNOME
       nerd-fonts.symbols-only # Just the Nerd Font Icons
       wev # Wayland event viewer (keycodes)

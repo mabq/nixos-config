@@ -17,6 +17,7 @@
     ../../modules/git.nix
 
     ../../modules/pipewire.nix
+    ../../modules/foot.nix
   ];
 
   programs.hyprland = {
