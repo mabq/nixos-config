@@ -2,9 +2,8 @@ return {
   "folke/tokyonight.nvim",
   lazy = false,
   priority = 1000,
-  opts = { style = "moon" }, -- https://github.com/folke/tokyonight.nvim#%EF%B8%8F-configuration
   config = function()
-    vim.cmd.colorscheme "tokyonight"
+    vim.cmd.colorscheme "tokyonight-night"
 
     -- Make the separator character more visible
     --  Must be set after setting the theme to pick the correct highlight group

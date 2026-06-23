@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Used by `nixos-theme-set`, this script automatically re-generates theme files
+# based on the colors defined in the `colors.toml` file inside each theme.
+
 selected_theme="$1"
 if [[ -z "$selected_theme" ]]; then
   echo "Error: No theme name was provided."
@@ -42,11 +45,10 @@ if [[ -f $COLORS_FILE ]]; then
     output_path="$THEME_DIR/$filename"
 
     # Don't overwrite the file if it already exists
-    if [[ ! -f $output_path ]]; then
-      sed -f "$sed_script" "$tpl" >"$output_path"
-    else
-      echo "${output_path} already exists."
+    if [[ -f $output_path ]]; then
+      echo "Overriding ${output_path}"
     fi
+    sed -f "$sed_script" "$tpl" >"$output_path"
   done
 
   rm "$sed_script"
