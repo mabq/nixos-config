@@ -8,7 +8,7 @@ vim.opt.shada = { "'10", "<0", "s10", "h" } -- better settings for shada files
 vim.o.ignorecase = true -- can be overruled by using `\c` or `\C` in the pattern
 vim.o.smartcase = true -- case sensitive if the search pattern contains upper case characters
 
-vim.o.inccommand = "split" -- preview substitutions live, as you type!
+-- vim.o.inccommand = "split" -- preview substitutions live, as you type!
 
 vim.o.wrap = false -- do not wrap lines by default
 vim.o.linebreak = true -- do not break words when wrapping
