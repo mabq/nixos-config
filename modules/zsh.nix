@@ -27,8 +27,8 @@
           eza # Modern, maintained replacement for ls
           fd # Simple, fast and user-friendly alternative to find
           ffmpeg # Complete, cross-platform solution to record, convert and stream audio and video
-          fzf # Command-line fuzzy finder (!yazi)
-          imagemagick # Software suite to create, edit, compose, or convert bitmap images (!elephant)
+          fzf # Command-line fuzzy finder
+          imagemagick # Software suite to create, edit, compose, or convert bitmap images
           parted # Create, destroy, resize, check, and copy partitions
           ripgrep # Utility that combines the usability of The Silver Searcher with the raw speed of grep
           zoxide # Fast cd command that learns your habits

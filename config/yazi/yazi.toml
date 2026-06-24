@@ -13,8 +13,13 @@ show_hidden = true
 # image_alloc = 0 # show images of any size
 # image_bound = [ 0, 0 ] # show images of any size
 
-# Linux: Hyprland + Hyprpaper
+# Set wallpaper from Yazi
+#   Define the action
 [[opener.set-wallpaper]]
-desc = "Set as wallpaper"
+desc = "Wallpaper"
 for  = "linux"
-run  = "hyprctl hyprpaper wallpaper ,%s1"
+run  = "hyprctl hyprpaper wallpaper \",%s\""
+#   Tell Yazi WHEN to show this opener option
+[[open.rules]]
+mime = "image/*"
+use  = [ "open", "set-wallpaper", "reveal" ]
