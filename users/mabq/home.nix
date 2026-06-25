@@ -2,45 +2,25 @@
   config, # home-manager options, not NixOS options
   pkgs,
   user,
-  configPath,
   ...
 }:
-let
-  mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
-in
 {
   home = {
-    file = {
-      ".config/hypr" = {
-        source = mkOutOfStoreSymlink "${configPath}/hypr"; # -- whole dir
-        force = true;
-      };
-      ".config/elephant" = {
-        source = mkOutOfStoreSymlink "${configPath}/elephant";
-        force = true;
-      };
-      ".config/walker/config.toml" = {
-        source = mkOutOfStoreSymlink "${configPath}/walker.toml";
-        force = true;
-      };
-    };
-
     homeDirectory = "/home/${user}"; # TODO: check if needed
 
+    username = user; # TODO: check if needed
+
+    # This value determines the Home Manager release that your
+    # configuration is compatible with. This helps avoid breakage
+    # when a new Home Manager release introduces backwards
+    # incompatible changes.
+    # You can update Home Manager without changing this value. See
+    # the Home Manager release notes for a list of state version
+    # changes in each release.
+    stateVersion = "25.11";
+
     packages = with pkgs; [
-      # hyprland # Dynamic tiling Wayland compositor that doesn't sacrifice on its looks
-      # uwsm # Universal wayland session manager
       brave # Privacy-oriented browser for Desktop and Laptop computers
-      hyprlauncher # A multipurpose and versatile launcher / picker for Hyprland
-      hyprtoolkit # A modern C++ Wayland-native GUI toolkit
-      nautilus # File manager for GNOME
-      wev # Wayland event viewer (keycodes)
-      wl-clip-persist # Keep Wayland clipboard even after programs close
-      wl-clipboard # Command-line copy/paste utilities for Wayland
-      libqalculate # Advanced calculator library (!elephant)
-      # ------------------------------------------------------------------------
-      # Later
-      # ------------------------------------------------------------------------
       # alacritty
       # avahi # mDNS/DNS-SD implementation (Bonjour)
       # bitwarden-cli # Secure and free password manager for all of your devices
@@ -142,25 +122,6 @@ in
       # yaru-icon-theme
       # yay
     ];
-
-    username = user; # TODO: check if needed
-
-    # This value determines the Home Manager release that your
-    # configuration is compatible with. This helps avoid breakage
-    # when a new Home Manager release introduces backwards
-    # incompatible changes.
-    # You can update Home Manager without changing this value. See
-    # the Home Manager release notes for a list of state version
-    # changes in each release.
-    stateVersion = "25.11";
-  };
-
-  services = {
-    elephant.enable = true;
-    walker = {
-      enable = true;
-      systemd.enable = true;
-    };
   };
 
   xdg = {

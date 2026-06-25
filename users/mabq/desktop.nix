@@ -19,12 +19,8 @@
     ../../modules/pipewire.nix
     ../../modules/foot.nix
     ../../modules/fonts.nix
+    ../../modules/hypr.nix
   ];
-
-  programs.hyprland = {
-    enable = true;
-    withUWSM = true; # https://wiki.hypr.land/Useful-Utilities/Systemd-start/#uwsm
-  };
 
   users.users.${user} = {
     isNormalUser = true;
