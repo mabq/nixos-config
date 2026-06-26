@@ -82,7 +82,7 @@ with lib;
 
   networking = {
     hostName = mkDefault machine;
-    firewall.enable = mkDefault true; # tailscale can go through
+    firewall.enable = mkDefault false; # tailscale can go through
   };
 
   # ----------------------------------------------------------------------------
