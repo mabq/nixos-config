@@ -1,7 +1,10 @@
 -- https://wiki.hypr.land/Configuring/Basics/Variables
+-- Shared path constants for Omarchy's Hyprland Lua modules.
+-- Lua files loaded with require() have separate local scopes, so modules that
+-- need these paths import this table instead of repeating os.getenv() lookups.
 
-local active_border_color = { colors = { "rgba(33ccffee)", "rgba(00ff99ee)" }, angle = 45 }
-local inactive_border_color = "rgba(595959aa)"
+local currentThemePath = os.getenv "NC_CURRENT_THEME_PATH"
+dofile(currentThemePath .. "/hyprland.lua")
 
 hl.config {
 
@@ -33,24 +36,7 @@ hl.config {
   general = {
     border_size = 2,
     gaps_out = 10,
-
-    col = {
-      active_border = active_border_color,
-      inactive_border = inactive_border_color,
-    },
-
     layout = "scrolling",
-  },
-
-  -------------------------------------------------------------------------------
-  -- Group
-  -------------------------------------------------------------------------------
-
-  group = {
-    col = {
-      border_active = active_border_color,
-      border_inactive = inactive_border_color,
-    },
   },
 
   -------------------------------------------------------------------------------

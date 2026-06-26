@@ -11,9 +11,6 @@
     withUWSM = true; # https://wiki.hypr.land/Useful-Utilities/Systemd-start/#uwsm
   };
 
-  # Optional, hint Electron apps to use Wayland:
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
-
   home-manager.users.${user} =
     { pkgs, config, ... }:
     let

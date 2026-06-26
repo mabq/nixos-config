@@ -1,6 +1,9 @@
+-- Use `hyprctl reload` to reload the configuration manually
+
 -- https://wiki.hypr.land/Configuring/Start/#require
-require "config.autostart"
+--  Use relative paths from the location of `hyprland.lua`.
 require "config.variables"
+require "config.autostart"
 require "config.animations"
 require "config.monitors"
 require "config.bindings"
@@ -26,8 +29,9 @@ require "config.bindings"
 
 -- See https://wiki.hypr.land/Configuring/Advanced-and-Cool/Environment-variables/
 
-hl.env("XCURSOR_SIZE", "20")
-hl.env("HYPRCURSOR_SIZE", "20")
+hl.env("XCURSOR_SIZE", "14")
+hl.env("HYPRCURSOR_SIZE", "14")
+-- hl.env("NIXOS_OZONE_WL", "1")
 
 -----------------------
 ----- PERMISSIONS -----
