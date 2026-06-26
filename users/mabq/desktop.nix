@@ -57,6 +57,7 @@
         unzip # Extraction utility for archives compressed in .zip format
         wget # Tool for retrieving files using HTTP, HTTPS, and FTP
         whois # Intelligent WHOIS client from Debian
+        plex # Media library streaming server
       ];
     };
 }
