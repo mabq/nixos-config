@@ -54,6 +54,7 @@
         gcc # GNU Compiler Collection
         iperf # Tool to measure IP bandwidth using UDP or TCP
         just # Handy way to save and run project-specific commands
+        libreoffice-fresh # Comprehensive, professional-quality productivity suite, a variant of openoffice.org
         mpv # General-purpose media player, fork of MPlayer and mplayer2
         ncdu # Disk usage analyzer with an ncurses interface
         nix-tree # Interactively browse a Nix store paths dependencies
