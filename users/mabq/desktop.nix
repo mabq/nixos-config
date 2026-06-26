@@ -22,6 +22,11 @@
     ../../modules/hypr.nix
   ];
 
+  services.plex = {
+    enable = true;
+    openFirewall = true;
+  };
+
   users.users.${user} = {
     isNormalUser = true;
     home = "/home/${user}";
@@ -57,7 +62,7 @@
         unzip # Extraction utility for archives compressed in .zip format
         wget # Tool for retrieving files using HTTP, HTTPS, and FTP
         whois # Intelligent WHOIS client from Debian
-        plex # Media library streaming server
+        qbittorrent # Featureful free software BitTorrent client
       ];
     };
 }
