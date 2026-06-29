@@ -19,7 +19,10 @@ with lib;
     { pkgs, ... }:
     {
       home.packages = with pkgs; [
-        bluetui # TUI for managing bluetooth on Linux [4]
+        bluetui # TUI for managing bluetooth on Linux [1]
       ];
     };
 }
+
+# [1] In order for bluetui to work the pipewire user service must be active,
+# try executing `wiremix` to start it.
