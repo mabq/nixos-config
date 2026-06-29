@@ -6,9 +6,8 @@
 }:
 {
   home = {
-    homeDirectory = "/home/${user}"; # TODO: check if needed
-
-    username = user; # TODO: check if needed
+    username = user;
+    homeDirectory = "/home/${user}";
 
     # This value determines the Home Manager release that your
     # configuration is compatible with. This helps avoid breakage
@@ -168,6 +167,3 @@
     };
   };
 }
-
-# [4] In order for bluetui to work the pipewire user service must be active,
-# try executing `wiremix` to start it.
