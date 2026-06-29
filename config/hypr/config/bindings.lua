@@ -10,10 +10,7 @@ hl.bind(mainMod .. " + SHIFT + f", hl.dsp.exec_cmd "uwsm app -- nautilus")
 
 hl.bind(mainMod .. " + w", hl.dsp.window.close())
 
--- hl.bind(
---   mainMod .. " + M",
---   hl.dsp.exec_cmd "command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"
--- )
+hl.bind(mainMod .. " + SHIFT + ESCAPE", hl.dsp.exec_cmd "uwsm stop")
 --
 hl.bind(mainMod .. " + V", hl.dsp.window.float { action = "toggle" })
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())

@@ -1,21 +1,3 @@
-# vim: filetype=sh
-
-# TODO: UWSM: Do I need to move these variables to UWSM?
-
-export EDITOR="nvim"
-
-export BAT_THEME=ansi
-export PATH="$HOME/.local/bin:$NC_REPO_PATH/bin:$PATH"
-export SUDO_EDITOR=$EDITOR
-
-# export GPG_TTY="${TTY:-$(tty)}"
-# export GTK_THEME="Adwaita:dark"
-# export MANPAGER="less -R --use-color -Dd+r -Du+b"
-# export MANROFFOPT="-P -c"  # https://wiki.archlinux.org/title/Color_output_in_console#Using_less
-# export PAGER="less -R --use-color -Dd+r -Du+b"
-# export VISUAL="nvim"  # when opening a GUI editor (nnn `-e` option will respect this variable)
-# export TERM=  # Do not set this variable, it is set by each terminal emulator.
-
-# SSH Agent
-# Required for the ssh-agent to work across terminals
-# export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"  # https://wiki.archlinux.org/title/SSH_keys#Start_ssh-agent_with_systemd_user
+# INFO: Don't put environent variables here, put them in `~/.config/uwsm/env`.
+#
+# Read the notes in the hyprland module for more info.

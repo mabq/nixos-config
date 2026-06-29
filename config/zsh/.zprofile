@@ -1,15 +1,29 @@
 # vim: filetype=sh
 
-# This file is only read by login shells (when you authenticate).
-#  Tmux new windows are considered login shells, skip.
-
 # Automatically start hyprland with UWSM.
 #  https://wiki.hypr.land/Useful-Utilities/Systemd-start/#in-tty
+#
+# This file is read only by login shells (when you authenticate).
+# Tmux new windows are considered login shells, so we need to skip those.
 if [[ -z "$TMUX" ]]; then
+  # Additionally make sure this only runs if we are on tty1.
   if [[ -z "$DISPLAY" ]] && [[ "$(tty)" = "/dev/tty1" ]]; then
-    # Skip if uwsm is not installed.
+    # Make sure uwsm is available.
     if uwsm check may-start; then
-      exec uwsm start hyprland.desktop
+      # We don't use a display manager, which reads the file
+      # `/run/current-system/sw/share/wayland-sessions/hyprland-uwsm.desktop`,
+      # so we replicate its content here.
+      #
+      # The `-D Hyprland` flag tells UWSM to explicitly set:
+      #  `XDG_CURRENT_DESKTOP=Hyprland`
+      #  `XDG_SESSION_DESKTOP=Hyprland`
+      #
+      # The -e flag stands for exclusive. It tells UWSM: "Take the desktop
+      # names I just specified with `-D` and discard any other conflicting
+      # desktop variables."
+      #
+      # For more information read notes in the hyprland module.
+      exec uwsm start -e -D Hyprland hyprland.desktop
     fi
   fi
 fi

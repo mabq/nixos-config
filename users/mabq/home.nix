@@ -7,6 +7,7 @@
 {
   home = {
     username = user;
+
     homeDirectory = "/home/${user}";
 
     # This value determines the Home Manager release that your

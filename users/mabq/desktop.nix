@@ -24,7 +24,12 @@
 
   users.users.${user} = {
     isNormalUser = true;
+
     home = "/home/${user}";
+
+    # NixOS does not create a group after the user name, it groups all human
+    # accounts into the `users` group.
+    # group = "${user}";
 
     # Members of the `wheel` group can execute `sudo` without password.
     extraGroups = [ "wheel" ];
