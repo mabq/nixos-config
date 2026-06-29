@@ -19,7 +19,7 @@ hide_action_hints = true # globally hide the action hints
 hide_return_action = true
 
 [columns]
-"symbols" = 3 # show this amount of symbols per row
+"symbols" = 5 # show this amount of symbols per row
 
 [keybinds]
 quick_activate = [] # remove F quick keys

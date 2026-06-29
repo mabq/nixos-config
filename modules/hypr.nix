@@ -1,7 +1,6 @@
 {
   user,
   repoPath,
-  # currentThemePath,
   ...
 }:
 {
@@ -10,23 +9,24 @@
     withUWSM = true; # [1] read what this does below!
   };
 
-  services.elephant.enable = true;
-
   home-manager.users.${user} =
-    { pkgs, config, ... }:
+    {
+      pkgs,
+      config,
+      ...
+    }:
     let
       mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
     in
     {
-
       home = {
         file = {
-          ".config/uwsm" = {
-            source = mkOutOfStoreSymlink "${repoPath}/config/uwsm";
+          ".config/uwsm/env.d/env" = {
+            source = mkOutOfStoreSymlink "${repoPath}/config/uwsm/env";
             force = true;
           };
-          ".config/hypr" = {
-            source = mkOutOfStoreSymlink "${repoPath}/config/hypr";
+          ".config/uwsm/env.d/hm-session-vars" = {
+            source = mkOutOfStoreSymlink "${config.home.sessionVariablesPackage}/etc/profile.d/hm-session-vars.sh";
             force = true;
           };
           ".config/elephant" = {
@@ -37,10 +37,14 @@
             source = mkOutOfStoreSymlink "${repoPath}/config/walker";
             force = true;
           };
+          ".config/hypr" = {
+            source = mkOutOfStoreSymlink "${repoPath}/config/hypr";
+            force = true;
+          };
         };
 
         packages = with pkgs; [
-          # elephant # Data provider service and backend for building custom application launchers (!walker)
+          elephant # Data provider service and backend for building custom application launchers (!walker)
           hyprlauncher # A multipurpose and versatile launcher / picker for Hyprland
           hyprtoolkit # A modern C++ Wayland-native GUI toolkit
           libqalculate # Advanced calculator library (!elephant)
@@ -50,6 +54,7 @@
           wl-clip-persist # Keep Wayland clipboard even after programs close
           wl-clipboard # Command-line copy/paste utilities for Wayland
         ];
+
       };
     };
 }
