@@ -10,22 +10,14 @@
     withUWSM = true; # [1] read what this does below!
   };
 
+  services.elephant.enable = true;
+
   home-manager.users.${user} =
     { pkgs, config, ... }:
     let
       mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
     in
     {
-      # services = {
-      #   # Walker is just the visual user interface, Elephant is the background
-      #   # service daemon that actually processes your keystrokes and runs your
-      #   # applications.
-      #   elephant.enable = true;
-      #   walker = {
-      #     enable = true;
-      #     systemd.enable = true;
-      #   };
-      # };
 
       home = {
         file = {
@@ -48,7 +40,7 @@
         };
 
         packages = with pkgs; [
-          elephant # Data provider service and backend for building custom application launchers (!walker)
+          # elephant # Data provider service and backend for building custom application launchers (!walker)
           hyprlauncher # A multipurpose and versatile launcher / picker for Hyprland
           hyprtoolkit # A modern C++ Wayland-native GUI toolkit
           libqalculate # Advanced calculator library (!elephant)

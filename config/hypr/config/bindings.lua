@@ -4,7 +4,8 @@ local mainMod = "SUPER"
 -- Launch applications
 ---------------------------------------------------------------------------------
 
-hl.bind(mainMod .. " + Space", hl.dsp.exec_cmd "uwsm app -- walker")
+-- hl.bind(mainMod .. " + Space", hl.dsp.exec_cmd "uwsm app -- walker")
+hl.bind(mainMod .. " + Space", hl.dsp.exec_cmd "uwsm app -- nc -U /run/user/1000/walker/walker.sock")
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd "uwsm app -- foot")
 hl.bind(mainMod .. " + SHIFT + f", hl.dsp.exec_cmd "uwsm app -- nautilus")
 
