@@ -64,11 +64,11 @@ vim.keymap.set("x", "J", ":<C-u>execute \"'<,'>move '>+\" . v:count1<cr>gv=gv", 
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search" })
 
 -- Easier window management
---   Move between windows
-vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Focus left window" })
-vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Focus right window" })
-vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Focus lower window" })
-vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Focus upper window" })
+--   Move between windows (see vim-tmux-navigator plugin)
+-- vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Focus left window" })
+-- vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Focus right window" })
+-- vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Focus lower window" })
+-- vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Focus upper window" })
 --   Resize windows
 vim.keymap.set("n", "<C-Left>", "<c-w>5<", { desc = "Decrease window width" })
 vim.keymap.set("n", "<C-Right>", "<c-w>5>", { desc = "Increase window width" })

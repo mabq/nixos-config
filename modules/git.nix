@@ -24,7 +24,7 @@
             force = true;
           };
           ".config/lazygit/config.yml" = {
-            source = mkOutOfStoreSymlink "${repoPath}/config/lazygit.yml";
+            source = mkOutOfStoreSymlink "${repoPath}/config/lazygit/lazygit.yml";
             force = true;
           };
         };

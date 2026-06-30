@@ -17,7 +17,7 @@
         ];
 
         file.".config/fontconfig/fonts.conf" = {
-          source = mkOutOfStoreSymlink "${repoPath}/fonts.conf";
+          source = mkOutOfStoreSymlink "${repoPath}/fontconfig/fonts.conf";
           force = true;
         };
       };

@@ -13,7 +13,7 @@
 
         file = {
           ".config/starship.toml" = {
-            source = mkOutOfStoreSymlink "${repoPath}/config/starship.toml";
+            source = mkOutOfStoreSymlink "${repoPath}/config/starship/starship.toml";
             force = true;
           };
         };

@@ -18,7 +18,7 @@
 
         file = {
           ".config/btop/btop.conf" = {
-            source = mkOutOfStoreSymlink "${repoPath}/config/btop.conf";
+            source = mkOutOfStoreSymlink "${repoPath}/config/btop/btop.conf";
             force = true;
           };
           ".config/btop/themes/current.theme" = {

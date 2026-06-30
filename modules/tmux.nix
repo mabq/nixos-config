@@ -17,7 +17,7 @@
 
         file = {
           ".config/tmux/tmux.conf" = {
-            source = mkOutOfStoreSymlink "${repoPath}/config/tmux.conf";
+            source = mkOutOfStoreSymlink "${repoPath}/config/tmux/tmux.conf";
             force = true;
           };
         };

@@ -44,6 +44,7 @@
         };
 
         packages = with pkgs; [
+          adwaita-icon-theme # Private UI icon set for GNOME core apps.
           elephant # Data provider service and backend for building custom application launchers (!walker)
           hyprlauncher # A multipurpose and versatile launcher / picker for Hyprland
           hyprtoolkit # A modern C++ Wayland-native GUI toolkit
@@ -96,8 +97,8 @@
     5. UWSM scans your system for the `hyprland.desktop` file, opens it, reads
     how to launch Hyprland, intercepts all your current shell environment
     variables, and pushes them into systemd's memory.
-    Keep in mind that variables in `~/.zshrc` (or its sourced) files are not
-    available yet at this point, that is why you should put all your
+    Keep in mind that variables in `~/.zshrc` (or its sourced files) are not
+    available yet at this point, so they won't be included. Put all your
     environment variables in `~/.config/uwsm/env` insted on zsh files.
 
     6. UWSM tells your systemd user instance to activate the universal Wayland
@@ -114,8 +115,9 @@
     sets up workspaces, and reads your custom configurations in
     `~/.config/hypr/hyprland.lua`
 
-    8. We set hyprland keybinds to use `uwsm app -- <command>` to make UWSM
-    signal systemd to launch that app inside an isolated transient unit
+    8. Make sure you set hyprland keybinds to use `uwsm app -- <command>` to
+    make UWSM signal systemd to launch that app inside an isolated transient
+    unit.
 
   Why UWSM:
 
