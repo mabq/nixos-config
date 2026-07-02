@@ -44,7 +44,6 @@
         };
 
         packages = with pkgs; [
-          adwaita-icon-theme # Private UI icon set for GNOME core apps.
           elephant # Data provider service and backend for building custom application launchers (!walker)
           hyprlauncher # A multipurpose and versatile launcher / picker for Hyprland
           hyprtoolkit # A modern C++ Wayland-native GUI toolkit
@@ -57,90 +56,169 @@
         ];
 
       };
+
+      # Linux theming
+
+      # 1. Control GTK App Themes & Icons
+      # gtk = {
+      #   enable = true;
+      #   colorScheme = "dark";
+      #   theme = {
+      #     name = "Adwaita-dark";
+      #     package = pkgs.gnome-themes-extra;
+      #   };
+      #   iconTheme = {
+      #     name = "Yaru-blue";
+      #     # package = pkgs.papirus-icon-theme;
+      #     package = pkgs.yaru-theme;
+      #   };
+      # };
+
+      # 2. Control GSettings / dconf (Forces modern GTK apps to listen)
+      # dconf.settings = {
+      #   "org/gnome/desktop/interface" = {
+      #     color-scheme = "prefer-dark";
+      #     gtk-theme = "Adwaita-dark";
+      #     icon-theme = "Yaru";
+      #   };
+      # };
+
+      # 3. Control Qt Apps (Forces them to look like your GTK theme)
+      # qt = {
+      #   enable = true;
+      #   platformTheme.name = "gtk";
+      #   style.name = "adwaita-dark";
+      # };
+
     };
 }
 
 /*
-  [1] This option enables `programs.uwsm.enable` and creates 2 `.desktop` files
-    in `/run/current-system/sw/share/wayland-sessions/`:
+  [1] withUWSM
 
-    1.`hyprland.desktop` contains `Exec=Hyprland`. UWSM reads this file to
-    figure out what binary it is wrapping and how to set up the systemd
-    environment variables. We absolutely need this file.
+     This option enables `programs.uwsm.enable` and creates 2 `.desktop` files
+      in `/run/current-system/sw/share/wayland-sessions/`:
 
-    2.`hyprland-uwsm.desktop` is exclusively meant for Display Managers (like
-    SDDM, Ly, or GDM). Since we don't use a display manager we replicate the
-    behaviour of this file in `~/.zprofile` (see the zsh module) to
-    automatically launch hyprland after authenticating.
+      1.`hyprland.desktop` contains `Exec=Hyprland`. UWSM reads this file to
+      figure out what binary it is wrapping and how to set up the systemd
+      environment variables. We absolutely need this file.
 
-  Understand the context:
+      2.`hyprland-uwsm.desktop` is exclusively meant for Display Managers (like
+      SDDM, Ly, or GDM). Since we don't use a display manager we replicate the
+      behaviour of this file in `~/.zprofile` (see the zsh module) to
+      automatically launch hyprland after authenticating.
 
-    The kernel prepares the hardware; systemd prepares the software.
+    Understand the context:
 
-    1. The boot loader (GRUB or systemd-boot) loads the Linux kernel into
-    memory and hands control over to it.
+      The kernel prepares the hardware; systemd prepares the software.
 
-    2. The kernel initializes the hardware (CPU, memory, storage controllers,
-    GPU) and then looks for the very first program to run in user-space
-    (`/sbin/init`, which on modern systems is a symlink to systemd) and
-    executes it as PID 1.
+      1. The boot loader (GRUB or systemd-boot) loads the Linux kernel into
+      memory and hands control over to it.
 
-    3. Systemd starts all your software services, mounts secondary disks
-    (using `/etc/fstab`), starts the network, and eventually spawns a virtual
-    console on `/dev/tty1` for authentication.
+      2. The kernel initializes the hardware (CPU, memory, storage controllers,
+      GPU) and then looks for the very first program to run in user-space
+      (`/sbin/init`, which on modern systems is a symlink to systemd) and
+      executes it as PID 1.
 
-    4. Once authenticated, systemd uses `/etc/passwd` to discover the default
-    login shell (in our case `zsh`). Before the login shell gives you an
-    interactive prompt, it reads `~/.profile` which we configure in the zsh
-    module to automatically launch hyprland.
+      3. Systemd starts all your software services, mounts secondary disks (using
+      `/etc/fstab`), starts the network, and eventually spawns a virtual console
+      on `/dev/tty1` for authentication.
 
-    5. UWSM scans your system for the `hyprland.desktop` file, opens it, reads
-    how to launch Hyprland, intercepts all your current shell environment
-    variables, and pushes them into systemd's memory.
-    Keep in mind that variables in `~/.zshrc` (or its sourced files) are not
-    available yet at this point, so they won't be included. Put all your
-    environment variables in `~/.config/uwsm/env` insted on zsh files.
+      4. Once authenticated, systemd uses `/etc/passwd` to discover the default
+      login shell (in our case `zsh`). Before the login shell gives you an
+      interactive prompt, it reads `~/.profile` which we configure in the zsh
+      module to automatically launch hyprland.
 
-    6. UWSM tells your systemd user instance to activate the universal Wayland
-    graphical target (`graphical-session.target`), this is the standard,
-    universal systemd target used across all Linux distributions to signal that
-    a graphical user interface is fully up and running.
+      5. UWSM scans your system for the `hyprland.desktop` file, opens it, reads
+      how to launch Hyprland, intercepts all your current shell environment
+      variables, and pushes them into systemd's memory. Keep in mind that
+      variables in `~/.zshrc` (or its sourced files) are not available yet at
+      this point, so they won't be included. Put all your environment variables
+      in `~/.config/uwsm/env` insted on zsh files.
 
-    7. Systemd loads all units associated to that target and nest them into
-    dedicated cgroup slices. `wayland-session@hyprland.target` is the primary
-    target activated by UWSM. `wayland-wm@hyprland.service` is the systemd
-    wrapper unit that actually targets and opens the Hyprland binary.
+      6. UWSM tells your systemd user instance to activate the universal Wayland
+      graphical target (`graphical-session.target`), this is the standard,
+      universal systemd target used across all Linux distributions to signal that
+      a graphical user interface is fully up and running.
 
-    7. Hyprland starts up inside the systemd scope. It initializes your GPU,
-    sets up workspaces, and reads your custom configurations in
-    `~/.config/hypr/hyprland.lua`
+      7. Systemd loads all units associated to that target and nest them into
+      dedicated cgroup slices. `wayland-session@hyprland.target` is the primary
+      target activated by UWSM. `wayland-wm@hyprland.service` is the systemd
+      wrapper unit that actually targets and opens the Hyprland binary.
 
-    8. Make sure you set hyprland keybinds to use `uwsm app -- <command>` to
-    make UWSM signal systemd to launch that app inside an isolated transient
-    unit.
+      7. Hyprland starts up inside the systemd scope. It initializes your GPU,
+      sets up workspaces, and reads your custom configurations in
+      `~/.config/hypr/hyprland.lua`
 
-  Why UWSM:
+      8. Make sure you set hyprland keybinds to use `uwsm app -- <command>` to
+      make UWSM signal systemd to launch that app inside an isolated transient
+      unit.
 
-    Without UWSM (Universal Wayland Session Manager), every single app you open
-    from inside Hyprland (terminal, browser, etc) becomes a "child process" tied
-    directly to Hyprland.
+    Why UWSM:
 
-    UWSM gives you clean isolation: Instead of your browser and terminal
-    running "inside" Hyprland, UWSM tells systemd to launch them as independent
-    units. If Hyprland crashes, your apps don't violently die in the
-    background, they can shut down cleanly, allowing browsers like Chromium to
-    save your tabs.
+      Without UWSM (Universal Wayland Session Manager), every single app you open
+      from inside Hyprland (terminal, browser, etc) becomes a "child process"
+      tied directly to Hyprland.
 
-    Flawless Environment Sharing: It automatically shares critical display
-    variables (like `WAYLAND_DISPLAY` and `XDG_CURRENT_DESKTOP`) to background
-    daemons. This solves the classic Wayland headache where things like
-    screen-sharing, calculators, and system notifications (xdg-desktop-portal)
-    randomly refuse to open.
-    The value for `XDG_CURRENT_DESKTOP` is obtained from the `DesktopNames`
-    attribute from the `hyprland.desktop` file.
+      UWSM gives you clean isolation: Instead of your browser and terminal
+      running "inside" Hyprland, UWSM tells systemd to launch them as independent
+      units. If Hyprland crashes, your apps don't violently die in the
+      background, they can shut down cleanly, allowing browsers like Chromium to
+      save your tabs.
 
-    Graceful Exit: Instead of forcefully killing the graphical server, typing
-    `uwsm stop` triggers a perfectly orchestrated system shutdown sequence
-    where background bars, wallpapers, and apps close down in the correct
-    order.
+      Flawless Environment Sharing: It automatically shares critical display
+      variables (like `WAYLAND_DISPLAY` and `XDG_CURRENT_DESKTOP`) to background
+      daemons. This solves the classic Wayland headache where things like
+      screen-sharing, calculators, and system notifications (xdg-desktop-portal)
+      randomly refuse to open. The value for `XDG_CURRENT_DESKTOP` is obtained
+      from the `DesktopNames` attribute from the `hyprland.desktop` file.
+
+      Graceful Exit: Instead of forcefully killing the graphical server, typing
+      `uwsm stop` triggers a perfectly orchestrated system shutdown sequence
+      where background bars, wallpapers, and apps close down in the correct
+      order.
+*/
+
+/*
+    [2] Icons themes
+
+    Most Linux distros (including NixOS) include the `hicolor` icon theme by default,
+    you can find it in `/run/current-system/sw/share/icons/hicolor`.
+
+    Icon themes you install with Home-manager can be found in
+    `/etc/static/profiles/per-user/mabq/share/icons/`.
+*/
+
+/*
+    UI Toolkits:
+
+      Linux is decentralized nature, so there is no universal theming system
+      like Apple's UIKit or Microsoft's WinUI.
+
+      UI toolkits where developed by Linux distros to facilitate the
+      development of graphical applications. Every Linux GUI application is
+      free to choose a UI toolkit (Qt, GTK, FLTK, Electron, etc.) or implement
+      its own rendering from scratch.
+
+      Apps are also free to override some of the toolkit configuration options,
+      for example; Firefox uses GTK for some integration (file dialogs, fonts,
+      etc.), but much of its interface is drawn by Firefox itself.
+
+      So the toolkit is the mechanism through which desktop-wide appearance
+      settings are applied, but if an application bypasses that mechanism, the
+      desktop has little or no control over its appearance.
+
+      The most popular toolkits are GTK and Qt.
+
+        GTK (GTK2, GTK3, GTK4)
+          Created by Gnome, but works everywhere.
+          Used by apps like Walker, Firefox, Gimp, Files.
+
+        Qt (Qt5, Qt6)
+          Created by KDE Plasma, but works everywhere.
+          Used by apps like VLC, OBS Studio, qBittorrent, and Dolphin.
+
+      In Wayland, applications ask the XDG Desktop Portal what the system theme
+      is, if your portal isn't configured, your Flatpaks will remain bright
+      white-themed even if your system is dark-themed.
 */

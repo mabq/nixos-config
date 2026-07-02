@@ -39,6 +39,7 @@ inputs.nixpkgs.lib.nixosSystem {
   inherit specialArgs; # 4
   modules = [
     inputs.disko.nixosModules.disko
+    inputs.catppuccin.nixosModules.catppuccin
     { nixpkgs.overlays = overlays; }
     machineConfig
     userProfile

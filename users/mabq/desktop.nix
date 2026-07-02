@@ -1,6 +1,8 @@
 { user, ... }:
 {
   imports = [
+    ../../modules/catppuccin.nix
+
     ../../modules/networkd.nix
     ../../modules/bluetooth.nix
     ../../modules/keyd.nix
@@ -48,6 +50,7 @@
     {
       home.packages = with pkgs; [
         # CLI
+        dropbox # Online stored folders (daemon version)
         age # Modern encryption tool with small explicit keys
         caligula # User-friendly, lightweight TUI for disk imaging
         fastfetch # Actively maintained, feature-rich and performance oriented, neofetch like system information tool
@@ -64,6 +67,8 @@
         unzip # Extraction utility for archives compressed in .zip format
         wget # Tool for retrieving files using HTTP, HTTPS, and FTP
         whois # Intelligent WHOIS client from Debian
+        # GUI
+        brave # Privacy-oriented browser for Desktop and Laptop computers
       ];
     };
 }

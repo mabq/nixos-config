@@ -20,7 +20,6 @@
     stateVersion = "25.11";
 
     packages = with pkgs; [
-      brave # Privacy-oriented browser for Desktop and Laptop computers
       # alacritty
       # avahi # mDNS/DNS-SD implementation (Bonjour)
       # bitwarden-cli # Secure and free password manager for all of your devices
