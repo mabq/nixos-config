@@ -1,0 +1,6 @@
+[tabs]
+active   = { fg = "black", bg = "blue", bold = true }
+inactive = { fg = "gray", bg = "black" }
+
+# sep_inner = { open = "", close = "" }
+# sep_outer = { open = "", close = "" }
