@@ -6,7 +6,7 @@
       tokyonightGtk = pkgs.tokyonight-gtk-theme.override {
         # See options here https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/by-name/to/tokyonight-gtk-theme/package.nix#L118
         colorVariants = [ "dark" ];
-        sizeVariants = [ "compact" ];
+        sizeVariants = [ "standard" ];
         themeVariants = [ "default" ];
         tweakVariants = [ "moon" ];
         iconVariants = [ "Moon" ];

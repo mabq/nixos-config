@@ -1,8 +1,6 @@
 { user, ... }:
 {
   imports = [
-    ../../modules/catppuccin.nix
-
     ../../modules/networkd.nix
     ../../modules/bluetooth.nix
     ../../modules/keyd.nix
@@ -21,6 +19,7 @@
     ../../modules/pipewire.nix
     ../../modules/foot.nix
     ../../modules/fonts.nix
+
     ../../modules/hypr.nix
   ];
 

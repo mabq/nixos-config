@@ -16,11 +16,12 @@ export PATH="$HOME/.local/bin:$NC_REPO_PATH/bin:$PATH"
 # XDG
 #  https://wiki.hypr.land/Configuring/Advanced-and-Cool/Environment-variables/#xdg-specifications
 
-#  NOTE: UWSM users don’t need to explicitly set these XDG environment
-#  variables (uwsm sets them automatically).
 export XDG_CURRENT_DESKTOP="Hyprland"
 export XDG_SESSION_TYPE="wayland"
 export XDG_SESSION_DESKTOP="Hyprland"
+
+# Other XDG variables are set by the xdg Home-manager module, see:
+#  /etc/profiles/per-user/{USER}/etc/profile.d/hm-session-vars.sh
 
 # ------------------------------------------------------------------------------
 
@@ -45,7 +46,7 @@ export GTK_THEME="Adwaita:dark"
 
 # Cursor
 #  Needs to be installed and readable by your user
-#export XCURSOR_THEME=""
+# export XCURSOR_THEME=""
 export XCURSOR_SIZE=24
 
 # Bat

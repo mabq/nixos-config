@@ -5,7 +5,7 @@
 }:
 {
   imports = [
-    ./hypr-theme-gtk.nix
+    # ./hypr-theme-gtk.nix
     # ./hypr-theme-qt.nix
   ];
 
@@ -34,10 +34,10 @@
             source = mkOutOfStoreSymlink "${repoPath}/config/uwsm/env-hyprland";
             force = true;
           };
-          ".config/uwsm/env.d/hm-session-vars" = {
-            source = mkOutOfStoreSymlink "${config.home.sessionVariablesPackage}/etc/profile.d/hm-session-vars.sh";
-            force = true;
-          };
+          # ".config/uwsm/env.d/hm-session-vars" = {
+          #   source = mkOutOfStoreSymlink "${config.home.sessionVariablesPackage}/etc/profile.d/hm-session-vars.sh";
+          #   force = true;
+          # };
 
           ".config/elephant" = {
             source = mkOutOfStoreSymlink "${repoPath}/config/elephant";
@@ -63,6 +63,7 @@
           wev # Wayland event viewer (keycodes)
           wl-clip-persist # Keep Wayland clipboard even after programs close
           wl-clipboard # Command-line copy/paste utilities for Wayland
+          gnome-themes-extra # Provides Adwaita color theme and icon theme
         ];
 
       };
