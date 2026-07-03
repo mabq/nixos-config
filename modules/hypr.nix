@@ -10,8 +10,15 @@
   ];
 
   programs.hyprland = {
+    # This option automatically enables critical components needed to run
+    # Hyprland properly, such as polkit, xdg-desktop-portal-hyprland, graphics
+    # drivers, fonts, dconf, xwayland, and adding a proper Desktop Entry to the
+    # Display Manager (which I do not use).
     enable = true;
-    withUWSM = true; # [1] read what this does below!
+
+    # Use Univernal Wayland Session Manager
+    # Read explanation below [1]
+    withUWSM = true;
   };
 
   home-manager.users.${user} =
@@ -55,15 +62,16 @@
 
         packages = with pkgs; [
           elephant # Data provider service and backend for building custom application launchers (!walker)
+          gnome-themes-extra # Provides Adwaita color theme and icon theme
           hyprlauncher # A multipurpose and versatile launcher / picker for Hyprland
           hyprtoolkit # A modern C++ Wayland-native GUI toolkit
           libqalculate # Advanced calculator library (!elephant)
           nautilus # File manager for GNOME
+          obs-studio # Free and open source software for video recording and live streaming
           walker # Wayland-native application runner
           wev # Wayland event viewer (keycodes)
           wl-clip-persist # Keep Wayland clipboard even after programs close
           wl-clipboard # Command-line copy/paste utilities for Wayland
-          gnome-themes-extra # Provides Adwaita color theme and icon theme
         ];
 
       };

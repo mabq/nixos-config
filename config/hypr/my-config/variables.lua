@@ -35,7 +35,8 @@ hl.config {
 
   general = {
     border_size = 2,
-    gaps_out = 10,
+    gaps_out = 0,
+    gaps_in = 0,
     layout = "scrolling",
   },
 
@@ -43,17 +44,22 @@ hl.config {
   -- Decoration
   -------------------------------------------------------------------------------
 
+  -- Disable fancy but battery hungry effects
   decoration = {
+    rounding = 0,
     blur = {
       enabled = false,
       -- size = 2,
       -- passes = 2,
-      -- contrast = 0.75,
+      -- special = true,
       -- brightness = 0.60,
+      -- contrast = 0.75,
     },
     shadow = {
       enabled = false,
       -- range = 2,
+      -- render_power = 3,
+      -- color = "rgba(1a1a1aee)",
     },
   },
 

@@ -46,7 +46,7 @@ export GTK_THEME="Adwaita:dark"
 
 # Cursor
 #  Needs to be installed and readable by your user
-# export XCURSOR_THEME=""
+export XCURSOR_THEME="Adwaita"
 export XCURSOR_SIZE=24
 
 # Bat
@@ -92,7 +92,7 @@ export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
 
 # Tell Qt based applications to pick your theme from qt5ct (with Kvantum).
 export QT_QPA_PLATFORMTHEME="qt5ct"
-export QT_STYLE_OVERRIDE="kvantum"
+# export QT_STYLE_OVERRIDE="kvantum" # (apparently this is invalid)
 
 # ------------------------------------------------------------------------------
 
