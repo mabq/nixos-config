@@ -4,6 +4,11 @@
   ...
 }:
 {
+  imports = [
+    ./hypr-theme-gtk.nix
+    # ./hypr-theme-qt.nix
+  ];
+
   programs.hyprland = {
     enable = true;
     withUWSM = true; # [1] read what this does below!
@@ -21,14 +26,19 @@
     {
       home = {
         file = {
-          ".config/uwsm/env.d/env" = {
+          ".config/uwsm/env" = {
             source = mkOutOfStoreSymlink "${repoPath}/config/uwsm/env";
+            force = true;
+          };
+          ".config/uwsm/env-hyprland" = {
+            source = mkOutOfStoreSymlink "${repoPath}/config/uwsm/env-hyprland";
             force = true;
           };
           ".config/uwsm/env.d/hm-session-vars" = {
             source = mkOutOfStoreSymlink "${config.home.sessionVariablesPackage}/etc/profile.d/hm-session-vars.sh";
             force = true;
           };
+
           ".config/elephant" = {
             source = mkOutOfStoreSymlink "${repoPath}/config/elephant";
             force = true;
@@ -56,39 +66,6 @@
         ];
 
       };
-
-      # Linux theming
-
-      # 1. Control GTK App Themes & Icons
-      # gtk = {
-      #   enable = true;
-      #   colorScheme = "dark";
-      #   theme = {
-      #     name = "Adwaita-dark";
-      #     package = pkgs.gnome-themes-extra;
-      #   };
-      #   iconTheme = {
-      #     name = "Yaru-blue";
-      #     # package = pkgs.papirus-icon-theme;
-      #     package = pkgs.yaru-theme;
-      #   };
-      # };
-
-      # 2. Control GSettings / dconf (Forces modern GTK apps to listen)
-      # dconf.settings = {
-      #   "org/gnome/desktop/interface" = {
-      #     color-scheme = "prefer-dark";
-      #     gtk-theme = "Adwaita-dark";
-      #     icon-theme = "Yaru";
-      #   };
-      # };
-
-      # 3. Control Qt Apps (Forces them to look like your GTK theme)
-      # qt = {
-      #   enable = true;
-      #   platformTheme.name = "gtk";
-      #   style.name = "adwaita-dark";
-      # };
 
     };
 }
@@ -217,6 +194,44 @@
         Qt (Qt5, Qt6)
           Created by KDE Plasma, but works everywhere.
           Used by apps like VLC, OBS Studio, qBittorrent, and Dolphin.
+
+          Kvantum is a third-party theme engine that replaces the default way
+          Qt draws its widgets (it only affects applications built on Qt). It
+          does this by using sophisticated SVG graphics and advanced
+          transparency effects to give Qt applications a much more polished,
+          customizable, and modern look than the basic built-in Qt styles can
+          provide. Note that Kvantum requires kvantum themes (normal QT themes
+          are not supported).
+          You have to manually tell your system to use "Kvantum" as the active
+          Qt style.
+
+      Read the following Archwiki link for more information:
+        https://wiki.archlinux.org/title/Uniform_look_for_Qt_and_GTK_applications
+
+      The exact files vary slightly depending on versions and distributions,
+      but the following covers the common setup:
+
+        `~/.config/gtk-3.0/settings.ini` — for GTK 3
+        `~/.config/gtk-4.0/settings.ini` — for GTK 3
+
+      A practical setup:
+
+        If you want a cohesive desktop without a desktop environment doing the
+        work for you, a common manual setup is:
+
+        GTK: `settings.ini` with your preferred GTK theme, icon theme, cursor
+        theme, and font.
+
+        Qt: qt6ct (or qt5ct) configured to use the same icon
+        theme and font, plus a matching style or a Kvantum theme.
+
+        Icons: Use a single icon pack (e.g. Papirus) for both GTK and Qt.
+
+        Cursor: Use one cursor theme system-wide.
+
+        This won't cover applications like Firefox, Chromium, Electron apps, or
+        Blender—their main interfaces have separate theming mechanisms—but it
+        will make most native GTK and Qt applications look consistent.
 
       In Wayland, applications ask the XDG Desktop Portal what the system theme
       is, if your portal isn't configured, your Flatpaks will remain bright

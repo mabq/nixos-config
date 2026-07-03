@@ -1,23 +1,108 @@
-export EDITOR="nvim"
-export SUDO_EDITOR=$EDITOR
+# For more information read:
+#  https://github.com/Vladimir-csp/uwsm?tab=readme-ov-file#4-environments-and-shell-profile
 
-export PATH="$HOME/.local/bin:$NC_REPO_PATH/bin:$PATH"
 
-export XCURSOR_SIZE=24
+#-------------------------------------------------------------------------------
+# Toolkit Backend Variables
+#  https://wiki.hypr.land/Configuring/Advanced-and-Cool/Environment-variables/#toolkit-backend-variables
+#-------------------------------------------------------------------------------
+
+# GTK: Use Wayland if available; if not, try X11 and then any other GDK backend
 export GDK_BACKEND="wayland,x11,*"
+
+# Run SDL2 applications on Wayland. Remove or set to `x11` if games that provide older versions of SDL cause compatibility issues
+export SDL_VIDEODRIVER="wayland"
+
+# Force Clutter applications to try and use the Wayland backend
+export CLUTTER_BACKEND="wayland"
+
+# These were taken from Omarchy (apparently they instruct Firefox and Chromium-based browsers to use Wayland)
+export MOZ_ENABLE_WAYLAND", "1")
+export ELECTRON_OZONE_PLATFORM_HINT", "wayland")
+export OZONE_PLATFORM", "wayland")
+
+
+#-------------------------------------------------------------------------------
+# XDG Specification
+#  https://wiki.hypr.land/Configuring/Advanced-and-Cool/Environment-variables/#xdg-specifications
+#-------------------------------------------------------------------------------
+
+# UWSM users don’t need to explicitly set XDG environment variables, as uwsm sets them automatically.
+
+
+#-------------------------------------------------------------------------------
+# UI Toolkit Varaibles (QT)
+#  https://wiki.hypr.land/Configuring/Advanced-and-Cool/Environment-variables/#qt-variables
+#-------------------------------------------------------------------------------
+
+# Enable automatic scaling, based on the monitor’s pixel density
+export QT_AUTO_SCREEN_SCALE_FACTOR="1"
+
+# Tell Qt applications to use the Wayland backend, and fall back to X11 if Wayland is unavailable
 export QT_QPA_PLATFORM="wayland;xcb"
 
-export BAT_THEME=ansi
+# Disables window decorations on Qt applications
+export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
 
-# ---
+# Tells Qt based applications to pick your theme from qt5ct, use with Kvantum.
+export QT_QPA_PLATFORMTHEME="qt5ct"
+export QT_STYLE_OVERRIDE="kvantum"
 
-# export GPG_TTY="${TTY:-$(tty)}"
-# export GTK_THEME="Adwaita:dark"
+
+#-------------------------------------------------------------------------------
+# UI Toolkit Varaibles (GTK)
+#  https://wiki.hypr.land/Configuring/Advanced-and-Cool/Environment-variables/#theming-related-variables
+#-------------------------------------------------------------------------------
+
+# Set a GTK theme manually, for those who want to avoid appearance tools such as lxappearance or nwg-look
+#export GTK_THEME="Adwaita:dark"
+export GTK_THEME="Tokyonight-Dark-Moon"
+
+
+#-------------------------------------------------------------------------------
+# Cursor Variables
+#  https://wiki.hypr.land/Configuring/Advanced-and-Cool/Environment-variables/#theming-related-variables
+#-------------------------------------------------------------------------------
+
+# Set your cursor theme. The theme needs to be installed and readable by your user.
+#export XCURSOR_THEME=""
+
+# Set cursor size
+#export XCURSOR_SIZE=24
+
+
+#-------------------------------------------------------------------------------
+# Default Apps
+#-------------------------------------------------------------------------------
+
+export EDITOR="nvim"
+export SUDO_EDITOR=$EDITOR
 # export MANPAGER="less -R --use-color -Dd+r -Du+b"
 # export MANROFFOPT="-P -c"  # https://wiki.archlinux.org/title/Color_output_in_console#Using_less
 # export PAGER="less -R --use-color -Dd+r -Du+b"
 # export VISUAL="nvim"  # when opening a GUI editor (nnn `-e` option will respect this variable)
 # export TERM=  # Do not set this variable, it is set by each terminal emulator.
+
+
+#-------------------------------------------------------------------------------
+# PATH
+#-------------------------------------------------------------------------------
+
+export PATH="$HOME/.local/bin:$NC_REPO_PATH/bin:$PATH"
+
+
+#-------------------------------------------------------------------------------
+# Themes
+#-------------------------------------------------------------------------------
+
+export BAT_THEME=ansi
+
+
+#-------------------------------------------------------------------------------
+# TO BE REVIEWED
+#-------------------------------------------------------------------------------
+
+# export GPG_TTY="${TTY:-$(tty)}"
 
 # SSH Agent
 # Required for the ssh-agent to work across terminals

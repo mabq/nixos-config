@@ -1,12 +1,15 @@
 -- Use `hyprctl reload` to reload the configuration manually
 
--- https://wiki.hypr.land/Configuring/Start/#require
---  Use relative paths from the location of `hyprland.lua`.
-require "config.variables"
-require "config.autostart"
-require "config.animations"
-require "config.monitors"
-require "config.bindings"
+-- Refer to files using relative paths from the location of `hyprland.lua`
+--  https://wiki.hypr.land/Configuring/Start/#require
+require "my-config.variables"
+require "my-config.autostart"
+require "my-config.animations"
+require "my-config.monitors"
+require "my-config.bindings"
+
+-- Env variables are set by UWSM, see:
+--  https://wiki.hypr.land/Configuring/Advanced-and-Cool/Environment-variables/
 
 -------------------
 ---- AUTOSTART ----
@@ -22,16 +25,6 @@ require "config.bindings"
 --   hl.exec_cmd("nm-applet")
 --   hl.exec_cmd("waybar & hyprpaper & firefox")
 -- end)
-
--------------------------------
----- ENVIRONMENT VARIABLES ----
--------------------------------
-
--- See https://wiki.hypr.land/Configuring/Advanced-and-Cool/Environment-variables/
-
-hl.env("XCURSOR_SIZE", "14")
-hl.env("HYPRCURSOR_SIZE", "14")
--- hl.env("NIXOS_OZONE_WL", "1")
 
 -----------------------
 ----- PERMISSIONS -----
