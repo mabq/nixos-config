@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# -- Show available themes to select one
 themes_path="$NC_REPO_PATH/themes/"
 
 selected_theme_path=$(fd --hidden --no-ignore --exact-depth 1 --type directory . $themes_path | fzf)
@@ -7,10 +8,11 @@ if [[ -z $selected_theme_path ]]; then
   exit 0
 fi
 
-selected_theme_name=$(basename "$selected_theme_path")
-nixos-theme-set-templates "$selected_theme_name"
+# -- Create files from templates
+# selected_theme_name=$(basename "$selected_theme_path")
+# nixos-theme-set-templates "$selected_theme_name"
 
-# Create the session (if necessary) in detached mode
+# -- Apply the selected theme
 link_path="$NC_CURRENT_THEME_PATH"
 rm -rf "$link_path"
 ln -s "$selected_theme_path" "$link_path"

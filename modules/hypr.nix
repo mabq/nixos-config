@@ -5,7 +5,7 @@
 }:
 {
   imports = [
-    # ./hypr-theme-gtk.nix
+    ./hypr-theme-gtk.nix
     # ./hypr-theme-qt.nix
   ];
 
@@ -61,17 +61,90 @@
         };
 
         packages = with pkgs; [
+          # -- Themes --
+          dconf # backend of `gsettings`
+          # glib # Provides the `gsettings` command to change GTK themes on the fly
+          # gsettings-desktop-schemas # Provides the themes/interface schemas required by `gsettings`
+
+          # -- NOTES
+          # How the application was built (GTK3 vs. GTK4) and how it communicates with the system.
+          #
+          # `GTK_THEME`
+          #   A blunt override variable, any GTK3 application launched by
+          #   Hyprland will look at that variable and use that theme.
+          #
+          #   Only works for GTK3. GTK4 and Libadwaita apps completely ignore it.
+          #   It cannot update an application that is already running; it only
+          #   applies at launch.
+          #
+          # `settings.ini` file:
+          #   This is where GTK applications traditionally look for GTK configurations
+          #   when running outside of GNOME.
+          #
+          #   When a GTK app starts, it checks these files:
+          #     `~/.config/gtk-3.0/settings.ini`
+          #     `~/.config/gtk-4.0/settings.ini`
+          #
+          # dconf & gsettings
+          #   dconf is a low-level key-value database used by the GNOME desktop.
+          #   gsettings is a high-level command-line frontend to modify it.
+          #
+          #   GNOME applications don't read settings.ini files; they query the
+          #   dconf database via gsettings to see what theme they should use.
+          #
+          #   The gsettings "No installed schemas" error:
+          #     In NixOS, applications cannot look into global directories like
+          #     /usr/share/glib-2.0/schemas because they don't exist. For
+          #     gsettings to work in a terminal, it needs an environment
+          #     variable called XDG_DATA_DIRS to point to the exact Nix store
+          #     path where gsettings-desktop-schemas is installed. When you
+          #     just install the package, your shell doesn't automatically get
+          #     that path mapped.
+          #
+          #   dconf commands succeed but do nothing:
+          #     You successfully wrote a key to the dconf database, but no one
+          #     was listening. For a GTK app to dynamically change its theme
+          #     when a dconf value changes, a background daemon called
+          #     xdg-desktop-portal-gtk must be running. This daemon acts as a
+          #     bridge: it watches dconf and alerts Wayland applications that
+          #     the theme has changed. Without it, your dconf writes are just
+          #     screaming into the void.
+          #
+          #   The Home Manager's gtk module automatically:
+          #     Writes the `settings.ini` files for GTK3 and GTK4. Generates the
+          #     correct dconf database entries. Packages the schemas so they
+          #     are visible to your user session.
+
+          # ---
+
+          # qt5-wayland
+          # qt6-wayland
+
+          gnome-themes-extra # Provides Adwaita GTK color and icon themes
+          yaru-theme # Ubuntu community theme 'yaru'
+
+          # -- Launcher --
           elephant # Data provider service and backend for building custom application launchers (!walker)
-          gnome-themes-extra # Provides Adwaita color theme and icon theme
-          hyprlauncher # A multipurpose and versatile launcher / picker for Hyprland
-          hyprtoolkit # A modern C++ Wayland-native GUI toolkit
-          libqalculate # Advanced calculator library (!elephant)
-          nautilus # File manager for GNOME
-          obs-studio # Free and open source software for video recording and live streaming
           walker # Wayland-native application runner
-          wev # Wayland event viewer (keycodes)
+          libqalculate # Advanced calculator library (!elephant)
+
+          # -- Hypr utils --
+          # hyprlauncher # A multipurpose and versatile launcher / picker for Hyprland
+          # hyprpwcenter # A GUI Pipewire control center
+          # hyprsysteminfo # Tiny qt6/qml application to display information about the running system
+          hyprpicker # Wlroots-compatible Wayland color picker that does not suck
+          hyprpolkitagent # Polkit authentication agent written in QT/QML
+          hyprshutdown # A graceful shutdown utility for Hyprland
+          hyprtoolkit # A modern C++ Wayland-native GUI toolkit
+
+          # -- Must have --
           wl-clip-persist # Keep Wayland clipboard even after programs close
           wl-clipboard # Command-line copy/paste utilities for Wayland
+
+          # -- Others --
+          nautilus # File manager for GNOME
+          obs-studio # Free and open source software for video recording and live streaming
+          wev # Wayland event viewer (keycodes)
         ];
 
       };

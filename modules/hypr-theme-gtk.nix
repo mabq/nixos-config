@@ -1,29 +1,39 @@
-{ user, ... }:
+{ pkgs, user, ... }:
 {
+  # services.dbus.enable = true;
+  # programs.dconf.enable = true;
+  # xdg.portal = {
+  #   enable = true;
+  #   extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  #   config.common.default = "*";
+  # };
+
   home-manager.users.${user} =
-    { pkgs, ... }:
+    { config, currentThemePath, ... }:
     let
-      tokyonightGtk = pkgs.tokyonight-gtk-theme.override {
-        # See options here https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/by-name/to/tokyonight-gtk-theme/package.nix#L118
-        colorVariants = [ "dark" ];
-        sizeVariants = [ "standard" ];
-        themeVariants = [ "default" ];
-        tweakVariants = [ "moon" ];
-        iconVariants = [ "Moon" ];
-      };
+      mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
     in
     {
-      gtk = {
-        enable = true;
+      home = {
+        packages = with pkgs; [
+          dconf # Essential: The reliable backend tool for live adjustments
+          xdg-desktop-portal-gtk
+          # dconf-editor # Optional: GUI for browsing keys
 
-        theme = {
-          name = "Tokyonight-Dark-Moon"; # verify exact name — see step 2
-          package = tokyonightGtk;
-        };
+          # Install the actual themes you want to toggle between globally
+          gnome-themes-extra # Provides the Adwaita theme
+          papirus-icon-theme
+        ];
 
-        iconTheme = {
-          name = "Tokyonight-Moon"; # verify exact name — see step 2
-          package = tokyonightGtk;
+        file = {
+          ".config/gtk-3.0/settings.ini" = {
+            source = mkOutOfStoreSymlink "${currentThemePath}/gtk-settings.ini";
+            force = true;
+          };
+          ".config/gtk-4.0/settings.ini" = {
+            source = mkOutOfStoreSymlink "${currentThemePath}/gtk-settings.ini";
+            force = true;
+          };
         };
       };
     };
