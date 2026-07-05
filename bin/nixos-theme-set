@@ -16,3 +16,5 @@ fi
 link_path="$NC_CURRENT_THEME_PATH"
 rm -rf "$link_path"
 ln -s "$selected_theme_path" "$link_path"
+
+nixos-theme-set-gnome

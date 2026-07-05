@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+if [[ -f "$NC_CURRENT_THEME_PATH/light.mode" ]]; then
+  dconf write /org/gnome/desktop/interface/gtk-theme "'Adwaita'"
+  dconf write /org/gnome/desktop/interface/color-scheme "'prefer-light'"
+  dconf write /org/gnome/desktop/interface/accent-color "'pink'"
+  dconf write /org/gnome/desktop/interface/icon-theme "'Papirus'"
+else
+  dconf write /org/gnome/desktop/interface/gtk-theme "'Adwaita-dark'"
+  dconf write /org/gnome/desktop/interface/color-scheme "'prefer-dark'"
+  dconf write /org/gnome/desktop/interface/accent-color "'pink'"
+  dconf write /org/gnome/desktop/interface/icon-theme "'Papirus-Dark'"
+fi
+
+dconf write /org/gnome/desktop/interface/cursor-size 24
+
+# Change gnome icon theme color
+# GNOME_ICONS_THEME="$NC_CURRENT_THEME_PATH/icons.theme"
+# if [[ -f $GNOME_ICONS_THEME ]]; then
+#   dconf write /org/gnome/desktop/interface/icon-theme "'$(<$GNOME_ICONS_THEME)'"
+# else
+#   dconf write /org/gnome/desktop/interface/icon-theme "'Yaru-blue'"
+# fi
+
+# ------------------------------------------------------------------------------
+#
+# NOTES:
+#
+#   Use `dconf dump /org/gnome/desktop/interface/` to check all current values.
+#
+#   Gtk-theme must be one of the themes in:
+#     `/etc/profiles/per-user/{USER}/share/themes` — if installed with Home-manager
+#     `/run/current-system/sw/share/themes` — if installed with NixOS
+#
+#   Color-scheme must be set to one of:
+#     `default`
+#     `prefer-light`
+#     `prefer-dark`.
+#
+#   Accent-color must be one of:
+#     `blue`
+#     `teal`
+#     `green`
+#     `yellow`
+#     `orange`
+#     `red`
+#     `pink`
+#     `purple`
+#     `slate`
+#
+#   Icon-theme must be one of the themes in:
+#     `/etc/profiles/per-user/{USER}/share/icons` — if installed with Home-manager
+#     `/run/current-system/sw/share/icons` — if installed with NixOS
+#
+#   TODO:
+#   Cursor-theme
+#
+# ------------------------------------------------------------------------------
