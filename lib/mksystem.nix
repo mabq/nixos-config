@@ -7,6 +7,7 @@
   machine,
   user,
   profile,
+  # TODO: If you change the theme manually and then rebuilt, this theme applies, is that what we want?
   theme ? "catppuccin", # must be one of the themes in the theme directory
 }:
 let

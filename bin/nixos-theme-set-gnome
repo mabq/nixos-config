@@ -3,18 +3,23 @@
 if [[ -f "$NC_CURRENT_THEME_PATH/light.mode" ]]; then
   dconf write /org/gnome/desktop/interface/gtk-theme "'Adwaita'"
   dconf write /org/gnome/desktop/interface/color-scheme "'prefer-light'"
-  dconf write /org/gnome/desktop/interface/accent-color "'pink'"
-  dconf write /org/gnome/desktop/interface/icon-theme "'Papirus'"
+  dconf write /org/gnome/desktop/interface/icon-theme "'WhiteSur-light'"
 else
   dconf write /org/gnome/desktop/interface/gtk-theme "'Adwaita-dark'"
   dconf write /org/gnome/desktop/interface/color-scheme "'prefer-dark'"
-  dconf write /org/gnome/desktop/interface/accent-color "'pink'"
-  dconf write /org/gnome/desktop/interface/icon-theme "'Papirus-Dark'"
+  dconf write /org/gnome/desktop/interface/cursor-theme "'WhiteSur-dark'"
 fi
 
-dconf write /org/gnome/desktop/interface/cursor-size 24
+# If you change these settings you must also change other files, see the cursor module.
+dconf write /org/gnome/desktop/interface/cursor-theme "'$XCURSOR_THEME'"
+dconf write /org/gnome/desktop/interface/cursor-size "$XCURSOR_SIZE"
 
-# Change gnome icon theme color
+# ------------------------------------------------------------------------------
+
+# The Yaru icon theme has folder icons with color variants, I much prefer the
+# ones of WhiteSur. I leave this here just in case I want to do something like
+# this in the future.
+#
 # GNOME_ICONS_THEME="$NC_CURRENT_THEME_PATH/icons.theme"
 # if [[ -f $GNOME_ICONS_THEME ]]; then
 #   dconf write /org/gnome/desktop/interface/icon-theme "'$(<$GNOME_ICONS_THEME)'"
@@ -26,7 +31,10 @@ dconf write /org/gnome/desktop/interface/cursor-size 24
 #
 # NOTES:
 #
-#   Use `dconf dump /org/gnome/desktop/interface/` to check all current values.
+#   Read notes about dconf in the gtk nixos module.
+#
+#   To check current dconf settings, use:
+#     `dconf dump /org/gnome/desktop/interface/`
 #
 #   Gtk-theme must be one of the themes in:
 #     `/etc/profiles/per-user/{USER}/share/themes` — if installed with Home-manager
@@ -36,17 +44,6 @@ dconf write /org/gnome/desktop/interface/cursor-size 24
 #     `default`
 #     `prefer-light`
 #     `prefer-dark`.
-#
-#   Accent-color must be one of:
-#     `blue`
-#     `teal`
-#     `green`
-#     `yellow`
-#     `orange`
-#     `red`
-#     `pink`
-#     `purple`
-#     `slate`
 #
 #   Icon-theme must be one of the themes in:
 #     `/etc/profiles/per-user/{USER}/share/icons` — if installed with Home-manager

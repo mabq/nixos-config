@@ -17,13 +17,13 @@ export PATH="$HOME/.local/bin:$NC_REPO_PATH/bin:$PATH"
 #  https://wiki.hypr.land/Configuring/Advanced-and-Cool/Environment-variables/#theming-related-variables
 
 # GTK
-#  https://wiki.hypr.land/Configuring/Advanced-and-Cool/Environment-variables/#theming-related-variables
-# export GTK_THEME="Yaru"
+#  Do not set this variable, see notes in the gtk module
+# export GTK_THEME=""
 
 # Cursor
-#  Needs to be installed and readable by your user
-export XCURSOR_THEME="Yaru"
-export XCURSOR_SIZE=24
+#  If you change these settings you must also change other files, see the cursor module.
+export XCURSOR_THEME="Bibata-Modern-Ice"
+export XCURSOR_SIZE=20
 
 # Bat
 export BAT_THEME=ansi

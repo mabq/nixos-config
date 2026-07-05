@@ -18,3 +18,4 @@ rm -rf "$link_path"
 ln -s "$selected_theme_path" "$link_path"
 
 nixos-theme-set-gnome
+nixos-theme-set-foot
