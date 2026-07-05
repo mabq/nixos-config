@@ -10,7 +10,7 @@ else
   dconf write /org/gnome/desktop/interface/cursor-theme "'WhiteSur-dark'"
 fi
 
-# If you change these settings you must also change other files, see the cursor module.
+# Must be set because of a bug in LibreOffice, see uwsm and cursor module notes
 dconf write /org/gnome/desktop/interface/cursor-theme "'$XCURSOR_THEME'"
 dconf write /org/gnome/desktop/interface/cursor-size "$XCURSOR_SIZE"
 

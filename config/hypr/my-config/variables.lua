@@ -46,7 +46,7 @@ hl.config {
 
   -- Disable fancy but battery hungry effects
   decoration = {
-    rounding = 0,
+    rounding = 2,
     blur = {
       enabled = false,
       -- size = 2,

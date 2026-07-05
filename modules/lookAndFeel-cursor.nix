@@ -12,11 +12,12 @@
 }
 
 /*
-  Bibata works consistently across GTK, Qt, Electron, and most apps (X11/Wayland).
+  Cursor theme and size is set with environment variables (see uwsm module).
 
-  Cursor theme and size are controled by environment variables, see the uwsm module.
+  Cursor themes are installed in:
+    `/etc/static/profiles/per-user/{USER}/share/icons/` - installed with Home-manager
+    `/run/current-system/sw/share/icons/` - installed with NixOS
 
-  See available cursor themes in:
-    `/etc/static/profiles/per-user/{USER}/share/icons/` - Installed with Home-manager
-    `/run/current-system/sw/share/icons/` - Installed with NixOS
+  dconf settings must be kept in sync with environment variables because of a
+  LibreOffice bug (see the dconf theme script).
 */

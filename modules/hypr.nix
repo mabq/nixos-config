@@ -7,7 +7,7 @@
   imports = [
     ./lookAndFeel-cursor.nix
     ./lookAndFeel-gtk.nix
-    # ./lookAndFeel-qt.nix
+    ./lookAndFeel-qt.nix
   ];
 
   programs.hyprland = {

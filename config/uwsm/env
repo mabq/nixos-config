@@ -17,11 +17,17 @@ export PATH="$HOME/.local/bin:$NC_REPO_PATH/bin:$PATH"
 #  https://wiki.hypr.land/Configuring/Advanced-and-Cool/Environment-variables/#theming-related-variables
 
 # GTK
-#  Do not set this variable, see notes in the gtk module
+#  Do not set this variable, see gtk module notes.
 # export GTK_THEME=""
 
+# QT
+#  Instruct qt applications to get configurations directly from kvantum
+export QT_STYLE_OVERRIDE="kvantum"
+#  Instruct qt applications to use dialogs, file pickers and more from xdgdesktopportal (gtk).
+export QT_QPA_PLATFORMTHEME="xdgdesktopportal"
+
 # Cursor
-#  If you change these settings you must also change other files, see the cursor module.
+#  See cursor module notes
 export XCURSOR_THEME="Bibata-Modern-Ice"
 export XCURSOR_SIZE=20
 
@@ -89,10 +95,6 @@ export QT_AUTO_SCREEN_SCALE_FACTOR="1"
 
 # Disable window decorations on Qt applications
 export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
-
-# Tell Qt based applications to pick your theme from qt5ct (with Kvantum).
-export QT_QPA_PLATFORMTHEME="qt5ct"
-# export QT_STYLE_OVERRIDE="kvantum" # (apparently this is invalid)
 
 # ------------------------------------------------------------------------------
 

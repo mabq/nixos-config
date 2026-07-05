@@ -1,30 +1,42 @@
-{ user, ... }:
+{ pkgs, user, ... }:
 {
   home-manager.users.${user} =
     { ... }:
     {
-      qt = {
-        enable = true;
-        platformTheme.name = "gtk"; # Qt apps inherit GTK's dark theme/colors directly
-        style.name = "adwaita-dark";
-      };
+      home.packages = with pkgs; [
+        libsForQt5.qtstyleplugin-kvantum
+        kdePackages.qtstyleplugin-kvantum
+      ];
     };
 }
 
-# qt5-wayland
-# qt6-wayland
-#
-#
-# Qt (Qt5, Qt6)
-#   Created by KDE Plasma, but works everywhere.
-#   Used by apps like VLC, OBS Studio, qBittorrent, and Dolphin.
-#
-#   Kvantum is a third-party theme engine that replaces the default way
-#   Qt draws its widgets (it only affects applications built on Qt). It
-#   does this by using sophisticated SVG graphics and advanced
-#   transparency effects to give Qt applications a much more polished,
-#   customizable, and modern look than the basic built-in Qt styles can
-#   provide. Note that Kvantum requires kvantum themes (normal QT themes
-#   are not supported).
-#   You have to manually tell your system to use "Kvantum" as the active
-#   Qt style.
+/*
+  QT is the UI toolkit developed by KDE Plasma.
+
+  There are two versions still used by many apps:
+    qt5 (e.g. vlc)
+    qt6 (e.g. qbittorrent)
+
+  Explanation:
+
+    When using KDE plasma you can manage the look of QT apps through the system
+    settings. When using a minimal wayland compositor like Hyprland you need
+    tools to manage QT settings.
+
+    > Do not use `qt5ct` and `qt6ct`. Those are just GUI tools that end up
+      editing files in your home directory. I tried to configure QT using
+      those and never liked the results.
+
+    Kvantum is a theme engine that changes how QT applications look. It
+    includes several good themes by default. I use `KvGnome` (light) and
+    `KvGnomeDark` (dark).
+
+  Configuration:
+
+    We instruct qt apps to use kvantum configurations by setting some
+    environment variables (see the uwsm module).
+
+    When we want to change between dark and light variants all we need to do is
+    update `/home/{USER}/.config/Kvantum/kvantum.kvconfig` (see the script that
+    changes themes).
+*/

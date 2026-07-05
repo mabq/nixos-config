@@ -17,17 +17,6 @@
           # Icon Themes
           whitesur-icon-theme
         ];
-
-        # file = {
-        #   ".config/gtk-3.0/settings.ini" = {
-        #     source = mkOutOfStoreSymlink "${currentThemePath}/gtk-settings.ini";
-        #     force = true;
-        #   };
-        #   ".config/gtk-4.0/settings.ini" = {
-        #     source = mkOutOfStoreSymlink "${currentThemePath}/gtk-settings.ini";
-        #     force = true;
-        #   };
-        # };
       };
     };
 }
