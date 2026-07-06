@@ -7,14 +7,13 @@ if [[ -f "$NC_CURRENT_THEME_PATH/light.mode" ]]; then
 else
   dconf write /org/gnome/desktop/interface/gtk-theme "'Adwaita-dark'"
   dconf write /org/gnome/desktop/interface/color-scheme "'prefer-dark'"
-  dconf write /org/gnome/desktop/interface/cursor-theme "'WhiteSur-dark'"
+  dconf write /org/gnome/desktop/interface/icon-theme "'WhiteSur-dark'"
 fi
 
-# Must be set because of a bug in LibreOffice, see uwsm and cursor module notes
+# These must also be set because of a bug in LibreOffice.
+#  Use the env variables to keep it in sync with xcursor.
 dconf write /org/gnome/desktop/interface/cursor-theme "'$XCURSOR_THEME'"
 dconf write /org/gnome/desktop/interface/cursor-size "$XCURSOR_SIZE"
-
-# ------------------------------------------------------------------------------
 
 # The Yaru icon theme has folder icons with color variants, I much prefer the
 # ones of WhiteSur. I leave this here just in case I want to do something like
@@ -27,29 +26,24 @@ dconf write /org/gnome/desktop/interface/cursor-size "$XCURSOR_SIZE"
 #   dconf write /org/gnome/desktop/interface/icon-theme "'Yaru-blue'"
 # fi
 
-# ------------------------------------------------------------------------------
-#
+# ---
+
 # NOTES:
 #
 #   Read notes about dconf in the gtk nixos module.
 #
-#   To check current dconf settings, use:
+#   Check current dconf settings with:
 #     `dconf dump /org/gnome/desktop/interface/`
 #
-#   Gtk-theme must be one of the themes in:
+#   Gtk-theme must be one of the ones stored in:
 #     `/etc/profiles/per-user/{USER}/share/themes` — if installed with Home-manager
 #     `/run/current-system/sw/share/themes` — if installed with NixOS
 #
-#   Color-scheme must be set to one of:
-#     `default`
+#   Color-scheme must be one of:
+#     `default` (light)
 #     `prefer-light`
 #     `prefer-dark`.
 #
-#   Icon-theme must be one of the themes in:
+#   Icon-theme must be one of the ones stored in:
 #     `/etc/profiles/per-user/{USER}/share/icons` — if installed with Home-manager
 #     `/run/current-system/sw/share/icons` — if installed with NixOS
-#
-#   TODO:
-#   Cursor-theme
-#
-# ------------------------------------------------------------------------------

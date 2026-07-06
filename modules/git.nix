@@ -1,8 +1,4 @@
-{
-  user,
-  repoPath,
-  ...
-}:
+{ user, repoPath, ... }:
 {
   home-manager.users.${user} =
     { pkgs, config, ... }:

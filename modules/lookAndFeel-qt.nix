@@ -1,12 +1,28 @@
-{ pkgs, user, ... }:
+{
+  user,
+  currentThemePath,
+  ...
+}:
 {
   home-manager.users.${user} =
-    { ... }:
+    { pkgs, config, ... }:
+    let
+      mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
+    in
     {
-      home.packages = with pkgs; [
-        libsForQt5.qtstyleplugin-kvantum
-        kdePackages.qtstyleplugin-kvantum
-      ];
+      home = {
+        packages = with pkgs; [
+          libsForQt5.qtstyleplugin-kvantum
+          kdePackages.qtstyleplugin-kvantum
+        ];
+
+        file = {
+          ".config/Kvantum/kvantum.kvconfig" = {
+            source = mkOutOfStoreSymlink "${currentThemePath}/kvantum.kvconfig";
+            force = true;
+          };
+        };
+      };
     };
 }
 
