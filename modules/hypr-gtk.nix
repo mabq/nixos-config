@@ -1,20 +1,27 @@
-{ pkgs, user, ... }:
+{ user, currentThemePath, ... }:
 {
   home-manager.users.${user} =
-    { lib, ... }:
+    { pkgs, config, ... }:
+    let
+      mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
+    in
     {
       home = {
         packages = with pkgs; [
-          dconf # `dconf` command
+          glib # For the gsettings CLI tool
+          gsettings-desktop-schemas # For GNOME-specific interface keys
+
+          # dconf # `dconf` command
+
           gnome-themes-extra # Adwaita GTK theme
           whitesur-icon-theme # Like them more than Adwaita icons
         ];
 
-        activation = {
-          runMyScript = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-            # This runs as your user after files are symlinked
-            nixos-theme-set-dconf
-          '';
+        file = {
+          ".config/glib-2.0/settings/keyfile" = {
+            source = mkOutOfStoreSymlink "${currentThemePath}/gtk.ini";
+            force = true;
+          };
         };
       };
     };
