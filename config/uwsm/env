@@ -1,33 +1,34 @@
-# ------------------------------------------------------------------------------
+# All environment variables set in this file are sourced by uwsm and available
+# to all managed compositors and graphical applications run inside such a
+# session.
 #
-# For more information read:
-#  https://github.com/Vladimir-csp/uwsm?tab=readme-ov-file#4-environments-and-shell-profile
-#  https://wiki.hypr.land/Configuring/Advanced-and-Cool/Environment-variables
+# If you need certain environment variables to be set only for a specific
+# compositor (and graphical applications in that graphical session), put them
+# in `${XDG_CONFIG_HOME}/uwsm/env-{COMPOSITOR}` instead.
+#
+# For more information, visit:
+#   https://wiki.archlinux.org/title/Universal_Wayland_Session_Manager#Environment_variables
+#   https://github.com/Vladimir-csp/uwsm?tab=readme-ov-file#4-environments-and-shell-profile
+#   https://wiki.hypr.land/Configuring/Advanced-and-Cool/Environment-variables
 
-# ------------------------------------------------------------------------------
 
-# PATH
-
-# Include local and repo binaries in the path
+# Add our bin directories to PATH
 export PATH="$HOME/.local/bin:$NC_REPO_PATH/bin:$PATH"
 
+
+# ------------------------------------------------------------------------------
+# THEMING VARIABLES
+#   https://wiki.hypr.land/Configuring/Advanced-and-Cool/Environment-variables/#theming-related-variables
 # ------------------------------------------------------------------------------
 
-# THEMING
-#  https://wiki.hypr.land/Configuring/Advanced-and-Cool/Environment-variables/#theming-related-variables
-
-# GTK
-#  Do not set this variable, see gtk module notes.
+# GTK (read notes in `hypr-gtk` module)
 # export GTK_THEME=""
 
-# QT
-#  Instruct qt applications to get configurations directly from kvantum
+# QT (read notes in `hypr-qt` module)
 export QT_STYLE_OVERRIDE="kvantum"
-#  Instruct qt applications to use dialogs, file pickers and more from xdgdesktopportal (gtk).
 export QT_QPA_PLATFORMTHEME="xdgdesktopportal"
 
-# Cursor
-#  See cursor module notes
+# Cursor (read notes in `hypr-cursor` module)
 export XCURSOR_THEME="Bibata-Modern-Ice"
 export XCURSOR_SIZE=20
 

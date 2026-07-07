@@ -47,27 +47,30 @@
   home-manager.users.${user} =
     { pkgs, ... }:
     {
-      home.packages = with pkgs; [
-        # CLI
-        dropbox # Online stored folders (daemon version)
-        age # Modern encryption tool with small explicit keys
-        caligula # User-friendly, lightweight TUI for disk imaging
-        fastfetch # Actively maintained, feature-rich and performance oriented, neofetch like system information tool
-        gcc # GNU Compiler Collection
-        iperf # Tool to measure IP bandwidth using UDP or TCP
-        just # Handy way to save and run project-specific commands
-        libreoffice-fresh # Comprehensive, professional-quality productivity suite, a variant of openoffice.org
-        mpv # General-purpose media player, fork of MPlayer and mplayer2
-        ncdu # Disk usage analyzer with an ncurses interface
-        nix-tree # Interactively browse a Nix store paths dependencies
-        pciutils # Provides the `lspci` command
-        qbittorrent # Featureful free software BitTorrent client
-        tldr # Simplified and community-driven man pages
-        unzip # Extraction utility for archives compressed in .zip format
-        wget # Tool for retrieving files using HTTP, HTTPS, and FTP
-        whois # Intelligent WHOIS client from Debian
-        # GUI
-        brave # Privacy-oriented browser for Desktop and Laptop computers
-      ];
+      home = {
+        packages = with pkgs; [
+          # CLI
+          dropbox # Online stored folders (daemon version)
+          age # Modern encryption tool with small explicit keys
+          caligula # User-friendly, lightweight TUI for disk imaging
+          fastfetch # Actively maintained, feature-rich and performance oriented, neofetch like system information tool
+          gcc # GNU Compiler Collection
+          iperf # Tool to measure IP bandwidth using UDP or TCP
+          just # Handy way to save and run project-specific commands
+          libreoffice-fresh # Comprehensive, professional-quality productivity suite, a variant of openoffice.org
+          mpv # General-purpose media player, fork of MPlayer and mplayer2
+          ncdu # Disk usage analyzer with an ncurses interface
+          nix-tree # Interactively browse a Nix store paths dependencies
+          pciutils # Provides the `lspci` command
+          qbittorrent # Featureful free software BitTorrent client
+          tldr # Simplified and community-driven man pages
+          unzip # Extraction utility for archives compressed in .zip format
+          wget # Tool for retrieving files using HTTP, HTTPS, and FTP
+          whois # Intelligent WHOIS client from Debian
+          # GUI
+          brave # Privacy-oriented browser for Desktop and Laptop computers
+          # obs-studio # Free and open source software for video recording and live streaming
+        ];
+      };
     };
 }

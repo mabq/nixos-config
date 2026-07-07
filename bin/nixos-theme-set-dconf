@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# Read notes in `hypr-gtk` module
 if [[ -f "$NC_CURRENT_THEME_PATH/light.mode" ]]; then
   dconf write /org/gnome/desktop/interface/gtk-theme "'Adwaita'"
   dconf write /org/gnome/desktop/interface/color-scheme "'prefer-light'"
@@ -10,40 +11,14 @@ else
   dconf write /org/gnome/desktop/interface/icon-theme "'WhiteSur-dark'"
 fi
 
-# These must also be set because of a bug in LibreOffice.
-#  Use the env variables to keep it in sync with xcursor.
+# Read notes in `hypr-cursor` module
+#   Use the same theme/size set by uwsm env variables.
 dconf write /org/gnome/desktop/interface/cursor-theme "'$XCURSOR_THEME'"
 dconf write /org/gnome/desktop/interface/cursor-size "$XCURSOR_SIZE"
 
-# The Yaru icon theme has folder icons with color variants, I much prefer the
-# ones of WhiteSur. I leave this here just in case I want to do something like
-# this in the future.
-#
 # GNOME_ICONS_THEME="$NC_CURRENT_THEME_PATH/icons.theme"
 # if [[ -f $GNOME_ICONS_THEME ]]; then
 #   dconf write /org/gnome/desktop/interface/icon-theme "'$(<$GNOME_ICONS_THEME)'"
 # else
 #   dconf write /org/gnome/desktop/interface/icon-theme "'Yaru-blue'"
 # fi
-
-# ---
-
-# NOTES:
-#
-#   Read notes about dconf in the gtk nixos module.
-#
-#   Check current dconf settings with:
-#     `dconf dump /org/gnome/desktop/interface/`
-#
-#   Gtk-theme must be one of the ones stored in:
-#     `/etc/profiles/per-user/{USER}/share/themes` — if installed with Home-manager
-#     `/run/current-system/sw/share/themes` — if installed with NixOS
-#
-#   Color-scheme must be one of:
-#     `default` (light)
-#     `prefer-light`
-#     `prefer-dark`.
-#
-#   Icon-theme must be one of the ones stored in:
-#     `/etc/profiles/per-user/{USER}/share/icons` — if installed with Home-manager
-#     `/run/current-system/sw/share/icons` — if installed with NixOS
