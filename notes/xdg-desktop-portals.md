@@ -1,5 +1,7 @@
 # XDG Desktop Portals
 
+TODO: CHECK `/run/current-system/sw/share/xdg-desktop-portal`
+
 When using minimal wayland compositors like Hyprland, you need to manually assemble the pieces that a full desktop environment usually provides out of the box.
 
 To understand what portals do, it helps to look at the problems they were designed to solve: security and standardization.
