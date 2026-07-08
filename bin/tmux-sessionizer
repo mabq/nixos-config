@@ -18,14 +18,18 @@
 #
 # ------------------------------------------------------------------------------
 
-# Add any directories you want (use `$HOME` instead of `~`)
-directories="$HOME/ $HOME/projects/"
-
-# Use the directory passed as argument or fuzzy find (if no argument is provided)
 if [[ $# -eq 1 ]]; then
   working_directory=$1
 else
-  working_directory=$(fd --hidden --no-ignore --exact-depth 1 --type directory . $directories | fzf)
+  list=$(
+    # Specific directories...
+    echo "$HOME/.local/share/nixos-config/"
+
+    # All dirs in these directories...
+    fd --hidden --no-ignore --exact-depth 1 --type directory . "$HOME/" "$HOME/projects/"
+  )
+  # LC_ALL takes the leading dot into account for sorting
+  working_directory=$(echo "$list" | LC_ALL=C sort | fzf)
 fi
 
 if [[ -z $working_directory ]]; then
