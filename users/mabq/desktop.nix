@@ -5,8 +5,6 @@
     ../../modules/bluetooth.nix
     ../../modules/keyd.nix
 
-    ../../modules/theme.nix
-
     ../../modules/zsh.nix
     ../../modules/starship.nix
     ../../modules/tmux.nix
@@ -20,6 +18,7 @@
     ../../modules/foot.nix
     ../../modules/fonts.nix
 
+    ../../modules/theme.nix
     ../../modules/hypr.nix
   ];
 

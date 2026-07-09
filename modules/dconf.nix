@@ -1,43 +1,28 @@
+{ user, ... }:
 {
-  self,
-  user,
-  currentThemePath,
-  ...
-}:
-{
-  home-manager.users.${user} =
-    {
-      pkgs,
-      config,
-      lib,
-      ...
-    }:
-    let
-      mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
-    in
-    {
-      home = {
-        packages = with pkgs; [
-          # glib # For the gsettings CLI tool
-          # gsettings-desktop-schemas # For GNOME-specific interface keys
+  options = { };
 
-          dconf # `dconf` command
-          gnome-themes-extra # Adwaita GTK theme
-          whitesur-icon-theme # Like them more than Adwaita icons
-        ];
-
-        file = {
-          ".config/glib-2.0/settings/keyfile" = {
-            source = mkOutOfStoreSymlink "${currentThemePath}/gtk.ini";
-            force = true;
+  config = {
+    home-manager.users.${user} =
+      { pkgs, ... }:
+      {
+        home = {
+          packages = with pkgs; [
+            dconf # `dconf` command
+            gnome-themes-extra # Adwaita GTK theme
+            whitesur-icon-theme # Like them more than Adwaita icons
+          ];
+        };
+        dconf.settings = {
+          "org/gnome/desktop/interface" = {
+            gtk-theme = "Adwaita";
+            color-scheme = "prefer-light";
+            icon-theme = "WhiteSur-light";
           };
         };
-
-        # activation.updateDconf = lib.hm.dag.entryAfter [ "writeBoundary" ] (
-        #   builtins.readFile (self + /bin/nixos-theme-set-dconf)
-        # );
       };
-    };
+
+  };
 }
 
 /*

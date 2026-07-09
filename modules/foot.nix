@@ -15,7 +15,7 @@
       settings = {
         main = {
           include = "${currentThemePath}/foot.ini";
-          term = "xterm-256color";
+          # term = "xterm-256color";
           font = "monospace:size=9";
           pad = "14x14";
           initial-window-mode = "windowed";

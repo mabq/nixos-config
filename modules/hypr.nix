@@ -2,9 +2,7 @@
 {
   imports = [
     ./hypr-uwsm.nix
-    ./hypr-cursor.nix
-    ./hypr-gtk.nix
-    ./hypr-qt.nix
+    ./theme-desktop.nix
   ];
 
   # This option automatically enables critical components needed to run
