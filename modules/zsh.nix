@@ -32,9 +32,9 @@
           parted # Create, destroy, resize, check, and copy partitions
           ripgrep # Utility that combines the usability of The Silver Searcher with the raw speed of grep
           zoxide # Fast cd command that learns your habits
-          zsh-autosuggestions # Fish shell autosuggestions for Zsh
-          zsh-history-substring-search # Fish shell history-substring-search for Zsh
-          zsh-syntax-highlighting # Fish shell like syntax highlighting for Zsh
+          zsh-autosuggestions # Fish-like shell autosuggestions for Zsh
+          zsh-history-substring-search # Fish-like shell history-substring-search for Zsh
+          zsh-syntax-highlighting # Fish-like shell like syntax highlighting for Zsh
         ];
 
         file = {

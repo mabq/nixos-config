@@ -1,7 +1,6 @@
 { user, repoPath, ... }:
 {
-  # See `uwsm` in the notes directory.
-  programs.hyprland.withUWSM = true;
+  programs.hyprland.withUWSM = true; # See uwsm notes!
 
   home-manager.users.${user} =
     { config, ... }:
@@ -19,10 +18,6 @@
             source = mkOutOfStoreSymlink "${repoPath}/config/uwsm/env-hyprland";
             force = true;
           };
-          # ".config/uwsm/env.d/hm-session-vars" = {
-          #   source = mkOutOfStoreSymlink "${config.home.sessionVariablesPackage}/etc/profile.d/hm-session-vars.sh";
-          #   force = true;
-          # };
         };
       };
     };

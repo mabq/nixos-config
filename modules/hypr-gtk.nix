@@ -1,18 +1,27 @@
-{ user, currentThemePath, ... }:
+{
+  self,
+  user,
+  currentThemePath,
+  ...
+}:
 {
   home-manager.users.${user} =
-    { pkgs, config, ... }:
+    {
+      pkgs,
+      config,
+      lib,
+      ...
+    }:
     let
       mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
     in
     {
       home = {
         packages = with pkgs; [
-          glib # For the gsettings CLI tool
-          gsettings-desktop-schemas # For GNOME-specific interface keys
+          # glib # For the gsettings CLI tool
+          # gsettings-desktop-schemas # For GNOME-specific interface keys
 
-          # dconf # `dconf` command
-
+          dconf # `dconf` command
           gnome-themes-extra # Adwaita GTK theme
           whitesur-icon-theme # Like them more than Adwaita icons
         ];
@@ -23,6 +32,10 @@
             force = true;
           };
         };
+
+        # activation.updateDconf = lib.hm.dag.entryAfter [ "writeBoundary" ] (
+        #   builtins.readFile (self + /bin/nixos-theme-set-dconf)
+        # );
       };
     };
 }

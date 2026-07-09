@@ -65,3 +65,19 @@
         Instructs QT applications to use xdg-desktop-portal for stuff the app
         does not control (e.g. file picker).
 */
+
+/*
+  [Qt App]
+     │ (Asks for system color scheme)
+     ▼
+  [xdg-desktop-portal]
+     │ (Routes request to the GTK backend)
+     ▼
+  [xdg-desktop-portal-gtk]
+     │ (Queries GSettings for org.gnome.desktop.interface)
+     ▼
+  [GSETTINGS_BACKEND=keyfile]
+     │ (Reads the plain-text file)
+     ▼
+  ~/.config/glib-2.0/settings/keyfile
+*/

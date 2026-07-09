@@ -52,3 +52,13 @@ the system (whether launched via terminal, keyboard shortcut, or background
 service) has access to the same environment variables.
 
 For more info read uwsm notes file.
+
+
+## NixOS
+--------
+
+All files setting environment variables are in:
+
+  `/etc/profiles/per-user/mabq` - Home-manager
+  `/run/current-system/sw` - NixOS
+

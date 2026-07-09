@@ -5,7 +5,7 @@
     {
       home = {
         packages = with pkgs; [
-          bibata-cursors # Material Based Cursor Theme
+          bibata-cursors # Cursor theme
         ];
       };
     };
