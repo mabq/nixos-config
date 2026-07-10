@@ -1,6 +1,5 @@
-history = false
+blacklist = ['Files']
+hide_from_providerlist = false
+history = false # do not use history for sorting (ping with `Ctrl+p`)
 only_search_title = true
 show_actions = false
-
-[Config]
-hide_from_providerlist = false

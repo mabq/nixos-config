@@ -1,5 +1,1 @@
-[Config]
-hide_from_providerlist = false
 icon = 'bluetooth-symbolic'
-min_score = 20
-name_pretty = ''

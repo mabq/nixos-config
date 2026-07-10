@@ -1,7 +1,6 @@
 { user, ... }:
 {
   imports = [
-    ../../modules/nixos-defaults.nix
     ../../modules/disko/uefi-ext4-encrypted.nix
 
     ../../modules/networkd.nix
@@ -21,7 +20,6 @@
     ../../modules/foot.nix
     ../../modules/fonts.nix
 
-    ../../modules/theme.nix
     ../../modules/hyprland.nix
   ];
   # ----------------------------------------------------------------------------

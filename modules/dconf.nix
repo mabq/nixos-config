@@ -1,4 +1,12 @@
-{ user, ... }:
+{
+  config,
+  user,
+  ...
+}:
+let
+  selectedTheme = config.my.theme;
+  hasLightMode = builtins.pathExists (../themes + "/${selectedTheme}/light.mode");
+in
 {
   options = { };
   config = {
@@ -16,9 +24,9 @@
           };
           dconf.settings = {
             "org/gnome/desktop/interface" = {
-              gtk-theme = "Adwaita";
-              color-scheme = "prefer-light";
-              icon-theme = "WhiteSur-light";
+              gtk-theme = if hasLightMode then "Adwaita" else "Adwaita-dark";
+              color-scheme = if hasLightMode then "prefer-light" else "prefer-dark";
+              icon-theme = if hasLightMode then "WhiteSur-light" else "WhiteSur-dark";
             };
           };
         };

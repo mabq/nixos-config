@@ -1,24 +1,58 @@
 # Nix modules options and config
 
+See [Writing NixOS modules](https://nixos.org/manual/nixos/stable/#ex-module-syntax).
+
 ```nix
 # configuration.nix or a shared system module
 { config, pkgs, inputs, ... }: {
 
-  # 1. NixOS System Level Config
-  environment.systemPackages = [ pkgs.curl ];
-  services.openssh.enable = true;
+  # -------------
+  # NixOS section
+  # -------------
 
-  # 2. Embedding Home Manager directly into NixOS
-  home-manager.useGlobalPkgs = true;
-  home-manager.useUserPackages = true;
+  imports = [
+    # paths to other modules...
+  ];
+
+  options = {
+    # option declarations...
+    # https://nixos.org/manual/nixos/stable/#sec-option-declarations
+  };
+
+  config = {
+    # 1. NixOS System Level Config
+    environment.systemPackages = [ pkgs.curl ];
+    services.openssh.enable = true;
+
+    # 2. Embedding Home Manager directly into NixOS
+    home-manager.useGlobalPkgs = true;
+    home-manager.useUserPackages = true;
+  };
 
   home-manager.users.yourusername = { config, pkgs, ... }: {
-    # Home Manager User Level Config
-    home.stateVersion = "24.05";
-    programs.git.enable = true;
 
-    # You can even reference NixOS options from here using 'osConfig'
-    # e.g., osConfig.networking.hostName
+    # --------------------
+    # Home-manager section
+    # --------------------
+
+    # You can access NixOS-level `config` here with `osConfig`
+
+    imports = [
+      # paths to other home-manager modules...
+    ];
+
+    options = {
+      # option declarations...
+    };
+
+    config = {
+      # Home Manager User Level Config
+      home.stateVersion = "24.05";
+      programs.git.enable = true;
+
+      # You can even reference NixOS options from here using 'osConfig'
+      # e.g., osConfig.networking.hostName
+    };
   };
 }
 ```
