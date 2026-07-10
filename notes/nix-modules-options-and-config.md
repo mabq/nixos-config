@@ -1,6 +1,33 @@
 # Nix modules options and config
 
-In a NixOS module, `options` and `config` serve different but complementary purposes:
+```nix
+# configuration.nix or a shared system module
+{ config, pkgs, inputs, ... }: {
+
+  # 1. NixOS System Level Config
+  environment.systemPackages = [ pkgs.curl ];
+  services.openssh.enable = true;
+
+  # 2. Embedding Home Manager directly into NixOS
+  home-manager.useGlobalPkgs = true;
+  home-manager.useUserPackages = true;
+
+  home-manager.users.yourusername = { config, pkgs, ... }: {
+    # Home Manager User Level Config
+    home.stateVersion = "24.05";
+    programs.git.enable = true;
+
+    # You can even reference NixOS options from here using 'osConfig'
+    # e.g., osConfig.networking.hostName
+  };
+}
+```
+
+Both NixOS and Home Manager use the exact same underlying Nix module system.
+
+NixOS modules manage the hardware, system-level daemons, and everything required to boot the machine. Home-manager modules manage your dotfiles, user-specific packages, and desktop environment settings.
+
+In a module, `options` and `config` serve different but complementary purposes:
 
   - `options` declares what configuration settings exist.
   - `config` implements the behavior based on those settings.
@@ -61,6 +88,8 @@ Without an `options` declaration, NixOS doesn't know that this option exists.
 ---------
 
 `config` contains the actual configuration that contributes to the final system configuration.
+
+Inside a NixOS module, `config` refers to system-wide settings (like `config.networking`). Inside a Home Manager module, `config` refers to your user settings (like `config.programs.git`).
 
 Typically it uses the options you've declared:
 

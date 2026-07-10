@@ -6,16 +6,14 @@
 {
   machine,
   user,
-  profile,
-  # TODO: If you change the theme manually and then rebuilt, this theme applies, is that what we want?
+  # profile,
   theme ? "catppuccin", # must be one of the themes in the theme directory
 }:
 let
   repoName = "nixos-config"; # 1
   repoPath = "/home/${user}/.local/share/${repoName}"; # 2
-  currentThemePath = "/home/${user}/.config/${repoName}/current/theme"; # 3
-
   configPath = "${repoPath}/users/${user}/config";
+  currentThemePath = "/home/${user}/.config/${repoName}/current/theme"; # 3
 
   specialArgs = {
     inherit
@@ -23,7 +21,7 @@ let
       inputs
       machine
       user
-      profile
+      # profile
       theme
       repoPath
       currentThemePath
@@ -31,23 +29,28 @@ let
       ;
   };
 
-  machineConfig = ../machines/${machine}.nix;
-  userProfile = ../users/${user}/${profile}.nix;
-  # TODO: Rewrite everything in home to nixos modules
+  # Hardware, system-level daemons, and everything required to boot the machine.
+  # machineConfig = ../machines/${machine}.nix;
+
+  # Dotfiles, user-specific packages, and desktop environment settings.
+  selected-config = ../users/${user}/${machine}.nix;
+
+  # TODO: Remove later
   userHMConfig = ../users/${user}/home.nix; # 3
 in
 inputs.nixpkgs.lib.nixosSystem {
   inherit specialArgs; # 4
   modules = [
-    inputs.disko.nixosModules.disko
     { nixpkgs.overlays = overlays; }
-    machineConfig
-    userProfile
+    inputs.disko.nixosModules.disko
+    # machineConfig
+    selected-config
     inputs.home-manager.nixosModules.home-manager
     {
       home-manager.useGlobalPkgs = true; # 5
       home-manager.useUserPackages = true; # 6
       home-manager.extraSpecialArgs = specialArgs;
+      # TODO: Remove later
       home-manager.users.${user} = userHMConfig;
     }
   ];

@@ -1,13 +1,12 @@
 # Encryption password is prompted at installation
 { lib, ... }:
-with lib;
 {
   disko = {
     devices = {
       disk = {
         main = {
           type = "disk";
-          device = mkDefault "/dev/sda"; # Allow to override on each machine config file
+          device = lib.mkDefault "/dev/sda"; # Allow to override on each machine config file
           content = {
             type = "gpt";
             partitions = {
@@ -26,7 +25,7 @@ with lib;
                 content = {
                   type = "luks";
                   name = "crypted";
-                  settings.allowDiscards = mkDefault true;
+                  settings.allowDiscards = lib.mkDefault true;
                   content = {
                     type = "filesystem";
                     format = "ext4";

@@ -1,27 +1,28 @@
 { user, ... }:
 {
   options = { };
-
   config = {
     home-manager.users.${user} =
       { pkgs, ... }:
       {
-        home = {
-          packages = with pkgs; [
-            dconf # `dconf` command
-            gnome-themes-extra # Adwaita GTK theme
-            whitesur-icon-theme # Like them more than Adwaita icons
-          ];
-        };
-        dconf.settings = {
-          "org/gnome/desktop/interface" = {
-            gtk-theme = "Adwaita";
-            color-scheme = "prefer-light";
-            icon-theme = "WhiteSur-light";
+        options = { };
+        config = {
+          home = {
+            packages = with pkgs; [
+              dconf # `dconf` command
+              gnome-themes-extra # Adwaita GTK theme
+              whitesur-icon-theme # Like them more than Adwaita icons
+            ];
+          };
+          dconf.settings = {
+            "org/gnome/desktop/interface" = {
+              gtk-theme = "Adwaita";
+              color-scheme = "prefer-light";
+              icon-theme = "WhiteSur-light";
+            };
           };
         };
       };
-
   };
 }
 

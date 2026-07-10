@@ -28,17 +28,17 @@
         nuc = mkSystem {
           machine = "nuc"; # 4
           user = "mabq";
-          profile = "desktop";
+          # profile = "desktop";
         };
         macbook = mkSystem {
           machine = "macbook";
           user = "mabq";
-          profile = "desktop";
+          # profile = "desktop";
         };
         xps = mkSystem {
           machine = "xps";
           user = "mabq";
-          profile = "plex";
+          # profile = "plex";
         };
       };
     };

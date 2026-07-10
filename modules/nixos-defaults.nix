@@ -29,7 +29,8 @@ with lib;
 
   hardware = {
     facter = {
-      reportPath = ./facter/${machine}.json; # configure hardware based on facter report
+      # Configure hardware based on facter report
+      reportPath = ../facter/${machine}.json;
     };
   };
 

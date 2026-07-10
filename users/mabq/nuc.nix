@@ -1,6 +1,9 @@
 { user, ... }:
 {
   imports = [
+    ../../modules/nixos-defaults.nix
+    ../../modules/disko/uefi-ext4-encrypted.nix
+
     ../../modules/networkd.nix
     ../../modules/bluetooth.nix
     ../../modules/keyd.nix
@@ -21,9 +24,24 @@
     ../../modules/theme.nix
     ../../modules/hypr.nix
   ];
-  options = { };
+  # ----------------------------------------------------------------------------
+  # NixOS
+  # ----------------------------------------------------------------------------
 
   config = {
+
+    # -- Machine ---------------------------------------------------------------
+
+    disko.devices.disk.main.device = "/dev/sda";
+
+    # Sometimes facter tries to use GRUB on UEFI systems, make sure it uses systemd-boot.
+    boot.loader.systemd-boot.enable = true;
+    boot.loader.efi.canTouchEfiVariables = true;
+
+    system.stateVersion = "25.11"; # only update when reinstalling with a newer ISO
+
+    # -- User ------------------------------------------------------------------
+
     users.users.${user} = {
       isNormalUser = true;
 
@@ -44,6 +62,10 @@
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINjOlPls0gNkjBTOvXIbmm7HbSUOHM+erfwE4tdNVMLn"
       ];
     };
+
+    # --------------------------------------------------------------------------
+    # Home-manager
+    # --------------------------------------------------------------------------
 
     home-manager.users.${user} =
       { pkgs, ... }:
