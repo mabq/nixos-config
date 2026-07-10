@@ -1,4 +1,8 @@
-{ user, repoPath, ... }:
+{
+  user,
+  repoPath,
+  ...
+}:
 {
   imports = [
     ./hypr-uwsm.nix

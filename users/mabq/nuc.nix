@@ -22,7 +22,7 @@
     ../../modules/fonts.nix
 
     ../../modules/theme.nix
-    ../../modules/hypr.nix
+    ../../modules/hyprland.nix
   ];
   # ----------------------------------------------------------------------------
   # NixOS

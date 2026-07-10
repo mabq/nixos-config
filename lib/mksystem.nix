@@ -43,6 +43,7 @@ inputs.nixpkgs.lib.nixosSystem {
   modules = [
     { nixpkgs.overlays = overlays; }
     inputs.disko.nixosModules.disko
+    ../modules # ← This automatically loads `/modules/default.nix` and all its imports
     # machineConfig
     selected-config
     inputs.home-manager.nixosModules.home-manager
