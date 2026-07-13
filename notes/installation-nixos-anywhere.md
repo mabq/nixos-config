@@ -4,15 +4,21 @@
 
 Before trying this, make sure both machines meet the [prerequisites](https://github.com/nix-community/nixos-anywhere#prerequisites).
 
+---
+- [Obtaining NixOS](https://nixos.org/manual/nixos/stable/#sec-obtaining)
+- [Booting from the Install Medium](https://nixos.org/manual/nixos/stable/#sec-installation-booting)
+---
 
 ## Instructions
 ---------------
 
-1. Boot the target machine from the USB (skip if it is already running Linux):
+1. Boot the target machine from a USB flash drive:
+
+   > INFO: Skip this step if the target machine is already running Linux
 
    [Download](https://nixos.org/download) the *minimal* ISO image and execute the following command to create the bootable USB:
 
-   > WARNING: This command completely destroys the data on the given disk, make sure you use the correct block device!. Double check with `lsblk`.
+   > WARNING: This command completely destroys the data on the given disk, make sure you use the correct block device!. Double check with `lsblk` or use `caligula` (if available on your system).
 
    ```bash
    # Replace:
@@ -31,11 +37,13 @@ Before trying this, make sure both machines meet the [prerequisites](https://git
 
    Finally, run `ip a` and annotate the IP.
 
-3. Install NixOS from the source machine:
+3. Install NixOS in the target machine from the source machine:
 
-   Clone this repository whereever you want and `cd` into it.
+   Clone this repository (doesn't matter where) and `cd` into it.
 
-   Run the following command to generate a `facter.json` report of the target machine and automatically install NixOS and apply the given configuration:
+   If the configuration you want to apply is not on the `master` branch, make sure you `git checkout <branch>` the desired branch first.
+
+   Finally, execute the following command:
 
    > WARNING: This command completely destroys the data on the remote machine, make sure you use the correct IP!
 
@@ -45,9 +53,14 @@ Before trying this, make sure both machines meet the [prerequisites](https://git
    #   `MACHINE-NAME` with one of the machines in the `/machines` directory.
    #   `USER` with `root` or the username (must be able to execute `sudo` without password).
    #   `IP` with the ip of the target machine.
-   sudo nix --experimental-features "nix-command flakes" \
+   sudo \
+     # Experimental features must be enabled to run this command
+     nix --experimental-features "nix-command flakes" \
+     # Runs nixos-anywhere code directly from the repository (awesome)
      run github:nix-community/nixos-anywhere -- \
+     # Uses the given configuration name (pick one) of the flake in the CWD.
      --flake ".#<NIXOS-CONFIGURATION-NAME>" \
+     #
      --generate-hardware-config nixos-facter ./machines/<MACHINE-NAME>/facter.json \
      --target-host <USER>@<IP> \
      --show-trace

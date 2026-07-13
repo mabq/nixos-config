@@ -11,6 +11,8 @@ Without UWSM (Universal Wayland Session Manager), every single app you open
 from inside Hyprland (terminal, browser, etc) becomes a "child process" tied
 directly to Hyprland.
 
+  > NOTE: Check with `systemctl status`
+
 UWSM instructs systemd to launch them as independent units. If Hyprland
 crashes, the apps don't violently die in the background, they can shut down
 cleanly, allowing browsers like Chromium to save your tabs.

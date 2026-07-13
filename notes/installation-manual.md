@@ -2,6 +2,8 @@
 
 > TO BE REVIEWED!
 
+For official documentation, see [Installation](https://nixos.org/manual/nixos/stable/#ch-installation).
+
 ## Notes
 
 - Why a swap file instead of a swap partition?
