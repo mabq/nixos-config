@@ -75,6 +75,16 @@ vim.keymap.set("n", "<C-Right>", "<c-w>5>", { desc = "Increase window width" })
 vim.keymap.set("n", "<C-Down>", "<C-W>-", { desc = "Decrease window height" })
 vim.keymap.set("n", "<C-Up>", "<C-W>+", { desc = "Increase window height" })
 
+-- Delete all buffers except the current one
+vim.keymap.set("n", "<leader>bo", function()
+  local current = vim.api.nvim_get_current_buf()
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if buf ~= current and vim.api.nvim_buf_is_valid(buf) then
+      vim.api.nvim_buf_delete(buf, { force = false })
+    end
+  end
+end, { desc = "Only" })
+
 -- Easier scope selection
 vim.keymap.set("x", "<right>", "an", { remap = true, desc = "Select more" })
 vim.keymap.set("x", "<left>", "in", { remap = true, desc = "Select less" })

@@ -1,6 +1,6 @@
 {
   user,
-  repoPath,
+  repoDir,
   ...
 }:
 {
@@ -17,7 +17,7 @@
 
         file = {
           ".config/tmux/tmux.conf" = {
-            source = mkOutOfStoreSymlink "${repoPath}/config/tmux/tmux.conf";
+            source = mkOutOfStoreSymlink "${repoDir}/config/tmux/tmux.conf";
             force = true;
           };
         };

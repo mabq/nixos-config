@@ -1,6 +1,6 @@
 {
   user,
-  repoPath,
+  repoDir,
   ...
 }:
 {
@@ -30,6 +30,7 @@
           xdg-desktop-portal-gtk # See "xdg-desktop-portal" in notes directory.
 
           # -- Launcher --
+          # INFO: Read [Service Management](https://nixos.org/manual/nixos/stable/#sec-systemctl)
           elephant # Data provider service and backend for building custom application launchers (!walker)
           walker # Wayland-native application runner
           libqalculate # Advanced calculator library (!elephant)
@@ -54,15 +55,15 @@
 
         file = {
           ".config/elephant" = {
-            source = mkOutOfStoreSymlink "${repoPath}/config/elephant";
+            source = mkOutOfStoreSymlink "${repoDir}/config/elephant";
             force = true;
           };
           ".config/walker" = {
-            source = mkOutOfStoreSymlink "${repoPath}/config/walker";
+            source = mkOutOfStoreSymlink "${repoDir}/config/walker";
             force = true;
           };
           ".config/hypr" = {
-            source = mkOutOfStoreSymlink "${repoPath}/config/hypr";
+            source = mkOutOfStoreSymlink "${repoDir}/config/hypr";
             force = true;
           };
         };

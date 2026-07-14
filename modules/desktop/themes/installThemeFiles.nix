@@ -2,7 +2,7 @@
   config,
   lib,
   user,
-  repoPath,
+  repoDir,
   currentThemePath,
   ...
 }:
@@ -10,7 +10,7 @@ let
   selectedTheme = config.my.theme;
 in
 {
-  config = lib.mkIf config.my.desktop.enable {
+  config = lib.mkIf config.my._isDesktop {
     home-manager.users.${user} =
       { config, lib, ... }:
       let
@@ -21,7 +21,7 @@ in
       in
       {
         home.file."${themesDir}" = {
-          source = mkOutOfStoreSymlink "${repoPath}/themes/${selectedTheme}";
+          source = mkOutOfStoreSymlink "${repoDir}/themes/${selectedTheme}";
           force = true;
         };
       };

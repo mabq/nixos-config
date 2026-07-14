@@ -4,7 +4,8 @@
   ...
 }:
 let
-  selectedTheme = config.my.theme;
+  selectedTheme = config.my.theme.name;
+  # `light.mode` is an empty file that should only exist in light themes
   hasLightMode = builtins.pathExists (../themes + "/${selectedTheme}/light.mode");
 in
 {

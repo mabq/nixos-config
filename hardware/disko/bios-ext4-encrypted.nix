@@ -1,13 +1,12 @@
 # Encryption password is prompted at installation
 { lib, ... }:
-with lib;
 {
   disko = {
     devices = {
       disk = {
         main = {
           type = "disk";
-          device = mkDefault "/dev/sda"; # Override on each machine config file where different
+          device = lib.mkDefault "/dev/sda"; # Override on each machine config file where different
           content = {
             type = "gpt";
             partitions = {
@@ -41,9 +40,9 @@ with lib;
                   name = "crypted";
                   extraFormatArgs = [
                     "--type"
-                    "luks1"
-                  ]; # GRUB does not support LUKS2.
-                  settings.allowDiscards = mkDefault true; # Keep it if you need SSD performance/longevity. Remove it if you require maximum security and can accept performance degradation.
+                    "luks1" # GRUB does not support LUKS2
+                  ];
+                  settings.allowDiscards = lib.mkDefault true; # SSD performance/longevity (remove if you require maximum security and don't mind performance degradation).
                   content = {
                     type = "filesystem";
                     format = "ext4";

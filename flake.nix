@@ -1,62 +1,79 @@
-# If a file isn't tracked by Git, it does not exist for Nix!
 {
   description = "My nixos configs";
 
   inputs = {
     nixpkgs = {
-      url = "github:NixOS/nixpkgs/nixpkgs-unstable"; # or `nixos-XX.YY` for stable releases
+      url = "github:NixOS/nixpkgs/nixos-unstable"; # [1]
     };
+
     home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs"; # 1
+      url = "github:nix-community/home-manager/master"; # [2]
+      inputs.nixpkgs.follows = "nixpkgs"; # [3]
     };
+
     disko = {
+      # TODO:
       url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs"; # [3]
     };
   };
 
   outputs =
     { self, ... }@inputs:
     let
-      overlays = [ ]; # 2
-      mkSystem = import ./lib/mksystem.nix { inherit self inputs overlays; };
+      mkConfig = import ./lib/mkConfig.nix { inherit self inputs; };
     in
     {
       nixosConfigurations = {
-        # 3
-        nuc = mkSystem {
-          machine = "nuc"; # 4
+        # [4]
+        "desktop" = mkConfig "desktop" {
+          machine = "GB-BXi3-5010";
           user = "mabq";
-          # profile = "desktop";
-        };
-        macbook = mkSystem {
-          machine = "macbook";
-          user = "mabq";
-          # profile = "desktop";
-        };
-        xps = mkSystem {
-          machine = "xps";
-          user = "mabq";
-          # profile = "plex";
         };
       };
     };
 }
 
 /*
-  1. Instruct home-manager to use our version of nixpkgs (home-manager is
-     designed to expect this).
+  [1]
 
-  2. Only use overlays to correct bugs in packages being used by other packages.
-     For upgrading/downgrading specific packages always prefer multiple nixpkgs
-     inputs - lighter and no compilation from source required.
-     https://nixos-and-flakes.thiscute.world/nixos-with-flakes/downgrade-or-upgrade-packages
+  The main nixpkgs branch to be used by this flake.
 
-  3. NixOS configuration name - cannot be accessed in NixOS modules.
+  `nixos-unstable` advances after NixOS tests pass. More stable for NixOS
+  systems.
 
-  4. Machine configuration name - can be accessed in NixOS modules via special
-     arguments. Use the same name as the NixOS configuration name - this will be
-     set as the default hostname and `nixos-rebuild` command uses the hostname
-     when no NixOS configuration name is passed.
+  `nixpkgs-unstable` advances after package builds succeed (no full NixOS
+  integration tests).
+
+  Both lag behind `master` for a couple of days. Check status at
+  https://status.nixos.org.
+
+  [2]
+
+  The home-manager branch to be used by this flake.
+
+  We explicitly use the `master` branch since that is the home-manager branch
+  that is tested against the "unstable" branches of nixpkgs.
+
+  If you ever change the `nixpkgs` branch to some fixed version like `26.06`
+  you should also change the home-manager branch to match that one.
+
+  [3]
+
+  Force the input flake to use the nixpkgs branch used by this flake.
+
+  This is recommended for most flake inputs, but that is now always the case.
+  Ask AI whether you should do this for any new input flakes you add.
+
+  [4]
+
+  Our nixos configuration names. You pass one of these to:
+
+    `sudo nixos-rebuild --flake .#<NIXOS-CONFIGURATION-NAME>`
+
+  If no nixos configuration name is passed, nix will try to match one with the
+  value of the current `hostname`.
+
+  Unfortunately, it is not possible to grab the key value on the RHS of the
+  expression, so we need to type the same value on both sides.
 */

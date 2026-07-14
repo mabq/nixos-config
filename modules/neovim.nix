@@ -1,6 +1,6 @@
 {
   user,
-  repoPath,
+  repoDir,
   ...
 }:
 {
@@ -43,7 +43,7 @@
 
         file = {
           ".config/nvim" = {
-            source = mkOutOfStoreSymlink "${repoPath}/config/nvim";
+            source = mkOutOfStoreSymlink "${repoDir}/config/nvim";
             force = true;
           };
           # `$NC_CURRENT_THEME_PATH/neovim.lua` is sourced directly by `lazy.nvim`

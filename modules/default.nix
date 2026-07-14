@@ -1,7 +1,9 @@
 { ... }: {
   imports = [
-    ./my.nix
+    # TODO: This must be split into modules (networking, hardware, etc.)
     ./nixos-defaults.nix
-    ./installThemeFiles.nix
+
+    ./my
+    ./desktop
   ];
 }

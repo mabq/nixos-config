@@ -1,14 +1,25 @@
-{ user, ... }:
 {
-  home-manager.users.${user} =
-    { pkgs, ... }:
-    {
-      home = {
-        packages = with pkgs; [
-          bibata-cursors # Cursor theme
-        ];
+  config,
+  lib,
+  user,
+  ...
+}:
+{
+  options = {
+    my.desktop.cursorTheme = lib.mkDefault "Bibata-Modern-Ice";
+    my.desktop.cursorSize = lib.mkDefault 20;
+  };
+  config = lib.mkIf config.my.desktop.enable {
+    home-manager.users.${user} =
+      { pkgs, ... }:
+      {
+        home = {
+          packages = with pkgs; [
+            bibata-cursors
+          ];
+        };
       };
-    };
+  };
 }
 
 /*

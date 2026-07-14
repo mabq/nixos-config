@@ -1,4 +1,4 @@
-{ user, repoPath, ... }:
+{ user, repoDir, ... }:
 {
   home-manager.users.${user} =
     { pkgs, config, ... }:
@@ -13,7 +13,7 @@
 
         file = {
           ".config/starship.toml" = {
-            source = mkOutOfStoreSymlink "${repoPath}/config/starship/starship.toml";
+            source = mkOutOfStoreSymlink "${repoDir}/config/starship/starship.toml";
             force = true;
           };
         };

@@ -1,11 +1,9 @@
-{ ... }: {
-  imports = [
-    ./defaults.nix
-    ../modules/disko/uefi-ext4-encrypted.nix
-  ];
-
-  # Make the disk descriptor explicit, otherwise you will forget to change it on new machines.
+{ machine, ... }: {
+  # In case disko is used to configure the main disk
   disko.devices.disk.main.device = "/dev/sda";
+
+  # This automatically configures hardware based on facter report
+  hardware.facter.reportPath = ../facter/${machine}.json;
 
   # Sometimes facter tries to use GRUB on UEFI systems, make sure it uses systemd-boot.
   boot.loader.systemd-boot.enable = true;

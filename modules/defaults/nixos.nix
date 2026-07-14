@@ -1,5 +1,4 @@
-# This file only contains default system-level configs.
-# These are default values (`mkDefault`), you can override them in per-host configuration files.
+# These are used as defaults for all systems, make sure you use `mkDefault`.
 {
   lib,
   pkgs,
@@ -21,17 +20,6 @@ with lib;
     #   systemd-boot.configurationLimit = mkIf config.boot.loader.systemd-boot.enable (mkDefault 10);
     #   grub.configurationLimit = mkIf config.boot.loader.grub.enable (mkDefault 10);
     # };
-  };
-
-  # ----------------------------------------------------------------------------
-  # Hardware
-  # ----------------------------------------------------------------------------
-
-  hardware = {
-    facter = {
-      # Configure hardware based on facter report
-      reportPath = ../facter/${machine}.json;
-    };
   };
 
   # ----------------------------------------------------------------------------
@@ -128,6 +116,7 @@ with lib;
 
     gc = {
       # Save disk space by automatically collection garbage
+      # INFO: Read [Cleaning the Nix Store](https://nixos.org/manual/nixos/stable/#sec-nix-gc)
       automatic = mkDefault true;
       dates = mkDefault "weekly";
       options = mkDefault "--delete-older-than 15d";

@@ -1,4 +1,4 @@
-{ user, repoPath, ... }:
+{ user, repoDir, ... }:
 {
   home-manager.users.${user} =
     { pkgs, config, ... }:
@@ -16,11 +16,11 @@
 
         file = {
           ".config/git/config" = {
-            source = mkOutOfStoreSymlink "${repoPath}/users/${user}/config/.gitconfig";
+            source = mkOutOfStoreSymlink "${repoDir}/users/${user}/config/.gitconfig";
             force = true;
           };
           ".config/lazygit/config.yml" = {
-            source = mkOutOfStoreSymlink "${repoPath}/config/lazygit/lazygit.yml";
+            source = mkOutOfStoreSymlink "${repoDir}/config/lazygit/lazygit.yml";
             force = true;
           };
         };

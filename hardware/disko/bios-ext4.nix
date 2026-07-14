@@ -1,12 +1,11 @@
 { lib, ... }:
-with lib;
 {
   disko = {
     devices = {
       disk = {
         main = {
-          device = mkDefault "/dev/sda"; # Override this on each machine configuration file if necessary.
           type = "disk";
+          device = lib.mkDefault "/dev/sda"; # Override this on each machine configuration file if necessary.
           content = {
             type = "gpt";
             partitions = {

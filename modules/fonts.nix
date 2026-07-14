@@ -1,6 +1,6 @@
 {
   user,
-  repoPath,
+  repoDir,
   ...
 }:
 {
@@ -17,7 +17,7 @@
         ];
 
         file.".config/fontconfig/fonts.conf" = {
-          source = mkOutOfStoreSymlink "${repoPath}/fontconfig/fonts.conf";
+          source = mkOutOfStoreSymlink "${repoDir}/fontconfig/fonts.conf";
           force = true;
         };
       };

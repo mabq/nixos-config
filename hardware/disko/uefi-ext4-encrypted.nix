@@ -6,7 +6,7 @@
       disk = {
         main = {
           type = "disk";
-          device = lib.mkDefault "/dev/sda"; # Allow to override on each machine config file
+          device = lib.mkDefault "/dev/sda"; # override on machine config file
           content = {
             type = "gpt";
             partitions = {
@@ -17,7 +17,7 @@
                   type = "filesystem";
                   format = "vfat";
                   mountpoint = "/boot";
-                  mountOptions = [ "umask=0077" ]; # Tightens permissions so only root can read the contents.
+                  mountOptions = [ "umask=0077" ]; # readable only by root!
                 };
               };
               luks = {

@@ -1,4 +1,4 @@
-{ user, repoPath, ... }:
+{ user, repoDir, ... }:
 {
   programs.hyprland.withUWSM = true; # See uwsm notes!
 
@@ -11,11 +11,11 @@
       home = {
         file = {
           ".config/uwsm/env" = {
-            source = mkOutOfStoreSymlink "${repoPath}/config/uwsm/env";
+            source = mkOutOfStoreSymlink "${repoDir}/config/uwsm/env";
             force = true;
           };
           ".config/uwsm/env-hyprland" = {
-            source = mkOutOfStoreSymlink "${repoPath}/config/uwsm/env-hyprland";
+            source = mkOutOfStoreSymlink "${repoDir}/config/uwsm/env-hyprland";
             force = true;
           };
         };

@@ -1,39 +1,40 @@
 {
   self,
   inputs,
-  overlays,
 }:
+nixos-configuration:
 {
-  machine,
+  hardware,
   user,
-  # profile,
-  theme ? "catppuccin", # must be one of the themes in the theme directory
+  theme ? "catppuccin", # Must be one in `/themes`
+  shell ? "zsh",
+  compositor ? "hyprland",
 }:
 let
-  repoName = "nixos-config"; # 1
-  repoPath = "/home/${user}/.local/share/${repoName}"; # 2
-  configPath = "${repoPath}/users/${user}/config";
-  currentThemePath = "/home/${user}/.config/${repoName}/current/theme"; # 3
+  # `mkOutOfStoreSymlink` requires absolute paths
+  repoDir = "/home/${user}/.local/share/nixos-config";
 
   specialArgs = {
     inherit
       self
       inputs
-      machine
+      hardware
       user
-      # profile
       theme
-      repoPath
-      currentThemePath
-      configPath
+      shell
+      compositor
+      repoDir
       ;
   };
 
-  # Hardware, system-level daemons, and everything required to boot the machine.
-  # machineConfig = ../machines/${machine}.nix;
+  # pure hardware configurations for the given machine (CPU, GPU, etc.)
+  hardwareConfig = ../hardware/${hardware}.nix;
+
+  # selected system configuration
+  nixosConfig = ../nixos-configurations/${nixos-configuration}.nix;
 
   # Dotfiles, user-specific packages, and desktop environment settings.
-  selected-config = ../users/${user}/${machine}.nix;
+  userConfig = ../users/${user}/${hardware}.nix;
 
   # TODO: Remove later
   userHMConfig = ../users/${user}/home.nix; # 3
@@ -41,15 +42,16 @@ in
 inputs.nixpkgs.lib.nixosSystem {
   inherit specialArgs; # 4
   modules = [
-    { nixpkgs.overlays = overlays; }
-    inputs.disko.nixosModules.disko
-    ../modules # ← This automatically loads `/modules/default.nix` and all its imports
-    # machineConfig
-    selected-config
+    hardwareConfig
+    nixosConfig
+    # inputs.disko.nixosModules.disko
+    ../modules
+    userConfig
     inputs.home-manager.nixosModules.home-manager
     {
       home-manager.useGlobalPkgs = true; # 5
       home-manager.useUserPackages = true; # 6
+      # TODO: Should not be required since every single module is a NixOS module
       home-manager.extraSpecialArgs = specialArgs;
       # TODO: Remove later
       home-manager.users.${user} = userHMConfig;
@@ -59,7 +61,7 @@ inputs.nixpkgs.lib.nixosSystem {
 
 /*
   1. If you ever decide to change the name of the repository, update this
-     variable, it should update everything automatically.
+     variable, everything should work.
 
   2. This is the path where you need to clone the repository.
      The variable is used to create OutOfStore symlinks pointing to the cloned
