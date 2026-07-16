@@ -1,197 +1,174 @@
 # NixOS manual installation
 
-> TO BE REVIEWED!
+The process is fully detailed in the [Installation](https://nixos.org/manual/nixos/stable/#ch-installation) section of the NixOS manual.
 
-For official documentation, see [Installation](https://nixos.org/manual/nixos/stable/#ch-installation).
 
-## Notes
+## Concepts
+-----------
 
-- Why a swap file instead of a swap partition?
-  A swap file is much more flexible than a partition and only marginally slower.
-  You can resize or remove it later without the risk of damaging the system.
-  Ask AI for more information.
+### Motherboard firmware
 
-- Why not a graphical installer?
-  The graphical installer does not allow to assign labels to partitions or file systems. Labels are required to make the hardware-configuration files reusable between installations.
+Software stored in the motherboard itself. You make the choice when you buy the hardware.
 
+Two options; UEFI and BIOS (legacy).
 
-## ISO
+If `/sys/firmware/efi` exists, the firmware is UEFI, otherwise it is BIOS.
 
-- Download the minimal ISO image from [nixos.org/download/](https://nixos.org/download).
+### Partitions
 
-- Create a bootable USB:
+Partition table is data at the start (sometimes also at the end) of a disk describing partitions (their locations, sizes, types, etc.).
 
-  `sudo dd bs=4M conv=fsync oflag=direct status=progress if=<path-to-image> of=/dev/<disk>` - change `if` and `of` to proper values.
+Two options; GPT or MBR.
 
-- Boot from the USB:
+  - UEFI → GPT
+    UEFI looks for an EFI System Partition (`ESP`) to boot. This partition type is supported by the GUID Partition Table (GPT).
 
-  On devices with very old Nvidia graphic cards you may need to enable the `copytoram` and `nomodeset` options - press `e` over the desired option in order to edit it and then press `F10` to load the installer.
+  - BIOS → MBR
+    Legacy BIOS boots by looking at the very first sectors of the disk, called the Master Boot Record (MBR). Can also boot from a disk using GPT with the right setup.
 
+Partitions are virtual divisions on a single physical disk appearing as multiple independent drives. The number and type of partitions depend on:
 
-## Internet
+  - Motherboard firmware
+  - Filesystems to be used
+  - Whether encryption is required
+  - Whether a swap partition is required
 
-- Check internet connection:
+Each partition has a filesystem — the internal structure used to write/retrieve data.
 
-  `ping google.com`
+#### Wipe data
 
-  See [networking in the installer](https://nixos.org/manual/nixos/stable/#sec-installation-manual-networking) for detailed instructions.
+Creating a new partition table and filesystems does not override previous data, which sometimes can cause errors (the new partition table did not override all sectors used by the previous one or one of the new partitions may be using the same sectors of a previous partition).
 
-- Log in as root:
+When reusing a disk always do one of the following:
 
-  `sudo -i`
+  - Override all previous data with random data (`dd if=/dev/urandom of=/dev/sdX bs=4M status=progress`) — most secure and reliable but very slow, overkill for personal use devices.
 
-  Most of the following commands will require sudo privileges.
+  - Delete each partition filesystem (`wipefs -a /dev/sdXY`) and then the partition table (`wipefs -a /dev/sdX`) itself.
 
-- Optionally, continue over ssh so that you can copy/paste all the following commands.
+To verify, first inform the OS about the changes (`partprove /dev/sdX`) and then review with `lsblk -l /dev/sdX`.
 
-  Use `passwd` to change current user's password.
-  Use `ip a` to check the IP address.
+### Filesystem
 
-  Then use `ssh root@<ip>` to login from a remote machine.
+System used by the partition to store and retrieve data.
 
+The filesystem is created in the actual partition — the tags you may see in the partition table are only hints to the operating system (ignored by Linux).
 
-## Firmware
+Btrfs seem to be the future. Its subvolumes seem to be a much better approach than normal partitions.
 
-- Check the firmware interface:
 
-  `ls /sys/firmware/efi` - only returns any output for UEFI systems.
+## Instructions
+---------------
 
-  > IMPORTANT! All following commands apply to UEFI systems only. For BIOS instructions see [Legacy Boot (MBR)](https://nixos.org/manual/nixos/stable/#sec-installation-manual-partitioning-MBR).
+Login as root (`sudo -i`), change its password (`passwd`) and ssh into the machine (`ssh root@<IP>`), that way you can copy/paste most commands from this document.
 
+Identify the target disk with `lsblk -f` and use it in place of `sdX` in the example commands.
 
-## Disk partitions
+### Recommended settings for BIOS systems
 
-- Identify the target disk:
+Two partitions — a tiny one at the start for the BIOS bootloader (must not be encrypted), and a second one filling the rest of the drive for our encrypted system (inside it btrfs subvolumes for `/` and `/home`, and (optionally) a swap file).
 
-  Execute `lsblk -f` and recognize the disk where you want to install NixOS.
+1. Partition the disk
 
-  Replace `<disk>` with the proper disk identifier in the following commands.
+  ```sh
+  # Remove previous filesystems from all previous partitions (recommended)
+  `wipefs -a /dev/sdXN`
 
-- Create a new GPT table:
+  # Remove the previous partition table
+  `wipefs -a /dev/sdX`
 
-  `parted /dev/<disk> -- mklabel gpt`
+  # Create a GPT partition table on the disk
+  parted -s /dev/sdX mklabel gpt
 
-- Create partitions:
+  # Create the BIOS boot partition (1MB)
+  parted -s /dev/sdX mkpart primary 1MiB 2MiB
+  # Mark it specifically as a BIOS boot partition
+  parted -s /dev/sdX set 1 bios_grub on
+  # Delete any previous si
 
-  1. `parted /dev/<disk> -- mkpart ESP fat32 1MB 512MB`
+  # Create the main partition using the rest of the disk
+  parted -s /dev/sdX mkpart primary 2MiB 100%
 
-     `ESP` is the partition label and it stands for "EFI System Partition".
+  # Inform the system about changes (to verify)
+  partprobe /dev/sdX
 
-  2. `parted /dev/<disk> -- mkpart root ext4 512MB 100%`
+  # Review
+  parted --list
+  ```
 
-     `root` is the partition label and it is used in the hardware configuration file.
+2. Set Up LUKS Encryption
 
-- Set the EFI System Partition flag for the first partition:
+  Initialize the encryption container on the main partition, maps to `/dev/mapper/cryptroot`.
 
-  `parted /dev/<disk> -- set 1 esp on` - makes the first partition recognizable for booting on UEFI systems.
+  ```sh
+  # Format the partition with LUKS (you will be prompted to create a password)
+  cryptsetup luksFormat /dev/sdX2
 
-- Check the results:
+  # Open the encrypted partition
+  cryptsetup open /dev/sdX2 cryptroot
+  ```
 
-  `parted --list`
+3. Create the Filesystem & Subvolumes
 
-- Encrypt the root partition:
+  Instead of making separate partitions for Swap and Home, Btrfs allows us to handle everything inside one layout. We will format the unlocked layout, create our subvolumes, and then mount them cleanly.
 
-  `cryptsetup luksFormat /dev/<disk>2` - enter a password when prompted.
+  ```sh
+  # Format the unlocked container with Btrfs
+  mkfs.btrfs -L system /dev/mapper/cryptroot
 
-- Open the encrypted partition:
+  # Mount the root Btrfs filesystem temporarily to create subvolumes
+  mount /dev/mapper/cryptroot /mnt
 
-  `cryptsetup luksOpen /dev/<disk>2 crypted`
+  # Create the subvolumes for root and home
+  btrfs subvolume create /mnt/@
+  btrfs subvolume create /mnt/@home
 
-  Here, `crypted` is just a name, in principle you could use whatever you want but do not change it since this name is also used in the hardware-configuration file.
+  # Unmount the temporary root mapping
+  umount /mnt
+  ```
 
+4. Mount Subvolumes & Activate Swap
 
-## Create the file systems
+  With the subvolumes created, we mount them to their final destinations. Btrfs supports swap files directly, which is the cleanest approach when using subvolumes.
 
-- Create the file system for the boot partition:
+  ```sh
+  # Mount the root subvolume (@) to /mnt
+  mount -o noatime,compress=zstd,subvol=@ /dev/mapper/cryptroot /mnt
 
-  `mkfs.fat -F 32 -n boot /dev/<disk>1`
+  # Create target directories for home and swap
+  mkdir -p /mnt/home
+  mkdir -p /mnt/swap
 
-  Here, `boot` is the file system label that is also being used in the hardware-configuration file.
+  # Mount the home subvolume (@home) to /mnt/home
+  mount -o noatime,compress=zstd,subvol=@home /dev/mapper/cryptroot /mnt/home
 
-- Create the file system for the encrypted partition:
+  # Mount the flat root Btrfs layout to /mnt/swap to host the swapfile safely
+  mount -o noatime,subvol=/ /dev/mapper/cryptroot /mnt/swap
 
-  `mkfs.ext4 -L nixos /dev/mapper/crypted`
+  # Allocate a 8GB Btrfs swapfile
+  btrfs filesystem mkswapfile --size 8g /mnt/swap/swapfile
 
-  Again, `nixos` is the file system label that is also being used in the hardware-configuration file.
+  # Activate the swapfile
+  swapon /mnt/swap/swapfile
+  ```
 
+5. Install NixOS:
 
-## Mounting
+  ```sh
+  # Generate default configuration files
+  nixos-generate-config --root /mnt
 
-- Mount the root file system:
+  # Install neovim (temporarily)
+  nix --extra-experimental-features "nix-command flakes" shell "nixpkgs#neovim"
 
-  `mount /dev/disk/by-label/nixos /mnt`
+  # Open the main configuration file and copy the base configuration `./installation-base.nix`
+  nvim /mnt/etc/nixos/configuration.nix
 
-- Mount the boot file system:
+  # Do the installation (will ask for root password at the end)
+  nixos-install
 
-  `mkdir -p /mnt/boot` - create a directory inside `/mnt`.
+  # Set the user password (replace user)
+  nixos-enter --root /mnt -c 'passwd <USER>'
 
-  `mount -o umask=077 /dev/disk/by-label/boot /mnt/boot` - mount the file system, making its contents accessible only to `root`.
-
-
-## Configuration files
-
-- Generate NixOS configuration files:
-
-  `nixos-generate-config --root /mnt`
-
-- Edit `configuration.nix`:
-
-  `nano /mnt/etc/nixos/configuration.nix`
-
-  Just the basic stuff, everything will be replaced later with our flake:
-
-  - Enable internet connection:
-    Uncomment `networking.networkmanager.enable = true;`.
-
-  - Set the correct time zome:
-    Uncomment `time.timeZone` and change its value to `America/Guayaquil`.
-
-  - Set the user account:
-    - Uncomment the `users.users` attribute set.
-    - Change the username.
-    - Add `networkmanager` to the `extraGroups` option list.
-    - Add `neovim` and `git` to the packages list (`git` is required by Flakes).
-
-  - Enable openssh:
-    Uncomment `services.openssh.enable = true;`.
-
-  - Allow non-free packages:
-    Add `nixpkgs.config.allowUnfree = true;`.
-
-  - Enable the new nix cli and flakes — [more info](https://nixos-and-flakes.thiscute.world/nixos-with-flakes/nixos-with-flakes-enabled):
-    Add `nix.settings.experimental-features = [ "nix-command" "flakes" ];`.
-
-- Edit `hardware-configuration.nix`:
-
-  `nano /mnt/etc/nixos/hardware-configuration.nix`
-
-  Replace disks' UUIDs with partition and file system labels to make this file reusable accross installations:
-
-    - `/` (filesystem) -> `/dev/disk/by-label/nixos`
-      `nixos` is the label for the file system in the root partition.
-
-    - `crypted` (device) -> `/dev/disk/by-partlabel/root`
-      `root` is the partition label for the root partition.
-
-    - `/boot` (filesystem) -> `/dev/disk/by-label/boot`
-      `boot` is the label for the filesystem in the boot partition.
-
-
-## Install
-
-- Install NixOS:
-
-  `nixos-install`
-
-  When prompted, enter the root user's password.
-
-- Change the user password:
-
-  `nixos-enter --root /mnt -c 'passwd {USER}'`
-
-  Use the same username as the one you set up in the configuration file.
-
-- Reboot:
-
-  `reboot`
-
+  # Reboot
+  reboot
+  ```
