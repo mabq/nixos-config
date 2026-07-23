@@ -1,6 +1,4 @@
-# NixOS manual installation
-
-The process is fully detailed in the [Installation](https://nixos.org/manual/nixos/stable/#ch-installation) section of the NixOS manual.
+# Installation (BIOS encrypted)
 
 
 ## Concepts

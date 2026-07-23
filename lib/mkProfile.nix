@@ -2,59 +2,40 @@
   self,
   inputs,
 }:
-nixos-configuration:
+profile:
 {
-  hardware,
-  user,
+  machine,
+  user, # without this here we cannot pass the repo absolute path to every module
   theme ? "catppuccin", # Must be one in `/themes`
-  shell ? "zsh",
-  compositor ? "hyprland",
 }:
 let
-  # `mkOutOfStoreSymlink` requires absolute paths
-  repoDir = "/home/${user}/.local/share/nixos-config";
+  repoDir = "/home/${user}/.local/share/nixos-config"; # `mkOutOfStoreSymlink` requires absolute paths
 
   specialArgs = {
     inherit
       self
       inputs
-      hardware
+      profile
+      machine
       user
       theme
-      shell
-      compositor
       repoDir
       ;
   };
-
-  # pure hardware configurations for the given machine (CPU, GPU, etc.)
-  hardwareConfig = ../hardware/${hardware}.nix;
-
-  # selected system configuration
-  nixosConfig = ../nixos-configurations/${nixos-configuration}.nix;
-
-  # Dotfiles, user-specific packages, and desktop environment settings.
-  userConfig = ../users/${user}/${hardware}.nix;
-
-  # TODO: Remove later
-  userHMConfig = ../users/${user}/home.nix; # 3
 in
 inputs.nixpkgs.lib.nixosSystem {
   inherit specialArgs; # 4
   modules = [
-    hardwareConfig
-    nixosConfig
-    # inputs.disko.nixosModules.disko
-    ../modules
-    userConfig
+    inputs.disko.nixosModules.disko
+    ../machines/${machine}.nix
+    ../users/${user}
+    ../profiles/${profile}.nix
     inputs.home-manager.nixosModules.home-manager
     {
       home-manager.useGlobalPkgs = true; # 5
       home-manager.useUserPackages = true; # 6
-      # TODO: Should not be required since every single module is a NixOS module
       home-manager.extraSpecialArgs = specialArgs;
-      # TODO: Remove later
-      home-manager.users.${user} = userHMConfig;
+      # home-manager.users.${user} = userHMConfig;
     }
   ];
 }

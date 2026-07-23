@@ -1,9 +1,9 @@
-{ machine, ... }: {
-  # In case disko is used to configure the main disk
+{ hardware-configuration, ... }: {
+  # TODO: Is this set by facter modules?
   disko.devices.disk.main.device = "/dev/sda";
 
   # This automatically configures hardware based on facter report
-  hardware.facter.reportPath = ../facter/${machine}.json;
+  hardware.facter.reportPath = ../facter/${hardware-configuration}.json;
 
   # Sometimes facter tries to use GRUB on UEFI systems, make sure it uses systemd-boot.
   boot.loader.systemd-boot.enable = true;

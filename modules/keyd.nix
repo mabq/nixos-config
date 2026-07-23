@@ -19,7 +19,6 @@ with lib;
 
     # Keyd config files cannot be put in the user's home directory.
     # `mkOutOfStoreSymlink` is a Home-manager function (cannot use it here).
-    # TODO: change the config so that I can insert things like em-dash and other common special characters that I need.
     etc."keyd".source = mkDefault ../config/keyd;
   };
 }

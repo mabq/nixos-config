@@ -20,7 +20,7 @@ return {
     end, { desc = "Harpoon" })
     vim.keymap.set("n", "+", function()
       harpoon:list():add()
-    end, { desc = "Add file" })
+    end, { desc = "Harpoon add file" })
 
     -- Set <space>1..<space>5 be my shortcuts to moving to the files
     for _, idx in ipairs { 1, 2, 3, 4, 5 } do

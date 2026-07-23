@@ -12,7 +12,6 @@
     };
 
     disko = {
-      # TODO:
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs"; # [3]
     };
@@ -21,13 +20,21 @@
   outputs =
     { self, ... }@inputs:
     let
-      mkConfig = import ./lib/mkConfig.nix { inherit self inputs; };
+      mkProfile = import ./lib/mkProfile.nix { inherit self inputs; };
     in
     {
       nixosConfigurations = {
         # [4]
-        "desktop" = mkConfig "desktop" {
-          machine = "GB-BXi3-5010";
+        "desktop" = mkProfile "desktop" {
+          machine = "GB-BXi3-5010.260713"; # [5]
+          user = "mabq";
+        };
+        "nixdev" = mkProfile "nixdev" {
+          machine = "MBP-15-2010.260713";
+          user = "mabq";
+        };
+        "plex-server" = mkProfile "plex-server" {
+          machine = "XPS-1340";
           user = "mabq";
         };
       };
@@ -76,4 +83,10 @@
 
   Unfortunately, it is not possible to grab the key value on the RHS of the
   expression, so we need to type the same value on both sides.
+
+  [5]
+
+  Must match a filename in `/hardware`.
+
+  Do not reuse hardware files!, read ./notes/hardware-files.md
 */

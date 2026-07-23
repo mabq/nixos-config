@@ -1,8 +1,8 @@
-# These are used as defaults for all systems, make sure you use `mkDefault`.
+# These are used as defaults for all systems, so make sure you use `mkDefault`.
 {
   lib,
   pkgs,
-  machine,
+  profile,
   ...
 }:
 with lib;
@@ -16,10 +16,10 @@ with lib;
     kernelPackages = mkDefault pkgs.linuxPackages_latest;
 
     # Limit the number of generations to keep in the boot loader
-    # loader = {
-    #   systemd-boot.configurationLimit = mkIf config.boot.loader.systemd-boot.enable (mkDefault 10);
-    #   grub.configurationLimit = mkIf config.boot.loader.grub.enable (mkDefault 10);
-    # };
+    loader = {
+      systemd-boot.configurationLimit = mkIf config.boot.loader.systemd-boot.enable (mkDefault 10);
+      grub.configurationLimit = mkIf config.boot.loader.grub.enable (mkDefault 10);
+    };
   };
 
   # ----------------------------------------------------------------------------
@@ -34,7 +34,7 @@ with lib;
     priority = 100; # prioritize zram over swap
   };
 
-  # Swap (better use this on per-machine file as needed)
+  # Swap (use this on per-machine file as needed)
   # swapDevices = [{
   #   device = "/var/lib/swapfile";
   #   size = 8 * 1024; # NixOS expects size in MB
@@ -70,15 +70,15 @@ with lib;
   # ----------------------------------------------------------------------------
 
   networking = {
-    hostName = mkDefault machine;
-    firewall.enable = mkDefault false; # tailscale can go through
+    hostName = mkDefault profile;
+    firewall.enable = mkDefault true; # tailscale can go through
   };
 
   # ----------------------------------------------------------------------------
   # User accounts
   # ----------------------------------------------------------------------------
 
-  users.mutableUsers = mkDefault false; # no imperative changes of user accounts
+  users.mutableUsers = mkDefault false; # do not allow imperative changes of user accounts
   security.sudo.wheelNeedsPassword = mkDefault false; # no sudo password for users who are members of `wheel`
 
   # ----------------------------------------------------------------------------
@@ -106,7 +106,6 @@ with lib;
     package = mkDefault pkgs.nixVersions.latest; # use the latest version of the cli
 
     settings = {
-      # Enable flake support
       experimental-features = [
         "nix-command"
         "flakes"
@@ -116,7 +115,7 @@ with lib;
 
     gc = {
       # Save disk space by automatically collection garbage
-      # INFO: Read [Cleaning the Nix Store](https://nixos.org/manual/nixos/stable/#sec-nix-gc)
+      #   https://nixos.org/manual/nixos/stable/#sec-nix-gc
       automatic = mkDefault true;
       dates = mkDefault "weekly";
       options = mkDefault "--delete-older-than 15d";

@@ -8,7 +8,7 @@ The purpose of this repo is to produce a set of NixOS reproducible configuration
 
 ## Installation
 
-Use [nixos-anywhere](./notes/installation-nixos-anywhere.md) to build a new (remote) machine with a single command or do a [manual installation](./notes/installation-manual.md) and apply one of the configurations later.
+If the machine is reachable over the public internet or local network (wired-connection), use [nixos-anywhere](./notes/installation-nixos-anywhere.md). Otherwise do a [manual]() or [graphical]() installation.
 
 --
 
