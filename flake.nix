@@ -20,22 +20,16 @@
   outputs =
     { self, ... }@inputs:
     let
-      mkProfile = import ./lib/mkProfile.nix { inherit self inputs; };
+      mkSystem = import ./lib/mkSystem.nix { inherit self inputs; };
     in
     {
       nixosConfigurations = {
         # [4]
-        "desktop" = mkProfile "desktop" {
-          machine = "GB-BXi3-5010.260713"; # [5]
-          user = "mabq";
-        };
-        "nixdev" = mkProfile "nixdev" {
-          machine = "MBP-15-2010.260713";
-          user = "mabq";
-        };
-        "plex-server" = mkProfile "plex-server" {
+        "xps" = mkSystem {
           machine = "XPS-1340";
           user = "mabq";
+          profile = "plex-server";
+          stateVersion = "26.05";
         };
       };
     };

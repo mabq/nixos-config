@@ -1,4 +1,5 @@
-# See https://git-scm.com/docs/git-config
+# Git configs
+#   https://git-scm.com/docs/git-config
 [user]
   email = alejandro.banderas@me.com
   name = mabq
@@ -24,9 +25,10 @@
   enabled = true            # Record and reuse conflict resolutions
   autoupdate = true         # Apply stored conflict resolutions automatically
 
-# Use `gh` instead of ssh keys to login to GitHub.
-#  These configs asume `gh` was installed with Home-manager (not NixOS).
-#  Use `which gh` to check the path where the exeuctable is located.
+# gh configs
+#   Instruct git to use `gh` to authenticate to GitHub
+#   For this to work `gh` must be installed with Home-manager (not NixOS).
+#   Use `which gh` to check the path where the exeuctable is located.
 [credential "https://github.com"]
   helper = # clear any existing helpers
   helper = !/etc/profiles/per-user/mabq/bin/gh auth git-credential
@@ -34,8 +36,8 @@
   helper = # clear any existing helpers
   helper = !/etc/profiles/per-user/mabq/bin/gh auth git-credential
 
-# Git delta
-#  https://github.com/dandavison/delta#get-started
+# Git delta configs
+#   https://github.com/dandavison/delta#get-started
 [core]
   pager = delta
 [interactive]

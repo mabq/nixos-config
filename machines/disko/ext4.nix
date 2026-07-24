@@ -1,10 +1,10 @@
-{ lib, ... }:
+# This will configure fileSystems and other required NixOS options to boot the
+# specified configuration.
 {
   disko.devices = {
     disk = {
       main = {
-        # When using disko-install, we will overwrite this value from the commandline
-        device = lib.mkDefault "/dev/disk/by-id/some-disk-id";
+        # device = (set this on each profile depending on the disk for the machine)
         type = "disk";
         content = {
           type = "gpt";

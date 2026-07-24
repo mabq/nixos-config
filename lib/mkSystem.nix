@@ -2,10 +2,11 @@
   self,
   inputs,
 }:
-profile:
 {
   machine,
-  user, # without this here we cannot pass the repo absolute path to every module
+  user, # without this here we cannot pass the repo absolute path to every modle
+  profile,
+  stateVersion,
   theme ? "catppuccin", # Must be one in `/themes`
 }:
 let
@@ -15,9 +16,10 @@ let
     inherit
       self
       inputs
-      profile
       machine
       user
+      profile
+      stateVersion
       theme
       repoDir
       ;
@@ -27,16 +29,30 @@ inputs.nixpkgs.lib.nixosSystem {
   inherit specialArgs; # 4
   modules = [
     inputs.disko.nixosModules.disko
-    ../machines/${machine}.nix
-    ../users/${user}
-    ../profiles/${profile}.nix
     inputs.home-manager.nixosModules.home-manager
     {
-      home-manager.useGlobalPkgs = true; # 5
-      home-manager.useUserPackages = true; # 6
-      home-manager.extraSpecialArgs = specialArgs;
-      # home-manager.users.${user} = userHMConfig;
+      # nixos
+      system.stateVersion = stateVersion;
+      users.users.${user} = {
+        isNormalUser = true;
+        home = "/home/${user}";
+      };
     }
+    {
+      home-manager = {
+        useGlobalPkgs = true; # 5
+        useUserPackages = true; # 6
+        extraSpecialArgs = specialArgs;
+        users.${user}.home = {
+          username = user;
+          homeDirectory = "/home/${user}";
+          stateVersion = stateVersion;
+        };
+      };
+    }
+    ../machines/${machine}.nix # things that are strictly determined by probe/hardware inspection
+    ../users/${user}
+    ../profiles/${profile}.nix # things that require human decision-making
   ];
 }
 

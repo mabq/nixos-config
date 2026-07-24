@@ -79,6 +79,11 @@ with lib;
   # ----------------------------------------------------------------------------
 
   users.mutableUsers = mkDefault false; # do not allow imperative changes of user accounts
+
+  # ----------------------------------------------------------------------------
+  # Security
+  # ----------------------------------------------------------------------------
+
   security.sudo.wheelNeedsPassword = mkDefault false; # no sudo password for users who are members of `wheel`
 
   # ----------------------------------------------------------------------------

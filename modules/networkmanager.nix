@@ -1,4 +1,4 @@
-# Import this module if you want to use NetworkManager as the network manager.
+# Import this module if you want to use NetworkManager
 {
   lib,
   user,
