@@ -19,7 +19,6 @@ let
       machine
       user
       profile
-      stateVersion
       theme
       repoDir
       ;
