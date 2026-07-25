@@ -1,5 +1,6 @@
 # These are used as defaults for all systems, so make sure you use `mkDefault`.
 {
+  config,
   lib,
   pkgs,
   profile,

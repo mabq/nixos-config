@@ -1,7 +1,7 @@
 { ... }: {
   imports = [
     # this will change whenever you regenerate config file or when reinstalling the system
-    ./hardware-configuration/XPS-1340-20260723.nix
+    ./hardware-configuration/xps-1340-20260724.nix
 
     # or user disko + facter when using nixos-anywhere
     # ./disko/ext4.nix
