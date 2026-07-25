@@ -4,7 +4,7 @@
   disko.devices = {
     disk = {
       main = {
-        # device = (set this on each profile depending on the disk for the machine)
+        # device = # set this on each host file
         type = "disk";
         content = {
           type = "gpt";

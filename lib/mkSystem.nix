@@ -3,7 +3,7 @@
   inputs,
 }:
 {
-  machine,
+  host,
   user, # without this here we cannot pass the repo absolute path to every modle
   profile,
   stateVersion,
@@ -16,7 +16,7 @@ let
     inherit
       self
       inputs
-      machine
+      host
       user
       profile
       theme
@@ -27,17 +27,17 @@ in
 inputs.nixpkgs.lib.nixosSystem {
   inherit specialArgs; # 4
   modules = [
-    inputs.disko.nixosModules.disko
     inputs.home-manager.nixosModules.home-manager
+
+    # -- Common configs
+    ../modules/defaults.nix
     {
-      # nixos
       system.stateVersion = stateVersion;
       users.users.${user} = {
         isNormalUser = true;
         home = "/home/${user}";
       };
-    }
-    {
+
       home-manager = {
         useGlobalPkgs = true; # 5
         useUserPackages = true; # 6
@@ -49,7 +49,9 @@ inputs.nixpkgs.lib.nixosSystem {
         };
       };
     }
-    ../machines/${machine}.nix # things that are strictly determined by probe/hardware inspection
+
+    # -- Custom configs
+    ../hosts/${host}.nix
     ../users/${user}
     ../profiles/${profile}.nix # things that require human decision-making
   ];

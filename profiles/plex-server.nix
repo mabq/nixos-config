@@ -1,7 +1,6 @@
 { pkgs, user, ... }:
 {
   imports = [
-    ../modules/defaults.nix
     ../modules/git.nix
     ../modules/keyd.nix
     ../modules/neovim.nix

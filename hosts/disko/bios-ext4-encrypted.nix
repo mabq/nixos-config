@@ -6,7 +6,7 @@
       disk = {
         main = {
           type = "disk";
-          device = lib.mkDefault "/dev/sda"; # Override on each machine config file where different
+          device = lib.mkDefault "/dev/sda"; # Override on each host
           content = {
             type = "gpt";
             partitions = {
