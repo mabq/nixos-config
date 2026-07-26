@@ -1,13 +1,18 @@
-# These are used as defaults for all systems, so make sure you use `mkDefault`.
+# These are used as defaults for all systems — use `mkDefault`!
 {
   config,
   lib,
   pkgs,
-  profile,
+  user,
+  stateVersion,
   ...
 }:
 with lib;
 {
+  imports = [
+    inputs.home-manager.nixosModules.home-manager
+  ];
+
   # ----------------------------------------------------------------------------
   # Boot (kernel)
   # ----------------------------------------------------------------------------
@@ -43,6 +48,44 @@ with lib;
   # }];
 
   # ----------------------------------------------------------------------------
+  # User accounts
+  # ----------------------------------------------------------------------------
+
+  users = {
+    mutableUsers = mkDefault false; # do not allow imperative changes of user accounts
+    users.${user} = {
+      isNormalUser = mkDefault true;
+      home = mkDefault "/home/${user}";
+    };
+  };
+
+  # ----------------------------------------------------------------------------
+  # Home-manager
+  # ----------------------------------------------------------------------------
+
+  home-manager = {
+    # Make home-manager integrate deeply with NixOS, e.g.:
+    #  `/etc/profiles/per-user/<username>/bin` instead of `~/.nix-profile/bin`.
+    #  `nix-collect-garbage -d` collects garbage from both.
+    #  `nixos-rebuild` rebuilds both.
+    # These options should only be set to `false` when using `nix` in non-NixOS
+    # Linux distributions (like Ubuntu/Arch).
+    useGlobalPkgs = mkDefault true;
+    useUserPackages = mkDefault true;
+    users.${user}.home = {
+      username = mkDefault user;
+      homeDirectory = mkDefault "/home/${user}";
+      stateVersion = mkDefault stateVersion; # see notes at the bottom
+    };
+  };
+
+  # ----------------------------------------------------------------------------
+  # Security
+  # ----------------------------------------------------------------------------
+
+  security.sudo.wheelNeedsPassword = mkDefault false; # no sudo password for users who are members of `wheel`
+
+  # ----------------------------------------------------------------------------
   # System packages
   # ----------------------------------------------------------------------------
 
@@ -55,15 +98,15 @@ with lib;
   # ----------------------------------------------------------------------------
 
   services = {
+    tailscale.enable = mkDefault true; # authenticate with `sudo tailscale up`
+
     openssh = {
-      enable = mkDefault true; # in case you ever lose Tailscale access
+      enable = mkDefault true;
       settings = {
-        PasswordAuthentication = mkDefault false;
-        PermitRootLogin = mkDefault "no";
+        PasswordAuthentication = mkDefault false; # ssh keys or Tailscale only!
+        PermitRootLogin = mkDefault "no"; # never!
       };
     };
-
-    tailscale.enable = mkDefault true; # must authenticate manually with `sudo tailscale up`
   };
 
   # ----------------------------------------------------------------------------
@@ -71,27 +114,15 @@ with lib;
   # ----------------------------------------------------------------------------
 
   networking = {
-    hostName = mkDefault profile;
+    hostName = mkDefault "nixos"; # override on host file
     firewall.enable = mkDefault true; # tailscale can go through
   };
-
-  # ----------------------------------------------------------------------------
-  # User accounts
-  # ----------------------------------------------------------------------------
-
-  users.mutableUsers = mkDefault false; # do not allow imperative changes of user accounts
-
-  # ----------------------------------------------------------------------------
-  # Security
-  # ----------------------------------------------------------------------------
-
-  security.sudo.wheelNeedsPassword = mkDefault false; # no sudo password for users who are members of `wheel`
 
   # ----------------------------------------------------------------------------
   # Time and locale
   # ----------------------------------------------------------------------------
 
-  time.timeZone = mkDefault "America/Guayaquil";
+  time.timeZone = mkDefault "America/Guayaquil"; # override in host file
   services.tzupdate.enable = mkDefault true; # update timezone automatically
 
   i18n = {
@@ -102,14 +133,14 @@ with lib;
   # Nixpkgs
   # ----------------------------------------------------------------------------
 
-  nixpkgs.config.allowUnfree = mkDefault true; # allow proprietary packages by default
+  nixpkgs.config.allowUnfree = mkDefault true; # allow proprietary packages
 
   # ----------------------------------------------------------------------------
   # Nix CLI
   # ----------------------------------------------------------------------------
 
   nix = {
-    package = mkDefault pkgs.nixVersions.latest; # use the latest version of the cli
+    package = mkDefault pkgs.nixVersions.latest; # latest cli version
 
     settings = {
       experimental-features = [
@@ -121,10 +152,33 @@ with lib;
 
     gc = {
       # Save disk space by automatically collection garbage
-      #   https://nixos.org/manual/nixos/stable/#sec-nix-gc
+      #  https://nixos.org/manual/nixos/stable/#sec-nix-gc
       automatic = mkDefault true;
       dates = mkDefault "weekly";
       options = mkDefault "--delete-older-than 15d";
     };
   };
+
+  # ----------------------------------------------------------------------------
+  # System
+  # ----------------------------------------------------------------------------
+
+  # This option defines the first version of NixOS you have installed on this particular machine,
+  # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
+  #
+  # Most users should NEVER change this value after the initial install, for any reason,
+  # even if you've upgraded your system to a new NixOS release.
+  #
+  # This value does NOT affect the Nixpkgs version your packages and OS are pulled from,
+  # so changing it will NOT upgrade your system - see https://nixos.org/manual/nixos/stable/#sec-upgrading for how
+  # to actually do that.
+  #
+  # This value being lower than the current NixOS release does NOT mean your system is
+  # out of date, out of support, or vulnerable.
+  #
+  # Do NOT change this value unless you have manually inspected all the changes it would make to your configuration,
+  # and migrated your data accordingly.
+  #
+  # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
+  system.stateVersion = stateVersion; # Did you read the comment?
 }

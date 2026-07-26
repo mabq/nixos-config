@@ -8,7 +8,6 @@
     # ../modules/starship.nix
     ../modules/tmux.nix
   ];
-  networking.firewall.enable = false;
 
   home-manager.users.${user} =
     { ... }:
