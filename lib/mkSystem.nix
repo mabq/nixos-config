@@ -28,7 +28,12 @@ in
 inputs.nixpkgs.lib.nixosSystem {
   inherit specialArgs; # 3
   modules = [
+    inputs.disko.nixosModules.disko
+    inputs.sops-nix.nixosModules.sops
+    inputs.home-manager.nixosModules.home-manager
+
     # { home-manager.extraSpecialArgs = specialArgs; }
+
     ../modules/defaults.nix
     ../hosts/${host}.nix
     ../users/${user}

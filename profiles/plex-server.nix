@@ -9,6 +9,8 @@
     ../modules/tmux.nix
   ];
 
+  services.openssh.settings.PasswordAuthentication = true;
+
   home-manager.users.${user} =
     { ... }:
     {

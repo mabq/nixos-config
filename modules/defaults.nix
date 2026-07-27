@@ -10,38 +10,26 @@
 }:
 with lib;
 {
-  imports = [
-    inputs.home-manager.nixosModules.home-manager
-  ];
-
   # ----------------------------------------------------------------------------
   # Boot (kernel)
   # ----------------------------------------------------------------------------
 
-  boot = {
-    # Use the latest stable linux kernel available in Nixpkgs
-    kernelPackages = mkDefault pkgs.linuxPackages_latest;
-
-    # Limit the number of generations to keep in the boot loader
-    loader = {
-      systemd-boot.configurationLimit = mkIf config.boot.loader.systemd-boot.enable (mkDefault 10);
-      grub.configurationLimit = mkIf config.boot.loader.grub.enable (mkDefault 10);
-    };
-  };
+  # Use the latest stable Linux kernel available in Nixpkgs
+  boot.kernelPackages = mkDefault pkgs.linuxPackages_latest;
 
   # ----------------------------------------------------------------------------
   # Memory
   # ----------------------------------------------------------------------------
 
-  # Compress data in ram (no major performance penalty)
+  # Compress data in memory — minor CPU penalty in exchange of more capacity
   zramSwap = {
     enable = mkDefault true;
     memoryPercent = mkDefault 50;
-    algorithm = mkDefault "lz4"; # on capable CPUs use `zstd` for higher compression rates
+    algorithm = mkDefault "lz4"; # use `zstd` for higher compression rates on newer cpus
     priority = 100; # prioritize zram over swap
   };
 
-  # Swap (use this on per-machine file as needed)
+  # Swap — do this on host file when needed
   # swapDevices = [{
   #   device = "/var/lib/swapfile";
   #   size = 8 * 1024; # NixOS expects size in MB
@@ -53,7 +41,7 @@ with lib;
   # ----------------------------------------------------------------------------
 
   users = {
-    mutableUsers = mkDefault false; # do not allow imperative changes of user accounts
+    mutableUsers = mkDefault false; # no imperative changes
     users.${user} = {
       isNormalUser = mkDefault true;
       home = mkDefault "/home/${user}";
@@ -65,10 +53,10 @@ with lib;
   # ----------------------------------------------------------------------------
 
   home-manager = {
-    # Make home-manager integrate deeply with NixOS, e.g.:
-    #  `/etc/profiles/per-user/<username>/bin` instead of `~/.nix-profile/bin`.
-    #  `nix-collect-garbage -d` collects garbage from both.
-    #  `nixos-rebuild` rebuilds both.
+    # Integrate home-manager with NixOS:
+    #  User binaries in `/etc/profiles/per-user/<username>/bin` (not `~/.nix-profile/bin`)
+    #  Single command to collect all garbage: `nix-collect-garbage -d`
+    #  Single command to rebuild both: `nixos-rebuild`
     # These options should only be set to `false` when using `nix` in non-NixOS
     # Linux distributions (like Ubuntu/Arch).
     useGlobalPkgs = mkDefault true;
@@ -84,7 +72,8 @@ with lib;
   # Security
   # ----------------------------------------------------------------------------
 
-  security.sudo.wheelNeedsPassword = mkDefault false; # no sudo password for users who are members of `wheel`
+  # No password on sudo actions for members of `wheel`
+  security.sudo.wheelNeedsPassword = mkDefault false;
 
   # ----------------------------------------------------------------------------
   # System packages

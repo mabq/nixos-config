@@ -15,6 +15,11 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs"; # [3]
     };
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs"; # [3]
+    };
   };
 
   outputs =
