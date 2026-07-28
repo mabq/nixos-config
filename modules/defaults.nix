@@ -3,13 +3,16 @@
   config,
   lib,
   pkgs,
-  inputs,
   user,
   stateVersion,
   ...
 }:
 with lib;
 {
+  imports = [
+    ./sops.nix
+  ];
+
   # ----------------------------------------------------------------------------
   # Boot (kernel)
   # ----------------------------------------------------------------------------
@@ -64,6 +67,10 @@ with lib;
     users.${user}.home = {
       username = mkDefault user;
       homeDirectory = mkDefault "/home/${user}";
+      packages = with pkgs; [
+        # Required by all users
+        just # Handy way to save and run project-specific commands
+      ];
       stateVersion = mkDefault stateVersion; # see notes at the bottom
     };
   };
@@ -88,7 +95,10 @@ with lib;
   # ----------------------------------------------------------------------------
 
   services = {
-    tailscale.enable = mkDefault true; # authenticate with `sudo tailscale up`
+    tailscale = {
+      enable = mkDefault true; # authenticate with `sudo tailscale up`
+      authKeyFile = config.sops.secrets.tailscale_auth_key.path;
+    };
 
     openssh = {
       enable = mkDefault true;

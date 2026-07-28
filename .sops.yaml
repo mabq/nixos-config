@@ -1,0 +1,25 @@
+# This file is read by the `sops` CLI command to know which public key to
+# use to encrypt the files matching the paths below.
+keys:
+  - &mabq age120tq73mkdzyjaq544rs9cqkedetzg6y8tu763ax03zvprg8emq5qnd2az2
+  # - &juanmar age1...
+  # - &josema age1...
+  # - &admin age1...
+
+# Each user should have its own secrets file.
+creation_rules:
+  - path_regex: secrets/mabq.yaml$
+    key_groups:
+      - age:
+          - *mabq
+          # - *admin # uncomment to allow admin to also encrypt/decrypt files here
+
+  # - path_regex: secrets/juanmar.yaml$
+  #   key_groups:
+  #     - age:
+  #         - *juanmar
+
+  # - path_regex: secrets/josema.yaml$
+  #   key_groups:
+  #     - age:
+  #         - *josema
