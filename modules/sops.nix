@@ -5,10 +5,10 @@
   user,
   ...
 }:
-
 {
   imports = [
     inputs.sops-nix.nixosModules.sops
+    # inputs.sops-nix.homeManagerModules.sops
   ];
 
   home-manager = {
@@ -19,12 +19,10 @@
   };
 
   sops = {
-    # Point sops-nix to your encrypted file and host SSH key
     defaultSopsFile = ../secrets/${user}.yaml;
-
-    # Specify the path to your standalone age private key
     age.keyFile = "/home/${user}/.config/sops/age/keys.txt";
-
-    secrets.tailscale_auth_key = { };
+    secrets = {
+      tailscale_auth_key = { };
+    };
   };
 }

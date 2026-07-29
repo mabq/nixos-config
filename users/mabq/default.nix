@@ -5,7 +5,7 @@
     # accounts into the `users` group.
     # group = "${user}";
 
-    # Members of the `wheel` group can execute `sudo` without password.
+    # Members of the `wheel` group can execute `sudo` without password
     extraGroups = [ "wheel" ];
 
     # Use `mkpasswd -m sha-512` to create a passwork hash.

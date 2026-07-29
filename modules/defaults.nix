@@ -45,9 +45,16 @@ with lib;
 
   users = {
     mutableUsers = mkDefault false; # no imperative changes
-    users.${user} = {
-      isNormalUser = mkDefault true;
-      home = mkDefault "/home/${user}";
+    users = {
+      ${user} = {
+        isNormalUser = mkDefault true;
+        home = mkDefault "/home/${user}";
+      };
+      root = {
+        openssh.authorizedKeys.keys = [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINjOlPls0gNkjBTOvXIbmm7HbSUOHM+erfwE4tdNVMLn"
+        ];
+      };
     };
   };
 

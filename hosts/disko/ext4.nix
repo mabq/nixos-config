@@ -1,5 +1,3 @@
-# This will configure fileSystems and other required NixOS options to boot the
-# specified configuration.
 {
   disko.devices = {
     disk = {
@@ -21,7 +19,7 @@
                 type = "filesystem";
                 format = "vfat";
                 mountpoint = "/boot";
-                mountOptions = [ "umask=0077" ];
+                mountOptions = [ "umask=0077" ]; # readable only by root
               };
             };
             root = {

@@ -1,4 +1,3 @@
-# Encryption password is prompted at installation
 { lib, ... }:
 {
   disko = {
@@ -40,3 +39,13 @@
     };
   };
 }
+
+/*
+  Encryption password is prompted at installation.
+
+  TRIM/discard tells an SSD which blocks are no longer in use so the drive can
+  reclaim them (better performance + longevity). On encrypted or layered
+  storage (LUKS, LVM, etc.), discards are disabled by default because they can
+  leak information about which blocks are free. allowDiscards explicitly opts
+  in to letting those commands through.
+*/
