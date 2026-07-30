@@ -99,10 +99,7 @@ with lib;
     secrets = {
       # Each secret ends up in its own file in `/run/secrets/` and can be
       # referenced with `config.sops.secrets.<name>.path`
-      tailscale_auth_key = {
-        # Needed early during boot if other network services depend on Tailscale
-        neededFor = "services";
-      };
+      tailscale_auth_key = { };
     };
   };
 
