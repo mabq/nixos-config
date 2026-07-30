@@ -13,6 +13,8 @@ with lib;
 {
   imports = [
     inputs.home-manager.nixosModules.home-manager
+    inputs.sops-nix.nixosModules.sops
+    # inputs.sops-nix.homeManagerModules.sops
   ];
 
   # ----------------------------------------------------------------------------
@@ -54,8 +56,7 @@ with lib;
       };
       root = {
         openssh.authorizedKeys.keys = [
-          # mabq public key
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINjOlPls0gNkjBTOvXIbmm7HbSUOHM+erfwE4tdNVMLn"
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINjOlPls0gNkjBTOvXIbmm7HbSUOHM+erfwE4tdNVMLn" # mabq
         ];
       };
     };
@@ -80,8 +81,25 @@ with lib;
       packages = with pkgs; [
         # Required by all users
         just # Handy way to save and run project-specific commands
+        sops # Simple and flexible tool for managing secrets
+        age # Modern encryption tool with small explicit keys
       ];
       stateVersion = mkDefault stateVersion; # see notes at the bottom
+    };
+  };
+
+  # ----------------------------------------------------------------------------
+  # Sops
+  # ----------------------------------------------------------------------------
+
+  sops = {
+    defaultSopsFile = ../users/${user}/secrets.yaml;
+    # Decrypted private key — must be in place when building the system!
+    age.keyFile = "/home/${user}/.config/sops/age/keys.txt";
+    secrets = {
+      # Each secret ends up in its own file in `/run/secrets/` and can be
+      # referenced with `config.sops.secrets.<name>.path`
+      tailscale_auth_key = { }; # must exist in the defaultSopsFile
     };
   };
 

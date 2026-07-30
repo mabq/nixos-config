@@ -16,7 +16,7 @@
 
         file = {
           ".config/git/config" = {
-            source = mkOutOfStoreSymlink "${repoDir}/users/${user}/config/.gitconfig";
+            source = mkOutOfStoreSymlink "${repoDir}/users/${user}/.gitconfig";
             force = true;
           };
           ".config/lazygit/config.yml" = {
