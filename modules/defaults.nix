@@ -111,9 +111,9 @@ with lib;
       extraSetFlags = [
         # see https://tailscale.com/docs/reference/tailscale-cli/up
         # "--accept-dns"
-        "--accept-routes"
-        "--hostname=${config.networking.hostName}"
-        "--ssh"
+        # "--accept-routes"
+        # "--hostname=${config.networking.hostName}"
+        # "--ssh"
       ];
     };
 
