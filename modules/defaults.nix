@@ -125,7 +125,7 @@ with lib;
   services = {
     tailscale = {
       enable = mkDefault true; # authenticate with `sudo tailscale up`
-      authKeyFile = config.sops.secrets.tailscale_auth_key.path;
+      # authKeyFile = config.sops.secrets.tailscale_auth_key.path;
       # extraSetFlags = [
       #   # see https://tailscale.com/docs/reference/tailscale-cli/up
       #   # "--accept-dns"
