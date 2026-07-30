@@ -7,7 +7,7 @@
   user,
   profile,
   stateVersion,
-  theme ? "catppuccin", # Must be one in `/themes`
+  theme ? "catppuccin", # must be one in `/themes`
 }:
 let
   repoDir = "/home/${user}/.local/share/nixos-config"; # `mkOutOfStoreSymlink` requires absolute paths
@@ -28,8 +28,6 @@ in
 inputs.nixpkgs.lib.nixosSystem {
   inherit specialArgs; # 3
   modules = [
-    inputs.disko.nixosModules.disko
-    inputs.home-manager.nixosModules.home-manager
     # { home-manager.extraSpecialArgs = specialArgs; }
     ../modules/defaults.nix
     ../hosts/${host}.nix

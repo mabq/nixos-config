@@ -1,5 +1,9 @@
 { user, ... }:
 {
+  imports = [
+    ../../modules/sops.nix
+  ];
+
   users.users.${user} = {
     # NixOS does not create a group after each user name, it groups all human
     # accounts into the `users` group.
