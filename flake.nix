@@ -31,7 +31,7 @@
       nixosConfigurations = {
         # [4]
         "xps-plex" = mkSystem {
-          host = "xps";
+          host = "xps-plex";
           user = "mabq";
           profile = "plex-server";
           stateVersion = "26.05";

@@ -4,6 +4,7 @@
   config,
   lib,
   pkgs,
+  host,
   user,
   stateVersion,
   ...
@@ -130,7 +131,7 @@ with lib;
   # ----------------------------------------------------------------------------
 
   networking = {
-    hostName = mkDefault "nixos"; # override on host file
+    hostName = mkDefault host; # override on host file
     firewall.enable = mkDefault true; # tailscale can go through
   };
 
