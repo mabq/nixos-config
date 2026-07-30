@@ -8,7 +8,7 @@ keys:
 
 # Each user should have its own secrets file.
 creation_rules:
-  - path_regex: secrets/mabq.yaml$
+  - path_regex: users/mabq/secrets.yaml$
     key_groups:
       - age:
           - *mabq

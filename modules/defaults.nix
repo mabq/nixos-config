@@ -93,13 +93,16 @@ with lib;
   # ----------------------------------------------------------------------------
 
   sops = {
-    defaultSopsFile = ../users/${user}/secrets.yaml;
     # Decrypted private key — must be in place when building the system!
     age.keyFile = "/home/${user}/.config/sops/age/keys.txt";
+    defaultSopsFile = ../users/${user}/secrets.yaml;
     secrets = {
       # Each secret ends up in its own file in `/run/secrets/` and can be
       # referenced with `config.sops.secrets.<name>.path`
-      tailscale_auth_key = { }; # must exist in the defaultSopsFile
+      tailscale_auth_key = {
+        # Needed early during boot if other network services depend on Tailscale
+        neededFor = "services";
+      };
     };
   };
 
@@ -125,14 +128,14 @@ with lib;
   services = {
     tailscale = {
       enable = mkDefault true; # authenticate with `sudo tailscale up`
-      # authKeyFile = config.sops.secrets.tailscale_auth_key.path;
-      # extraSetFlags = [
-      #   # see https://tailscale.com/docs/reference/tailscale-cli/up
-      #   # "--accept-dns"
-      #   "--accept-routes"
-      #   "--hostname=${config.networking.hostName}"
-      #   "--ssh"
-      # ];
+      authKeyFile = config.sops.secrets."tailscale_auth_key".path;
+      extraUpFlags = [
+        # see https://tailscale.com/docs/reference/tailscale-cli/up
+        # "--accept-dns"
+        # "--accept-routes"
+        "--hostname=${config.networking.hostName}"
+        "--ssh"
+      ];
     };
 
     openssh = {
