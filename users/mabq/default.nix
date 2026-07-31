@@ -7,6 +7,7 @@
 }:
 {
   imports = [
+    # inputs.sops-nix.nixosModules.sops
     inputs.sops-nix.nixosModules.sops
   ];
 
@@ -46,7 +47,7 @@
       };
       "ssh_private_key" = {
         # Create the file with the right permissions
-        path = "/home/${user}/.ssh/id_ed25519";
+        # path = "/home/${user}/.ssh/id_ed25519";
         mode = "0600";
         owner = "${user}";
         group = "users";
@@ -67,4 +68,20 @@
       ];
     };
   };
+
+  home-manager.users.${user} =
+    { config, ... }:
+    let
+      mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
+    in
+    {
+      home = {
+        file = {
+          ".ssh/id_ed25519" = {
+            source = mkOutOfStoreSymlink config.sops.secrets."ssh_private_key".path;
+            force = true;
+          };
+        };
+      };
+    };
 }
