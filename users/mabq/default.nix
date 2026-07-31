@@ -58,7 +58,7 @@
     tailscale = {
       enable = true;
       authKeyFile = config.sops.secrets."tailscale_auth_key".path;
-      extraSetFlags = [
+      extraUpFlags = [
         # https://tailscale.com/docs/reference/tailscale-cli/up
         # "--accept-dns"
         # "--accept-routes"

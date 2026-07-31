@@ -102,7 +102,7 @@ with lib;
       enable = mkDefault true;
       settings = {
         PermitRootLogin = mkDefault "no"; # Never!
-        # Use ssh keys of Tailscale SSH — override in profile file if needed.
+        # Use ssh keys or Tailscale SSH — override in profile file if needed.
         PasswordAuthentication = mkDefault false;
       };
     };
