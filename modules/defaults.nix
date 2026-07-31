@@ -1,7 +1,6 @@
 # These are used as defaults for all systems — use `mkDefault`!
 {
   inputs,
-  config,
   lib,
   pkgs,
   host,
@@ -13,8 +12,6 @@ with lib;
 {
   imports = [
     inputs.home-manager.nixosModules.home-manager
-    inputs.sops-nix.nixosModules.sops
-    # inputs.sops-nix.homeManagerModules.sops
   ];
 
   # ----------------------------------------------------------------------------
@@ -49,16 +46,9 @@ with lib;
 
   users = {
     mutableUsers = mkDefault false; # no imperative changes
-    users = {
-      ${user} = {
-        isNormalUser = mkDefault true;
-        home = mkDefault "/home/${user}";
-      };
-      root = {
-        openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINjOlPls0gNkjBTOvXIbmm7HbSUOHM+erfwE4tdNVMLn" # mabq
-        ];
-      };
+    users.${user} = {
+      isNormalUser = mkDefault true;
+      home = mkDefault "/home/${user}";
     };
   };
 
@@ -79,27 +69,12 @@ with lib;
       username = mkDefault user;
       homeDirectory = mkDefault "/home/${user}";
       packages = with pkgs; [
-        # Required by all users
+        # Required by all configurations
         just # Handy way to save and run project-specific commands
-        sops # Simple and flexible tool for managing secrets
         age # Modern encryption tool with small explicit keys
+        sops # Simple and flexible tool for managing secrets
       ];
       stateVersion = mkDefault stateVersion; # see notes at the bottom
-    };
-  };
-
-  # ----------------------------------------------------------------------------
-  # Sops
-  # ----------------------------------------------------------------------------
-
-  sops = {
-    # Decrypted private key — must be in place when building the system!
-    age.keyFile = "/home/${user}/.config/sops/age/keys.txt";
-    defaultSopsFile = ../users/${user}/secrets.yaml;
-    secrets = {
-      # Each secret ends up in its own file in `/run/secrets/` and can be
-      # referenced with `config.sops.secrets.<name>.path`
-      tailscale_auth_key = { };
     };
   };
 
@@ -107,7 +82,7 @@ with lib;
   # Security
   # ----------------------------------------------------------------------------
 
-  # No password on sudo actions for members of `wheel`
+  # No password when escalating privileges for members of the `wheel` group.
   security.sudo.wheelNeedsPassword = mkDefault false;
 
   # ----------------------------------------------------------------------------
@@ -119,29 +94,20 @@ with lib;
   };
 
   # ----------------------------------------------------------------------------
-  # OpenSSH and Tailscale
+  # Services
   # ----------------------------------------------------------------------------
 
   services = {
-    tailscale = {
-      enable = mkDefault true; # authenticate with `sudo tailscale up`
-      authKeyFile = config.sops.secrets."tailscale_auth_key".path;
-      extraUpFlags = [
-        # see https://tailscale.com/docs/reference/tailscale-cli/up
-        # "--accept-dns"
-        # "--accept-routes"
-        "--hostname=${config.networking.hostName}"
-        "--ssh"
-      ];
-    };
-
     openssh = {
       enable = mkDefault true;
       settings = {
-        PermitRootLogin = mkDefault "no"; # never!
-        PasswordAuthentication = mkDefault false; # ssh keys or Tailscale only!
+        PermitRootLogin = mkDefault "no"; # Never!
+        # Use ssh keys of Tailscale SSH — override in profile file if needed.
+        PasswordAuthentication = mkDefault false;
       };
     };
+
+    tzupdate.enable = mkDefault true; # update timezone automatically
   };
 
   # ----------------------------------------------------------------------------
@@ -158,7 +124,6 @@ with lib;
   # ----------------------------------------------------------------------------
 
   time.timeZone = mkDefault "America/Guayaquil"; # override in host file
-  services.tzupdate.enable = mkDefault true; # update timezone automatically
 
   i18n = {
     defaultLocale = mkDefault "en_US.UTF-8";

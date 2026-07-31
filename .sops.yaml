@@ -1,5 +1,5 @@
-# This file is read by the `sops` CLI command to know which public key to
-# use to encrypt the files matching the paths below.
+# This file is read by the `sops` CLI command to know which public key to use
+# to encrypt the files matching the paths below.
 keys:
   - &mabq age120tq73mkdzyjaq544rs9cqkedetzg6y8tu763ax03zvprg8emq5qnd2az2
   # - &juanmar age1...
