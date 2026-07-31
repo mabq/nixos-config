@@ -13,12 +13,12 @@
 
     disko = {
       url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs"; # [3]
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     sops-nix = {
       url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs"; # [3]
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -45,8 +45,9 @@
 
   The main nixpkgs branch to be used by this flake.
 
-  `nixos-unstable` advances after NixOS tests pass. More stable for NixOS
-  systems.
+  `nixos-unstable` advances after NixOS integration tests pass — recommended
+  when using NixOS. If you want an even more stable branch use the last version
+  available.
 
   `nixpkgs-unstable` advances after package builds succeed (no full NixOS
   integration tests).
@@ -66,26 +67,17 @@
 
   [3]
 
-  Force the input flake to use the nixpkgs branch used by this flake.
+  Force the input flake to use the same nixpkgs branch used by this flake.
 
-  This is recommended for most flake inputs, but that is now always the case.
+  This is recommended for most input flakes, but that is now always the case.
   Ask AI whether you should do this for any new input flakes you add.
 
   [4]
 
-  Our nixos configuration names. You pass one of these to:
+  The nixosConfiguration name is only used by the cli command targeting the
+  configuration, for example:
 
-    `sudo nixos-rebuild --flake .#<NIXOS-CONFIGURATION-NAME>`
+    `sudo nixos-rebuild --flake .#<CONFIGURATION-NAME>`
 
-  If no nixos configuration name is passed, nix will try to match one with the
-  value of the current `hostname`.
-
-  Unfortunately, it is not possible to grab the key value on the RHS of the
-  expression, so we need to type the same value on both sides.
-
-  [5]
-
-  Must match a filename in `/hardware`.
-
-  Do not reuse hardware files!, read ./notes/hardware-files.md
+  The attributes, on the other hand, are used to target configuration files.
 */

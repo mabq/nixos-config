@@ -98,6 +98,8 @@ with lib;
   # ----------------------------------------------------------------------------
 
   services = {
+    tailscale.enable = mkDefault true; # automated login in user's file
+
     openssh = {
       enable = mkDefault true;
       settings = {

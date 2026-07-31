@@ -55,18 +55,15 @@
     };
   };
 
-  services = {
-    tailscale = {
-      enable = true;
-      authKeyFile = config.sops.secrets."tailscale_auth_key".path;
-      extraUpFlags = [
-        # https://tailscale.com/docs/reference/tailscale-cli/up
-        # "--accept-dns"
-        # "--accept-routes"
-        "--hostname=${host}"
-        # "--ssh"
-      ];
-    };
+  services.tailscale = {
+    authKeyFile = config.sops.secrets."tailscale_auth_key".path;
+    extraUpFlags = [
+      # https://tailscale.com/docs/reference/tailscale-cli/up
+      "--hostname=${host}"
+      "--accept-dns"
+      "--accept-routes"
+      # "--ssh"
+    ];
   };
 
 }

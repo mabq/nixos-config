@@ -7,10 +7,10 @@
   user,
   profile,
   stateVersion,
-  theme ? "catppuccin", # must be one in `/themes`
+  theme ? "catppuccin",
 }:
 let
-  repoDir = "/home/${user}/.local/share/nixos-config"; # `mkOutOfStoreSymlink` requires absolute paths
+  repoDir = "/home/${user}/.local/share/nixos-config"; # [1]
 
   specialArgs = {
     inherit
@@ -26,7 +26,7 @@ let
   };
 in
 inputs.nixpkgs.lib.nixosSystem {
-  inherit specialArgs; # 3
+  inherit specialArgs; # [2]
   modules = [
     # { home-manager.extraSpecialArgs = specialArgs; }
     ../modules/defaults.nix
@@ -37,18 +37,16 @@ inputs.nixpkgs.lib.nixosSystem {
 }
 
 /*
-  1. If you ever decide to change the name of the repository, update this
-     variable, everything should work.
+  [1]
 
-  2. This is the path where you need to clone the repository.
-     The variable is used to create OutOfStore symlinks pointing to the cloned
-     repository files.
-     Must be an absolute path because symlinks do not expand things like `$HOME`
-     or `~`.
-     If you ever decide to clone the repository somewhere else, update this
-     variable, it should update everything automatically.
+  This is the path where you need to clone the flake repository.
 
-  3. Must use `specialArgs`, `_module.args` causes infinite recursion when any of
-     the passed arguments is used in the `imports` section of other modules.
-     https://nixos-and-flakes.thiscute.world/nixos-with-flakes/nixos-flake-and-module-system#pass-non-default-parameters-to-submodules
+  Symlinks require absolute paths — used by `mkOutOfStoreSymlink` accross many
+  modules.
+
+  [2]
+
+  Must be `specialArgs` — `_module.args` causes infinite recursion when any of
+  the these arguments is used in the `imports` section of a module.
+  https://nixos-and-flakes.thiscute.world/nixos-with-flakes/nixos-flake-and-module-system#pass-non-default-parameters-to-submodules
 */
