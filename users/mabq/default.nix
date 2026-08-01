@@ -1,8 +1,7 @@
 {
-  inputs,
   config,
+  inputs,
   user,
-  host,
   ...
 }:
 {
@@ -28,10 +27,9 @@
   };
 
   sops = {
-    # ⚠️ IMPORTANT
-    # This file contains the decrypted private key. It must be present for the
-    # execution of the flake to succeed!. Make sure it never ends in a public
-    # repository and is only readable by this user.
+    # ⚠️ IMPORTANT! This file needs to be present before executing the flake.
+    # It contains the private key required to decrypt user secrets. Make sure
+    # it never ends in a public repository and is only readable by this user.
     age.keyFile = "/home/${user}/.config/sops/age/keys.txt";
 
     # The file containing the secrets. Can only be edited with the `sops`
@@ -40,15 +38,16 @@
 
     secrets = {
       "tailscale_auth_key" = {
-        # If you don't explicitly set `path`, sops-nix places the decrypted
-        # file in `/run/secrets/<name>` (a RAM-backed tmpfs). You can reference
-        # the path dynamically anywhere in your configuration with
-        # `config.sops.secrets."name".path` (see below)
+        # path = "";
+        # When no explicit `path` is set, sops-nix places the decrypted file in
+        # `/run/secrets/<name>` (a RAM-backed tmpfs). You can reference the
+        # path dynamically anywhere in your configuration with
+        # `config.sops.secrets."name".path` (see below).
       };
       "ssh_private_key" = {
         # Create the file with the right permissions
         path = "/home/${user}/.ssh/id_ed25519";
-        mode = "0600";
+        mode = "0400";
         owner = "${user}";
         group = "users";
       };
@@ -56,10 +55,11 @@
   };
 
   services.tailscale = {
+    enable = true;
     authKeyFile = config.sops.secrets."tailscale_auth_key".path;
     extraUpFlags = [
       # https://tailscale.com/docs/reference/tailscale-cli/up
-      "--hostname=${host}"
+      "--hostname=${config.networking.hostName}"
       "--accept-dns"
       "--accept-routes"
       # "--ssh"

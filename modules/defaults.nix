@@ -98,14 +98,13 @@ with lib;
   # ----------------------------------------------------------------------------
 
   services = {
-    tailscale.enable = mkDefault true; # automated login in user's file
+    tailscale.enable = mkDefault true; # auth manually or in user's config file
 
     openssh = {
       enable = mkDefault true;
       settings = {
         PermitRootLogin = mkDefault "no"; # Never!
-        # Use ssh keys or Tailscale SSH — override in profile file if needed.
-        PasswordAuthentication = mkDefault false;
+        PasswordAuthentication = mkDefault false; # Auth via SSH keys or Tailscale SSH
       };
     };
 
