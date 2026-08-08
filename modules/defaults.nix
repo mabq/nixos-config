@@ -104,7 +104,7 @@ with lib;
       enable = mkDefault true;
       settings = {
         PermitRootLogin = mkDefault "no"; # Never!
-        PasswordAuthentication = mkDefault false; # Auth via SSH keys or Tailscale SSH
+        PasswordAuthentication = mkDefault false; # use ssh keys or Tailscale SSH
       };
     };
 

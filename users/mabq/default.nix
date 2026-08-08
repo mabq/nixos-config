@@ -58,11 +58,16 @@
     enable = true;
     authKeyFile = config.sops.secrets."tailscale_auth_key".path;
     extraUpFlags = [
-      # https://tailscale.com/docs/reference/tailscale-cli/up
-      "--hostname=${config.networking.hostName}"
+      # up — https://tailscale.com/docs/reference/tailscale-cli#up
+      "--hostname=${config.networking.hostName}" # magic-dns name
+      # These settings are secure since we own the Tailnet, do not
+      # enable these for Tailnets you do not own.
       "--accept-dns"
       "--accept-routes"
-      # "--ssh"
+      "--ssh"
+    ];
+    extraSetFlags = [
+      # set — https://tailscale.com/docs/reference/tailscale-cli#set
     ];
   };
 
