@@ -1,6 +1,5 @@
 # This file is used by `sops` to map the matching file to a public key for encryption.
 
-# Public keys
 keys:
   - &mabq age120tq73mkdzyjaq544rs9cqkedetzg6y8tu763ax03zvprg8emq5qnd2az2
   # - &jmsb age1...

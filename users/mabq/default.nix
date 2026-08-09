@@ -27,24 +27,31 @@
   };
 
   sops = {
-    # ⚠️ IMPORTANT! This file needs to be present before executing the flake.
-    # It contains the private key required to decrypt user secrets. Make sure
-    # it never ends in a public repository and is only readable by this user.
+    # IMPORTANT!
+    # This file needs to be present before executing the flake. It should
+    # contain the decrypted version of `./keys.txt.age`. Without this file in
+    # place sops-nix won't be able to decrypt secrets and will throw an error.
+    # Make sure this file never ends in a public repository and is only
+    # readable by this user.
     age.keyFile = "/home/${user}/.config/sops/age/keys.txt";
 
     # The file containing the secrets. Can only be edited with the `sops`
-    # command, which also expects to find the private key in the path above.
+    # command, which also expects to find the private key above.
+    # If you ever change the location of this file, update `.sops.yaml` at the
+    # root of the flake.
     defaultSopsFile = ./secrets.yaml;
 
+    # Decrypt secrets. Secret names must match the ones in the secrets file.
     secrets = {
-      "tailscale_auth_key" = {
+      # HERE!!! The mabq.github tailnet is owned by me so only I should be
+      # able to decrypt the auth keys.
+      "mabq_tailscale_sharedTag_authKey" = {
         # path = "";
         # When no explicit `path` is set, sops-nix places the decrypted file in
         # `/run/secrets/<name>` (a RAM-backed tmpfs). You can reference the
-        # path dynamically anywhere in your configuration with
-        # `config.sops.secrets."name".path` (see below).
+        # path dynamically anywhere with `config.sops.secrets."<name>".path`.
       };
-      "ssh_private_key" = {
+      "mabq_ssh_private_key" = {
         # Create the file with the right permissions
         path = "/home/${user}/.ssh/id_ed25519";
         mode = "0400";
@@ -53,22 +60,4 @@
       };
     };
   };
-
-  services.tailscale = {
-    enable = true;
-    authKeyFile = config.sops.secrets."tailscale_auth_key".path;
-    extraUpFlags = [
-      # up — https://tailscale.com/docs/reference/tailscale-cli#up
-      "--hostname=${config.networking.hostName}" # magic-dns name
-      # These settings are secure since we own the Tailnet, do not
-      # enable these for Tailnets you do not own.
-      "--accept-dns"
-      "--accept-routes"
-      "--ssh"
-    ];
-    extraSetFlags = [
-      # set — https://tailscale.com/docs/reference/tailscale-cli#set
-    ];
-  };
-
 }
