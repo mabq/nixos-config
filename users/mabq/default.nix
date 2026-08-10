@@ -1,12 +1,6 @@
-{
-  config,
-  inputs,
-  user,
-  ...
-}:
+{ inputs, user, ... }:
 {
   imports = [
-    # inputs.sops-nix.nixosModules.sops
     inputs.sops-nix.nixosModules.sops
   ];
 
@@ -27,31 +21,33 @@
   };
 
   sops = {
-    # IMPORTANT!
-    # This file needs to be present before executing the flake. It should
-    # contain the decrypted version of `./keys.txt.age`. Without this file in
-    # place sops-nix won't be able to decrypt secrets and will throw an error.
-    # Make sure this file never ends in a public repository and is only
-    # readable by this user.
+    # Decrypted private key file 🔥
+    # Needs to be present before executing the flake. Without it sops-nix won't
+    # be able to decrypt secrets and will throw an error. Make sure the
+    # decrypted file never ends in a public repository and is only readable by
+    # this user.
     age.keyFile = "/home/${user}/.config/sops/age/keys.txt";
 
-    # The file containing the secrets. Can only be edited with the `sops`
-    # command, which also expects to find the private key above.
-    # If you ever change the location of this file, update `.sops.yaml` at the
-    # root of the flake.
+    # The file containing the secrets.
+    # Can only be edited with the `sops` command, which also expects to find
+    # the private key above. If you ever change the location of this file,
+    # update `.sops.yaml` at the root of the flake as well.
     defaultSopsFile = ./secrets.yaml;
 
-    # Decrypt secrets. Secret names must match the ones in the secrets file.
+    # Decrypt secrets.
+    # Attribute names come from keys in the `secrets.yaml` file.
     secrets = {
-      # HERE!!! The mabq.github tailnet is owned by me so only I should be
-      # able to decrypt the auth keys.
-      "mabq_tailscale_sharedTag_authKey" = {
-        # path = "";
+      # Tailscale auth keys are decrypted here (because this users owns the
+      # Tailnet) but used in per-host files because different hosts have
+      # different roles in the Tailnet.
+      "tailscale_mabq_sharedTagKey" = {
         # When no explicit `path` is set, sops-nix places the decrypted file in
         # `/run/secrets/<name>` (a RAM-backed tmpfs). You can reference the
-        # path dynamically anywhere with `config.sops.secrets."<name>".path`.
+        # path anywhere with `config.sops.secrets."<name>".path`
+        # path = "";
       };
-      "mabq_ssh_private_key" = {
+      "tailscale_mabq_adminKey" = { };
+      "ssh_private_key" = {
         # Create the file with the right permissions
         path = "/home/${user}/.ssh/id_ed25519";
         mode = "0400";
