@@ -34,16 +34,12 @@ in
     authKeyFile = config.sops.secrets."tailscale_mabq_sharedTagKey".path;
     extraUpFlags = [
       # Flags passed to the `up` command instruct the Tailscale local client
-      # about what features you want to enable for the machine. These must be
+      # about what features you want to enable for this machine. These must be
       # set on per-host basis since different machines might need to enable
       # different features.
       #
       # For information about flags that can be passed to the `up` command, read:
       #  https://tailscale.com/docs/reference/tailscale-cli#up
-      "--hostname=${config.networking.hostName}"
-      # "--accept-dns"
-      # "--accept-routes"
-      "--ssh"
     ];
     extraSetFlags = [
       # Flags passed to the `set` command change any settings for the client
@@ -51,6 +47,10 @@ in
       #
       # For information about flags that can be passed to the `set` command, read:
       #  https://tailscale.com/docs/reference/tailscale-cli#set
+      "--hostname=${config.networking.hostName}"
+      # "--accept-dns"
+      # "--accept-routes"
+      "--ssh"
     ];
   };
 }
