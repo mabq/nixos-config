@@ -11,16 +11,6 @@ let
 in
 {
   options = {
-
-    my.user = lib.mkOption {
-      # Must be a string matching a directory name in `/themes`
-      type = lib.types.enum validThemeNames;
-      default = "catppuccin";
-      description = ''
-        Must be one of: ${lib.strings.concatStringsSep ", " validThemeNames}
-      '';
-    };
-
     my.theme = lib.mkOption {
       # Must be a string matching a directory name in `/themes`
       type = lib.types.enum validThemeNames;

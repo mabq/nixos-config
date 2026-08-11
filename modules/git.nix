@@ -9,7 +9,7 @@
       home = {
         packages = with pkgs; [
           delta # Syntax-highlighting pager for git
-          gh # GitHub CLI tool
+          gh # CLI GitHub tool (authenticate from the terminal)
           git # Distributed version control system
           lazygit # Simple terminal UI for git commands
         ];

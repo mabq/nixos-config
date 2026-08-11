@@ -4,6 +4,10 @@
   ...
 }:
 {
+  imports = [
+    ../modules/theme-files.nix
+  ];
+
   home-manager.users.${user} =
     { pkgs, config, ... }:
     let
