@@ -40,13 +40,16 @@
       # Tailscale auth keys are decrypted here (because this users owns the
       # Tailnet) but used in per-host files because different hosts have
       # different roles in the Tailnet.
+      #
+      # When no explicit `path` is set, sops-nix places the decrypted file in
+      # `/run/secrets/<name>` (a RAM-backed tmpfs). You can reference the
+      # path anywhere with `config.sops.secrets."<name>".path`
       "tailscale_mabq_sharedTagKey" = {
-        # When no explicit `path` is set, sops-nix places the decrypted file in
-        # `/run/secrets/<name>` (a RAM-backed tmpfs). You can reference the
-        # path anywhere with `config.sops.secrets."<name>".path`
         # path = "";
       };
-      "tailscale_mabq_adminKey" = { };
+      "tailscale_mabq_adminKey" = {
+        # path = "";
+      };
       "ssh_private_key" = {
         # Create the file with the right permissions
         path = "/home/${user}/.ssh/id_ed25519";

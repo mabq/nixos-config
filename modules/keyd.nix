@@ -1,4 +1,4 @@
-# Read the README file in the configuration files!
+# README file in configuration files
 {
   lib,
   pkgs,
@@ -17,7 +17,7 @@
     ];
 
     # Keyd config files are system-level — `mkOutOfStoreSymlink` is a
-    # home-manager function (cannot use it here).
+    # home-manager function that cannot be used here.
     etc."keyd".source = lib.mkDefault ../config/keyd;
   };
 }
