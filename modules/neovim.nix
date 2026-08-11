@@ -21,6 +21,7 @@
           tree-sitter # Parser generator tool and an incremental parsing library
           curl # Command line tool for transferring files with URL syntax (!Treesitter)
           gnutar # GNU implementation of the `tar` archiver (!Treesitter)
+          gcc # GNU Compiler Collection (!Treesitter)
 
           fd # Simple, fast and user-friendly alternative to find (!Telescope find_files)
           ripgrep # Utility that combines the usability of The Silver Searcher with the raw speed of grep (!Telescope live_grep)

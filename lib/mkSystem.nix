@@ -41,7 +41,7 @@ inputs.nixpkgs.lib.nixosSystem {
 
   This is the path where you need to clone the flake repository.
 
-  Symlinks require absolute paths — used by `mkOutOfStoreSymlink` accross many
+  Symlinks require absolute paths. Used by `mkOutOfStoreSymlink` accross many
   modules.
 
   [2]
