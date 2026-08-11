@@ -17,6 +17,13 @@ with lib;
 
   # Only members of the `networkmanager` group can use `nmtui` or `nmcli`
   users.users.${user}.extraGroups = [ "networkmanager" ];
+
+  # Install some packages with HomeManager
+  home-manager.users.${user} = {
+    home.packages = with pkgs; [
+      dig # Domain name server (provides the `nslookup` command to check DNS)
+    ];
+  };
 }
 
 /*

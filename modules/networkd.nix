@@ -188,8 +188,13 @@ with lib;
   # The user must be a member of the `wheel` group to manage iwd [2]
   users.users.${user}.extraGroups = [ "wheel" ];
 
-  # Impala provides a TUI interface for iwd [3]
-  environment.systemPackages = [ pkgs.impala ];
+  # Install some packages with HomeManager
+  home-manager.users.${user} = {
+    home.packages = with pkgs; [
+      impala # TUI for managing wifi
+      dig # Domain name server (provides the `nslookup` command to check DNS)
+    ];
+  };
 
   # [1] https://wiki.archlinux.org/title/Iwd
   # [2] https://wiki.archlinux.org/title/Iwd#Usage
