@@ -151,7 +151,7 @@ with lib;
       # This does not affect queries of domain names that match the more
       # specific search domains specified in per-link configuration, they will
       # still be resolved using their respective per-link DNS servers.
-      Domains = mkDefault "~.";
+      # Domains = mkDefault "~.";
 
       # Encrypt DNS queries whenever possible [2]. Fallback to unencrypted
       # queries if the DNS server does not support it to avoid DNS resolution
