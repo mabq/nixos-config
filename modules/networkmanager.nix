@@ -1,6 +1,7 @@
 # Import this module if you want to use NetworkManager.
 {
   lib,
+  pkgs,
   user,
   ...
 }:
