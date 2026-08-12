@@ -6,7 +6,7 @@
 }:
 {
   imports = [
-    ../modules/networkmanager.nix
+    ../modules/networkd.nix
     ../modules/git.nix
     ../modules/keyd.nix
     ../modules/neovim.nix
@@ -25,8 +25,7 @@
     # https://tailscale.com/docs/reference/tailscale-cli#set
     extraSetFlags = [
       "--hostname=${config.networking.hostName}"
-      # Let the system use Tailscale DNS servers
-      "--accept-dns"
+      # "--accept-dns" # No need, using systemd-networkd
       # "--accept-routes"
       "--ssh"
     ];

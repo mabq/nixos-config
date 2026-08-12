@@ -35,19 +35,8 @@ with lib;
   to [2] when you rebuild the system.
 
   If you wish to use custom DNS servers, configure those manually with `nmtui`
-  or enable Tailscale to use its DNS settings. Mixing NetworkManager with
+  or let Tailscale override local DNS settings [8]. Mixing NetworkManager with
   systemd-resolved is not ideal.
-
-  ---
-
-  When using ssh via Wi-FI you will notice some "hiccups", this happens because
-  NetworkManager periodically scans for nearby Wi-Fi networks to provide an
-  updated list for the GUI or to check if a "better" known network is available.
-  During a scan, the Wi-Fi card momentarily stops transmitting data to listen
-  to other channels. This causes a spike in latency (jitter), which makes an
-  interactive SSH session feel sluggish or "stuck" for a split second.
-
-  ---
 
   [1] `/etc/NetworkManager/system-connections/`
   [2] `/run/NetworkManager/`
@@ -56,4 +45,6 @@ with lib;
   [5] https://networkmanager.dev/docs/api/latest/settings-ipv4.html
   [6] `resolvectl status`
   [7] https://search.nixos.org/options?channel=unstable&query=networking.networkmanager
+  [8] https://tailscale.com/docs/reference/dns-in-tailscale?tab=linux#override-dns-servers
+      https://tailscale.com/docs/reference/tailscale-cli#up
 */

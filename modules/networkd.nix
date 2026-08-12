@@ -12,18 +12,18 @@ with lib;
   #  https://nixos.wiki/wiki/Systemd-networkd
   # ----------------------------------------------------------------------------
 
-  # Don't use this option. Is a compatibility mechanism which translates older
-  # `networking.*` options into networkd configurations. If you're writing
-  # native `systemd.network.networks` declarations, it's unnecessary.
-  # `networking.useNetworkd = true;`
+  # Disable facter network configurations.
+  hardware.facter.detected.dhcp.enable = false;
 
   # Disable the legacy scripted-networking DHCP client so nothing outside
   # networkd/resolved tries configure the network.
   networking.useDHCP = false;
   networking.dhcpcd.enable = false;
 
-  # Disable facter network configurations.
-  hardware.facter.detected.dhcp.enable = false;
+  # Don't use this option. Is a compatibility mechanism which translates older
+  # `networking.*` options into networkd configurations. If you're writing
+  # native `systemd.network.networks` declarations, it's unnecessary.
+  # `networking.useNetworkd = true;`
 
   # Increase log details for possible debugging.
   #  https://nixos.wiki/wiki/Systemd-networkd#Debugging
@@ -60,16 +60,19 @@ with lib;
         networkConfig = {
           # Start a DHCP Client for Addressing/Routing
           DHCP = mkDefault "yes";
+          # Prevent this interface from being used as a default DNS route.
+          DNSDefaultRoute = mkDefault false;
           # Accept Router Advertisements for Stateless IPv6 Autoconfiguraton (SLAAC)
           IPv6AcceptRA = mkDefault true;
           # Local names for printers and stuff
           MulticastDNS = mkDefault "yes";
-          # Prevent this interface from being used as a default DNS route.
-          DNSDefaultRoute = mkDefault false;
         };
         dhcpV4Config = {
-          # Prevent your local router's DHCP from pushing its own DNS servers
-          # into resolved.
+          # By default, when systemd-networkd receives a DNS server from DHCP,
+          # it assigns that DNS server to the physical network interface with a
+          # default wildcard routing scope (~.).
+          # We need to tell systemd-networkd to ignore DHCP-provided DNS
+          # servers on physical links.
           UseDNS = mkDefault false;
           # Prefer wired connections — lower values take precedence.
           RouteMetric = mkDefault 100;
@@ -90,9 +93,9 @@ with lib;
         linkConfig.RequiredForOnline = mkDefault "routable";
         networkConfig = {
           DHCP = mkDefault "yes";
+          DNSDefaultRoute = false;
           IPv6AcceptRA = mkDefault true;
           MulticastDNS = mkDefault "yes";
-          DNSDefaultRoute = false;
         };
         dhcpV4Config = {
           UseDNS = mkDefault false;
@@ -209,6 +212,9 @@ with lib;
 /*
   Systemd-networkd is ligher and faster than NetworkManager but has less features.
 
+  When to use:
+   https://nixos.wiki/wiki/Systemd-networkd#When_to_use
+
   It does not run background processes - e.g. it won't automatically switch to
   another Wi-Fi network, you need to do that manually.
 
@@ -238,10 +244,9 @@ with lib;
   Systemd-networkd offers full integration with systemd-resolved.
 
   Systemd-networkd configurations [1] take precedence over systemd-resolved
-  configurations [2]. This allows you to set per-link configurations.
-
-  We instruct systemd-networkd to inform systemd-resolved to ignore the
-  default DNS Servers received from the DHCP server (ISP router).
+  configurations [2]. This allows you to set per-link configurations. Thats why
+  we instruct systemd-networkd to inform systemd-resolved to ignore the default
+  DNS Servers received from the DHCP server (ISP router).
 
   [1] https://man.archlinux.org/man/systemd.network.5
   [2] https://man.archlinux.org/man/resolved.conf.5
@@ -261,9 +266,8 @@ with lib;
 
   ---
 
-  Tailscale lets you force any device in your tailnet to use your Tailnet DNS
-  settings instead of its local DNS settings.
+  To override DNS servers with Tailscale see:
 
-  [1] https://tailscale.com/docs/reference/dns-in-tailscale?tab=macos#override-dns-servers
-  [2] https://tailscale.com/blog/sisyphean-dns-client-linux
+  [1] https://tailscale.com/docs/reference/dns-in-tailscale?tab=linux#override-dns-servers
+  [2] https://tailscale.com/docs/reference/tailscale-cli#up
 */
