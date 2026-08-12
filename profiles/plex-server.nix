@@ -10,8 +10,8 @@
     ../modules/git.nix
     ../modules/keyd.nix
     ../modules/neovim.nix
-    # ../modules/starship.nix
     ../modules/tmux.nix
+    # ../modules/starship.nix
   ];
 
   services.tailscale = {

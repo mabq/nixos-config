@@ -1,4 +1,3 @@
-# usage: just rebuild config
 xps:
   sudo nixos-rebuild --verbose switch --flake ~/.local/share/nixos-config/flake.nix#xps
 
