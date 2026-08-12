@@ -69,8 +69,8 @@ with lib;
           DNSDefaultRoute = false;
         };
         dhcpV4Config = {
-          # Do not use DNS servers from DHCP. This forces the connection to use
-          # the default Global DNS servers configured by systemd-resolved.
+          # Prevent your local router's DHCP from pushing its own DNS servers
+          # into resolved.
           UseDNS = mkDefault false;
           # Prefer wired connections — lower values take precedence.
           RouteMetric = mkDefault 100;
@@ -132,18 +132,18 @@ with lib;
     settings.Resolve = {
       # Make CloudFlare DNS servers the default option
       DNS = mkDefault [
-        "1.1.1.1"
-        "1.0.0.1"
-        "2606:4700:4700::1111"
-        "2606:4700:4700::1001"
+        # "1.1.1.1"
+        # "1.0.0.1"
+        # "2606:4700:4700::1111"
+        # "2606:4700:4700::1001"
       ];
 
       # Use Quad9 DNS servers as fallback
       FallbackDNS = mkDefault [
-        "9.9.9.9"
-        "149.112.112.112"
-        "2620:fe::fe"
-        "2620:fe::9"
+        # "9.9.9.9"
+        # "149.112.112.112"
+        # "2620:fe::fe"
+        # "2620:fe::9"
       ];
 
       # Make the Global interface the default for all DNS queries that do not
@@ -160,17 +160,17 @@ with lib;
       # To verify that DNS over TLS is being used run `ngrep port 853`, it
       # should produce encrypted output. On the other hand `ngrep port 53`
       # should produce no output at all.
-      DNSOverTLS = mkDefault "opportunistic";
+      # DNSOverTLS = mkDefault "opportunistic";
 
       # Verify DNS signatures whenever possible [3]. This totally depends on
       # the domains being queried, allow downgrade to allow access to
       # real-world sites (old or small sites) that do not have this enabled.
-      DNSSEC = mkDefault "allow-downgrade";
+      # DNSSEC = mkDefault "allow-downgrade";
 
       # Enable zero-configuration local name resolution [4]. Common for
       # discovering printers, Chromecast, AirPlay, smart devices. Implemented
       # by Avahi (Linux) or Bonjour (Apple).
-      MulticastDNS = mkDefault true;
+      # MulticastDNS = mkDefault true;
     };
   };
 

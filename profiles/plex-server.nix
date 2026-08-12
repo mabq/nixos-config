@@ -25,6 +25,7 @@
     # https://tailscale.com/docs/reference/tailscale-cli#set
     extraSetFlags = [
       "--hostname=${config.networking.hostName}"
+      # Let the system use Tailscale DNS servers
       "--accept-dns"
       # "--accept-routes"
       "--ssh"
