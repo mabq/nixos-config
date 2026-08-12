@@ -69,7 +69,8 @@ with lib;
           DNSDefaultRoute = false;
         };
         dhcpV4Config = {
-          # Do not use DNS servers received from DHCP.
+          # Do not use DNS servers from DHCP. This forces the connection to use
+          # the default Global DNS servers configured by systemd-resolved.
           UseDNS = mkDefault false;
           # Prefer wired connections — lower values take precedence.
           RouteMetric = mkDefault 100;
@@ -84,7 +85,7 @@ with lib;
         };
       };
 
-      # Wireless interface
+      # Wireless interface (less priority)
       "20-wlan" = {
         matchConfig.Name = mkDefault "wl*"; # `wlan0`, `wlan1`, etc.
         linkConfig.RequiredForOnline = mkDefault "routable";
@@ -96,9 +97,7 @@ with lib;
         };
         dhcpV4Config = {
           UseDNS = mkDefault false;
-          # Lower priority than ethernet - try to have only one active
-          # connection at a time, otherwise you might experience "Asymmetric
-          # Routing" or "Reverse Path Filtering (RPF)" conflicts.
+          # Lower priority than ethernet
           RouteMetric = mkDefault 600;
         };
         dhcpV6Config = {
@@ -126,11 +125,12 @@ with lib;
   # Disable default resolveconf [5]
   networking.resolvconf.enable = mkDefault false;
 
+  # Configure systemd-resolved
   services.resolved = {
     enable = mkDefault true;
 
     settings.Resolve = {
-      # CloudFlare DNS servers as primary option
+      # Make CloudFlare DNS servers the default option
       DNS = mkDefault [
         "1.1.1.1"
         "1.0.0.1"
@@ -138,7 +138,7 @@ with lib;
         "2606:4700:4700::1001"
       ];
 
-      # Quad9 DNS servers as fallback
+      # Use Quad9 DNS servers as fallback
       FallbackDNS = mkDefault [
         "9.9.9.9"
         "149.112.112.112"
