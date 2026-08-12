@@ -17,9 +17,8 @@ with lib;
   # native `systemd.network.networks` declarations, it's unnecessary.
   # `networking.useNetworkd = true;`
 
-  # Disable NixOS's legacy DHCP/network configuration. This is important to
-  # avoid having multiple DHCP clients fighting over the same network
-  # interfaces.
+  # Disable the legacy scripted-networking DHCP client so nothing outside
+  # networkd/resolved tries configure the network.
   networking.useDHCP = false;
   networking.dhcpcd.enable = false;
 
@@ -38,7 +37,7 @@ with lib;
     wait-online.anyInterface = mkDefault true;
 
     # Configure hardware interfaces [1]. Virtual interfaces like `wg0` or
-    # `tailscale0` are managed by those programs.
+    # `tailscale0` do not need to be configured.
     networks = {
       # Wired interface (highest priority)
       "10-ether" = {
@@ -66,7 +65,7 @@ with lib;
           # Local names for printers and stuff
           MulticastDNS = mkDefault "yes";
           # Prevent this interface from being used as a default DNS route.
-          DNSDefaultRoute = false;
+          DNSDefaultRoute = mkDefault false;
         };
         dhcpV4Config = {
           # Prevent your local router's DHCP from pushing its own DNS servers
@@ -132,18 +131,18 @@ with lib;
     settings.Resolve = {
       # Make CloudFlare DNS servers the default option
       DNS = mkDefault [
-        # "1.1.1.1"
-        # "1.0.0.1"
-        # "2606:4700:4700::1111"
-        # "2606:4700:4700::1001"
+        "1.1.1.1"
+        "1.0.0.1"
+        "2606:4700:4700::1111"
+        "2606:4700:4700::1001"
       ];
 
       # Use Quad9 DNS servers as fallback
       FallbackDNS = mkDefault [
-        # "9.9.9.9"
-        # "149.112.112.112"
-        # "2620:fe::fe"
-        # "2620:fe::9"
+        "9.9.9.9"
+        "149.112.112.112"
+        "2620:fe::fe"
+        "2620:fe::9"
       ];
 
       # Make the Global interface the default for all DNS queries that do not
@@ -151,7 +150,7 @@ with lib;
       # This does not affect queries of domain names that match the more
       # specific search domains specified in per-link configuration, they will
       # still be resolved using their respective per-link DNS servers.
-      # Domains = mkDefault "~.";
+      Domains = mkDefault [ "~." ];
 
       # Encrypt DNS queries whenever possible [2]. Fallback to unencrypted
       # queries if the DNS server does not support it to avoid DNS resolution
@@ -160,17 +159,17 @@ with lib;
       # To verify that DNS over TLS is being used run `ngrep port 853`, it
       # should produce encrypted output. On the other hand `ngrep port 53`
       # should produce no output at all.
-      # DNSOverTLS = mkDefault "opportunistic";
+      DNSOverTLS = mkDefault "opportunistic";
 
       # Verify DNS signatures whenever possible [3]. This totally depends on
       # the domains being queried, allow downgrade to allow access to
       # real-world sites (old or small sites) that do not have this enabled.
-      # DNSSEC = mkDefault "allow-downgrade";
+      DNSSEC = mkDefault "allow-downgrade";
 
       # Enable zero-configuration local name resolution [4]. Common for
       # discovering printers, Chromecast, AirPlay, smart devices. Implemented
       # by Avahi (Linux) or Bonjour (Apple).
-      # MulticastDNS = mkDefault true;
+      MulticastDNS = mkDefault true;
     };
   };
 
@@ -208,7 +207,7 @@ with lib;
 }
 
 /*
-  Systemd-networkd is ligher and faster than NetworkManager.
+  Systemd-networkd is ligher and faster than NetworkManager but has less features.
 
   It does not run background processes - e.g. it won't automatically switch to
   another Wi-Fi network, you need to do that manually.
@@ -262,8 +261,8 @@ with lib;
 
   ---
 
-  Tailscale lets you force any device in your tailnet to use your tailnet DNS
-  settings instead of its local DNS settings [1][2]
+  Tailscale lets you force any device in your tailnet to use your Tailnet DNS
+  settings instead of its local DNS settings.
 
   [1] https://tailscale.com/docs/reference/dns-in-tailscale?tab=macos#override-dns-servers
   [2] https://tailscale.com/blog/sisyphean-dns-client-linux

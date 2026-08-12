@@ -9,9 +9,6 @@ with lib;
   # Do not create DHCP configurations based on facter file
   hardware.facter.detected.dhcp.enable = mkDefault false;
 
-  # Make sure systemd-networkd is not enable
-  systemd.network.enable = mkForce false;
-
   # Enable NetworkManager
   networking.networkmanager.enable = mkDefault true;
 
@@ -27,8 +24,6 @@ with lib;
 }
 
 /*
-  Prefer systemd-networkd whenever possible.
-
   NetworkManager is fundamentally imperative. Use `nmtui` or `nmcli` to modify
   live state - settings are applied immediately [2], changes are persisted to
   disk [1] as a side effect, not as the primary action.

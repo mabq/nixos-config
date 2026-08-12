@@ -6,7 +6,7 @@
 }:
 {
   imports = [
-    ../modules/networkd.nix
+    ../modules/networkmanager.nix
     ../modules/git.nix
     ../modules/keyd.nix
     ../modules/neovim.nix
