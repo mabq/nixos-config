@@ -7,48 +7,45 @@
 }:
 with lib;
 {
-  # ----------------------------------------------------------------------------
-  # Networking
-  #  https://nixos.wiki/wiki/Systemd-networkd
-  # ----------------------------------------------------------------------------
+  # High-level option to instruct
+  networking = {
+    useNetworkd = true;
+    # Systemd-networkd has its own dhcp client. The default one must be
+    # disabled to avoid conflicts.
+    useDHCP = false;
+  };
 
-  # Don't use this option. Is a compatibility mechanism which translates older
-  # `networking.*` options into networkd configurations. If you're writing
-  # native `systemd.network.networks` declarations, it's unnecessary.
-  # `networking.useNetworkd = true;`
-
-  # Disable NixOS's legacy DHCP/network configuration. This is important to
-  # avoid having multiple DHCP clients fighting over the same network
-  # interfaces.
-  networking.useDHCP = false;
-  networking.dhcpcd.enable = false;
-
-  # Disable facter network configurations.
+  # Disable facter configurations for the network.
   hardware.facter.detected.dhcp.enable = false;
 
   # Increase log details for possible debugging.
   #  https://nixos.wiki/wiki/Systemd-networkd#Debugging
   # systemd.services."systemd-networkd".environment.SYSTEMD_LOG_LEVEL = "debug";
 
-  # systemd-networkd configuration.
+  # ----------------------------------------------------------------------------
+  # Configure systemd-networkd
+  #  https://nixos.wiki/wiki/Systemd-networkd
+  # ----------------------------------------------------------------------------
+
   systemd.network = {
     enable = mkDefault true;
 
     # Consider the system "online" when any interface reaches "routable" state.
     wait-online.anyInterface = mkDefault true;
 
-    # Configure hardware interfaces [1]. Virtual interfaces like `wg0` or
-    # `tailscale0` are managed by those programs.
+    # Configure interfaces [1]
+    # Only hardware interfaces. Virtual interfaces like `wg0` or `tailscale0`
+    # are managed directly by those programs.
     networks = {
-      # Wired interface (highest priority)
+      # Wired interface
       "10-ether" = {
         # The `[MATCH]` section determines which file is used to configure
-        # each interface. Files are scanned in alpha-numeric order, thats why
-        # we use a number prefix in front of the file name [2].
+        # each interface. Only the first one to match is used - that's the
+        # reason for the number prefix [2].
         #
         # Matching with `Type=ether` causes issues with containers because it
-        # also matches virtual Ethernet interfaces like `veth*` [3]. Instead
-        # match by globbing the network interface name.
+        # also matches virtual Ethernet interfaces (`veth*`) [3]. Instead match
+        # by globbing the network interface name.
         matchConfig.Name = mkDefault "en* eth*";
 
         # Prevent `systemd-networkd-wait-online.service` (enabled by default)
@@ -62,24 +59,23 @@ with lib;
           # Start a DHCP Client for Addressing/Routing
           DHCP = mkDefault "yes";
           # Accept Router Advertisements for Stateless IPv6 Autoconfiguraton (SLAAC)
-          IPv6AcceptRA = mkDefault true;
-          # Local names for printers and stuff
+          IPv6AcceptRA = true;
           MulticastDNS = mkDefault "yes";
           # Prevent this interface from being used as a default DNS route.
           DNSDefaultRoute = false;
         };
         dhcpV4Config = {
-          # Do not use DNS servers received from DHCP.
-          UseDNS = mkDefault false;
-          # Prefer wired connections — lower values take precedence.
+          # Use systemd-resolved global DNS instead of the ones proviced by the DCHP server.
+          # UseDNS = mkDefault false;
+          # Prefer ethernet over Wi-Fi (lower takes precedence).
           RouteMetric = mkDefault 100;
         };
         dhcpV6Config = {
-          UseDNS = mkDefault false;
+          # UseDNS = mkDefault false;
           # There is no `RouteMetric` option in this section.
         };
         ipv6AcceptRAConfig = {
-          UseDNS = mkDefault false;
+          # UseDNS = mkDefault false;
           RouteMetric = mkDefault 100;
         };
       };
@@ -90,23 +86,22 @@ with lib;
         linkConfig.RequiredForOnline = mkDefault "routable";
         networkConfig = {
           DHCP = mkDefault "yes";
-          IPv6AcceptRA = mkDefault true;
-          MulticastDNS = mkDefault "yes";
+          # MulticastDNS = mkDefault "yes";
           DNSDefaultRoute = false;
         };
         dhcpV4Config = {
-          UseDNS = mkDefault false;
+          # UseDNS = mkDefault false;
           # Lower priority than ethernet - try to have only one active
           # connection at a time, otherwise you might experience "Asymmetric
           # Routing" or "Reverse Path Filtering (RPF)" conflicts.
           RouteMetric = mkDefault 600;
         };
         dhcpV6Config = {
-          UseDNS = mkDefault false;
+          # UseDNS = mkDefault false;
           # There is no `RouteMetric` option in this section.
         };
         ipv6AcceptRAConfig = {
-          UseDNS = mkDefault false;
+          # UseDNS = mkDefault false;
           RouteMetric = mkDefault 600;
         };
       };
@@ -119,7 +114,7 @@ with lib;
   # [3] See https://bugs.archlinux.org/task/70892
 
   # ----------------------------------------------------------------------------
-  # Configure systemd-resolved (DNS)
+  # Configure systemd-resolved
   #  https://nixos.wiki/wiki/Systemd-resolved
   # ----------------------------------------------------------------------------
 
