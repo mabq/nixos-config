@@ -1,4 +1,4 @@
-# Import this module to use systemd-networkd and systemd-resolved.
+# Import this module to use DHCP with systemd-networkd and custom DNS servers.
 {
   lib,
   pkgs,
