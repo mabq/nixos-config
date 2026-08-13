@@ -1,7 +1,7 @@
 {
   config,
-  # pkgs,
-  # user,
+  pkgs,
+  user,
   ...
 }:
 {
@@ -25,7 +25,7 @@
     # https://tailscale.com/docs/reference/tailscale-cli#set
     extraSetFlags = [
       "--hostname=${config.networking.hostName}"
-      # "--accept-dns" # No need, using systemd-networkd
+      # "--accept-dns" # no need when using networkd
       # "--accept-routes"
       "--ssh"
     ];
@@ -35,7 +35,8 @@
   #   { ... }:
   #   {
   #     home = {
-  #       packages = with pkgs; [ ];
+  #       packages = with pkgs; [
+  #       ];
   #     };
   #   };
 }

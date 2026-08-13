@@ -69,9 +69,9 @@ with lib;
       username = mkDefault user;
       homeDirectory = mkDefault "/home/${user}";
       packages = with pkgs; [
-        # Required by all configurations
-        just # Handy way to save and run project-specific commands
         age # Modern encryption tool with small explicit keys
+        just # Handy way to save and run project-specific commands
+        pciutils # Collection of programs for inspecting and manipulating configuration of PCI devices
         sops # Simple and flexible tool for managing secrets
       ];
       stateVersion = mkDefault stateVersion; # see notes at the bottom

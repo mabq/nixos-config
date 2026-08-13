@@ -7,14 +7,34 @@
 }:
 with lib;
 {
+  # ----------------------------------------------------------------------------
+  # Disable conflicting options
+  # ----------------------------------------------------------------------------
+
+  # These options are enabled by default and must be disabled to avoid
+  # conflicts with NetworkManager.
+
+  # Each network interface should be managed by only one DHCP client or network
+  # manager. Disable NixOS default script-based DHCP configuration on all
+  # interfaces. NetworkManager has its own built-in DHCP client daemon.
+  networking.useDHCP = false;
+
   # Do not create DHCP configurations based on facter file
-  hardware.facter.detected.dhcp.enable = mkDefault false;
+  hardware.facter.detected.dhcp.enable = false;
+
+  # ----------------------------------------------------------------------------
+  # NetworkManager
+  # ----------------------------------------------------------------------------
 
   # Enable NetworkManager
   networking.networkmanager.enable = mkDefault true;
 
   # Only members of the `networkmanager` group can use `nmtui` or `nmcli`
   users.users.${user}.extraGroups = [ "networkmanager" ];
+
+  # ----------------------------------------------------------------------------
+  # Extra packages
+  # ----------------------------------------------------------------------------
 
   # Install some packages with HomeManager
   home-manager.users.${user} = {
