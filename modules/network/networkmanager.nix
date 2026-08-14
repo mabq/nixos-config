@@ -32,11 +32,16 @@ with lib;
   networking.networkmanager = {
     enable = mkDefault true;
 
-    # Ignore DNS servers obtained from DHCP. Let systemd-resolved handle DNS
-    # resolution.
-    dns = mkForce "none";
+    # Instruct networkmanager to let systemd-resolved handle DNS resolution.
+    dns = "systemd-resolved";
+
+    # Ignore DNS servers obtained from DHCP, otherwise systemd-resolved
+    # prioritized per-link DNS servers.
     settings = {
-      systemd-resolved = false;
+      connection = {
+        "ipv4.ignore-auto-dns" = true;
+        "ipv6.ignore-auto-dns" = true;
+      };
     };
   };
 
