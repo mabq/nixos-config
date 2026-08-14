@@ -34,7 +34,7 @@ with lib;
 
     # Ignore DNS servers obtained from DHCP. Let systemd-resolved handle DNS
     # resolution.
-    dns = "none";
+    dns = mkForce "none";
   };
 
   # Only members of the `networkmanager` group can use `nmtui` or `nmcli`
