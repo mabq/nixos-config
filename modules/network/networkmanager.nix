@@ -34,8 +34,8 @@ with lib;
 
     # Ignore DNS servers obtained from DHCP. Let systemd-resolved handle DNS
     # resolution.
+    dns = mkForce "none";
     settings = {
-      dns = mkForce "none";
       systemd-resolved = false;
     };
   };
