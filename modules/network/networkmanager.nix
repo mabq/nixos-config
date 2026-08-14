@@ -24,9 +24,6 @@ with lib;
   # interfaces. NetworkManager has its own built-in DHCP client daemon.
   networking.useDHCP = false;
 
-  # Disable default legacy wpa_supplicant
-  networking.wireless.enable = mkForce false;
-
   # Do not create DHCP configurations based on facter file
   hardware.facter.detected.dhcp.enable = false;
 
@@ -39,6 +36,14 @@ with lib;
 
     # Tell NetworkManager to hand over DNS handling to systemd-resolved
     dns = "systemd-resolved";
+
+    # Ignore DNS servers obtained from DHCP. Use Global DNS servers from resolved.
+    connectionConfig = {
+      "ipv4.method" = "auto";
+      "ipv4.ignore-auto-dns" = true;
+      "ipv6.method" = "auto";
+      "ipv6.ignore-auto-dns" = true;
+    };
   };
 
   # Only members of the `networkmanager` group can use `nmtui` or `nmcli`
