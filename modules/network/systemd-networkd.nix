@@ -1,4 +1,4 @@
-# Import this module to use DHCP with systemd-networkd and custom DNS servers.
+# systemd-networkd as the network manager.
 {
   lib,
   pkgs,
@@ -8,18 +8,18 @@
 with lib;
 {
   imports = [
-    ./systemd-resolved.nix # Use systemd-resolved for DNS resolution
+    ./systemd-resolved.nix # DNS resolution
   ];
 
   # ----------------------------------------------------------------------------
   # Disable conflicting options
   #  These options are enabled by default and must be disabled to avoid
-  #  conflicts with systemd-networkd and systemd-resolved.
+  #  conflicts with systemd-networkd.
   # ----------------------------------------------------------------------------
 
   # Each network interface should be managed by only one DHCP client or network
-  # manager. Disable default NixOS script-based DHCP configuration on all
-  # interfaces since networkd has its own built-in DHCP client daemon.
+  # manager. Disable NixOS default script-based DHCP configuration on all
+  # interfaces. Systemd-networkd has its own built-in DHCP client daemon.
   networking.useDHCP = false;
 
   # Disable facter network configurations.
@@ -31,45 +31,57 @@ with lib;
   #  https://wiki.archlinux.org/title/Systemd-networkd
   # ----------------------------------------------------------------------------
 
-  # This option is a compatibility mechanism which translates older
-  # `networking.*` options into networkd configurations. Since we are using
-  # native `systemd.network.networks` declarations, it's unnecessary.
+  # Don't use this option. In many tutorials this option is mentioned, it acts
+  # as compatibility mechanism to translate older `networking.*` options into
+  # networkd configurations. Since we are using native
+  # `systemd.network.networks` declarations, it is unnecessary.
   # `networking.useNetworkd = true;`
 
   # Increase log details for possible debugging.
   #  https://nixos.wiki/wiki/Systemd-networkd#Debugging
   # systemd.services."systemd-networkd".environment.SYSTEMD_LOG_LEVEL = "debug";
 
-  # systemd-networkd configuration.
   systemd.network = {
     enable = mkDefault true;
 
     # Consider the system "online" when any interface reaches "routable" state.
     wait-online.anyInterface = mkDefault true;
 
-    # Configure network interfaces [1]
-    #  https://wiki.archlinux.org/title/Network_configuration#Network_interfaces
-    #  Virtual interfaces like `wg0` or `tailscale0` do not need to be configured.
+    # Configure network interfaces
+    #  systemd-networkd uses first-match-wins semantics — when multiple
+    #  .network files could match an interface, only the single
+    #  highest-priority matching file's settings apply in full, that is why
+    #  file names are prefixed with a number.
+    #
+    #  Virtual interfaces like `wg0` or `tailscale0` do not need to be
+    #  configured. Only hardware links.
+    #
+    #  There is no global option to ignore DNS servers obtained from DHCP for
+    #  all interfaces. We instruct all ethernet and wireless connections to do
+    #  so.
+    #
+    #  For more info see:
+    #   https://wiki.archlinux.org/title/Network_configuration#Network_interfaces
+    #   https://wiki.archlinux.org/title/Systemd-networkd
+    #   https://man.archlinux.org/man/systemd.network.5
     networks = {
-      # Configurations for ethernet connections (highest priority)
+      # Ethernet connection (highest priority)
       "10-ether" = {
-        # The first file matching the interface name will be used. Files are
-        # scanned in alpha-numeric order, the lower the number prefix the higher
-        # the priority [2].
-        #
         # Matching with `Type=ether` causes issues with containers because it
-        # also matches virtual Ethernet interfaces like `veth*` [3]. Better
-        # match by globbing the network interface name.
+        # also matches virtual Ethernet interfaces like `veth*`. Its better to
+        # use globbing to match the network interface name.
+        #  https://bugs.archlinux.org/task/70892
         matchConfig.Name = mkDefault "en* eth*";
 
         # Prevent `systemd-networkd-wait-online.service` (enabled by default)
         # from exiting before network interfaces have a routable IP address
-        # and thus having other services that require a working network
-        # connection starting too early.
+        # causing other services that require a working network connection
+        # starting too early.
         linkConfig.RequiredForOnline = mkDefault "routable";
 
         networkConfig = {
-          # Use DHCP — for static example see [5]
+          # Use DHCP, for other options like static IPs see:
+          #  https://nixos.wiki/wiki/Systemd-networkd
           DHCP = mkDefault "yes";
 
           # Accept Router Advertisements for Stateless IPv6 Autoconfiguraton (SLAAC)
@@ -85,23 +97,24 @@ with lib;
           MulticastDNS = mkDefault "no";
         };
         dhcpV4Config = {
-          # Ignore the DNS servers obtained from the DHCP server. We want all
-          # queries to use the Global DNS settings defined below.
+          # Ignore DNS servers obtained from the DHCP for IPv4 connections.
           UseDNS = mkDefault false;
           # Prefer wired connections — lower values take precedence.
           RouteMetric = mkDefault 100;
         };
         dhcpV6Config = {
+          # Ignore DNS servers obtained from the DHCP for IPv6 connections.
           UseDNS = mkDefault false;
           # There is no `RouteMetric` option in this section.
         };
         ipv6AcceptRAConfig = {
+          # Ignore DNS servers obtained from the DHCP for IPv6 connections.
           UseDNS = mkDefault false;
           RouteMetric = mkDefault 100;
         };
       };
 
-      # Configurations for wireless connections (less priority)
+      # Wireless connections (less priority)
       "20-wlan" = {
         matchConfig.Name = mkDefault "wl*";
         linkConfig.RequiredForOnline = mkDefault "routable";
@@ -128,74 +141,40 @@ with lib;
     };
   };
 
-  # [1] https://wiki.archlinux.org/title/Network_configuration#Network_interfaces
-  #     https://man.archlinux.org/man/systemd.network.5
-  #     https://wiki.archlinux.org/title/Systemd-networkd
-  # [2] https://man.archlinux.org/man/systemd.network.5#%5BMATCH%5D_SECTION_OPTIONS
-  #     https://systemd.io/PREDICTABLE_INTERFACE_NAMES/
-  # [3] See https://bugs.archlinux.org/task/70892
-  # [4] https://tailscale.com/blog/sisyphean-dns-client-linux
-  # [5] https://nixos.wiki/wiki/Systemd-networkd#Static
-
   # ----------------------------------------------------------------------------
-  # Wi-Fi tools
+  # Tools to manage Wi-Fi connections
   # ----------------------------------------------------------------------------
 
   # Iwd brings the wireless link up (scans, authenticates, associates).
-  # Systemd-networkd configures IP/DNS after iwd has brought the link up [1].
+  # Systemd-networkd configures IP/DNS after iwd has brought the link up.
+  #  https://wiki.archlinux.org/title/Iwd
   networking.wireless.iwd.enable = mkDefault true;
 
-  # The user must be a member of the `wheel` group to manage iwd [2]
+  # The user must be a member of the `wheel` group to manage iwd.
+  #  https://wiki.archlinux.org/title/Iwd#Usage
   users.users.${user}.extraGroups = [ "wheel" ];
 
-  # Some required packages
   home-manager.users.${user} = {
     home.packages = with pkgs; [
       impala # TUI for managing wifi
       dig # Domain name server (provides the `nslookup` command to check DNS)
     ];
   };
-
-  # [1] https://wiki.archlinux.org/title/Iwd
-  # [2] https://wiki.archlinux.org/title/Iwd#Usage
-  # [3] https://wiki.archlinux.org/title/Iwd#Installation
 }
 
 /*
-  Systemd-networkd is ligher than NetworkManager but has less features — see
-  https://nixos.wiki/wiki/Systemd-networkd#When_to_use.
+  Use systemd-networkd on devices where you don't need to switch between
+  Wi-Fi networks constantly. It is faster and lighter than NetworkManager.
+   https://nixos.wiki/wiki/Systemd-networkd#When_to_use.
 
-  It does not run background processes - e.g. it won't automatically switch to
-  another Wi-Fi network, you need to do that manually.
-
-  It lacks the ability to automatically open "login pages" when connecting to
-  public networks using captive portals - you need to trigger those manually.
-  Run `networkctl status <wlan>` and look for the "Captive Portal" field,
-  then manually open the portal in your browser using the URL shown, or try
-  accessing `http://neverssl.com` or `http://captive.apple.com` to trigger the
-  redirect.
+  Systemd-networkd provides the `networkctl` command, see `networkctl help` or
+  read its man page `man networkctl` to learn about it.
 
   ---
 
-  Systemd-networkd is configured declaratively - perfect for Nixos management.
-
-  `networkctl` [1] is primarily used to query network configuration, the few
-  state changes you will ever do with it are added to "drop-in" files that do
-  not affect the main `.network` files [2].
-
-  Changes in "drop-in" files are invisible to NixOS, hence not reproducible.
-
-  [1] https://man.archlinux.org/man/networkctl.1.en
-  [2] https://man.archlinux.org/man/systemd.network.5#DESCRIPTION
-
-  ---
-
-  Systemd-networkd offers full integration with systemd-resolved.
-
-  Systemd-networkd configurations [1] take precedence over systemd-resolved
-  configurations [2]. This allows you to set per-link configurations. Thats why
-  we instruct systemd-networkd to ignore the DNS Servers received from the DHCP.
-
-  [1] https://man.archlinux.org/man/systemd.network.5
-  [2] https://man.archlinux.org/man/resolved.conf.5
+  If you need to connect to a network using a captive portal, you need to
+  trigger those manually. Run `networkctl status <wlan>` and look for the
+  "Captive Portal" field, then manually open the portal in your browser using
+  the URL shown, or try accessing `http://neverssl.com` or
+  `http://captive.apple.com` to trigger the redirect.
 */

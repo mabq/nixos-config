@@ -16,14 +16,14 @@
     #  https://tailscale.com/docs/features/access-control/auth-keys
     #  https://tailscale.com/docs/how-to/set-up-servers
     authKeyFile = config.sops.secrets."tailscale_mabq_sharedTagKey".path;
-    # https://tailscale.com/docs/reference/tailscale-cli#up
-    extraUpFlags = [ ];
-    # https://tailscale.com/docs/reference/tailscale-cli#set
+    extraUpFlags = [
+      # https://tailscale.com/docs/reference/tailscale-cli#up
+    ];
     extraSetFlags = [
+      # https://tailscale.com/docs/reference/tailscale-cli#set
       "--hostname=${config.networking.hostName}"
-      # "--accept-dns" # no need with networkd
-      # "--accept-routes"
       "--ssh"
+      # "--accept-routes"
     ];
   };
 

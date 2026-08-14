@@ -1,4 +1,4 @@
-# Import this module if you want to use NetworkManager.
+# NetworkManager as the network manager.
 {
   lib,
   pkgs,
@@ -8,13 +8,13 @@
 with lib;
 {
   imports = [
-    ./systemd-resolved.nix # Use systemd-resolved for DNS resolution
+    ./systemd-resolved.nix # DNS resolution
   ];
 
   # ----------------------------------------------------------------------------
   # Disable conflicting options
   #  These options are enabled by default and must be disabled to avoid
-  #  conflicts with networkmanager and systemd-resolved.
+  #  conflicts with NetworkManager.
   # ----------------------------------------------------------------------------
 
   # Each network interface should be managed by only one DHCP client or network
@@ -22,17 +22,21 @@ with lib;
   # interfaces. NetworkManager has its own built-in DHCP client daemon.
   networking.useDHCP = false;
 
-  # Do not create DHCP configurations based on facter file
+  # Disable facter network configurations.
   hardware.facter.detected.dhcp.enable = false;
 
   # ----------------------------------------------------------------------------
   # NetworkManager
+  #  https://wiki.archlinux.org/title/NetworkManager
+  #  https://networkmanager.dev/docs/api/latest/settings-ipv4.html
   # ----------------------------------------------------------------------------
 
   networking.networkmanager = {
     enable = mkDefault true;
 
-    # Never forward DNS info from DHCP/RA to resolved, on any interface!
+    # Instruct NetworkManager to ignore DNS servers obtained from DHCP on all
+    # interfaces. This is important to let DNS resolution be managed by
+    # systemd-resolved servers.
     dns = mkForce "none";
     settings.main."systemd-resolved" = false;
   };
@@ -44,33 +48,24 @@ with lib;
   # Extra packages
   # ----------------------------------------------------------------------------
 
-  # Install some packages with HomeManager
   home-manager.users.${user} = {
     home.packages = with pkgs; [
-      dig # Domain name server (provides the `nslookup` command to check DNS)
+      dig # Domain name server
     ];
   };
 }
 
 /*
-  NetworkManager is fundamentally imperative.
-
-  Use `nmtui` or `nmcli` to modify live state - settings are applied
-  immediately [2], changes are persisted to disk [1] as a side effect, not as
-  the primary action.
+  NetworkManager is fundamentally imperative. Use `nmtui` or `nmcli` to manage
+  network settings — settings are applied immediately [2], changes are
+  persisted to disk [1] as a side effect, not as the primary action.
 
   NixOS configuration files [3] are immutable by design. NetworkManager
   configuration files [1] are mutable by design. So, configuration files
-  created by NixOS options [7] won't appear in [1], they are directly loaded
+  created by NixOS options won't appear in [1], they are directly loaded
   to [2] when you rebuild the system.
 
   [1] `/etc/NetworkManager/system-connections/`
   [2] `/run/NetworkManager/`
   [3] `/nix/store/`
-  [4] `nmcli connection reload <connection>`
-  [5] https://networkmanager.dev/docs/api/latest/settings-ipv4.html
-  [6] `resolvectl status`
-  [7] https://search.nixos.org/options?channel=unstable&query=networking.networkmanager
-  [8] https://tailscale.com/docs/reference/dns-in-tailscale?tab=linux#override-dns-servers
-      https://tailscale.com/docs/reference/tailscale-cli#up
 */
