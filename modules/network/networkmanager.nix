@@ -32,15 +32,9 @@ with lib;
   networking.networkmanager = {
     enable = mkDefault true;
 
-    # Instruct networkmanager to let systemd-resolved handle DNS resolution.
-    dns = "systemd-resolved";
-
-    # Ignore DNS servers obtained from DHCP, otherwise systemd-resolved
-    # prioritized per-link DNS servers.
-    settings = {
-      "ipv4.ignore-auto-dns" = true;
-      "ipv6.ignore-auto-dns" = true;
-    };
+    # Never forward DNS info from DHCP/RA to resolved, on any interface!
+    dns = "none";
+    settings.main."systemd-resolved" = false;
   };
 
   # Only members of the `networkmanager` group can use `nmtui` or `nmcli`
