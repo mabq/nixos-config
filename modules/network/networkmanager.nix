@@ -25,7 +25,7 @@ with lib;
   networking.useDHCP = false;
 
   # Disable default legacy wpa_supplicant
-  networking.wireless.enable = false;
+  networking.wireless.enable = mkForce false;
 
   # Do not create DHCP configurations based on facter file
   hardware.facter.detected.dhcp.enable = false;
