@@ -33,7 +33,7 @@ with lib;
     enable = mkDefault true;
 
     # Never forward DNS info from DHCP/RA to resolved, on any interface!
-    dns = "none";
+    dns = mkForce "none";
     settings.main."systemd-resolved" = false;
   };
 
