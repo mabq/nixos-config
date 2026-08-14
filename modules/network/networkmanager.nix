@@ -38,10 +38,8 @@ with lib;
     # Ignore DNS servers obtained from DHCP, otherwise systemd-resolved
     # prioritized per-link DNS servers.
     settings = {
-      connection = {
-        "ipv4.ignore-auto-dns" = true;
-        "ipv6.ignore-auto-dns" = true;
-      };
+      "ipv4.ignore-auto-dns" = true;
+      "ipv6.ignore-auto-dns" = true;
     };
   };
 
