@@ -8,14 +8,13 @@
 with lib;
 {
   imports = [
-    # User systemd-resolved for DNS resolution
-    ./systemd-resolved.nix
+    ./systemd-resolved.nix # Use systemd-resolved for DNS resolution
   ];
 
   # ----------------------------------------------------------------------------
   # Disable conflicting options
   #  These options are enabled by default and must be disabled to avoid
-  #  conflicts with networkd and resolved.
+  #  conflicts with systemd-networkd and systemd-resolved.
   # ----------------------------------------------------------------------------
 
   # Each network interface should be managed by only one DHCP client or network

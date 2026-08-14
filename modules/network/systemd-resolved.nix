@@ -1,26 +1,19 @@
-# Import this module to use systemd-resolved for DNS resolution
+# Used by networkmanager/systemd-networkd for DNS resolution.
 { lib, ... }:
 with lib;
 {
-  # ----------------------------------------------------------------------------
-  # Disable conflicting options
-  #  These options are enabled by default and must be disabled to avoid
-  #  conflicts with networkd and resolved.
-  # ----------------------------------------------------------------------------
-
-  # Disable default resolveconf in favor of systemd-resolved [4]
+  # Disable default resolveconf to avoid conflicts with systemd-resolved
   networking.resolvconf.enable = mkDefault false;
 
-  # ----------------------------------------------------------------------------
-  # Configure systemd-resolved (DNS)
+  # Configure systemd-resolved
   #  https://nixos.wiki/wiki/Systemd-resolved
-  # ----------------------------------------------------------------------------
-
+  #  https://wiki.archlinux.org/title/Systemd-resolved#Automatically
   services.resolved = {
     enable = mkDefault true;
 
     settings.Resolve = {
-      # Make Quad9 DNS servers the default option
+
+      # Use Quad9 DNS servers by default
       DNS = mkDefault [
         "9.9.9.9"
         "149.112.112.112"
@@ -36,11 +29,19 @@ with lib;
         "2606:4700:4700::1001"
       ];
 
-      # Make the Global interface the default for all DNS queries that do not
-      # match any more specific routing domain on other interfaces [1].
-      # This does not affect queries of domain names that match the more
-      # specific search domains specified in per-link configuration, they will
-      # still be resolved using their respective per-link DNS servers.
+      # Route all general DNS traffic to these DNS servers, unless a more
+      # specific match exists. Domain names that match the more specific search
+      # domain specified in per-link configuration will still be resolved using
+      # their respective per-link DNS servers.
+      #
+      # If you prefer to use the DNS servers set in the Tailscale Admin
+      # console:
+      #  1. Enable the "Override DNS servers" in the Tailscale Admin console
+      #     https://tailscale.com/docs/reference/dns-in-tailscale#override-dns-servers
+      #  2. Comment out this line so that the DNS servers configured here are
+      #     not used to route general DNS traffic.
+      #  3. Enable the `--accept-dns` options
+      #     https://tailscale.com/docs/reference/tailscale-cli#up
       Domains = mkDefault [ "~." ];
 
       # Encrypt DNS queries whenever possible [2]. Fallback to unencrypted
@@ -62,43 +63,27 @@ with lib;
     };
   };
 
-  # [1] https://www.freedesktop.org/software/systemd/man/latest/resolved.conf.html#Domains=
-  # [2] https://wiki.archlinux.org/title/Systemd-resolved#DNS_over_TLS
-  #     https://www.freedesktop.org/software/systemd/man/latest/resolved.conf.html#DNSOverTLS=
-  # [3] https://wiki.archlinux.org/title/Systemd-resolved#DNSSEC
-  #     https://www.freedesktop.org/software/systemd/man/latest/resolved.conf.html#DNSSEC=
-  # [4] https://wiki.archlinux.org/title/Systemd-resolved#mDNS
-  #     https://www.freedesktop.org/software/systemd/man/latest/resolved.conf.html#MulticastDNS=
 }
 
 /*
-  Systemd-networkd configurations [1] take precedence over systemd-resolved
-  configurations [2]. This allows you to set per-link configurations. Thats why
-  we instruct systemd-networkd to ignore the DNS Servers received from the DHCP.
+  Important!
 
-  [1] https://man.archlinux.org/man/systemd.network.5
-  [2] https://man.archlinux.org/man/resolved.conf.5
+  Per-link DNS configurations take precedence over systemd-resolved. Make sure
+  you configure NetworkManager/systemd-networkd to ignore DNS settings obtained
+  from DHCP servers.
 
   ---
-
-  systemd-resolved [1] provides a DNS stub listener in 127.0.0.53 that caches
-  resolved queries to make subsequent queries much faster.
-
-  You can change global DNS servers at runtime by executing
-  `sudo resolvectl dns <interface> <DNS IP>`. To undo the changes just
-  restart the systemd-networkd service.
 
   Use `resolvectl status` to check DNS servers being currently used.
 
-  [1] https://wiki.archlinux.org/title/Systemd-resolved
+  ---
+
+  You can change global DNS servers at runtime by executing
+  `sudo resolvectl dns <interface> <DNS IP>`. To undo the changes just
+  restart systemd-networkd/networkmanager service.
 
   ---
 
-  To enforce DNS servers defined in Tailscale Admin Console, comment the line
-      Domains = mkDefault [ "~." ];
-  in systemd-resolved configuration. Make sure you check the override DNS servers
-  option in Tailscale [1].
-
-  [1] https://tailscale.com/docs/reference/dns-in-tailscale?tab=linux#override-dns-servers
-  [2] https://tailscale.com/docs/reference/tailscale-cli#up
+  For configuration options see:
+   https://www.freedesktop.org/software/systemd/man/latest/resolved.conf.html
 */

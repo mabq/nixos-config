@@ -8,16 +8,14 @@
 with lib;
 {
   imports = [
-    # User systemd-resolved for DNS resolution
-    ./systemd-resolved.nix
+    ./systemd-resolved.nix # Use systemd-resolved for DNS resolution
   ];
 
   # ----------------------------------------------------------------------------
   # Disable conflicting options
+  #  These options are enabled by default and must be disabled to avoid
+  #  conflicts with networkmanager and systemd-resolved.
   # ----------------------------------------------------------------------------
-
-  # These options are enabled by default and must be disabled to avoid
-  # conflicts with NetworkManager.
 
   # Each network interface should be managed by only one DHCP client or network
   # manager. Disable NixOS default script-based DHCP configuration on all
@@ -34,16 +32,9 @@ with lib;
   networking.networkmanager = {
     enable = mkDefault true;
 
-    # Tell NetworkManager to hand over DNS handling to systemd-resolved
-    dns = "systemd-resolved";
-
-    # Ignore DNS servers obtained from DHCP. Use Global DNS servers from resolved.
-    connectionConfig = {
-      "ipv4.method" = "auto";
-      "ipv4.ignore-auto-dns" = true;
-      "ipv6.method" = "auto";
-      "ipv6.ignore-auto-dns" = true;
-    };
+    # Ignore DNS servers obtained from DHCP. Let systemd-resolved handle DNS
+    # resolution.
+    dns = "none";
   };
 
   # Only members of the `networkmanager` group can use `nmtui` or `nmcli`
@@ -62,9 +53,11 @@ with lib;
 }
 
 /*
-  NetworkManager is fundamentally imperative. Use `nmtui` or `nmcli` to modify
-  live state - settings are applied immediately [2], changes are persisted to
-  disk [1] as a side effect, not as the primary action.
+  NetworkManager is fundamentally imperative.
+
+  Use `nmtui` or `nmcli` to modify live state - settings are applied
+  immediately [2], changes are persisted to disk [1] as a side effect, not as
+  the primary action.
 
   NixOS configuration files [3] are immutable by design. NetworkManager
   configuration files [1] are mutable by design. So, configuration files
