@@ -1,12 +1,8 @@
-{
-  config,
-  pkgs,
-  user,
-  ...
-}:
+{ config, ... }:
 {
   imports = [
-    ../modules/networkd.nix
+    ../modules/network/networkmanager.nix
+
     ../modules/git.nix
     ../modules/keyd.nix
     ../modules/neovim.nix
@@ -25,7 +21,7 @@
     # https://tailscale.com/docs/reference/tailscale-cli#set
     extraSetFlags = [
       "--hostname=${config.networking.hostName}"
-      # "--accept-dns" # no need when using networkd
+      # "--accept-dns" # no need with networkd
       # "--accept-routes"
       "--ssh"
     ];

@@ -7,6 +7,11 @@
 }:
 with lib;
 {
+  imports = [
+    # User systemd-resolved for DNS resolution
+    ./systemd-resolved.nix
+  ];
+
   # ----------------------------------------------------------------------------
   # Disable conflicting options
   # ----------------------------------------------------------------------------
@@ -19,6 +24,9 @@ with lib;
   # interfaces. NetworkManager has its own built-in DHCP client daemon.
   networking.useDHCP = false;
 
+  # Disable default legacy wpa_supplicant
+  networking.wireless.enable = false;
+
   # Do not create DHCP configurations based on facter file
   hardware.facter.detected.dhcp.enable = false;
 
@@ -26,8 +34,12 @@ with lib;
   # NetworkManager
   # ----------------------------------------------------------------------------
 
-  # Enable NetworkManager
-  networking.networkmanager.enable = mkDefault true;
+  networking.networkmanager = {
+    enable = mkDefault true;
+
+    # Tell NetworkManager to hand over DNS handling to systemd-resolved
+    dns = "systemd-resolved";
+  };
 
   # Only members of the `networkmanager` group can use `nmtui` or `nmcli`
   users.users.${user}.extraGroups = [ "networkmanager" ];
@@ -53,10 +65,6 @@ with lib;
   configuration files [1] are mutable by design. So, configuration files
   created by NixOS options [7] won't appear in [1], they are directly loaded
   to [2] when you rebuild the system.
-
-  If you wish to use custom DNS servers, configure those manually with `nmtui`
-  or let Tailscale override local DNS settings [8]. Mixing NetworkManager with
-  systemd-resolved is not ideal.
 
   [1] `/etc/NetworkManager/system-connections/`
   [2] `/run/NetworkManager/`
