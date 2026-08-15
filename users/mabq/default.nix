@@ -20,8 +20,9 @@
     ];
   };
 
+  # Decrypt secrets
   sops = {
-    # Decrypted private key file 🔥
+    # Decrypted Age private key 🔥
     # Needs to be present before executing the flake. Without it sops-nix won't
     # be able to decrypt secrets and will throw an error. Make sure the
     # decrypted file never ends in a public repository and is only readable by
@@ -34,29 +35,21 @@
     # update `.sops.yaml` at the root of the flake as well.
     defaultSopsFile = ./secrets.yaml;
 
-    # Decrypt secrets.
-    # Attribute names come from keys in the `secrets.yaml` file.
+    # Attribute names come from `secrets.yaml`
     secrets = {
-      # Tailscale auth keys are decrypted here (because this users owns the
-      # Tailnet) but used in per-host files because different hosts have
-      # different roles in the Tailnet.
-      #
-      # When no explicit `path` is set, sops-nix places the decrypted file in
-      # `/run/secrets/<name>` (a RAM-backed tmpfs). You can reference the
-      # path anywhere with `config.sops.secrets."<name>".path`
-      "tailscale_mabq_sharedTagKey" = {
-        # path = "";
-      };
-      "tailscale_mabq_adminKey" = {
-        # path = "";
-      };
+      # Create the file with the decrypted content
       "ssh_private_key" = {
-        # Create the file with the right permissions
         path = "/home/${user}/.ssh/id_ed25519";
         mode = "0400";
         owner = "${user}";
         group = "users";
       };
+
+      # Decrypt the content into memory. When no `path` is given, sops-nix
+      # stores the decrypted file in `/run/secrets/<name>`. You can reference
+      # the path anywhere with `config.sops.secrets."<name>".path`
+      "tailnetKey_mabqSharedTag" = { };
+      "tailnetKey_mabqAdmin" = { };
     };
   };
 }

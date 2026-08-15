@@ -98,7 +98,7 @@ with lib;
   # ----------------------------------------------------------------------------
 
   services = {
-    tailscale.enable = mkDefault true; # auth manually or in user's config file
+    tailscale.enable = mkDefault true; # auth manually or via an auth key in profile file
 
     openssh = {
       enable = mkDefault true;
