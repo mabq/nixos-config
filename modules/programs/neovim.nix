@@ -5,7 +5,7 @@
 }:
 {
   imports = [
-    ../modules/theme-files.nix
+    # ../modules/theme-files.nix
   ];
 
   home-manager.users.${user} =
