@@ -45,11 +45,23 @@
         group = "users";
       };
 
-      # Decrypt the content into memory. When no `path` is given, sops-nix
-      # stores the decrypted file in `/run/secrets/<name>`. You can reference
-      # the path anywhere with `config.sops.secrets."<name>".path`
+      # Tailscale
+      #  Decrypt the content into memory. When no `path` is given, sops-nix
+      #  stores the decrypted file in `/run/secrets/<name>`. You can reference
+      #  the path anywhere with `config.sops.secrets."<name>".path`
       "tailnetKey_mabqSharedTag" = { };
       "tailnetKey_mabqAdmin" = { };
+
+      # Atuin
+      #  Overwrites the auto-generated key with the one used in all my
+      #  machines. This way you can run `atuin login` leaving the "encryption
+      #  key" prompt blank and it'll pick up the key file automatically.
+      "atuin_key" = {
+        path = "/home/${user}/.local/share/atuin/key";
+        mode = "0600";
+        owner = "${user}";
+        group = "users";
+      };
     };
   };
 }

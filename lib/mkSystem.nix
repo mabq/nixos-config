@@ -29,7 +29,7 @@ inputs.nixpkgs.lib.nixosSystem {
   inherit specialArgs; # [2]
   modules = [
     # { home-manager.extraSpecialArgs = specialArgs; }
-    ../modules/defaults.nix
+    ../modules/default.nix
     ../hosts/${host}.nix
     ../users/${user}
     ../profiles/${profile}.nix

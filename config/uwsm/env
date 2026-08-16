@@ -37,9 +37,6 @@ export QT_QPA_PLATFORMTHEME="xdgdesktopportal"
 export XCURSOR_THEME="Bibata-Modern-Ice"
 export XCURSOR_SIZE=20
 
-# Bat
-export BAT_THEME=ansi
-
 # ------------------------------------------------------------------------------
 
 # -- XDG

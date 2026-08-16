@@ -1,0 +1,50 @@
+# Git configs
+#  https://git-scm.com/docs/git-config
+[user]
+  email = alejandro.banderas@me.com
+  name = mabq
+[init]
+  defaultBranch = master    # Instead of main
+[pull]
+  rebase = true             # Rebase (instead of merge) on pull
+[push]
+  autoSetupRemote = true    # Automatically set upstream branch on push
+[diff]
+  algorithm = histogram     # Clearer diffs on moved/edited lines
+  colorMoved = plain        # Highlight moved blocks in diffs
+  mnemonicPrefix = true     # More intuitive refs in diff output
+[commit]
+  verbose = true            # Include diff comment in commit message template
+[column]
+  ui = auto                 # Output in columns when possible
+[branch]
+  sort = -committerdate     # Sort branches by most recent commit first
+[tag]
+  sort = -version:refname   # Sort version numbers as you would expect
+[rerere]
+  enabled = true            # Record and reuse conflict resolutions
+  autoupdate = true         # Apply stored conflict resolutions automatically
+
+# gh configs
+#  Instruct git to use `gh` to authenticate to GitHub
+#  For this to work `gh` must be installed with Home-manager (not NixOS).
+#  Use `which gh` to check the path where the exeuctable is located.
+[credential "https://github.com"]
+  helper = # clear any existing helpers
+  helper = !/etc/profiles/per-user/mabq/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+  helper = # clear any existing helpers
+  helper = !/etc/profiles/per-user/mabq/bin/gh auth git-credential
+
+# Git delta configs
+#  https://github.com/dandavison/delta#get-started
+[core]
+  pager = delta
+[interactive]
+  diffFilter = delta --color-only
+[delta]
+  navigate = true  # use n and N to move between diff sections
+  # side-by-side = true
+  dark = true      # or light = true, or omit for auto-detection
+[merge]
+  conflictStyle = zdiff3

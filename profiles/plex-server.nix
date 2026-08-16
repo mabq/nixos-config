@@ -1,13 +1,12 @@
-{ config, ... }:
+{ config, user, ... }:
 {
   imports = [
     ../modules/network/systemd-networkd.nix
+    # ../modules/shell/zsh.nix
 
-    ../modules/git.nix
-    ../modules/keyd.nix
-    ../modules/neovim.nix
-    ../modules/tmux.nix
-    # ../modules/starship.nix
+    ../modules/programs/git.nix
+    ../modules/programs/keyd.nix
+    ../modules/programs/neovim.nix
   ];
 
   services.tailscale = {
@@ -21,6 +20,12 @@
       "--hostname=${config.networking.hostName}"
       "--ssh"
     ];
+  };
+
+  services.plex = {
+    enable = true;
+    openFirewall = true;
+    user = "${user}";
   };
 
   # home-manager.users.${user} =

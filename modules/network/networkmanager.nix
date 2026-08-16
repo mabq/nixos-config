@@ -8,7 +8,7 @@
 with lib;
 {
   imports = [
-    ./systemd-resolved.nix # DNS resolution
+    ./dependencies/systemd-resolved.nix # DNS resolution
   ];
 
   # ----------------------------------------------------------------------------
