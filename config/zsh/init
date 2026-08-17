@@ -9,7 +9,9 @@ if command -v zoxide &>/dev/null; then
 fi
 
 if command -v atuin &>/dev/null; then
-  eval "$(atuin init zsh --disable-up-arrow)" # open with <Ctrl-r>. Up arrow is used by zsh-history-substring-search
+  # Use Ctrl-r for atuin. Leave the Up arrow for `zsh-history-substring-search`.
+  #  https://docs.atuin.sh/latest/configuration/key-binding/#disable-up-arrow
+  eval "$(atuin init zsh --disable-up-arrow)"
 fi
 
 # if command -v mise &> /dev/null; then

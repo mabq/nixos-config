@@ -8,6 +8,7 @@
 }:
 {
   imports = [
+    ./dependencies/atuin.nix
     ./dependencies/bat.nix
     ./dependencies/tmux.nix
     ./dependencies/yazi.nix

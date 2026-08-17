@@ -5,6 +5,7 @@
 }:
 {
   imports = [
+    # TODO: enable this later
     # ../modules/theme-files.nix
   ];
 

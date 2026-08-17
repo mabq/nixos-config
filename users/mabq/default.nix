@@ -52,10 +52,7 @@
       "tailnetKey_mabqSharedTag" = { };
       "tailnetKey_mabqAdmin" = { };
 
-      # Atuin
-      #  Overwrites the auto-generated key with the one used in all my
-      #  machines. This way you can run `atuin login` leaving the "encryption
-      #  key" prompt blank and it'll pick up the key file automatically.
+      # Atuin - read the notes in the atuin module
       "atuin_key" = {
         path = "/home/${user}/.local/share/atuin/key";
         mode = "0600";

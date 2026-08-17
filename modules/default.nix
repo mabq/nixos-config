@@ -96,7 +96,13 @@ with lib;
   # ----------------------------------------------------------------------------
 
   services = {
-    tailscale.enable = mkDefault true; # auth manually or via an auth key in profile file
+    tailscale = {
+      enable = mkDefault true; # auth manually or via an auth key in profile file
+      extraSetFlags = [
+        # https://tailscale.com/docs/reference/tailscale-cli#set
+        "--hostname=${config.networking.hostName}"
+      ];
+    };
 
     openssh = {
       enable = mkDefault true;

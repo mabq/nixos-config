@@ -2,7 +2,7 @@
 {
   imports = [
     ../modules/network/systemd-networkd.nix
-    # ../modules/shell/zsh.nix
+    ../modules/shell/zsh.nix
 
     ../modules/programs/git.nix
     ../modules/programs/keyd.nix
@@ -14,15 +14,12 @@
     #  https://tailscale.com/docs/features/access-control/auth-keys
     #  https://tailscale.com/docs/how-to/set-up-servers
     authKeyFile = config.sops.secrets."tailnetKey_mabqSharedTag".path;
-
-    extraSetFlags = [
-      # https://tailscale.com/docs/reference/tailscale-cli#set
-      "--hostname=${config.networking.hostName}"
-      "--ssh"
-    ];
+    #  https://tailscale.com/docs/reference/tailscale-cli#set
+    extraSetFlags = [ "--ssh" ];
   };
 
   services.plex = {
+    # Configure Plex via `http://<SERVER-IP>:32400/web`
     enable = true;
     openFirewall = true;
     user = "${user}";
