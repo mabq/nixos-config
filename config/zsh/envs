@@ -8,4 +8,4 @@
 # ------------------------------------------------------------------------------
 
 # Replaced with Nix option in default module.
-# export PATH="$HOME/.local/bin:$PATH"
+export PATH="$REPODIR:$HOME/.local/bin:$PATH"

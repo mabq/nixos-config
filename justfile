@@ -1,5 +1,5 @@
 xps:
-  sudo nixos-rebuild --verbose switch --flake ~/.local/share/nixos-config#xps
+  sudo nixos-rebuild --verbose switch --flake .#xps
 
 rebuild config:
   sudo nixos-rebuild --verbose switch --flake .#{{config}}

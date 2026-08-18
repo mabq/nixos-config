@@ -45,6 +45,7 @@ with lib;
           ## Read notes in zsh nix module
           setopt NO_GLOBAL_RCS
           ZDOTDIR="${repoDir}/config/zsh"
+          REPODIR="${repoDir}"
         '';
         force = true;
       };
@@ -102,6 +103,10 @@ with lib;
 
     - `ZDOTDIR` variable
        Shows zsh where to find all other user-level zsh configuration files.
+
+    - `REPODIR` variable
+       Used by a couple config files to avoid hard-coding the repo directory.
+       Check with grep.
 
   zprofile
   --------

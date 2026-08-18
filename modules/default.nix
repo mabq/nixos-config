@@ -89,9 +89,6 @@ with lib;
             sops # Simple and flexible tool for managing secrets
           ];
 
-          # Include repository bin directory in $PATH
-          sessionPath = [ "${repoDir}/bin" ];
-
           # Symlink current theme
           file = {
             # This path is hard-coded in several configuration files
