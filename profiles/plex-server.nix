@@ -4,6 +4,7 @@
     ../modules/network/systemd-networkd.nix
     ../modules/shell/zsh.nix
 
+    ../modules/programs/btop.nix
     ../modules/programs/git.nix
     ../modules/programs/keyd.nix
     ../modules/programs/neovim.nix
@@ -28,9 +29,6 @@
   # home-manager.users.${user} =
   #   { ... }:
   #   {
-  #     home = {
-  #       packages = with pkgs; [
-  #       ];
-  #     };
+  #     home.packages = with pkgs; [ ];
   #   };
 }

@@ -7,5 +7,5 @@
 
 # ------------------------------------------------------------------------------
 
-# Replaced with Nix option in default module.
+# Include nixos-config `bin` directory in $PATH
 export PATH="$REPODIR/bin:$PATH"

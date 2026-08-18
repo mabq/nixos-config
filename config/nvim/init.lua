@@ -70,8 +70,7 @@ Direct startup directories:
 
 Theme file:
 
-  Is loaded by the `lazy.nvim` file directly from:
-   `~/.config/nixos-config/current/theme/neovim.lua`
+  Loaded directly by the `lazy.nvim` file.
 
 To learn about Lua (the language), see:
 

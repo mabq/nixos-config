@@ -11,6 +11,7 @@
 }:
 let
   repoDir = "/home/${user}/.local/share/nixos-config"; # [1]
+  currentThemeDir = "/home/${user}/.config/nixos-config/current/theme"; # [2]
 
   specialArgs = {
     inherit
@@ -22,11 +23,12 @@ let
       stateVersion
       theme
       repoDir
+      currentThemeDir
       ;
   };
 in
 inputs.nixpkgs.lib.nixosSystem {
-  inherit specialArgs; # [2]
+  inherit specialArgs; # [3]
   modules = [
     # { home-manager.extraSpecialArgs = specialArgs; }
     ../modules/default.nix
@@ -45,6 +47,14 @@ inputs.nixpkgs.lib.nixosSystem {
   modules.
 
   [2]
+
+  Path of the current theme (symlink to repository).
+
+  This variable helps avoid hard-coding the same path in many modules but not
+  in some configuration files, if you ever need to change this make sure you
+  check with grep and update all those files as well.
+
+  [3]
 
   Must be `specialArgs` — `_module.args` causes infinite recursion when any of
   the these arguments is used in the `imports` section of a module.

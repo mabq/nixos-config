@@ -1,11 +1,9 @@
 {
   user,
   repoDir,
+  currentThemeDir,
   ...
 }:
-let
-  currentThemePath = "home/${user}/.config/nixos-config/current/theme";
-in
 {
   home-manager.users.${user} =
     { pkgs, config, ... }:
@@ -24,7 +22,7 @@ in
             force = true;
           };
           ".config/bat/themes/current.tmTheme" = {
-            source = mkOutOfStoreSymlink "${currentThemePath}/bat.tmTheme";
+            source = mkOutOfStoreSymlink "${currentThemeDir}/bat.tmTheme";
             force = true;
           };
         };

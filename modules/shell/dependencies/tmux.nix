@@ -13,6 +13,8 @@
       home = {
         packages = with pkgs; [
           tmux # Terminal multiplexer
+          fd # Simple, fast and user-friendly alternative to find (!tmux-sessionizer)
+          fzf # Command-line fuzzy finder (!tmux-sessionizer)
         ];
 
         file = {
@@ -29,11 +31,13 @@
   Related configurations
   ======================
 
-  - Default module
-    Includes the repository's `bin` directory in $PATH.
-    Required to execute `tmux-sessionizer` script.
+  - Shell configs
+    Include the repository `bin` directory to $PATH (required for
+    `tmux-sessionizer` to be reachable.
 
-  - Shell config
+    `~/.zshenv` exports the `$REPODIR` used by `tmux-sessionizer` to
+    include the repository directory.
+
     Shortcut to invoke `tmux-sessionizer`
 
   - Neovim config

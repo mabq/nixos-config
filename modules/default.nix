@@ -81,17 +81,17 @@ with lib;
           homeDirectory = mkDefault "/home/${user}";
           stateVersion = mkDefault stateVersion; # See notes at the bottom
 
-          # Packages required by all users/profiles
+          # Packages available to all users/profiles
           packages = with pkgs; [
             age # Modern encryption tool with small explicit keys
             just # Handy way to save and run project-specific commands
-            pciutils # Collection of programs for inspecting and manipulating configuration of PCI devices
             sops # Simple and flexible tool for managing secrets
           ];
 
           # Symlink current theme
           file = {
-            # This path is hard-coded in several configuration files
+            # This path is hard-coded in several configuration files, if you
+            # change it make sure you update all those files as well.
             ".config/nixos-config/current/theme" = {
               source = mkOutOfStoreSymlink "${repoDir}/themes/${theme}";
               force = true;

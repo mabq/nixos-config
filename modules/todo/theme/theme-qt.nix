@@ -1,10 +1,9 @@
-{ user, ... }:
+{ user, currentThemeDir, ... }:
 {
   home-manager.users.${user} =
     { pkgs, config, ... }:
     let
       mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
-      currentThemePath = "home/${user}/.config/nixos-config/current/theme";
     in
     {
       home = {
@@ -15,7 +14,7 @@
 
         file = {
           ".config/Kvantum/kvantum.kvconfig" = {
-            source = mkOutOfStoreSymlink "${currentThemePath}/kvantum.kvconfig";
+            source = mkOutOfStoreSymlink "${currentThemeDir}/kvantum.kvconfig";
             force = true;
           };
         };

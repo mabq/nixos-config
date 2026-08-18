@@ -1,6 +1,7 @@
 {
   user,
   repoDir,
+  currentThemeDir,
   ...
 }:
 {
@@ -8,7 +9,6 @@
     { pkgs, config, ... }:
     let
       mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
-      currentThemePath = "home/${user}/.config/nixos-config/current/theme";
     in
     {
       home = {
@@ -22,7 +22,7 @@
             force = true;
           };
           ".config/btop/themes/current.theme" = {
-            source = mkOutOfStoreSymlink "${currentThemePath}/btop.theme";
+            source = mkOutOfStoreSymlink "${currentThemeDir}/btop.theme";
             force = true;
           };
         };

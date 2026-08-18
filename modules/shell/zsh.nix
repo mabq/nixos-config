@@ -25,17 +25,17 @@
     home = {
       packages = with pkgs; [
         exfatprogs # exFAT filesystem userspace utilities (!functions)
-        eza # Modern, maintained replacement for ls (!alias)
+        eza # Modern, maintained replacement for ls (!aliases)
         fd # Simple, fast and user-friendly alternative to find
-        ffmpeg # Complete, cross-platform solution to record, convert and stream audio and video
+        ffmpeg # Complete, cross-platform solution to record, convert and stream audio and video (!functions)
         fzf # Command-line fuzzy finder
-        imagemagick # Software suite to create, edit, compose, or convert bitmap images
-        parted # Create, destroy, resize, check, and copy partitions
+        imagemagick # Software suite to create, edit, compose, or convert bitmap images (!functions(
+        parted # Create, destroy, resize, check, and copy partitions (!functions)
         ripgrep # Utility that combines the usability of The Silver Searcher with the raw speed of grep
-        zoxide # Fast cd command that learns your habits
-        zsh-autosuggestions # Fish-like shell autosuggestions for Zsh
-        zsh-history-substring-search # Fish-like shell history-substring-search for Zsh
-        zsh-syntax-highlighting # Fish-like shell like syntax highlighting for Zsh
+        zoxide # Fast cd command that learns your habits (!aliases)
+        zsh-autosuggestions # Fish-like shell autosuggestions for Zsh (!inputrc)
+        zsh-history-substring-search # Fish-like shell history-substring-search for Zsh (!inputrc)
+        zsh-syntax-highlighting # Fish-like shell like syntax highlighting for Zsh (!inputrc)
       ];
 
       file.".zshenv" = {
@@ -106,7 +106,6 @@
     - `REPODIR` variable
        Used by a couple config files to avoid hard-coding the repo directory.
        Must be exported to be available in scripts, e.g. tmux-sessionizer
-       Check with grep.
 
   zprofile
   --------

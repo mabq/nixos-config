@@ -90,4 +90,4 @@ sourceZshPlugins
 # --- Others ---
 
 # Ensure command hashing is off for mise
-# set +h # TODO: Check later
+# set +h
