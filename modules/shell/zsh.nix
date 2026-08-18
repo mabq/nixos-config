@@ -43,7 +43,7 @@
           ## Read notes in zsh nix module
           setopt NO_GLOBAL_RCS
           ZDOTDIR="${repoDir}/config/zsh"
-          REPODIR="${repoDir}"
+          export REPODIR="${repoDir}"
         '';
         force = true;
       };
