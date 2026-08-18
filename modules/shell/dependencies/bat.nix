@@ -29,3 +29,11 @@
       };
     };
 }
+
+/*
+  Related configurations
+  ======================
+
+  - Default module
+    Symlink to current theme.
+*/

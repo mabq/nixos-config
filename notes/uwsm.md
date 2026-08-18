@@ -11,14 +11,15 @@ Without UWSM (Universal Wayland Session Manager), every single app you open
 from inside Hyprland (terminal, browser, etc) becomes a "child process" tied
 directly to Hyprland.
 
-  > NOTE: Check with `systemctl status`
+> [!info]
+> Check with `systemctl status`
 
 UWSM instructs systemd to launch them as independent units. If Hyprland
 crashes, the apps don't violently die in the background, they can shut down
-cleanly, allowing browsers like Chromium to save your tabs.
+cleanly. E.g. Allow the browser to save current tabs.
 
 Additionally, UWSM ensures background daemons started with `systemd --user`
-have access to critical variables ((like `WAYLAND_DISPLAY` and
+have access to critical variables (like `WAYLAND_DISPLAY` and
 `XDG_CURRENT_DESKTOP`). More info about this in environment variables notes.
 
 Instead of forcefully killing the graphical server, typing `uwsm stop` triggers
@@ -111,7 +112,7 @@ that variable.
 
   6. `systemd --user` loads all units associated to that target and nest them
      into dedicated cgroup slices. Since all Hyprland related environment
-     variables where available to `systemd --user`, all the processes started
+     variables are available to `systemd --user`, all the processes started
      by it will also have them available.
 
 Make sure you set hyprland keybinds to use `uwsm app -- <command>` to make UWSM

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-foot_theme="$NC_CURRENT_THEME_PATH/foot.ini"
+foot_theme="$HOME/.config/nixos-config/current/theme/foot.ini"
 
 if [[ ! -f $foot_theme ]] || ! pgrep -x foot >/dev/null; then
   exit 0

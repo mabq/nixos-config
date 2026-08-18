@@ -17,13 +17,6 @@
 #
 # ------------------------------------------------------------------------------
 
-# -- PATH
-
-# Include our script directories to $PATH
-export PATH="$HOME/.local/bin:$NC_REPO_PATH/bin:$PATH"
-
-# ------------------------------------------------------------------------------
-
 # -- THEMING VARIABLES
 
 # GTK (read notes in `hypr-gtk` module)

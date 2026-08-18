@@ -1,3 +1,11 @@
-# INFO: Don't put environent variables here, put them in `~/.config/uwsm/env`.
+# Important!
+#   Environment variables required by any process not launched from the
+#   terminal (e.g. `systemd`, `systemd --user`, compositor) must be set in
+#   `~/.config/uwsm/env`.
 #
-# Read the notes in the hyprland module for more info.
+#   Read the notes in the hyprland module for more info.
+
+# ------------------------------------------------------------------------------
+
+# Replaced with Nix option in default module.
+# export PATH="$HOME/.local/bin:$PATH"

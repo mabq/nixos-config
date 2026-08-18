@@ -3,8 +3,8 @@
 -- Lua files loaded with require() have separate local scopes, so modules that
 -- need these paths import this table instead of repeating os.getenv() lookups.
 
-local currentThemePath = os.getenv "NC_CURRENT_THEME_PATH"
-dofile(currentThemePath .. "/hyprland.lua")
+-- TODO: Make this dynamic for any user!
+dofile "/home/mabq/.config/nixos-config/current/theme/hyprland.lua"
 
 hl.config {
 

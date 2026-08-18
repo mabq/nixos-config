@@ -26,6 +26,24 @@
 }
 
 /*
+  Related configurations
+  ======================
+
+  - Shell init
+    Atuin must be initialized by a shell config file.
+      https://docs.atuin.sh/latest/guide/shell-integration/
+      https://docs.atuin.sh/latest/configuration/key-binding/
+
+  - User's module
+    Overrides the random encryption key created at installation with the one of
+    the user's Atuin account.
+
+  Manual steps
+  ============
+
+  Must run `atuin login` to start syncing history. See encryption key notes
+  below.
+
   Encryption key
   ==============
 
@@ -33,28 +51,18 @@
   will share the same history. If you need separate histories, create separate
   Atuin accounts.
 
-  Unfortunatelly, Atuin does not allow me to write auth credentials to a file
-  and read from there to automate the login process. So, if you wish to sync
-  history you need to manually run `atuin login`.
+  Atuin does not read authentication credentials from files, so if you wish to
+  sync history you need to manually run `atuin login`.
    https://docs.atuin.sh/latest/guide/sync/#login
 
-  If you are already syncing history in another machine (with the same Atuin
-  account), you need to use the same encryption key as the other machine.
-  Run `atuin key --base64` to check the encryption key it is using.
+  In order to avoid typing the encryption key manually (which replaces the
+  content of `~/.local/share/atuin/key`), we use the user's module to create
+  that file from a secret. So, when executing `atuin login` just leave the
+  encryption key empty. You need a browser to open the authentication URL.
 
-  In order to avoid typing the encryption key manually (which under the hood
-  replaces the current content of `~/.local/share/atuin/key`), we use the
-  user's module to create that file from a secret. So, when executing `atuin
-  login` leave the encryption key empty to use the key from the file.
-
-  Note: It is safe to override the key because it is only used when syncing
-  data. The local database is not encrypted.
-
-  Initializing
-  ============
-
-  `atuin init zsh --disable-up-arrow` is done in the shell `init` file.
-    https://docs.atuin.sh/latest/configuration/key-binding/
+  Run `atuin key --base64` to check the encryption key. We can safely override
+  the key because it is only used for syncing data. The local database is not
+  encrypted.
 
   Links
   =====

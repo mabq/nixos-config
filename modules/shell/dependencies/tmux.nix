@@ -1,4 +1,8 @@
-{ user, repoDir, ... }:
+{
+  user,
+  repoDir,
+  ...
+}:
 {
   home-manager.users.${user} =
     { pkgs, config, ... }:
@@ -20,3 +24,18 @@
       };
     };
 }
+
+/*
+  Related configurations
+  ======================
+
+  - Default module
+    Includes the repository's `bin` directory in $PATH.
+    Required to execute `tmux-sessionizer` script.
+
+  - Shell config
+    Shortcut to invoke `tmux-sessionizer`
+
+  - Neovim config
+    Shortcut to invoke `tmux-sessionizer`
+*/

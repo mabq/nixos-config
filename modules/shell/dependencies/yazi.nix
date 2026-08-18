@@ -48,3 +48,11 @@
       };
     };
 }
+
+/*
+  Related configurations
+  ======================
+
+  - Shell config
+    Alias `y` to automatically change directory on exit.
+*/

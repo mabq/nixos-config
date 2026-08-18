@@ -20,3 +20,13 @@
       };
     };
 }
+
+/*
+  Related configurations
+  ======================
+
+  - Shell init
+    Starship must be initialized by a shell config file.
+      https://docs.atuin.sh/latest/guide/shell-integration/
+      https://docs.atuin.sh/latest/configuration/key-binding/
+*/

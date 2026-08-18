@@ -58,24 +58,49 @@ with lib;
 
   home-manager = {
     # Integrate home-manager with NixOS:
-    #  User binaries in `/etc/profiles/per-user/<username>/bin` (not `~/.nix-profile/bin`)
-    #  Single command to collect all garbage: `nix-collect-garbage -d`
-    #  Single command to rebuild both: `nixos-rebuild`
+    #   User binaries in `/etc/profiles/per-user/<username>/bin` (not `~/.nix-profile/bin`)
+    #   Single command to collect all garbage: `nix-collect-garbage -d`
+    #   Single command to rebuild both: `nixos-rebuild`
     # These options should only be set to `false` when using `nix` in non-NixOS
-    # Linux distributions (like Ubuntu/Arch).
+    # linux distributions (like Ubuntu/Arch).
     useGlobalPkgs = mkDefault true;
     useUserPackages = mkDefault true;
-    users.${user}.home = {
-      username = mkDefault user;
-      homeDirectory = mkDefault "/home/${user}";
-      packages = with pkgs; [
-        age # Modern encryption tool with small explicit keys
-        just # Handy way to save and run project-specific commands
-        pciutils # Collection of programs for inspecting and manipulating configuration of PCI devices
-        sops # Simple and flexible tool for managing secrets
-      ];
-      stateVersion = mkDefault stateVersion; # see notes at the bottom
-    };
+
+    # Common user configurations
+    users.${user} =
+      { config, ... }:
+      let
+        mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
+      in
+      {
+        home = {
+          username = mkDefault user;
+          homeDirectory = mkDefault "/home/${user}";
+          stateVersion = mkDefault stateVersion; # See notes at the bottom
+
+          # Packages required by all users/profiles
+          packages = with pkgs; [
+            age # Modern encryption tool with small explicit keys
+            just # Handy way to save and run project-specific commands
+            pciutils # Collection of programs for inspecting and manipulating configuration of PCI devices
+            sops # Simple and flexible tool for managing secrets
+          ];
+
+          # Include repository bin directory in $PATH
+          sessionPath = [ "${repoDir}/bin" ];
+
+          # Symlink current theme
+          file = {
+            # This path is hard-coded in several configuration files
+            ".config/nixos-config/current/theme" = {
+              source = mkOutOfStoreSymlink "${repoDir}/themes/${theme}";
+              force = true;
+            };
+          };
+        };
+
+      };
+
   };
 
   # ----------------------------------------------------------------------------

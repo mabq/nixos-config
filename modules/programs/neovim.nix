@@ -5,8 +5,7 @@
 }:
 {
   imports = [
-    # TODO: enable this later
-    # ../modules/theme-files.nix
+    ../themes/current-theme.nix
   ];
 
   home-manager.users.${user} =

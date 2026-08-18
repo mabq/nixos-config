@@ -1,15 +1,15 @@
-# zsh as the main shell
+# Zsh as the main shell
 {
   pkgs,
   user,
   repoDir,
-  currentThemePath,
   ...
 }:
 {
   imports = [
     ./dependencies/atuin.nix
     ./dependencies/bat.nix
+    ./dependencies/starship.nix
     ./dependencies/tmux.nix
     ./dependencies/yazi.nix
   ];
@@ -21,45 +21,114 @@
   users.users.${user}.shell = pkgs.zsh;
 
   # Home-manager
-  home-manager.users.${user} =
-    { pkgs, config, ... }:
-    let
-      mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
-    in
-    {
-      home = {
-        packages = with pkgs; [
-          exfatprogs # exFAT filesystem userspace utilities (!functions)
-          eza # Modern, maintained replacement for ls (!alias)
-          fd # Simple, fast and user-friendly alternative to find
-          ffmpeg # Complete, cross-platform solution to record, convert and stream audio and video
-          fzf # Command-line fuzzy finder
-          imagemagick # Software suite to create, edit, compose, or convert bitmap images
-          parted # Create, destroy, resize, check, and copy partitions
-          ripgrep # Utility that combines the usability of The Silver Searcher with the raw speed of grep
-          zoxide # Fast cd command that learns your habits
-          zsh-autosuggestions # Fish-like shell autosuggestions for Zsh
-          zsh-history-substring-search # Fish-like shell history-substring-search for Zsh
-          zsh-syntax-highlighting # Fish-like shell like syntax highlighting for Zsh
-        ];
+  home-manager.users.${user} = {
+    home = {
+      packages = with pkgs; [
+        exfatprogs # exFAT filesystem userspace utilities (!functions)
+        eza # Modern, maintained replacement for ls (!alias)
+        fd # Simple, fast and user-friendly alternative to find
+        ffmpeg # Complete, cross-platform solution to record, convert and stream audio and video
+        fzf # Command-line fuzzy finder
+        imagemagick # Software suite to create, edit, compose, or convert bitmap images
+        parted # Create, destroy, resize, check, and copy partitions
+        ripgrep # Utility that combines the usability of The Silver Searcher with the raw speed of grep
+        zoxide # Fast cd command that learns your habits
+        zsh-autosuggestions # Fish-like shell autosuggestions for Zsh
+        zsh-history-substring-search # Fish-like shell history-substring-search for Zsh
+        zsh-syntax-highlighting # Fish-like shell like syntax highlighting for Zsh
+      ];
 
-        file = {
-          ".zshenv" = {
-            text = ''
-              # Be careful what you put in this file, it affects every zsh invocation (including scp, rsync, etc).
-              setopt NO_GLOBAL_RCS # --- Ignore zsh global config files, except `/etc/zshenv` which is read before this file.
-              ZDOTDIR="${repoDir}/config/zsh" # --- Source zsh config files directly from the repository. No need to export.
-              export NC_REPO_PATH="${repoDir}" # --- Used to include binaries of this repo to PATH
-              export NC_CURRENT_THEME_PATH="${currentThemePath}" # --- Used to point config files to current theme
-            '';
-            force = true;
-          };
-
-          ".zprofile" = {
-            source = mkOutOfStoreSymlink "${repoDir}/config/zsh/.zprofile";
-            force = true;
-          };
-        };
+      # Read notes below!
+      file.".zshenv" = {
+        text = ''
+          setopt NO_GLOBAL_RCS
+          ZDOTDIR="${repoDir}/config/zsh"
+        '';
+        force = true;
       };
     };
+  };
 }
+
+/*
+  Source Order
+  ============
+
+  Zsh uses five main startup configuration files, each serving a specific
+  purpose. They are sourced in a strict chronological order.
+
+     System-level            User-level
+     ------------            ----------
+     `/etc/zshenv`     ->    `~/.zshenv`
+     `/etc/zprofile`   ->    `~/.zprofile`
+     `/etc/zshrc`      ->    `~/.zshrc`
+     `/etc/zlogin`     ->    `~/.zlogin`
+     `/etc/zlogout`    ->    `~/.zlogout`
+
+  System-wide versions located in `/etc/` are sourced right before their
+  corresponding user-level files.
+
+  Shell Types
+  ===========
+
+    - Interactive:      Terminal windows
+    - Non-interactive:  Running scripts
+    - Login:            SSH login
+
+  zshenv
+  ======
+
+  System-level and user-level versions of this file are ALWAYS sourced,
+  regardless of the shell type — meaning both files are executed every single
+  time Zsh starts, including non-interactive scripts and remote commands.
+
+  Put only environment variables that must be available to all scripts,
+  subshells, and applications. Keep this file as lightweight as possible to
+  avoid slowing down script execution. Do not put output commands, aliases, or
+  prompt configurations here.
+
+  The system-level version is controlled by NixOS and it includes basic
+  stuff.
+
+  The user-level version is created by this module.
+
+    - `NO_GLOBAL_RCS` option
+       Instructs zsh to ignore all sub-sequent system-level configuration
+       files. Those files contain configurations that we don't need and may
+       conflict with our configs.
+
+    - `ZDOTDIR` variable
+       Shows zsh where to find all user-level zsh configuration files.
+
+  zprofile
+  ========
+
+  Only runs at start for login shells. Use this for heavy environment setups or
+  path configurations that don't need to re-run every time you open a new
+  terminal tab.
+
+  zshrc
+  =====
+
+  Runs everytime you open a terminal window. Controls the interactive terminal
+  user experience.
+
+  Place all your prompt settings (e.g., Starship, Oh My Zsh), interactive
+  options (setopt), completion setup (compinit), aliases, and custom functions
+  here.
+
+  zlogin
+  ======
+
+  Executes commands immediately after the shell environment is fully
+  initialized, at login, immediately after `.zshrc`.
+
+  Use for startup status messages, displaying system info (neofetch), or
+  launching a window manager.
+
+  zlogout
+  =======
+
+  Runs upon exiting a login shell. Used for clearing the terminal screen,
+  dropping temporary files, or logging logout times.
+*/
