@@ -101,9 +101,11 @@
 
     - `ZDOTDIR` variable
        Shows zsh where to find all other user-level zsh configuration files.
+       No need to export.
 
     - `REPODIR` variable
        Used by a couple config files to avoid hard-coding the repo directory.
+       Must be exported to be available in scripts, e.g. tmux-sessionizer
        Check with grep.
 
   zprofile
