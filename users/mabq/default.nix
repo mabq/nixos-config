@@ -69,10 +69,12 @@
 
   # Home Manager
   home-manager.users.${user} = {
+    # Packages the user expects to find in all systems
     home.packages = with pkgs; [
-      # Packages the user expects to find in all systems
+      # CLI
       pciutils # Collection of programs for inspecting and manipulating configuration of PCI devices
       caligula # User-friendly, lightweight TUI for disk imaging
+      psmisc # Set of small useful utilities that use the proc filesystem (such as fuser, killall and pstree)
     ];
   };
 }
