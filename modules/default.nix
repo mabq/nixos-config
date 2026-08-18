@@ -7,6 +7,7 @@
   host,
   user,
   stateVersion,
+  theme,
   repoDir,
   ...
 }:
