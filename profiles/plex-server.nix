@@ -1,4 +1,9 @@
-{ config, user, ... }:
+{
+  config,
+  user,
+  pkgs,
+  ...
+}:
 {
   imports = [
     ../modules/network/systemd-networkd.nix
@@ -26,19 +31,12 @@
     };
   };
 
-  # plasma
-  services = {
-    desktopManager.plasma6.enable = true;
+  programs.niri.enable = true;
+  programs.foot.enable = true;
 
-    # Default display manager for Plasma
-    displayManager.plasma-login-manager.enable = true;
-    displayManager.defaultSession = "plasmax11";
-
-    # Optionally enable xserver
-    xserver.enable = true;
+  home-manager.users.${user} = {
+    home.packages = with pkgs; [
+      brave
+    ];
   };
-
-  # home-manager.users.${user} = {
-  #   home.packages = with pkgs; [ ];
-  # };
 }
