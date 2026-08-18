@@ -9,6 +9,7 @@
   stateVersion,
   theme,
   repoDir,
+  themeDirHome,
   ...
 }:
 with lib;
@@ -89,13 +90,9 @@ with lib;
           ];
 
           # Symlink current theme
-          file = {
-            # This path is hard-coded in several configuration files, if you
-            # change it make sure you update all those files as well.
-            ".config/nixos-config/current/theme" = {
-              source = mkOutOfStoreSymlink "${repoDir}/themes/${theme}";
-              force = true;
-            };
+          file."${themeDirHome}" = {
+            source = mkOutOfStoreSymlink "${repoDir}/themes/${theme}";
+            force = true;
           };
         };
 

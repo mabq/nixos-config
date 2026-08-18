@@ -3,6 +3,7 @@
   pkgs,
   user,
   repoDir,
+  themeDir,
   ...
 }:
 {
@@ -32,7 +33,7 @@
         imagemagick # Software suite to create, edit, compose, or convert bitmap images (!functions(
         parted # Create, destroy, resize, check, and copy partitions (!functions)
         ripgrep # Utility that combines the usability of The Silver Searcher with the raw speed of grep
-        zoxide # Fast cd command that learns your habits (!aliases)
+        zoxide # Fast cd command that learns your habits (!aliases) (must be initialized)
         zsh-autosuggestions # Fish-like shell autosuggestions for Zsh (!inputrc)
         zsh-history-substring-search # Fish-like shell history-substring-search for Zsh (!inputrc)
         zsh-syntax-highlighting # Fish-like shell like syntax highlighting for Zsh (!inputrc)
@@ -44,6 +45,7 @@
           setopt NO_GLOBAL_RCS
           ZDOTDIR="${repoDir}/config/zsh"
           export REPODIR="${repoDir}"
+          export THEMEDIR="${themeDir}"
         '';
         force = true;
       };
@@ -106,6 +108,11 @@
     - `REPODIR` variable
        Used by a couple config files to avoid hard-coding the repo directory.
        Must be exported to be available in scripts, e.g. tmux-sessionizer
+
+    - `THEMEDIR` variable
+       Used by config files that admit global variables to avoid hard-coding
+       the theme path.
+       Must be exported to be available in configuration files.
 
   zprofile
   --------

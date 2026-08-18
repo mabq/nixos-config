@@ -25,17 +25,17 @@ if command -v zoxide &>/dev/null; then
   }
 fi
 
-if command -v git &>/dev/null; then
-  alias gl='git log --graph --oneline --all --decorate'
-fi
+# if command -v git &>/dev/null; then
+#   alias gl='git log --graph --oneline --all --decorate'
+# fi
 
 if command -v tmux &>/dev/null; then
   alias t='tmux attach || tmux new -s Work'
 fi
 
-if command -v nvim &>/dev/null; then
-  n() { if [ "$#" -eq 0 ]; then command nvim .; else command nvim "$@"; fi; }
-fi
+# if command -v nvim &>/dev/null; then
+#   n() { if [ "$#" -eq 0 ]; then command nvim .; else command nvim "$@"; fi; }
+# fi
 
 if command -v yazi &>/dev/null; then
   # https://yazi-rs.github.io/docs/quick-start/#shell-wrapper

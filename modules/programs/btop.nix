@@ -1,7 +1,7 @@
 {
   user,
   repoDir,
-  currentThemeDir,
+  themeDir,
   ...
 }:
 {
@@ -22,7 +22,7 @@
             force = true;
           };
           ".config/btop/themes/current.theme" = {
-            source = mkOutOfStoreSymlink "${currentThemeDir}/btop.theme";
+            source = mkOutOfStoreSymlink "${themeDir}/btop.theme";
             force = true;
           };
         };

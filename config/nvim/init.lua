@@ -18,8 +18,8 @@ require("vim._core.ui2").enable {
   },
 }
 
--- Require lazy config
-require "config.lazy"
+-- Require lua/config.lua
+require "config"
 
 --[[
 

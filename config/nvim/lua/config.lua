@@ -19,9 +19,10 @@ vim.opt.rtp:prepend(lazypath) -- include in runtimepath so that Neovim also look
 -- Load and configure Lazy.nvim
 require("lazy").setup {
   spec = {
-    { import = "plugins" }, -- this is where lazy.nvim looks for plugin specs
+    -- Source all plugins
+    { import = "plugins" },
 
-    -- Source the theme file directly
+    -- Source theme file
     dofile(vim.fn.expand "$HOME/.config/nixos-config/current/theme/neovim.lua") or nil,
   },
   change_detection = {

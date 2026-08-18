@@ -1,12 +1,7 @@
-{
-  inputs,
-  pkgs,
-  user,
-  ...
-}:
+{ pkgs, user, ... }:
 {
   imports = [
-    inputs.sops-nix.nixosModules.sops
+    ./secrets/sops-nix.nix
   ];
 
   users.users.${user} = {
@@ -25,51 +20,8 @@
     ];
   };
 
-  # Decrypt secrets
-  sops = {
-    # Decrypted Age private key 🔥
-    # Needs to be present before executing the flake. Without it sops-nix won't
-    # be able to decrypt secrets and will throw an error. Make sure the
-    # decrypted file never ends in a public repository and is only readable by
-    # this user.
-    age.keyFile = "/home/${user}/.config/sops/age/keys.txt";
-
-    # The file containing the secrets.
-    # Can only be edited with the `sops` command, which also expects to find
-    # the private key above. If you ever change the location of this file,
-    # update `.sops.yaml` at the root of the flake as well.
-    defaultSopsFile = ./secrets.yaml;
-
-    # Attribute names come from `secrets.yaml`
-    secrets = {
-      # Create the file with the decrypted content
-      "ssh_private_key" = {
-        path = "/home/${user}/.ssh/id_ed25519";
-        mode = "0400";
-        owner = "${user}";
-        group = "users";
-      };
-
-      # Tailscale
-      #  Decrypt the content into memory. When no `path` is given, sops-nix
-      #  stores the decrypted file in `/run/secrets/<name>`. You can reference
-      #  the path anywhere with `config.sops.secrets."<name>".path`
-      "tailnetKey_mabqSharedTag" = { };
-      "tailnetKey_mabqAdmin" = { };
-
-      # Atuin - read the notes in the atuin module
-      "atuin_key" = {
-        path = "/home/${user}/.local/share/atuin/key";
-        mode = "0600";
-        owner = "${user}";
-        group = "users";
-      };
-    };
-  };
-
-  # Home Manager
+  # Packages the user expects to find in all systems
   home-manager.users.${user} = {
-    # Packages the user expects to find in all systems
     home.packages = with pkgs; [
       # CLI
       pciutils # Collection of programs for inspecting and manipulating configuration of PCI devices

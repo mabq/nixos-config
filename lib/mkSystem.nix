@@ -11,7 +11,8 @@
 }:
 let
   repoDir = "/home/${user}/.local/share/nixos-config"; # [1]
-  currentThemeDir = "/home/${user}/.config/nixos-config/current/theme"; # [2]
+  themeDirHome = ".config/nixos-config/current/theme"; # [2]
+  themeDir = "/home/${user}/${themeDirHome}"; # [2]
 
   specialArgs = {
     inherit
@@ -23,7 +24,8 @@ let
       stateVersion
       theme
       repoDir
-      currentThemeDir
+      themeDirHome
+      themeDir
       ;
   };
 in
@@ -50,9 +52,10 @@ inputs.nixpkgs.lib.nixosSystem {
 
   Path of the current theme (symlink to repository).
 
-  This variable helps avoid hard-coding the same path in many modules but not
-  in some configuration files, if you ever need to change this make sure you
-  check with grep and update all those files as well.
+  These variables are an attempt to avoid hard-coding the path in configuration
+  files. While they greatly accomplish the goal, some configuration files do
+  not allow global variables in them. So, if you change this, do a grep with
+  the path so see the files you will need to update.
 
   [3]
 
