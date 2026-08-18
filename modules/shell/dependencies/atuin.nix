@@ -41,8 +41,8 @@
   Manual steps
   ============
 
-  Must run `atuin login` to start syncing history. See encryption key notes
-  below.
+  Must run `atuin login` to login and `atuin sync` to start sync. See
+  encryption key notes below.
 
   Encryption key
   ==============
