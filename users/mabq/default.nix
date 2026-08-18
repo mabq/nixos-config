@@ -23,13 +23,13 @@
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINjOlPls0gNkjBTOvXIbmm7HbSUOHM+erfwE4tdNVMLn"
     ];
-  };
 
-  # Packages the user expects to find in all systems
-  home.packages = with pkgs; [
-    pciutils # Collection of programs for inspecting and manipulating configuration of PCI devices
-    caligula # User-friendly, lightweight TUI for disk imaging
-  ];
+    # Packages the user expects to find in all systems
+    home.packages = with pkgs; [
+      pciutils # Collection of programs for inspecting and manipulating configuration of PCI devices
+      caligula # User-friendly, lightweight TUI for disk imaging
+    ];
+  };
 
   # Decrypt secrets
   sops = {
