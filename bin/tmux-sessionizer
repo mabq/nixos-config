@@ -22,8 +22,11 @@ if [[ $# -eq 1 ]]; then
   working_directory=$1
 else
   list=$(
-    # The $REPODIR variable is defined in `~/.zshenv`
-    fd --hidden --no-ignore --exact-depth 1 --type directory . "$REPODIR" "$HOME/" "$HOME/projects/"
+    # Include the nixos-config directory
+    echo "${REPODIR}/"
+
+    # All dirs in these directories
+    fd --hidden --no-ignore --exact-depth 1 --type directory . "$HOME/" "$HOME/projects/"
   )
   # LC_ALL takes the leading dot into account for sorting
   working_directory=$(echo "$list" | LC_ALL=C sort | fzf)
