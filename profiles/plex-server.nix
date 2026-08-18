@@ -26,6 +26,14 @@
     };
   };
 
+  # plasma
+  services.xserver.enable = true;
+  services.desktopManager.plasma6.enable = true;
+  services.displayManager.sddm.enable = true;
+  services.displayManager.defaultSession = "plasmax11";
+  services.displayManager.sddm.wayland.enable = false;
+  hardware.graphics.enable = true;
+
   # home-manager.users.${user} = {
   #   home.packages = with pkgs; [ ];
   # };
