@@ -1,4 +1,3 @@
-email:
 { user, repoDir, ... }:
 {
   home-manager.users.${user} =
