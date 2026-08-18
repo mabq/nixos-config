@@ -1,6 +1,7 @@
 # Don't forget to use `mkDefault`, these should be overidable.
 {
   inputs,
+  config,
   lib,
   pkgs,
   host,
