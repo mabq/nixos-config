@@ -1,12 +1,10 @@
 # Zsh as the main shell
 {
-  lib,
   pkgs,
   user,
   repoDir,
   ...
 }:
-with lib;
 {
   imports = [
     ./dependencies/atuin.nix
@@ -17,10 +15,10 @@ with lib;
   ];
 
   # Must be enabled to be used as the default shell
-  programs.zsh.enable = mkDefault true;
+  programs.zsh.enable = true;
 
   # Make it the default shell for the user
-  users.users.${user}.shell = mkDefault pkgs.zsh;
+  users.users.${user}.shell = pkgs.zsh;
 
   # Home-manager
   home-manager.users.${user} = {
