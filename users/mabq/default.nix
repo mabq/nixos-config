@@ -23,12 +23,6 @@
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINjOlPls0gNkjBTOvXIbmm7HbSUOHM+erfwE4tdNVMLn"
     ];
-
-    # Packages the user expects to find in all systems
-    home.packages = with pkgs; [
-      pciutils # Collection of programs for inspecting and manipulating configuration of PCI devices
-      caligula # User-friendly, lightweight TUI for disk imaging
-    ];
   };
 
   # Decrypt secrets
@@ -71,5 +65,14 @@
         group = "users";
       };
     };
+  };
+
+  # Home Manager
+  home-manager.users.${user} = {
+    home.packages = with pkgs; [
+      # Packages the user expects to find in all systems
+      pciutils # Collection of programs for inspecting and manipulating configuration of PCI devices
+      caligula # User-friendly, lightweight TUI for disk imaging
+    ];
   };
 }
