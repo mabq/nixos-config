@@ -52,10 +52,10 @@ inputs.nixpkgs.lib.nixosSystem {
 
   Path of the current theme (symlink to repository).
 
-  These variables are an attempt to avoid hard-coding the path in configuration
-  files. While they greatly accomplish the goal, some configuration files do
-  not allow global variables in them. So, if you change this, do a grep with
-  the path so see the files you will need to update.
+  These variables are an attempt to reduce the places where the path
+  hard-coded, unfortunatelly not all configuration files accept global
+  variables. So, if you ever need to change this, make sure you do a grep and
+  update those files as well.
 
   [3]
 
