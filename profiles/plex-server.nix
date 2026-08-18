@@ -27,12 +27,16 @@
   };
 
   # plasma
-  services.xserver.enable = true;
-  services.desktopManager.plasma6.enable = true;
-  services.displayManager.sddm.enable = true;
-  services.displayManager.defaultSession = "plasmax11";
-  services.displayManager.sddm.wayland.enable = false;
-  hardware.graphics.enable = true;
+  services = {
+    desktopManager.plasma6.enable = true;
+
+    # Default display manager for Plasma
+    displayManager.plasma-login-manager.enable = true;
+    displayManager.defaultSession = "plasmax11";
+
+    # Optionally enable xserver
+    xserver.enable = true;
+  };
 
   # home-manager.users.${user} = {
   #   home.packages = with pkgs; [ ];
