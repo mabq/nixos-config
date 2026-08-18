@@ -1,10 +1,12 @@
 # Zsh as the main shell
 {
+  lib,
   pkgs,
   user,
   repoDir,
   ...
 }:
+with lib;
 {
   imports = [
     ./dependencies/atuin.nix
@@ -15,10 +17,10 @@
   ];
 
   # Must be enabled to be used as the default shell
-  programs.zsh.enable = true;
+  programs.zsh.enable = mkDefault true;
 
   # Make it the default shell for the user
-  users.users.${user}.shell = pkgs.zsh;
+  users.users.${user}.shell = mkDefault pkgs.zsh;
 
   # Home-manager
   home-manager.users.${user} = {
@@ -38,9 +40,9 @@
         zsh-syntax-highlighting # Fish-like shell like syntax highlighting for Zsh
       ];
 
-      # Read notes below!
       file.".zshenv" = {
         text = ''
+          ## Read notes in zsh nix module
           setopt NO_GLOBAL_RCS
           ZDOTDIR="${repoDir}/config/zsh"
         '';
@@ -51,74 +53,75 @@
 }
 
 /*
-  Source Order
-  ============
-
-  Zsh uses five main startup configuration files, each serving a specific
-  purpose. They are sourced in a strict chronological order.
-
-     System-level            User-level
-     ------------            ----------
-     `/etc/zshenv`     ->    `~/.zshenv`
-     `/etc/zprofile`   ->    `~/.zprofile`
-     `/etc/zshrc`      ->    `~/.zshrc`
-     `/etc/zlogin`     ->    `~/.zlogin`
-     `/etc/zlogout`    ->    `~/.zlogout`
-
-  System-wide versions located in `/etc/` are sourced right before their
-  corresponding user-level files.
-
   Shell Types
   ===========
 
     - Interactive:      Terminal windows
     - Non-interactive:  Running scripts
-    - Login:            SSH login
+    - Login:            Initial login / SSH login
+
+  Config files
+  ============
+
+  Zsh uses five main startup configuration files, each serving a specific
+  purpose depending on whether the shell is interactive or non-interactive, and
+  whether it is a login shell.
+
+   System-level       User-level
+   ------------       ----------
+   `/etc/zshenv`      `~/.zshenv`
+   `/etc/zprofile`    `~/.zprofile`
+   `/etc/zshrc`       `~/.zshrc`
+   `/etc/zlogin`      `~/.zlogin`
+   `/etc/zlogout`     `~/.zlogout`
+
+  System-wide versions located in `/etc/` are sourced right before their
+  corresponding user-level files. So, `/etc/zshenv`, then `~/.zshenv`, then
+  `/etc/zprofile`, then `~/.zprofile` and so on.
 
   zshenv
-  ======
+  ------
 
   System-level and user-level versions of this file are ALWAYS sourced,
   regardless of the shell type — meaning both files are executed every single
   time Zsh starts, including non-interactive scripts and remote commands.
 
-  Put only environment variables that must be available to all scripts,
-  subshells, and applications. Keep this file as lightweight as possible to
-  avoid slowing down script execution. Do not put output commands, aliases, or
+  Keep this file as lightweight as possible to avoid slowing down script
+  execution. Put only environment variables that must be available to all
+  scripts, subshells, and applications. Do not put output commands, aliases, or
   prompt configurations here.
 
-  The system-level version is controlled by NixOS and it includes basic
-  stuff.
+  The system-level file is controlled by NixOS and only includes basic stuff.
 
-  The user-level version is created by this module.
+  The user-level file is created by this module.
 
     - `NO_GLOBAL_RCS` option
        Instructs zsh to ignore all sub-sequent system-level configuration
-       files. Those files contain configurations that we don't need and may
-       conflict with our configs.
+       files. They contain configurations that we don't need and may conflict
+       with our config.
 
     - `ZDOTDIR` variable
-       Shows zsh where to find all user-level zsh configuration files.
+       Shows zsh where to find all other user-level zsh configuration files.
 
   zprofile
-  ========
+  --------
 
   Only runs at start for login shells. Use this for heavy environment setups or
   path configurations that don't need to re-run every time you open a new
   terminal tab.
 
   zshrc
-  =====
+  -----
 
-  Runs everytime you open a terminal window. Controls the interactive terminal
-  user experience.
+  Runs everytime you open an interactive terminal window. Controls the
+  interactive terminal user experience.
 
   Place all your prompt settings (e.g., Starship, Oh My Zsh), interactive
   options (setopt), completion setup (compinit), aliases, and custom functions
   here.
 
   zlogin
-  ======
+  ------
 
   Executes commands immediately after the shell environment is fully
   initialized, at login, immediately after `.zshrc`.
@@ -127,7 +130,7 @@
   launching a window manager.
 
   zlogout
-  =======
+  -------
 
   Runs upon exiting a login shell. Used for clearing the terminal screen,
   dropping temporary files, or logging logout times.
