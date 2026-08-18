@@ -1,9 +1,11 @@
 {
   user,
   repoDir,
-  currentThemePath,
   ...
 }:
+let
+  currentThemePath = "home/${user}/.config/nixos-config/current/theme";
+in
 {
   home-manager.users.${user} =
     { pkgs, config, ... }:

@@ -1,9 +1,10 @@
-{ user, currentThemePath, ... }:
+{ user, ... }:
 {
   home-manager.users.${user} =
     { pkgs, config, ... }:
     let
       mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
+      currentThemePath = "home/${user}/.config/nixos-config/current/theme";
     in
     {
       home = {

@@ -2,11 +2,10 @@
 # foot does not accept an env variable as part of the path to include.
 # You don't need to rebuild to apply a new theme but you do if you want
 # to change the font size or any of the other configs set by this file.
-{
-  user,
-  currentThemePath,
-  ...
-}:
+{ user, ... }:
+let
+  currentThemePath = "home/${user}/.config/nixos-config/current/theme";
+in
 {
   home-manager.users.${user} = {
     # Fast, lightweight and minimalistic Wayland terminal emulator
