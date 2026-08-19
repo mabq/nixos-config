@@ -48,7 +48,7 @@
         ];
         file = {
           ".config/foot/foot.ini" = {
-            source = mkOutOfStoreSymlink "${repoDir}/config/foot/foot/ini";
+            source = mkOutOfStoreSymlink "${repoDir}/config/foot/foot.ini";
             force = true;
           };
         };
