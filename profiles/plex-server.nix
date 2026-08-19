@@ -40,4 +40,9 @@
       fuzzel
     ];
   };
+
+  environment.sessionVariables = {
+    # Required to run brave in wayland mode
+    NIXOS_OZONE_WL = "1";
+  };
 }
