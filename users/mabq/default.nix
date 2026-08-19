@@ -24,6 +24,7 @@
   home-manager.users.${user} = {
     home.packages = with pkgs; [
       # CLI
+      fastfetch # Actively maintained, feature-rich and performance oriented, neofetch like system information tool
       pciutils # Collection of programs for inspecting and manipulating configuration of PCI devices
       caligula # User-friendly, lightweight TUI for disk imaging
       psmisc # Set of small useful utilities that use the proc filesystem (such as fuser, killall and pstree)
