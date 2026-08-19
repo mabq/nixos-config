@@ -14,7 +14,7 @@
     ../modules/programs/keyd.nix
     ../modules/programs/neovim.nix
 
-    ../modules/programs/foot
+    ../modules/programs/foot.nix
   ];
 
   services.tailscale = {
