@@ -1,35 +1,32 @@
-# We use the home-manager foot module to produce the config file because
-# foot does not accept an env variable as part of the path to include.
-# You don't need to rebuild to apply a new theme but you do if you want
-# to change the font size or any of the other configs set by this file.
-{ user, themeDir, ... }:
+{ user, repoDir, ... }:
 {
-  home-manager.users.${user} = {
-    # Fast, lightweight and minimalistic Wayland terminal emulator
-    programs.foot = {
-      enable = true;
-      settings = {
-        main = {
-          include = "${themeDir}/foot.ini";
-          # term = "xterm-256color";
-          font = "monospace:size=9";
-          pad = "14x14";
-          initial-window-mode = "windowed";
-          workers = "0";
-        };
-        scrollback = {
-          lines = "10000";
-        };
-        cursor = {
-          style = "block";
-          blink = "no";
-        };
-        key-bindings = {
-          clipboard-copy = "Control+Insert";
-          primary-paste = "none";
-          clipboard-paste = "Control+Shift+v";
+  home-manager.users.${user} =
+    { pkgs, config, ... }:
+    let
+      mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
+    in
+    {
+      home = {
+        packages = with pkgs; [
+          foot # Fast, lightweight and minimalistic Wayland terminal emulator
+        ];
+
+        file = {
+          ".config/foot/foot.ini" = {
+            # Unfortunately, foot does not allow variables in paths given to
+            # `include`, so we must use a user's scoped file.
+            source = mkOutOfStoreSymlink "${repoDir}/config/foot.ini";
+            force = true;
+          };
         };
       };
     };
-  };
 }
+
+/*
+  Related configurations
+  ======================
+
+  - Default module
+    Symlink to current theme.
+*/
