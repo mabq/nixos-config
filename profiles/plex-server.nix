@@ -2,6 +2,7 @@
   config,
   user,
   pkgs,
+  repoDir,
   ...
 }:
 {
@@ -32,14 +33,27 @@
   };
 
   programs.niri.enable = true;
-  programs.foot.enable = true;
 
-  home-manager.users.${user} = {
-    home.packages = with pkgs; [
-      brave
-      fuzzel
-    ];
-  };
+  home-manager.users.${user} =
+    { pkgs, config, ... }:
+    let
+      mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
+    in
+    {
+      home = {
+        packages = with pkgs; [
+          brave
+          fuzzel
+          foot
+        ];
+      };
+      file = {
+        ".config/foot/foot.ini" = {
+          source = mkOutOfStoreSymlink "${repoDir}/config/foot/foot/ini";
+          force = true;
+        };
+      };
+    };
 
   environment.sessionVariables = {
     # Required to run brave in wayland mode
