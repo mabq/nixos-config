@@ -1,11 +1,12 @@
 {
+  pkgs,
   user,
   repoDir,
   ...
 }:
 {
   home-manager.users.${user} =
-    { pkgs, config, ... }:
+    { config, ... }:
     let
       mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
     in

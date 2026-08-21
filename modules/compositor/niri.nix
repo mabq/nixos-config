@@ -1,5 +1,4 @@
 {
-  config,
   pkgs,
   user,
   repoDir,
@@ -13,6 +12,7 @@
   # programs.niri.enable = true;
 
   home-manager.users.${user} =
+    { config, ... }:
     let
       mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
     in

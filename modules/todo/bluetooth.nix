@@ -1,4 +1,9 @@
-{ lib, user, ... }:
+{
+  pkgs,
+  lib,
+  user,
+  ...
+}:
 with lib;
 {
   hardware.bluetooth = {
@@ -15,13 +20,11 @@ with lib;
     };
   };
 
-  home-manager.users.${user} =
-    { pkgs, ... }:
-    {
-      home.packages = with pkgs; [
-        bluetui # TUI for managing bluetooth on Linux [1]
-      ];
-    };
+  home-manager.users.${user} = {
+    home.packages = with pkgs; [
+      bluetui # TUI for managing bluetooth on Linux [1]
+    ];
+  };
 }
 
 # [1] In order for bluetui to work the pipewire user service must be active,

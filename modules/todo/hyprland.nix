@@ -1,4 +1,5 @@
 {
+  pkgs,
   user,
   repoDir,
   ...
@@ -16,11 +17,7 @@
   programs.hyprland.enable = true;
 
   home-manager.users.${user} =
-    {
-      pkgs,
-      config,
-      ...
-    }:
+    { config, ... }:
     let
       mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
     in
