@@ -4,6 +4,9 @@ return {
     dependencies = { "saghen/blink.cmp" },
     config = function()
       -- Configure LSPs:
+      --
+      --   LSPs must be installed by the neovim nix module.
+      --
       --   These customized configurations will be merged with the ones
       --   provided by nvim-lspconfig. Pass an emtpy table `{}` to use the
       --   default config.

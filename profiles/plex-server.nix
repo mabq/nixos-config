@@ -1,9 +1,4 @@
-{
-  config,
-  user,
-  pkgs,
-  ...
-}:
+{ config, user, ... }:
 {
   imports = [
     ../modules/network/systemd-networkd.nix
@@ -14,7 +9,7 @@
     ../modules/programs/keyd.nix
     ../modules/programs/neovim.nix
 
-    ../modules/programs/foot.nix
+    ../modules/compositor/niri.nix
   ];
 
   services.tailscale = {
@@ -29,14 +24,5 @@
     enable = true;
     openFirewall = true;
     user = "${user}"; # ⚠️ should not run as my user, it could read secret files only readble by me
-  };
-
-  programs.niri.enable = true;
-
-  home-manager.users.${user} = {
-    home.packages = with pkgs; [
-      brave
-      fuzzel
-    ];
   };
 }
