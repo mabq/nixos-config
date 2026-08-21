@@ -9,7 +9,7 @@
     ./dependencies/foot.nix
   ];
 
-  # programs.niri.enable = true;
+  programs.niri.enable = true;
 
   home-manager.users.${user} =
     { config, ... }:
@@ -19,7 +19,7 @@
     {
       home = {
         packages = with pkgs; [
-          niri # Scrollable-tiling Wayland compositor
+          # niri # Scrollable-tiling Wayland compositor
           brave # Privacy-oriented browser for Desktop and Laptop computers
           fuzzel # Wayland-native application launcher, similar to rofi’s drun mode
         ];
