@@ -54,7 +54,6 @@ return {
         javascript = { "biome" },
         json = { "biome" },
         jsonc = { "biome" },
-        kdl = { "kdlfmt" },
         lua = { "stylua", lsp_format = "never" },
         markdown = { "biome" },
         nix = { "nixfmt" },

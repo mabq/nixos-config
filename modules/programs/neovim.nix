@@ -39,8 +39,6 @@
 
           biome # Toolchain of the web
 
-          kdlfmt # Formatter for kdl documents
-
           # luajit # High-performance JIT compiler for Lua 5.1
           # luarocks # A package manager for Lua modules
         ];
