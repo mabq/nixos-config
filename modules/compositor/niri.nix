@@ -23,12 +23,12 @@
           brave # Privacy-oriented browser for Desktop and Laptop computers
           fuzzel # Wayland-native application launcher, similar to rofi’s drun mode
         ];
-      };
 
-      file = {
-        ".config/niri" = {
-          source = mkOutOfStoreSymlink "${repoDir}/config/niri";
-          force = true;
+        file = {
+          ".config/niri" = {
+            source = mkOutOfStoreSymlink "${repoDir}/config/niri";
+            force = true;
+          };
         };
       };
     };
