@@ -22,6 +22,7 @@
           # niri # Scrollable-tiling Wayland compositor
           brave # Privacy-oriented browser for Desktop and Laptop computers
           fuzzel # Wayland-native application launcher, similar to rofi’s drun mode
+          nautilus # File manager for GNOME
         ];
 
         file = {
