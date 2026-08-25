@@ -88,10 +88,10 @@ binds {
     Mod+Down { set-window-height "-2%"; }
     Mod+Up { set-window-height "+2%"; }
 
-    Mod+m repeat=false { maximize-window-to-edges; }
+    Mod+m repeat=false { maximize-column; }
+    Mod+Shift+m repeat=false { maximize-window-to-edges; }
 
-    Mod+f repeat=false { maximize-column; }
-    Mod+Shift+f repeat=false { fullscreen-window; }
+    Mod+f repeat=false { toggle-windowed-fullscreen; }
 
     Mod+c repeat=false { center-column; }
 

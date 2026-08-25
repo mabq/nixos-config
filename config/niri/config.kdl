@@ -8,6 +8,12 @@ cursor {
     hide-when-typing
 }
 
+gestures {
+    hot-corners {
+        off
+    }
+}
+
 // Settings that influence how windows are positioned and sized.
 // Find more information on the wiki:
 // https://niri-wm.github.io/niri/Configuration:-Layout
