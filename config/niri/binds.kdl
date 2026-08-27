@@ -1,20 +1,13 @@
 /*
-  Keys consist of modifiers separated by + signs, followed by an XKB key name
-  in the end. To find an XKB name for a particular key, you may use a program
-  like `wev`.
+  https://niri-wm.github.io/niri/Configuration%3A-Key-Bindings.html
 
-  "Mod" is a special modifier equal to Super when running on a TTY, and to Alt
-  when running as a winit window.
+  To find the XKB name for a particular key, use a program like wev.
 
-  Most actions that you can bind here can also be invoked programmatically with
+  Most actions invoked here can also be called programmatically with
   `niri msg action do-something`.
 */
 
 binds {
-    /*
-      Window management
-    */
-
     Mod+w repeat=false { close-window; }
 
     Mod+o repeat=false { toggle-overview; }
@@ -79,14 +72,14 @@ binds {
     Mod+Ctrl+Alt+j repeat=false { move-workspace-to-monitor-down; }
     Mod+Ctrl+Alt+k repeat=false { move-workspace-to-monitor-up; }
 
+    //
+
     Mod+t { toggle-column-tabbed-display; }
 
-    // Sizing
-
-    Mod+Left { set-column-width "-2%"; }
-    Mod+Right { set-column-width "+2%"; }
-    Mod+Down { set-window-height "-2%"; }
-    Mod+Up { set-window-height "+2%"; }
+    Mod+Left { set-column-width "-1%"; }
+    Mod+Right { set-column-width "+1%"; }
+    Mod+Down { set-window-height "-1%"; }
+    Mod+Up { set-window-height "+1%"; }
 
     Mod+m repeat=false { maximize-column; }
     Mod+Shift+m repeat=false { maximize-window-to-edges; }
@@ -98,9 +91,7 @@ binds {
     Mod+v { toggle-window-floating; }
     Mod+Shift+v { switch-focus-between-floating-and-tiling; }
 
-    /*
-      Media and Programs
-    */
+    //
 
     Mod+return hotkey-overlay-title="Open a Terminal: foot" { spawn "foot"; }
     Mod+Space hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
@@ -135,9 +126,7 @@ binds {
     XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+10%"; }
     XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "10%-"; }
 
-    /*
-      Others
-    */
+    //
 
     Mod+Shift+p { power-off-monitors; }
 
