@@ -5,8 +5,10 @@ local mainMod = "SUPER"
 ---------------------------------------------------------------------------------
 
 -- Uses netcat for the absolute fastest socket-activation trigger
-hl.bind(mainMod .. " + Space", hl.dsp.exec_cmd "uwsm app -- nc -U /run/user/1000/walker/walker.sock")
-hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd "uwsm app -- foot")
+-- hl.bind(mainMod .. " + Space", hl.dsp.exec_cmd "uwsm app -- nc -U /run/user/1000/walker/walker.sock")
+hl.bind(mainMod .. " + Space", hl.dsp.exec_cmd "fuzzel")
+-- hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd "uwsm app -- foot")
+hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd "foot")
 hl.bind(mainMod .. " + SHIFT + f", hl.dsp.exec_cmd "uwsm app -- nautilus")
 
 hl.bind(mainMod .. " + w", hl.dsp.window.close())
