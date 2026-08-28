@@ -9,7 +9,7 @@
     ../modules/programs/keyd.nix
     ../modules/programs/neovim.nix
 
-    ../modules/compositor/niri.nix
+    ../modules/compositor/hyprland.nix
   ];
 
   services.tailscale = {
