@@ -27,11 +27,16 @@
         packages = with pkgs; [
           xdg-desktop-portal-gtk # See "xdg-desktop-portal" in notes directory.
 
+          brave # Privacy-oriented browser for Desktop and Laptop computers
+          fuzzel # Wayland-native application launcher, similar to rofi’s drun mode
+          nautilus # File manager for GNOME
+          libqalculate # Advanced calculator library (!elephant)
+          wev # Wayland event viewer (keycodes)
+
           # -- Launcher --
           # INFO: Read [Service Management](https://nixos.org/manual/nixos/stable/#sec-systemctl)
-          elephant # Data provider service and backend for building custom application launchers (!walker)
-          walker # Wayland-native application runner
-          libqalculate # Advanced calculator library (!elephant)
+          # elephant # Data provider service and backend for building custom application launchers (!walker)
+          # walker # Wayland-native application runner
 
           # -- Hypr utils --
           # hyprlauncher # A multipurpose and versatile launcher / picker for Hyprland
@@ -45,21 +50,17 @@
           # -- Must have --
           wl-clip-persist # Keep Wayland clipboard even after programs close
           wl-clipboard # Command-line copy/paste utilities for Wayland
-
-          # -- Others --
-          nautilus # File manager for GNOME
-          wev # Wayland event viewer (keycodes)
         ];
 
         file = {
-          ".config/elephant" = {
-            source = mkOutOfStoreSymlink "${repoDir}/config/elephant";
-            force = true;
-          };
-          ".config/walker" = {
-            source = mkOutOfStoreSymlink "${repoDir}/config/walker";
-            force = true;
-          };
+          # ".config/elephant" = {
+          #   source = mkOutOfStoreSymlink "${repoDir}/config/elephant";
+          #   force = true;
+          # };
+          # ".config/walker" = {
+          #   source = mkOutOfStoreSymlink "${repoDir}/config/walker";
+          #   force = true;
+          # };
           ".config/hypr" = {
             source = mkOutOfStoreSymlink "${repoDir}/config/hypr";
             force = true;
