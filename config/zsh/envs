@@ -9,3 +9,4 @@
 
 # Include nixos-config `bin` directory in $PATH
 export PATH="$REPODIR/bin:$PATH"
+export XCURSOR_SIZE=20
