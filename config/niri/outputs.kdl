@@ -14,16 +14,16 @@
 // XPS 13 (1280 x 800)
 output "LVDS-1" {
     scale 1
+    position x=0 y=0
     // backdrop-color "#1a1b26"
-    position x=-1280 y=0 // left
-    // position x=1440 y=0 // right
-    // position x=0 y=900 // down
-    // position x=0 y=-900 // up
 }
 
 // Dell P2016 (1440 x 900)
 output "DP-1" {
     // off
     scale 1
-    position x=0 y=0
+    // position x=-1280 y=0 // left
+    // position x=1440 y=0 // right
+    // position x=0 y=900 // down
+    position x=-80 y=-900 // up
 }

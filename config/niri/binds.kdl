@@ -14,87 +14,85 @@ binds {
 
     Mod+Semicolon repeat=false { focus-window-previous; }
 
-    Mod+h repeat=false { focus-column-left; }
-    Mod+l repeat=false { focus-column-right; }
-    Mod+j repeat=false { focus-window-or-workspace-down; }
-    Mod+k repeat=false { focus-window-or-workspace-up; }
+    Mod+h { focus-column-left; }
+    Mod+l { focus-column-right; }
+    Mod+j { focus-window-or-workspace-down; }
+    Mod+k { focus-window-or-workspace-up; }
 
-    Mod+Shift+h repeat=false { move-column-left; }
-    Mod+Shift+l repeat=false { move-column-right; }
-    Mod+Shift+j repeat=false { move-column-to-workspace-down; }
-    Mod+Shift+k repeat=false { move-column-to-workspace-up; }
-
-    Mod+WheelScrollLeft cooldown-ms=150 { focus-column-left; }
-    Mod+WheelScrollRight cooldown-ms=150 { focus-column-right; }
+    Mod+WheelScrollLeft cooldown-ms=150 { focus-column-right; }
+    Mod+WheelScrollRight cooldown-ms=150 { focus-column-left; }
     Mod+WheelScrollDown cooldown-ms=150 { focus-window-or-workspace-down; }
     Mod+WheelScrollUp cooldown-ms=150 { focus-window-or-workspace-up; }
 
-    Mod+Shift+left repeat=false { consume-or-expel-window-left; }
-    Mod+Shift+right repeat=false { consume-or-expel-window-right; }
-    Mod+Shift+down repeat=false { move-window-down-or-to-workspace-down; }
-    Mod+Shift+up repeat=false { move-window-up-or-to-workspace-up; }
+    Mod+Shift+left { consume-or-expel-window-left; }
+    Mod+Shift+right { consume-or-expel-window-right; }
+    Mod+Shift+down { move-window-down-or-to-workspace-down; }
+    Mod+Shift+up { move-window-up-or-to-workspace-up; }
 
-    Mod+1 repeat=false { focus-workspace 1; }
-    Mod+2 repeat=false { focus-workspace 2; }
-    Mod+3 repeat=false { focus-workspace 3; }
-    Mod+4 repeat=false { focus-workspace 4; }
-    Mod+5 repeat=false { focus-workspace 5; }
-    Mod+6 repeat=false { focus-workspace 6; }
-    Mod+7 repeat=false { focus-workspace 7; }
-    Mod+8 repeat=false { focus-workspace 8; }
-    Mod+9 repeat=false { focus-workspace 9; }
+    Mod+Shift+h { move-column-left; }
+    Mod+Shift+l { move-column-right; }
+    Mod+Shift+j { move-column-to-workspace-down; }
+    Mod+Shift+k { move-column-to-workspace-up; }
 
-    Mod+Shift+1 repeat=false { move-window-to-workspace 1; }
-    Mod+Shift+2 repeat=false { move-window-to-workspace 2; }
-    Mod+Shift+3 repeat=false { move-window-to-workspace 3; }
-    Mod+Shift+4 repeat=false { move-window-to-workspace 4; }
-    Mod+Shift+5 repeat=false { move-window-to-workspace 5; }
-    Mod+Shift+6 repeat=false { move-window-to-workspace 6; }
-    Mod+Shift+7 repeat=false { move-window-to-workspace 7; }
-    Mod+Shift+8 repeat=false { move-window-to-workspace 8; }
-    Mod+Shift+9 repeat=false { move-window-to-workspace 9; }
+    Mod+1 { focus-workspace 1; }
+    Mod+2 { focus-workspace 2; }
+    Mod+3 { focus-workspace 3; }
+    Mod+4 { focus-workspace 4; }
+    Mod+5 { focus-workspace 5; }
+    Mod+6 { focus-workspace 6; }
+    Mod+7 { focus-workspace 7; }
+    Mod+8 { focus-workspace 8; }
+    Mod+9 { focus-workspace 9; }
 
-    Mod+Alt+j repeat=false { move-workspace-down; }
-    Mod+Alt+k repeat=false { move-workspace-up; }
+    Mod+Shift+1 { move-window-to-workspace 1; }
+    Mod+Shift+2 { move-window-to-workspace 2; }
+    Mod+Shift+3 { move-window-to-workspace 3; }
+    Mod+Shift+4 { move-window-to-workspace 4; }
+    Mod+Shift+5 { move-window-to-workspace 5; }
+    Mod+Shift+6 { move-window-to-workspace 6; }
+    Mod+Shift+7 { move-window-to-workspace 7; }
+    Mod+Shift+8 { move-window-to-workspace 8; }
+    Mod+Shift+9 { move-window-to-workspace 9; }
 
-    Mod+Ctrl+h repeat=false { focus-monitor-left; }
-    Mod+Ctrl+l repeat=false { focus-monitor-right; }
-    Mod+Ctrl+j repeat=false { focus-monitor-down; }
-    Mod+Ctrl+k repeat=false { focus-monitor-up; }
+    Mod+Alt+j { move-workspace-down; }
+    Mod+Alt+k { move-workspace-up; }
 
-    Mod+Ctrl+Shift+h repeat=false { move-window-to-monitor-left; }
-    Mod+Ctrl+Shift+l repeat=false { move-window-to-monitor-right; }
-    Mod+Ctrl+Shift+j repeat=false { move-window-to-monitor-down; }
-    Mod+Ctrl+Shift+k repeat=false { move-window-to-monitor-up; }
+    Mod+Ctrl+h { focus-monitor-left; }
+    Mod+Ctrl+l { focus-monitor-right; }
+    Mod+Ctrl+j { focus-monitor-down; }
+    Mod+Ctrl+k { focus-monitor-up; }
 
-    Mod+Ctrl+Alt+h repeat=false { move-workspace-to-monitor-left; }
-    Mod+Ctrl+Alt+l repeat=false { move-workspace-to-monitor-right; }
-    Mod+Ctrl+Alt+j repeat=false { move-workspace-to-monitor-down; }
-    Mod+Ctrl+Alt+k repeat=false { move-workspace-to-monitor-up; }
+    Mod+Ctrl+Shift+h { move-column-to-monitor-left; }
+    Mod+Ctrl+Shift+l { move-column-to-monitor-right; }
+    Mod+Ctrl+Shift+j { move-column-to-monitor-down; }
+    Mod+Ctrl+Shift+k { move-column-to-monitor-up; }
 
-    //
-
-    Mod+t { toggle-column-tabbed-display; }
+    Mod+Ctrl+Alt+h { move-workspace-to-monitor-left; }
+    Mod+Ctrl+Alt+l { move-workspace-to-monitor-right; }
+    Mod+Ctrl+Alt+j { move-workspace-to-monitor-down; }
+    Mod+Ctrl+Alt+k { move-workspace-to-monitor-up; }
 
     Mod+Left { set-column-width "-1%"; }
     Mod+Right { set-column-width "+1%"; }
     Mod+Down { set-window-height "-1%"; }
     Mod+Up { set-window-height "+1%"; }
 
-    Mod+m repeat=false { maximize-column; }
+    Mod+m repeat=false repeat=false { maximize-column; }
     Mod+Shift+m repeat=false { maximize-window-to-edges; }
 
     Mod+f repeat=false { toggle-windowed-fullscreen; }
 
     Mod+c repeat=false { center-column; }
 
-    Mod+v { toggle-window-floating; }
-    Mod+Shift+v { switch-focus-between-floating-and-tiling; }
+    Mod+v repeat=false { toggle-window-floating; }
+    Mod+Shift+v repeat=false { switch-focus-between-floating-and-tiling; }
+
+    Mod+t repeat=false { toggle-column-tabbed-display; }
 
     //
 
-    Mod+return hotkey-overlay-title="Open a Terminal: foot" { spawn "foot"; }
-    Mod+Space hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
+    Mod+return repeat=false hotkey-overlay-title="Open a Terminal: foot" { spawn "foot"; }
+    Mod+Space repeat=false hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
     // Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
 
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
@@ -102,9 +100,9 @@ binds {
     // For example, this is a standard bind to toggle the screen reader (orca).
     // Super+Alt+S allow-when-locked=true hotkey-overlay-title=null { spawn-sh "pkill orca || exec orca"; }
 
-    Print { screenshot; }
-    Ctrl+Print { screenshot-screen; }
-    Alt+Print { screenshot-window; }
+    Print repeat=false { screenshot; }
+    Ctrl+Print repeat=false { screenshot-screen; }
+    Alt+Print repeat=false { screenshot-window; }
 
     // PipeWire & WirePlumber
     // Using spawn-sh allows to pass multiple arguments together with the command
@@ -128,11 +126,11 @@ binds {
 
     //
 
-    Mod+Shift+p { power-off-monitors; }
+    Mod+Shift+p repeat=false { power-off-monitors; }
 
-    Mod+Shift+e { quit; }
+    Mod+Shift+e repeat=false { quit; }
 
-    Mod+Shift+slash { show-hotkey-overlay; }
+    Mod+Shift+slash repeat=false { show-hotkey-overlay; }
 
     // Applications such as remote-desktop clients and software KVM switches
     // may request that niri stops processing the keyboard shortcuts defined

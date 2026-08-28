@@ -22,7 +22,6 @@ input {
     }
 
     mouse {
-        natural-scroll
-        scroll-factor horizontal=-1.0 vertical=1.0
+        scroll-factor horizontal=-1.0 vertical=1.0 // MxKeys
     }
 }
