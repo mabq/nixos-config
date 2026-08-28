@@ -1,8 +1,8 @@
 # XDG Desktop Portals
 
-TODO: CHECK `/run/current-system/sw/share/xdg-desktop-portal`
+TODO: Check `/run/current-system/sw/share/xdg-desktop-portal`
 
-When using minimal wayland compositors like Hyprland, you need to manually assemble the pieces that a full desktop environment usually provides out of the box.
+When using a minimal Wayland compositor like Hyprland or Niri, you need to manually assemble the pieces that a full desktop environment usually provides out of the box.
 
 To understand what portals do, it helps to look at the problems they were designed to solve: security and standardization.
 
@@ -22,7 +22,7 @@ Instead of letting the application dig into your system to grab a file or captur
 
 Think of `xdg-desktop-portal` as a hotel concierge.
 
-The application (the guest) goes to the concierge and says, "I need to ask the user to pick a file to open."
+The application (the guest) goes to the concierge and says, "I need to ask the user to pick a file to open".
 
 The application does not know or care how the file picker is drawn or what toolkit (Qt, GTK) is used.
 

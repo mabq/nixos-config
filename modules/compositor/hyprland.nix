@@ -6,8 +6,9 @@
 }:
 {
   imports = [
-    ./hypr-uwsm.nix
-    ./theme-desktop.nix
+    ./dependencies/foot.nix
+    # ./dependencies/hypr-uwsm.nix
+    # ./theme-desktop.nix
   ];
 
   # This option automatically enables critical components needed to run
