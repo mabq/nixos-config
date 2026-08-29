@@ -5,9 +5,10 @@
   ...
 }:
 {
+  # Make nvim the default text editor.
+  # Read session variables notes in the default module for more information
+  # about this option..
   environment.sessionVariables = {
-    # Read notes about session variables in the Zsh module.
-    # Make nvim the default text editor.
     EDITOR = "nvim";
     SUDO_EDITOR = "nvim";
     VISUAL = "nvim";

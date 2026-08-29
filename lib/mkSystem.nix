@@ -11,8 +11,7 @@
 }:
 let
   repoDir = "/home/${user}/.local/share/nixos-config"; # [1]
-  themeDirHome = ".config/nixos-config/current/theme"; # [2]
-  themeDir = "/home/${user}/${themeDirHome}"; # [2]
+  themeDir = "/home/${user}/.config/nixos-config/current/theme"; # [2]
 
   specialArgs = {
     inherit
@@ -24,7 +23,6 @@ let
       stateVersion
       theme
       repoDir
-      themeDirHome
       themeDir
       ;
   };

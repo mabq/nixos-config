@@ -9,7 +9,7 @@
   stateVersion,
   theme,
   repoDir,
-  themeDirHome,
+  themeDir,
   ...
 }:
 with lib;
@@ -75,6 +75,7 @@ with lib;
       { config, ... }:
       let
         mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
+        currentThemeDir = lib.strings.removePrefix "/home/${user}" themeDir;
       in
       {
         home = {
@@ -90,7 +91,7 @@ with lib;
           ];
 
           # Symlink current theme
-          file."${themeDirHome}" = {
+          file."${currentThemeDir}" = {
             source = mkOutOfStoreSymlink "${repoDir}/themes/${theme}";
             force = true;
           };
@@ -112,6 +113,34 @@ with lib;
   # ----------------------------------------------------------------------------
 
   # environment.systemPackages = with pkgs; [ ];
+
+  # ----------------------------------------------------------------------------
+  # Environment variables
+  # ----------------------------------------------------------------------------
+  #
+  # These are fixed environment variables that nix makes available to all
+  # shells (for zsh see `/etc/zshenv`) and user-level (not system-level)
+  # systemd services.
+  #
+  # Only include here variables that you want to be available for all shells
+  # (interactive and non-interactive Bash, Zsh, Fish shells).
+  #
+  # For dynamic variables (set at runtime) that you also need to be available
+  # for systemd services, see the uwsm module.
+  #
+  # This option is also used by other modules, do a live grep to check.
+
+  environment.sessionVariables = {
+    REPODIR = "${repoDir}"; # avoid hard-coding the repo directory in most config files
+    THEMEDIR = "${themeDir}"; # avoid hard-coding the theme dir in most config files
+
+    PATH = "${repoDir}/bin"; # include binaries of this repo in PATH (don't use `<path>:$PATH` syntax here)
+
+    PAGER = "less -R --use-color -Dd+r -Du+b"; # colorized pager
+    MANPAGER = "less -R --use-color -Dd+r -Du+b"; # colorized man pages
+    MANROFFOPT = "-P -c"; # https://wiki.archlinux.org/title/Color_output_in_console#Using_less
+    # TERM = # do not set this variable, it is set by each terminal emulator.
+  };
 
   # ----------------------------------------------------------------------------
   # Services

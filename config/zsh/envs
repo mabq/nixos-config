@@ -1,2 +1,2 @@
 # Only put here variables specific to zsh interactive shells, otherwise prefer
-# the "session-variables" module. See the zsh nix module.
+# the "session-variables" option in the default module.
