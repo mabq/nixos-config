@@ -18,6 +18,7 @@
   # https://wiki.hypr.land/Nix/Hyprland-on-NixOS/
   programs.hyprland.enable = true;
 
+  # Nixpkgs
   # https://wiki.hypr.land/Nix/#nixos-module
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
