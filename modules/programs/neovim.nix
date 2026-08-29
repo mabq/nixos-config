@@ -5,6 +5,14 @@
   ...
 }:
 {
+  environment.sessionVariables = {
+    # Read notes about session variables in the Zsh module.
+    # Make nvim the default text editor.
+    EDITOR = "nvim";
+    SUDO_EDITOR = "$EDITOR";
+    VISUAL = "$EDITOR";
+  };
+
   home-manager.users.${user} =
     { config, ... }:
     let

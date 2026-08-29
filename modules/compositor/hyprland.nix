@@ -11,11 +11,15 @@
     # ./theme-desktop.nix
   ];
 
-  # This option automatically enables critical components needed to run
-  # Hyprland properly, such as polkit, xdg-desktop-portal-hyprland, graphics
-  # drivers, fonts, dconf, xwayland, and adding a proper Desktop Entry to the
-  # Display Manager (which I do not use).
+  # The NixOS module enables critical components needed to run Hyprland
+  # properly, such as polkit, xdg-desktop-portal-hyprland, graphics drivers,
+  # fonts, dconf, xwayland, and adding a proper Desktop Entry to your Display
+  # Manager.
+  # https://wiki.hypr.land/Nix/Hyprland-on-NixOS/
   programs.hyprland.enable = true;
+
+  # https://wiki.hypr.land/Nix/#nixos-module
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   home-manager.users.${user} =
     { config, ... }:
@@ -32,6 +36,7 @@
           nautilus # File manager for GNOME
           libqalculate # Advanced calculator library (!elephant)
           wev # Wayland event viewer (keycodes)
+          xlsclients # Utility to list client applications running on a X11 display
 
           # -- Launcher --
           # INFO: Read [Service Management](https://nixos.org/manual/nixos/stable/#sec-systemctl)

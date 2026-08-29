@@ -1,12 +1,11 @@
 # Important!
-#   Environment variables required by any process not launched from the
-#   terminal (e.g. `systemd`, `systemd --user`, compositor) must be set in
-#   `~/.config/uwsm/env`.
+#  Environment variables required by any process not launched from the
+#  terminal (e.g. `systemd`, `systemd --user`, compositor) must be set in
+#  `~/.config/uwsm/env`.
 #
-#   Read the notes in the hyprland module for more info.
+#  Read the notes in the hyprland module for more info.
 
 # ------------------------------------------------------------------------------
 
 # Include nixos-config `bin` directory in $PATH
-export PATH="$REPODIR/bin:$PATH"
-export XCURSOR_SIZE=20
+# export PATH="$REPODIR/bin:$PATH"

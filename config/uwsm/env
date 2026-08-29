@@ -61,41 +61,17 @@ export XCURSOR_SIZE=20
 
 # ------------------------------------------------------------------------------
 
-# -- DEFAULT APPS
-
-export EDITOR="nvim"
-export SUDO_EDITOR=$EDITOR
-export VISUAL=$EDITOR
-export MANPAGER="less -R --use-color -Dd+r -Du+b"
-export MANROFFOPT="-P -c"  # https://wiki.archlinux.org/title/Color_output_in_console#Using_less
-export PAGER="less -R --use-color -Dd+r -Du+b"
-# export TERM=  # Do not set this variable, it is set by each terminal emulator.
-
-#-------------------------------------------------------------------------------
-
-# -- WAYLAND
-#    Instruct apps to use Wayland as the display backend.
-#    https://wiki.hypr.land/Configuring/Advanced-and-Cool/Environment-variables/#toolkit-backend-variables
-
-# GTK
-export GDK_BACKEND="wayland,x11,*"
-
-# QT
-export QT_QPA_PLATFORM="wayland;xcb"
-
-# SDL2
-#  Remove or set to `x11` if games that provide older versions of SDL cause compatibility issues.
-export SDL_VIDEODRIVER="wayland"
-
-# Clutter
-export CLUTTER_BACKEND="wayland"
-
-# Firefox based browsers
-export MOZ_ENABLE_WAYLAND="1"
-
-# Chromium and electron apps
-export OZONE_PLATFORM="wayland"
-export ELECTRON_OZONE_PLATFORM_HINT="wayland"
+# Instruct apps to use Wayland
+#  https://wiki.hypr.land/Configuring/Advanced-and-Cool/Environment-variables/#toolkit-backend-variables
+#  To check if an app is not running natively under Wayland use `xlsclients`.
+export ELECTRON_OZONE_PLATFORM_HINT="auto" # Electron 28+ apps (VS Code, Slack, Obsidian)
+export OZONE_PLATFORM="wayland" # Chromium and electron apps
+export MOZ_ENABLE_WAYLAND="1" # Firefox / Thunderbird
+export GDK_BACKEND="wayland,x11,*" # GTK 3 & GTK 4 apps (falls back to X11 if Wayland fails)
+export QT_QPA_PLATFORM="wayland;xcb" # Qt 5 & Qt 6 apps (falls back to XCB/X11 if needed)
+export SDL_VIDEODRIVER="wayland,x11" # Games & SDL2/SDL3 applications
+export CLUTTER_BACKEND="wayland" # Older Clutter-based applications
+export WLR_NO_HARDWARE_CURSORS="1" # General Wayland graphics fix
 
 # ------------------------------------------------------------------------------
 
