@@ -15,11 +15,8 @@
   # properly, such as polkit, xdg-desktop-portal-hyprland, graphics drivers,
   # fonts, dconf, xwayland, and adding a proper Desktop Entry to your Display
   # Manager.
-  # https://wiki.hypr.land/Nix/Hyprland-on-NixOS/
+  #  https://wiki.hypr.land/Nix/Hyprland-on-NixOS/
   programs.hyprland.enable = true;
-
-  # Nixpkgs
-  # https://wiki.hypr.land/Nix/#nixos-module
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   home-manager.users.${user} =

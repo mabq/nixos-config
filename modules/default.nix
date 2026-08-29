@@ -118,17 +118,22 @@ with lib;
   # Environment variables
   # ----------------------------------------------------------------------------
   #
-  # These are fixed environment variables that nix makes available to all
-  # shells (for zsh see `/etc/zshenv`) and user-level (not system-level)
-  # systemd services.
+  # NixOS takes static variables defined in this option and writes them into
+  # `/etc/set-environment`. Then it automatically:
   #
-  # Only include here variables that you want to be available for all shells
-  # (interactive and non-interactive Bash, Zsh, Fish shells).
+  #   Makes them available to all interactive and non-interactive shells for
+  #   Bash, Zsh, Fish, etc. For example, review `/etc/zshenv` to see how it is
+  #   configured to source `/etc/set-environment`. To learn more read notes in
+  #   the zsh module.
   #
-  # For dynamic variables (set at runtime) that you also need to be available
-  # for systemd services, see the uwsm module.
+  #   Pushes them to the newly spawned `systemd --user` instance via
+  #   `systemctl --user import-environment`. Note that NixOS cannot push to
+  #   systemd variables set after login (e.g. variables set by Hyprland). For
+  #   those see notes in uwsm module.
   #
-  # This option is also used by other modules, do a live grep to check.
+  # Only put here variables that you want available everywhere. Otherwise use
+  # this option in specific modules (e.g. neovim, hyprland, etc.). Do a live
+  # grep to check where it is being used.
 
   environment.sessionVariables = {
     REPODIR = "${repoDir}"; # avoid hard-coding the repo directory in most config files
