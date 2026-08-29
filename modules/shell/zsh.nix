@@ -24,7 +24,7 @@
   environment.sessionVariables = {
     PATH = "${repoDir}/bin:$PATH";
     PAGER = "less -R --use-color -Dd+r -Du+b";
-    MANPAGER = "$PAGER";
+    MANPAGER = "less -R --use-color -Dd+r -Du+b";
     MANROFFOPT = "-P -c"; # https://wiki.archlinux.org/title/Color_output_in_console#Using_less
     # TERM=  # Do not set this variable, it is set by each terminal emulator.
   };

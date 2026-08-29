@@ -9,8 +9,8 @@
     # Read notes about session variables in the Zsh module.
     # Make nvim the default text editor.
     EDITOR = "nvim";
-    SUDO_EDITOR = "$EDITOR";
-    VISUAL = "$EDITOR";
+    SUDO_EDITOR = "nvim";
+    VISUAL = "nvim";
   };
 
   home-manager.users.${user} =
