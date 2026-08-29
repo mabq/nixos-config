@@ -1,6 +1,7 @@
 {
   repoDir,
   themeDir,
+  ...
 }:
 {
   environment.sessionVariables = {
