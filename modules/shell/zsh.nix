@@ -22,7 +22,7 @@
   users.users.${user}.shell = pkgs.zsh;
 
   environment.sessionVariables = {
-    PATH = "${repoDir}/bin:$PATH";
+    PATH = "${repoDir}/bin";
     PAGER = "less -R --use-color -Dd+r -Du+b";
     MANPAGER = "less -R --use-color -Dd+r -Du+b";
     MANROFFOPT = "-P -c"; # https://wiki.archlinux.org/title/Color_output_in_console#Using_less
