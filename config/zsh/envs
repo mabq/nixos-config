@@ -1,1 +1,2 @@
-# Read notes about `environment.sessionVariables` in zsh nix module.
+# Only put here variables specific to zsh interactive shells, otherwise prefer
+# the "session-variables" module. See the zsh nix module.

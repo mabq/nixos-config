@@ -1,3 +1,4 @@
+# TODO: Don't, some profiles won't include Hyprland
 ## vim: filetype=sh
 #
 ## Automatically start hyprland with UWSM.
@@ -9,7 +10,6 @@
 #  # Additionally make sure this only runs if we are on tty1.
 #  if [[ -z "$DISPLAY" ]] && [[ "$(tty)" = "/dev/tty1" ]]; then
 #    # Make sure uwsm is available.
-#    # TODO: This should also check if hyprland is not already running (because you can get a new tty with Ctrl-Alt-f1/f7
 #    if uwsm check may-start; then
 #      # We don't use a display manager, which reads the file
 #      # `/run/current-system/sw/share/wayland-sessions/hyprland-uwsm.desktop`,
