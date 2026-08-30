@@ -34,6 +34,7 @@
           host = "xps";
           user = "mabq";
           profile = "plex-server";
+          disk = "/dev/sda";
           stateVersion = "26.05";
         };
       };

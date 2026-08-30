@@ -45,6 +45,25 @@ with lib;
   # }];
 
   # ----------------------------------------------------------------------------
+  # Network
+  # ----------------------------------------------------------------------------
+
+  networking = {
+    hostName = mkDefault host; # override on host file
+    firewall.enable = mkDefault true; # tailscale can go through
+  };
+
+  # ----------------------------------------------------------------------------
+  # Time and locale
+  # ----------------------------------------------------------------------------
+
+  time.timeZone = mkDefault "America/Guayaquil"; # override in host file
+
+  i18n = {
+    defaultLocale = mkDefault "en_US.UTF-8";
+  };
+
+  # ----------------------------------------------------------------------------
   # User accounts
   # ----------------------------------------------------------------------------
 
@@ -56,88 +75,23 @@ with lib;
     };
   };
 
-  # ----------------------------------------------------------------------------
-  # Home-manager
-  # ----------------------------------------------------------------------------
-
-  home-manager = {
-    # Integrate home-manager with NixOS:
-    #   User binaries in `/etc/profiles/per-user/<username>/bin` (not `~/.nix-profile/bin`)
-    #   Single command to collect all garbage: `nix-collect-garbage -d`
-    #   Single command to rebuild both: `nixos-rebuild`
-    # These options should only be set to `false` when using `nix` in non-NixOS
-    # linux distributions (like Ubuntu/Arch).
-    useGlobalPkgs = mkDefault true;
-    useUserPackages = mkDefault true;
-
-    # Common user configurations
-    users.${user} =
-      { config, ... }:
-      let
-        mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
-        currentThemeDir = lib.strings.removePrefix "/home/${user}" themeDir;
-      in
-      {
-        home = {
-          username = mkDefault user;
-          homeDirectory = mkDefault "/home/${user}";
-          stateVersion = mkDefault stateVersion; # See notes at the bottom
-
-          # Packages available to all users/profiles
-          packages = with pkgs; [
-            age # Modern encryption tool with small explicit keys
-            just # Handy way to save and run project-specific commands
-            sops # Simple and flexible tool for managing secrets
-          ];
-
-          # Symlink current theme
-          file."${currentThemeDir}" = {
-            source = mkOutOfStoreSymlink "${repoDir}/themes/${theme}";
-            force = true;
-          };
-        };
-
-      };
-
-  };
-
-  # ----------------------------------------------------------------------------
-  # Security
-  # ----------------------------------------------------------------------------
-
-  # No password when escalating privileges for members of the `wheel` group.
+  # No password when escalating privileges for members of the `wheel` group
   security.sudo.wheelNeedsPassword = mkDefault false;
 
   # ----------------------------------------------------------------------------
-  # System packages
+  # Environment
   # ----------------------------------------------------------------------------
 
-  # environment.systemPackages = with pkgs; [ ];
+  environment.systemPackages = with pkgs; [ ];
 
-  # ----------------------------------------------------------------------------
-  # Environment variables
-  # ----------------------------------------------------------------------------
+  # These variables are pushed by NixOS to the shell and systemd user
+  # environment. To understand how see "environment-variables" learning notes.
   #
-  # NixOS takes static variables defined in this option and writes them into
-  # `/etc/set-environment`. Then it automatically:
-  #
-  #   Makes them available to all interactive and non-interactive shells for
-  #   Bash, Zsh, Fish, etc. For example, review `/etc/zshenv` to see how it is
-  #   configured to source `/etc/set-environment`. To learn more read notes in
-  #   the zsh module.
-  #
-  #   Pushes them to the newly spawned `systemd --user` instance via
-  #   `systemctl --user import-environment`. Note that NixOS cannot push to
-  #   systemd variables set after login (e.g. variables set by Hyprland). For
-  #   those see notes in uwsm module.
-  #
-  # Only put here variables that you want available everywhere. Otherwise use
-  # this option in specific modules (e.g. neovim, hyprland, etc.). Do a live
-  # grep to check where it is being used.
-
-  environment.sessionVariables = {
-    REPODIR = "${repoDir}"; # avoid hard-coding the repo directory in most config files
-    THEMEDIR = "${themeDir}"; # avoid hard-coding the theme dir in most config files
+  # Only put variables that you want available everywhere, for more specific
+  # variables use this option in the modules requiring them.
+  environment.sessionVariables = mkDefault {
+    REPODIR = "${repoDir}"; # used in config files, do a live grep
+    THEMEDIR = "${themeDir}"; # used in config files, so a live grep
 
     PATH = "${repoDir}/bin"; # include binaries of this repo in PATH (don't use `<path>:$PATH` syntax here)
 
@@ -172,34 +126,53 @@ with lib;
   };
 
   # ----------------------------------------------------------------------------
-  # Network
+  # Home-manager
   # ----------------------------------------------------------------------------
 
-  networking = {
-    hostName = mkDefault host; # override on host file
-    firewall.enable = mkDefault true; # tailscale can go through
+  home-manager = {
+    # Integrate home-manager with NixOS:
+    #   User binaries in `/etc/profiles/per-user/<username>/bin` (not `~/.nix-profile/bin`)
+    #   Single command to collect all garbage: `nix-collect-garbage -d`
+    #   Single command to rebuild both: `nixos-rebuild`
+    # These options should only be set to `false` when using `nix` in non-NixOS
+    # linux distributions (like Ubuntu/Arch).
+    useGlobalPkgs = mkDefault true;
+    useUserPackages = mkDefault true;
+
+    users.${user} =
+      { config, ... }:
+      let
+        mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
+        currentThemeDir = lib.strings.removePrefix "/home/${user}" themeDir;
+      in
+      {
+        home = {
+          username = mkDefault user;
+          homeDirectory = mkDefault "/home/${user}";
+          stateVersion = mkDefault stateVersion; # see system notes below
+          packages = with pkgs; [
+            age # Modern encryption tool with small explicit keys
+            just # Handy way to save and run project-specific commands
+            sops # Simple and flexible tool for managing secrets
+          ];
+
+          # Symlink current theme
+          file."${currentThemeDir}" = {
+            source = mkOutOfStoreSymlink "${repoDir}/themes/${theme}";
+            force = true;
+          };
+        };
+      };
   };
 
   # ----------------------------------------------------------------------------
-  # Time and locale
+  # Nix
   # ----------------------------------------------------------------------------
 
-  time.timeZone = mkDefault "America/Guayaquil"; # override in host file
+  # Allow proprietary packages
+  nixpkgs.config.allowUnfree = mkDefault true;
 
-  i18n = {
-    defaultLocale = mkDefault "en_US.UTF-8";
-  };
-
-  # ----------------------------------------------------------------------------
-  # Nixpkgs
-  # ----------------------------------------------------------------------------
-
-  nixpkgs.config.allowUnfree = mkDefault true; # allow proprietary packages
-
-  # ----------------------------------------------------------------------------
   # Nix CLI
-  # ----------------------------------------------------------------------------
-
   nix = {
     package = mkDefault pkgs.nixVersions.latest; # latest cli version
 

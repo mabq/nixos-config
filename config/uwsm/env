@@ -1,4 +1,4 @@
-# ------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
 #
 # All environment variables set in this file are sourced by uwsm and available
 # to all managed compositors and graphical applications run inside such a

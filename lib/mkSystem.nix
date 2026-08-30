@@ -6,12 +6,13 @@
   host,
   user,
   profile,
+  disk,
   stateVersion,
   theme ? "catppuccin",
 }:
 let
   repoDir = "/home/${user}/.local/share/nixos-config"; # [1]
-  themeDir = "/home/${user}/.config/nixos-config/current/theme"; # [2]
+  themeDir = "/home/${user}/.config/nixos-config/current/theme"; # [1]
 
   specialArgs = {
     inherit
@@ -20,6 +21,7 @@ let
       host
       user
       profile
+      disk
       stateVersion
       theme
       repoDir
@@ -28,7 +30,7 @@ let
   };
 in
 inputs.nixpkgs.lib.nixosSystem {
-  inherit specialArgs; # [3]
+  inherit specialArgs; # [2]
   modules = [
     # { home-manager.extraSpecialArgs = specialArgs; }
     ../modules/default.nix
@@ -41,21 +43,16 @@ inputs.nixpkgs.lib.nixosSystem {
 /*
   [1]
 
-  This is the path where you need to clone the flake repository.
+  Paths to the local repository and current theme. Used to avoid hard-coding
+  these paths into config files in case we ever need to change them.
 
-  Symlinks require absolute paths. Used by `mkOutOfStoreSymlink` accross many
-  modules.
+  Not all config files accept environment variables (these are pushed to env
+  variables by the default module), so do a live grep to check where these
+  paths are hard-coded before changing them.
+
+  Must be absolute paths cause these are also used to create symlinks.
 
   [2]
-
-  Path of the current theme (symlink to repository).
-
-  These variables are an attempt to reduce the places where the path
-  hard-coded, unfortunatelly not all configuration files accept global
-  variables. So, if you ever need to change this, make sure you do a grep and
-  update those files as well.
-
-  [3]
 
   Must be `specialArgs` — `_module.args` causes infinite recursion when any of
   the these arguments is used in the `imports` section of a module.

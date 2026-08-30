@@ -3,9 +3,8 @@
 -- Lua files loaded with require() have separate local scopes, so modules that
 -- need these paths import this table instead of repeating os.getenv() lookups.
 
--- TODO: THEMEDIR
-dofile "/home/mabq/.config/nixos-config/current/theme/hyprland.lua"
 -- dofile(os.getenv "THEMEDIR" .. "/hyprland.lua")
+dofile "/home/mabq/.config/nixos-config/current/theme/hyprland.lua"
 
 hl.config {
 

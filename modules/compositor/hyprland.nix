@@ -11,13 +11,12 @@
     # ./theme-desktop.nix
   ];
 
-  # The NixOS module enables critical components needed to run Hyprland
-  # properly, such as polkit, xdg-desktop-portal-hyprland, graphics drivers,
-  # fonts, dconf, xwayland, and adding a proper Desktop Entry to your Display
-  # Manager.
+  # Enable Hyprland
   #  https://wiki.hypr.land/Nix/Hyprland-on-NixOS/
   programs.hyprland.enable = true;
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
+  environment.sessionVariables = {
+    NIXOS_OZONE_WL = "1"; # [1]
+  };
 
   home-manager.users.${user} =
     { config, ... }:
@@ -73,3 +72,13 @@
 
     };
 }
+
+/*
+  [1] Force apps to use Wayland
+
+  Variables set with `environment.sessionVariables` are written to `/etc/set-environment`
+  which is sourced by all shells by default in NixOS and also pushed to systemd user
+  ;
+
+  https://wiki.hypr.land/Getting-Started/Master-Tutorial/#force-apps-to-use-wayland
+*/

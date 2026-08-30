@@ -23,9 +23,8 @@ require("lazy").setup {
     { import = "plugins" },
 
     -- Source theme file
-    -- TODO: THEMEDIR
-    dofile(vim.fn.expand "$HOME/.config/nixos-config/current/theme/neovim.lua") or nil,
     -- dofile(vim.fn.expand "$THEMEDIR") or nil,
+    dofile(vim.fn.expand "$HOME/.config/nixos-config/current/theme/neovim.lua") or nil,
   },
   change_detection = {
     notify = false, -- do not notify when changes are found
