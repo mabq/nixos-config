@@ -3,7 +3,7 @@
   disko.devices = {
     disk = {
       main = {
-        # device = # IMPORTANT, set this on the host file!
+        # device = # set this on the host file!
         type = "disk";
         content = {
           type = "gpt";
@@ -11,7 +11,7 @@
             MBR = {
               type = "EF02"; # for grub MBR
               size = "1M";
-              priority = 1; # Needs to be first partition
+              priority = 1; # needs to be first partition
             };
             ESP = {
               type = "EF00";

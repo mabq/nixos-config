@@ -1,7 +1,0 @@
-Include generated hardware configuration files in this directory.
-
-Name each file to something that you can identify, e.g.
-`<host-ref>-<yyyymmdd>.nix`.
-
-Do not edit the contents of the file, if you need to add or override anything
-do it in the host file.
