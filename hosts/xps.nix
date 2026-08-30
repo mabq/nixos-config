@@ -1,6 +1,6 @@
 {
-  # inputs,
-  # config,
+  inputs,
+  config,
   disk,
   ...
 }:
@@ -8,14 +8,13 @@
   imports = [
     # Manual install
     # --------------
-    ./hardware-configuration/xps-20260724.nix
+    # ./hardware-configuration/xps-20260724.nix
 
     # Nixos-anywhere
     # --------------
-    # inputs.disko.nixosModules.disko
-    # ./disko/ext4-encrypted.nix
-
-    # ./hardware-configuration/xps-20260729.nix # `nixos-generate-config`
+    inputs.disko.nixosModules.disko
+    ./disko/ext4-encrypted.nix
+    # ./hardware-configuration/xps-20260729.nix
   ];
 
   boot.loader.grub.enable = true;
@@ -23,8 +22,8 @@
 
   # Nixos-anywhere
   # --------------
-  # disko.devices.disk.main.device = disk;
-  # hardware.facter.reportPath = ./facter/xps-20260729.json; # https://nix-community.github.io/nixos-anywhere/quickstart.html#81-nixos-facter
+  disko.devices.disk.main.device = disk;
+  hardware.facter.reportPath = ./facter/xps-20260829.json;
 }
 
 /*
