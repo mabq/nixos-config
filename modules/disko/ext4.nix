@@ -1,3 +1,4 @@
+# This file is used by `nixos-anywhere` to partition, format, and mount the disks.
 {
   disko.devices = {
     disk = {

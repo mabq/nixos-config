@@ -42,8 +42,8 @@
   Manual steps
   ============
 
-  Must run `atuin login` to login and `atuin sync` to start sync. See
-  encryption key notes below.
+  Must run `atuin login` to login and `atuin sync` to start sync (see notes
+  below).
 
   Encryption key
   ==============
@@ -55,6 +55,10 @@
   Atuin does not read authentication credentials from files, so if you wish to
   sync history you need to manually run `atuin login`.
    https://docs.atuin.sh/latest/guide/sync/#login
+
+  INFO: No longer applies, use the password manager to get the encryption key.
+  If you don't have a web-broser on the machine, ssh into it using Tailscale
+  from a machine that does, copy the code and paste it in the prompt.
 
   In order to avoid typing the encryption key manually (which replaces the
   content of `~/.local/share/atuin/key`), we use the user's module to create

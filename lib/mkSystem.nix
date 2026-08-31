@@ -34,8 +34,8 @@ inputs.nixpkgs.lib.nixosSystem {
   modules = [
     # { home-manager.extraSpecialArgs = specialArgs; }
     ../modules/default.nix
-    ../hosts/${host}.nix
-    ../users/${user}
+    ../hosts/${host}/default.nix
+    ../users/${user}/default.nix
     ../profiles/${profile}.nix
   ];
 }

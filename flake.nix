@@ -35,7 +35,7 @@
           user = "mabq";
           profile = "plex-server";
           disk = "/dev/sda";
-          stateVersion = "26.05";
+          stateVersion = "26.05"; # the one used on first install
         };
       };
     };

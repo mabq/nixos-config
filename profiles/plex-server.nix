@@ -14,7 +14,7 @@
 
   services.tailscale = {
     # This key must be opened by the user's module.
-    authKeyFile = config.sops.secrets."mabqTailnet_sharedTagKey".path;
+    # authKeyFile = config.sops.secrets."mabqTailnet_sharedTagKey".path;
     # For possible flags see https://tailscale.com/docs/reference/tailscale-cli#set
     extraSetFlags = [ "--ssh" ];
   };
