@@ -1,10 +1,6 @@
 # Open user secrets
 { inputs, user, ... }:
 {
-  imports = [
-    inputs.sops-nix.nixosModules.sops
-  ];
-
   sops = {
     # Age keys 🔥
     #  Sops secrets are encrypted/decrypted using age's public/private keys.
@@ -37,6 +33,8 @@
       # SSH key
       #  Creates a symlink to the secret file in the expected location. SSH
       #  requires the private key file to only be readable by the user.
+      # NOTE: This should be on profile. Not all machines with this
+      # user account should have the private ssh key.
       "ssh_private_key" = {
         path = "/home/${user}/.ssh/id_ed25519";
         mode = "0400";

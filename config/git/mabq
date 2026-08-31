@@ -1,3 +1,5 @@
+# vim: set filetype=gitconfig:
+
 # Git configs
 #  https://git-scm.com/docs/git-config
 [user]

@@ -3,26 +3,20 @@
   inputs,
 }:
 {
-  host,
   user,
   profile,
-  disk,
-  stateVersion,
   theme ? "catppuccin",
 }:
 let
   repoDir = "/home/${user}/.local/share/nixos-config"; # [1]
-  themeDir = "/home/${user}/.config/nixos-config/current/theme"; # [1]
+  themeDir = "/home/${user}/.config/nixos-config/theme"; # [1]
 
   specialArgs = {
     inherit
       self
       inputs
-      host
       user
       profile
-      disk
-      stateVersion
       theme
       repoDir
       themeDir
@@ -32,10 +26,11 @@ in
 inputs.nixpkgs.lib.nixosSystem {
   inherit specialArgs; # [2]
   modules = [
+    inputs.disko.nixosModules.disko
+    inputs.home-manager.nixosModules.home-manager
     # { home-manager.extraSpecialArgs = specialArgs; }
-    ../modules/default.nix
-    ../hosts/${host}/default.nix
-    ../users/${user}/default.nix
+    # inputs.sops-nix.nixosModules.sops
+
     ../profiles/${profile}.nix
   ];
 }
@@ -44,13 +39,11 @@ inputs.nixpkgs.lib.nixosSystem {
   [1]
 
   Paths to the local repository and current theme. Used to avoid hard-coding
-  these paths into config files in case we ever need to change them.
+  paths in config. Not all config files accept environment variables though, so
+  do a live grep to check where these paths are hard-coded before changing
+  them.
 
-  Not all config files accept environment variables (these are pushed to env
-  variables by the default module), so do a live grep to check where these
-  paths are hard-coded before changing them.
-
-  Must be absolute paths cause these are also used to create symlinks.
+  Must be absolute because these are also used to create symlinks.
 
   [2]
 

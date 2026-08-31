@@ -1,15 +1,11 @@
-{ pkgs, user, ... }:
+{ user, ... }:
 {
-  imports = [
-    # ./secrets/sops-nix.nix
-  ];
-
   users.users.${user} = {
     # NixOS does not create a group after each user name, it groups all human
     # accounts into the `users` group.
     # group = "${user}";
 
-    # No sudo password for members of `wheel`
+    # Elevated privileges without password
     extraGroups = [ "wheel" ];
 
     # User account password
@@ -30,17 +26,6 @@
     #   All you need is access to the password manager.
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINjOlPls0gNkjBTOvXIbmm7HbSUOHM+erfwE4tdNVMLn"
-    ];
-  };
-
-  # Packages the user expects to find in all systems
-  home-manager.users.${user} = {
-    home.packages = with pkgs; [
-      # CLI
-      fastfetch # Actively maintained, feature-rich and performance oriented, neofetch like system information tool
-      pciutils # Collection of programs for inspecting and manipulating configuration of PCI devices
-      caligula # User-friendly, lightweight TUI for disk imaging
-      psmisc # Set of small useful utilities that use the proc filesystem (such as fuser, killall and pstree)
     ];
   };
 }

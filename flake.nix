@@ -16,10 +16,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    sops-nix = {
-      url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # sops-nix = {
+    #   url = "github:Mic92/sops-nix";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
   };
 
   outputs =
@@ -31,11 +31,8 @@
       nixosConfigurations = {
         # [4]
         "xps" = mkSystem {
-          host = "xps";
           user = "mabq";
           profile = "plex-server";
-          disk = "/dev/sda";
-          stateVersion = "26.05"; # the one used on first install
         };
       };
     };

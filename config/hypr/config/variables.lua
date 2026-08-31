@@ -4,7 +4,7 @@
 -- need these paths import this table instead of repeating os.getenv() lookups.
 
 -- dofile(os.getenv "THEMEDIR" .. "/hyprland.lua")
-dofile "/home/mabq/.config/nixos-config/current/theme/hyprland.lua"
+dofile "/home/mabq/.config/nixos-config/theme/hyprland.lua"
 
 hl.config {
 

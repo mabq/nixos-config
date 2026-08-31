@@ -1,12 +1,9 @@
 # Don't forget to use `mkDefault`, these should be overidable.
 {
-  inputs,
   config,
   lib,
   pkgs,
-  host,
   user,
-  stateVersion,
   theme,
   repoDir,
   themeDir,
@@ -14,9 +11,33 @@
 }:
 with lib;
 {
-  imports = [
-    inputs.home-manager.nixosModules.home-manager
-  ];
+  # ----------------------------------------------------------------------------
+  # Nix
+  # ----------------------------------------------------------------------------
+
+  # Allow proprietary packages
+  nixpkgs.config.allowUnfree = mkDefault true;
+
+  nix = {
+    # Use the latest version of the CLI
+    package = mkDefault pkgs.nixVersions.latest;
+
+    settings = {
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+      auto-optimise-store = mkDefault true;
+    };
+
+    gc = {
+      # Save disk space by automatically collection garbage
+      #  https://nixos.org/manual/nixos/stable/#sec-nix-gc
+      automatic = mkDefault true;
+      dates = mkDefault "weekly";
+      options = mkDefault "--delete-older-than 15d";
+    };
+  };
 
   # ----------------------------------------------------------------------------
   # Boot (kernel)
@@ -48,16 +69,13 @@ with lib;
   # Network
   # ----------------------------------------------------------------------------
 
-  networking = {
-    hostName = mkDefault host; # override on host file
-    firewall.enable = mkDefault true; # tailscale can go through
-  };
+  networking.firewall.enable = mkDefault true; # tailscale can go through
 
   # ----------------------------------------------------------------------------
   # Time and locale
   # ----------------------------------------------------------------------------
 
-  time.timeZone = mkDefault "America/Guayaquil"; # override in host file
+  time.timeZone = mkDefault "America/Guayaquil";
 
   i18n = {
     defaultLocale = mkDefault "en_US.UTF-8";
@@ -82,21 +100,27 @@ with lib;
   # Environment
   # ----------------------------------------------------------------------------
 
-  environment.systemPackages = with pkgs; [ ];
+  # environment.systemPackages = with pkgs; [ ];
 
-  # These variables are pushed by NixOS to the shell and systemd user
-  # environment. To understand how see "environment-variables" learning notes.
-  #
-  # Only put variables that you want available everywhere, for more specific
-  # variables use this option in the modules requiring them.
+  # Environment variables
+  #  These variables are pushed by NixOS to all shells (Bash, Zsh, etc.) and
+  #  systemd user environment. Read more in "environment-variables"
+  #  learning notes. Put here variables that you want available everywhere, for
+  #  more specific variables use this option in the modules requiring them.
   environment.sessionVariables = mkDefault {
-    REPODIR = "${repoDir}"; # used in config files, do a live grep
-    THEMEDIR = "${themeDir}"; # used in config files, so a live grep
+    # These are used to avoid hard-coding paths in config files. Not all config
+    # files accept environment variables though.
+    REPODIR = "${repoDir}";
+    THEMEDIR = "${themeDir}";
 
-    PATH = "${repoDir}/bin"; # include binaries of this repo in PATH (don't use `<path>:$PATH` syntax here)
+    # Include binaries of this repo in PATH. Don't use `<path>:$PATH` syntax here.
+    PATH = "${repoDir}/bin";
 
-    PAGER = "less -R --use-color -Dd+r -Du+b"; # colorized pager
-    MANPAGER = "less -R --use-color -Dd+r -Du+b"; # colorized man pages
+    # Colorized man pages
+    PAGER = "less -R --use-color -Dd+r -Du+b";
+    MANPAGER = "less -R --use-color -Dd+r -Du+b";
+
+    # Others
     MANROFFOPT = "-P -c"; # https://wiki.archlinux.org/title/Color_output_in_console#Using_less
     # TERM = # do not set this variable, it is set by each terminal emulator.
   };
@@ -107,22 +131,28 @@ with lib;
 
   services = {
     tailscale = {
-      enable = mkDefault true; # auth manually or via an auth key in profile file
+      # This only enables the service, you must activate manually with
+      # `sudo tailscale up` and authenticate via a web browser.
+      # Flags allowing ssh access and more should be set on per-host basis.
+      enable = mkDefault true;
       extraSetFlags = [
         # https://tailscale.com/docs/reference/tailscale-cli#set
-        "--hostname=${config.networking.hostName}"
+        "--hostname=${config.networking.hostName}" # host module
       ];
     };
 
     openssh = {
       enable = mkDefault true;
       settings = {
-        PermitRootLogin = mkDefault "no"; # never!!
-        PasswordAuthentication = mkDefault false; # use ssh keys or Tailscale SSH instead
+        # Do not allow root access or password authentication for improved
+        # security. Use ssh keys or Tailscale ssh.
+        PermitRootLogin = mkDefault "no";
+        PasswordAuthentication = mkDefault false;
       };
     };
 
-    tzupdate.enable = mkDefault true; # update timezone automatically
+    # Update timezone automatically
+    tzupdate.enable = mkDefault true;
   };
 
   # ----------------------------------------------------------------------------
@@ -147,12 +177,15 @@ with lib;
       in
       {
         home = {
-          username = mkDefault user;
-          homeDirectory = mkDefault "/home/${user}";
-          stateVersion = mkDefault stateVersion; # see system notes below
+          username = user;
+          homeDirectory = "/home/${user}";
           packages = with pkgs; [
             age # Modern encryption tool with small explicit keys
+            caligula # User-friendly, lightweight TUI for disk imaging
+            fastfetch # Actively maintained, feature-rich and performance oriented, neofetch like system information tool
             just # Handy way to save and run project-specific commands
+            pciutils # Collection of programs for inspecting and manipulating configuration of PCI devices
+            psmisc # Set of small useful utilities that use the proc filesystem (such as fuser, killall and pstree)
             sops # Simple and flexible tool for managing secrets
           ];
 
@@ -164,55 +197,4 @@ with lib;
         };
       };
   };
-
-  # ----------------------------------------------------------------------------
-  # Nix
-  # ----------------------------------------------------------------------------
-
-  # Allow proprietary packages
-  nixpkgs.config.allowUnfree = mkDefault true;
-
-  # Nix CLI
-  nix = {
-    package = mkDefault pkgs.nixVersions.latest; # latest cli version
-
-    settings = {
-      experimental-features = [
-        "nix-command"
-        "flakes"
-      ];
-      auto-optimise-store = mkDefault true;
-    };
-
-    gc = {
-      # Save disk space by automatically collection garbage
-      #  https://nixos.org/manual/nixos/stable/#sec-nix-gc
-      automatic = mkDefault true;
-      dates = mkDefault "weekly";
-      options = mkDefault "--delete-older-than 15d";
-    };
-  };
-
-  # ----------------------------------------------------------------------------
-  # System
-  # ----------------------------------------------------------------------------
-
-  # This option defines the first version of NixOS you have installed on this particular machine,
-  # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
-  #
-  # Most users should NEVER change this value after the initial install, for any reason,
-  # even if you've upgraded your system to a new NixOS release.
-  #
-  # This value does NOT affect the Nixpkgs version your packages and OS are pulled from,
-  # so changing it will NOT upgrade your system - see https://nixos.org/manual/nixos/stable/#sec-upgrading for how
-  # to actually do that.
-  #
-  # This value being lower than the current NixOS release does NOT mean your system is
-  # out of date, out of support, or vulnerable.
-  #
-  # Do NOT change this value unless you have manually inspected all the changes it would make to your configuration,
-  # and migrated your data accordingly.
-  #
-  # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
-  system.stateVersion = stateVersion; # Did you read the comment?
 }
