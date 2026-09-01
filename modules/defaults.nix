@@ -17,7 +17,7 @@ with lib;
   # Bootstrap repo
   # ----------------------------------------------------------------------------
 
-  "systemd.services.clone-${repoName}" = {
+  systemd.services.clone-repo = {
     description = "Clone ${repoName} repository if missing";
     wantedBy = [ "multi-user.target" ];
     before = [ "home-manager-${user}.service" ];
