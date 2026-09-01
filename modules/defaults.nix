@@ -5,7 +5,7 @@
   pkgs,
   user,
   theme,
-  repoBranch,
+  branch,
   repoName,
   repoDir,
   currentThemeDir,
@@ -14,21 +14,21 @@
 with lib;
 {
   # ----------------------------------------------------------------------------
-  # Clone repo automatically on new installations
+  # Bootstrap repo
   # ----------------------------------------------------------------------------
 
-  systemd.services.clone-repo = {
+  "systemd.services.clone-${repoName}" = {
     description = "Clone ${repoName} repository if missing";
     wantedBy = [ "multi-user.target" ];
     before = [ "home-manager-${user}.service" ];
-    # Only if the repo does not exist yet
+    # Skip if the repo is already in place
     unitConfig.ConditionPathExists = "!${repoDir}/.git";
     serviceConfig = {
       Type = "oneshot";
       User = "${user}";
       ExecStart = [
         "${pkgs.git}/bin/git clone https://github.com/mabq/${repoName}.git ${repoDir}"
-        "${pkgs.git}/bin/git -C ${repoDir} checkout ${repoBranch}"
+        "${pkgs.git}/bin/git -C ${repoDir} checkout ${branch}"
       ];
     };
   };

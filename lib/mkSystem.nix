@@ -6,7 +6,7 @@
   user,
   profile,
   theme ? "catppuccin",
-  repoBranch ? "main",
+  branch ? "main",
 }:
 let
   repoName = "mynix";
@@ -20,7 +20,7 @@ let
       user
       profile
       theme
-      repoBranch
+      branch
       repoName
       repoDir
       currentThemeDir

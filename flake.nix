@@ -33,7 +33,7 @@
         "xps" = mkSystem {
           user = "mabq";
           profile = "plex-server";
-          repoBranch = "restructure";
+          branch = "restructure";
         };
       };
     };
