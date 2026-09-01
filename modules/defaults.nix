@@ -211,8 +211,8 @@ with lib;
       Type = "oneshot";
       User = "${user}";
       ExecStart = [
-        # "mkdir -p ${dirOf repoDir}"
-        "${pkgs.git}/bin/git clone ${repoUrl} ${repoDir}"
+        # mkdir -p ${dirOf repoDir}"
+        "${pkgs.git}/bin/git clone https://github.com/mabq/nixos-config ${repoDir}"
         "${pkgs.git}/bin/git -C ${repoDir} checkout ${repoBranch}"
       ];
     };
