@@ -14,6 +14,26 @@
 with lib;
 {
   # ----------------------------------------------------------------------------
+  # Clone repo automatically on new installations
+  # ----------------------------------------------------------------------------
+
+  systemd.services.clone-repo = {
+    description = "Clone nixos-config repository if missing";
+    wantedBy = [ "multi-user.target" ];
+    before = [ "home-manager-${user}.service" ];
+    # Only if the repo does not exist yet
+    unitConfig.ConditionPathExists = "!${repoDir}/.git";
+    serviceConfig = {
+      Type = "oneshot";
+      User = "${user}";
+      ExecStart = [
+        "${pkgs.git}/bin/git clone ${repoUrl} ${repoDir}"
+        "${pkgs.git}/bin/git -C ${repoDir} checkout ${repoBranch}"
+      ];
+    };
+  };
+
+  # ----------------------------------------------------------------------------
   # Nix
   # ----------------------------------------------------------------------------
 
@@ -196,25 +216,5 @@ with lib;
           };
         };
       };
-  };
-
-  # ----------------------------------------------------------------------------
-  # Clone Repo Service
-  # ----------------------------------------------------------------------------
-
-  systemd.services.clone-repo = {
-    description = "Clone nixos-config repository if missing.";
-    wantedBy = [ "multi-user.target" ];
-    before = [ "home-manager-${user}.service" ];
-    unitConfig.ConditionPathExists = "!${repoDir}/.git";
-    serviceConfig = {
-      Type = "oneshot";
-      User = "${user}";
-      ExecStart = [
-        # mkdir -p ${dirOf repoDir}"
-        "${pkgs.git}/bin/git clone https://github.com/mabq/nixos-config ${repoDir}"
-        "${pkgs.git}/bin/git -C ${repoDir} checkout ${repoBranch}"
-      ];
-    };
   };
 }

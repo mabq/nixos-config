@@ -9,9 +9,11 @@
   theme ? "catppuccin",
 }:
 let
-  repoUrl = "https://github.com/mabq/nixos-config.git";
-  repoDir = "/home/${user}/.local/share/nixos-config"; # [1]
-  themeDir = "/home/${user}/.config/nixos-config/theme"; # [1]
+  repoName = "nixos-config";
+
+  repoUrl = "https://github.com/mabq/${repoName}.git";
+  repoDir = "/home/${user}/.local/share/${repoName}"; # [1]
+  themeDir = "/home/${user}/.config/${repoName}/theme"; # [1]
 
   specialArgs = {
     inherit
