@@ -36,8 +36,8 @@
     Include the repository `bin` directory to $PATH (required for
     `tmux-sessionizer` to be reachable.
 
-    `~/.zshenv` exports the `$REPODIR` used by `tmux-sessionizer` to
-    include the repository directory.
+    The defaults module sets an environment variable used by `tmux-sessionizer`
+    to include the repository directory.
 
     Shortcut to invoke `tmux-sessionizer`
 

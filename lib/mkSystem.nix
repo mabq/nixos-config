@@ -5,15 +5,13 @@
 {
   user,
   profile,
-  repoBranch ? "main",
   theme ? "catppuccin",
+  repoBranch ? "main",
 }:
 let
-  repoName = "nixos-config";
-
-  repoUrl = "https://github.com/mabq/${repoName}.git";
+  repoName = "mynix";
   repoDir = "/home/${user}/.local/share/${repoName}"; # [1]
-  themeDir = "/home/${user}/.config/${repoName}/theme"; # [1]
+  currentThemeDir = "/home/${user}/.config/${repoName}/theme"; # [1]
 
   specialArgs = {
     inherit
@@ -23,9 +21,9 @@ let
       profile
       theme
       repoBranch
-      repoUrl
+      repoName
       repoDir
-      themeDir
+      currentThemeDir
       ;
   };
 in
@@ -34,7 +32,6 @@ inputs.nixpkgs.lib.nixosSystem {
   modules = [
     inputs.disko.nixosModules.disko
     inputs.home-manager.nixosModules.home-manager
-    # { home-manager.extraSpecialArgs = specialArgs; }
     # inputs.sops-nix.nixosModules.sops
 
     ../profiles/${profile}.nix

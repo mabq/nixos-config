@@ -13,7 +13,7 @@ fi
 # nixos-theme-set-templates "$selected_theme_name"
 
 # -- Apply the selected theme
-link_path="$HOME/.config/nixos-config/theme"
+link_path="$HOME/.config/mynix/theme"
 rm -rf "$link_path"
 ln -s "$selected_theme_path" "$link_path"
 

@@ -2,7 +2,7 @@
   pkgs,
   user,
   repoDir,
-  themeDir,
+  currentThemeDir,
   ...
 }:
 {
@@ -23,7 +23,7 @@
             force = true;
           };
           ".config/bat/themes/current.tmTheme" = {
-            source = mkOutOfStoreSymlink "${themeDir}/bat.tmTheme";
+            source = mkOutOfStoreSymlink "${currentThemeDir}/bat.tmTheme";
             force = true;
           };
         };

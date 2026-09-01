@@ -1,8 +1,8 @@
 xps:
   sudo nixos-rebuild --verbose --show-trace switch --flake .#xps
 
-rebuild config:
-  sudo nixos-rebuild --verbose switch --flake .#{{config}}
+nr config:
+  sudo nixos-rebuild --verbose --show-trace switch --flake .#{{config}}
 
 fetch:
   git fetch origin

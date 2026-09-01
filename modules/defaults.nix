@@ -6,9 +6,9 @@
   user,
   theme,
   repoBranch,
-  repoUrl,
+  repoName,
   repoDir,
-  themeDir,
+  currentThemeDir,
   ...
 }:
 with lib;
@@ -18,7 +18,7 @@ with lib;
   # ----------------------------------------------------------------------------
 
   systemd.services.clone-repo = {
-    description = "Clone nixos-config repository if missing";
+    description = "Clone ${repoName} repository if missing";
     wantedBy = [ "multi-user.target" ];
     before = [ "home-manager-${user}.service" ];
     # Only if the repo does not exist yet
@@ -27,7 +27,7 @@ with lib;
       Type = "oneshot";
       User = "${user}";
       ExecStart = [
-        "${pkgs.git}/bin/git clone ${repoUrl} ${repoDir}"
+        "${pkgs.git}/bin/git clone https://github.com/mabq/${repoName}.git ${repoDir}"
         "${pkgs.git}/bin/git -C ${repoDir} checkout ${repoBranch}"
       ];
     };
@@ -130,8 +130,8 @@ with lib;
   environment.sessionVariables = {
     # These are used to avoid hard-coding paths in config files. Not all config
     # files accept environment variables though.
-    REPODIR = "${repoDir}";
-    THEMEDIR = "${themeDir}";
+    MYNIX_REPO = "${repoDir}";
+    MYNIX_THEME = "${currentThemeDir}";
 
     # Include binaries of this repo in PATH. Don't use `<path>:$PATH` syntax here.
     PATH = "${repoDir}/bin";
@@ -193,7 +193,7 @@ with lib;
       { config, ... }:
       let
         mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
-        currentThemeDir = lib.strings.removePrefix "/home/${user}" themeDir;
+        _currentThemeDir = lib.strings.removePrefix "/home/${user}" currentThemeDir;
       in
       {
         home = {
@@ -210,7 +210,7 @@ with lib;
           ];
 
           # Symlink current theme
-          file."${currentThemeDir}" = {
+          file."${_currentThemeDir}" = {
             source = mkOutOfStoreSymlink "${repoDir}/themes/${theme}";
             force = true;
           };
