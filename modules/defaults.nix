@@ -211,7 +211,7 @@ with lib;
       Type = "oneshot";
       User = "${user}";
       ExecStart = [
-        "mkdir -p ${dirOf repoDir}"
+        # "mkdir -p ${dirOf repoDir}"
         "${pkgs.git}/bin/git clone ${repoUrl} ${repoDir}"
         "${pkgs.git}/bin/git -C ${repoDir} checkout ${repoBranch}"
       ];
