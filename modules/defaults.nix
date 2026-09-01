@@ -211,7 +211,7 @@ with lib;
 
           # Symlink current theme
           file."${_currentThemeDir}" = {
-            source = mkOutOfStoreSymlink "${repoDir}/themes/${theme}";
+            source = mkOutOfStoreSymlink "${repoDir}/config/${repoName}/themes/${theme}";
             force = true;
           };
         };
