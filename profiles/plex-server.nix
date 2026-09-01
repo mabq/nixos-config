@@ -2,6 +2,7 @@
 {
   imports = [
     ../modules/defaults.nix
+
     ../modules/users/${user}.nix
     ../modules/hosts/xps.nix
 

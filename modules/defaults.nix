@@ -76,10 +76,7 @@ with lib;
   # ----------------------------------------------------------------------------
 
   time.timeZone = mkDefault "America/Guayaquil";
-
-  i18n = {
-    defaultLocale = mkDefault "en_US.UTF-8";
-  };
+  i18n.defaultLocale = mkDefault "en_US.UTF-8";
 
   # ----------------------------------------------------------------------------
   # User accounts
@@ -107,7 +104,8 @@ with lib;
   #  systemd user environment. Read more in "environment-variables"
   #  learning notes. Put here variables that you want available everywhere, for
   #  more specific variables use this option in the modules requiring them.
-  environment.sessionVariables = mkDefault {
+  #  Don't use `mkDefault` here
+  environment.sessionVariables = {
     # These are used to avoid hard-coding paths in config files. Not all config
     # files accept environment variables though.
     REPODIR = "${repoDir}";

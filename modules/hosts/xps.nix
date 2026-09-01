@@ -5,13 +5,13 @@ let
 in
 {
   imports = [
-    ./hardware-configuration/xps.nix
-    # ../disko/ext4-encrypted.nix
+    # ./hardware-configuration/xps.nix
+    ../disko/ext4-encrypted.nix
   ];
-  # disko.devices.disk.main.device = "/dev/disk/by-id/wwn-0x5000cca55ff314ed";
+  disko.devices.disk.main.device = "/dev/disk/by-id/wwn-0x5000cca55ff314ed";
 
   boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/sda";
+  # boot.loader.grub.device = "/dev/sda";
 
   networking.hostName = "xps";
 
@@ -23,7 +23,7 @@ in
   #  the hardware, and the decision-making logic lives in the nixpkgs facter
   #  modules. As NixOS evolves, you get better decisions automatically on
   #  rebuild, without re-running detection on the physical machine.
-  # hardware.facter.reportPath = ./facter/xps.json;
+  hardware.facter.reportPath = ./facter/xps.json;
 
   system.stateVersion = stateVersion;
   home-manager.users.${user}.home.stateVersion = stateVersion;
