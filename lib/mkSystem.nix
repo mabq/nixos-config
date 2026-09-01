@@ -5,9 +5,11 @@
 {
   user,
   profile,
+  repoBranch ? "main",
   theme ? "catppuccin",
 }:
 let
+  repoUrl = "https://github.com/mabq/nixos-config.git";
   repoDir = "/home/${user}/.local/share/nixos-config"; # [1]
   themeDir = "/home/${user}/.config/nixos-config/theme"; # [1]
 
@@ -18,6 +20,8 @@ let
       user
       profile
       theme
+      repoBranch
+      repoUrl
       repoDir
       themeDir
       ;

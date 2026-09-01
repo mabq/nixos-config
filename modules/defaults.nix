@@ -5,6 +5,8 @@
   pkgs,
   user,
   theme,
+  repoBranch,
+  repoUrl,
   repoDir,
   themeDir,
   ...
@@ -194,5 +196,25 @@ with lib;
           };
         };
       };
+  };
+
+  # ----------------------------------------------------------------------------
+  # Clone Repo Service
+  # ----------------------------------------------------------------------------
+
+  systemd.services.clone-repo = {
+    description = "Clone nixos-config repository if missing.";
+    wantedBy = [ "multi-user.target" ];
+    before = [ "home-manager-${user}.service" ];
+    unitConfig.ConditionPathExists = "!${repoDir}/.git";
+    serviceConfig = {
+      Type = "oneshot";
+      User = "${user}";
+      ExecStart = [
+        "mkdir -p ${dirOf repoDir}"
+        "${pkgs.git}/bin/git clone ${repoUrl} ${repoDir}"
+        "${pkgs.git}/bin/git -C ${repoDir} checkout ${repoBranch}"
+      ];
+    };
   };
 }

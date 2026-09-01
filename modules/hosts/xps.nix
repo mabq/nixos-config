@@ -10,8 +10,9 @@ in
   ];
   disko.devices.disk.main.device = "/dev/disk/by-id/wwn-0x5000cca55ff314ed";
 
+  # No need to set `device`, disko will add all devices that have a EF02
+  # partition to the list.
   boot.loader.grub.enable = true;
-  # boot.loader.grub.device = "/dev/sda";
 
   networking.hostName = "xps";
 
