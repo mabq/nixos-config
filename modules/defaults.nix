@@ -93,7 +93,7 @@ with lib;
   # ----------------------------------------------------------------------------
 
   networking = {
-    hostname = mkDefault host;
+    hostName = mkDefault host;
     firewall.enable = mkDefault true; # tailscale can go through
   };
 
