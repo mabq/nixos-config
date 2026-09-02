@@ -18,6 +18,7 @@ let
     inherit
       self
       inputs
+      host
       user
       profile
       theme
