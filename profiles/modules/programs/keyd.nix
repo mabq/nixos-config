@@ -18,6 +18,6 @@
 
     # Keyd config files are system-level — `mkOutOfStoreSymlink` is a
     # home-manager function that cannot be used here.
-    etc."keyd".source = lib.mkDefault ../../config/keyd;
+    etc."keyd".source = lib.mkDefault ../../../config/keyd;
   };
 }
