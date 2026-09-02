@@ -9,13 +9,6 @@
   ...
 }:
 {
-  imports = [
-    ./dependencies/bat.nix
-    ./dependencies/starship.nix
-    ./dependencies/tmux.nix
-    ./dependencies/yazi.nix
-  ];
-
   # Must be enabled to be used as the default shell
   programs.zsh.enable = true;
 

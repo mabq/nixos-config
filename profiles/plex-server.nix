@@ -5,6 +5,11 @@
     (import ./modules/zsh.nix { })
     ./modules/atuin.nix
 
+    ./modules/bat.nix
+    ./modules/starship.nix
+    ./modules/tmux.nix
+    ./modules/yazi.nix
+
     ./modules/programs/btop.nix
     ./modules/programs/git.nix
     ./modules/programs/keyd.nix
