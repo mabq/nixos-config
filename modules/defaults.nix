@@ -194,7 +194,7 @@ with lib;
     useUserPackages = mkDefault true;
 
     users.${user} =
-      { config, ... }:
+      { nixosConfig, config, ... }:
       let
         mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
         _currentThemeDir = lib.strings.removePrefix "/home/${user}" currentThemeDir;
@@ -203,7 +203,7 @@ with lib;
         home = {
           username = user;
           homeDirectory = "/home/${user}";
-          stateVersion = config.system.stateVersion;
+          stateVersion = nixosConfig.system.stateVersion;
           packages = with pkgs; [
             age # Modern encryption tool with small explicit keys
             caligula # User-friendly, lightweight TUI for disk imaging
