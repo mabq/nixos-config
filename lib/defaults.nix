@@ -18,11 +18,14 @@ with lib;
   # Bootstrap repo
   # ----------------------------------------------------------------------------
 
+  # A systemd service that will automatically clone the repository on new
+  # installations. We aggresively use `mkOutOfStoreSymlink` to avoid rebuilds.
+  # Those symlinks are worthless if the repository is not in place.
   systemd.services.clone-repo = {
     description = "Clone ${repoName} repository if missing";
     wantedBy = [ "multi-user.target" ];
     before = [ "home-manager-${user}.service" ];
-    # Skip if the repo is already in place
+    # Skip if the repository is already in place
     unitConfig.ConditionPathExists = "!${repoDir}/.git";
     serviceConfig = {
       Type = "oneshot";
@@ -77,7 +80,8 @@ with lib;
   zramSwap = {
     enable = mkDefault true;
     memoryPercent = mkDefault 50;
-    algorithm = mkDefault "lz4"; # use `zstd` for higher compression rates on newer cpus
+    # Use `zstd` for higher compression rates on machines with capable CPUs
+    algorithm = mkDefault "lz4";
     priority = 100; # prioritize zram over swap
   };
 
@@ -102,6 +106,8 @@ with lib;
   # ----------------------------------------------------------------------------
 
   time.timeZone = mkDefault "America/Guayaquil";
+  services.tzupdate.enable = mkDefault true; # update timezone automatically
+
   i18n.defaultLocale = mkDefault "en_US.UTF-8";
 
   # ----------------------------------------------------------------------------
@@ -155,11 +161,9 @@ with lib;
 
   services = {
     tailscale = {
-      # This only enables the service, you must activate manually with
-      # `sudo tailscale up` and authenticate via a web browser.
-      # Flags allowing ssh access and more should be set on per-host basis.
-      enable = mkDefault true;
+      enable = mkDefault true; # use `sudo tailscale up` to authenticate
       extraSetFlags = [
+        # Flags like `--ssh` should be set on per-host basis
         # https://tailscale.com/docs/reference/tailscale-cli#set
         "--hostname=${config.networking.hostName}" # host module
       ];
@@ -168,15 +172,13 @@ with lib;
     openssh = {
       enable = mkDefault true;
       settings = {
-        # Do not allow root access or password authentication for improved
-        # security. Use ssh keys or Tailscale ssh.
+        # Never allow root access!
+        # Password authentication is disabled for improved security. Use ssh
+        # keys or Tailscale SSH.
         PermitRootLogin = mkDefault "no";
         PasswordAuthentication = mkDefault false;
       };
     };
-
-    # Update timezone automatically
-    tzupdate.enable = mkDefault true;
   };
 
   # ----------------------------------------------------------------------------
@@ -184,17 +186,20 @@ with lib;
   # ----------------------------------------------------------------------------
 
   home-manager = {
-    # Integrate home-manager with NixOS:
-    #   User binaries in `/etc/profiles/per-user/<username>/bin` (not `~/.nix-profile/bin`)
-    #   Single command to collect all garbage: `nix-collect-garbage -d`
-    #   Single command to rebuild both: `nixos-rebuild`
-    # These options should only be set to `false` when using `nix` in non-NixOS
-    # linux distributions (like Ubuntu/Arch).
+    # Use the global `pkgs` that is configured via the system level nixpkgs
+    # options. This saves an extra Nixpkgs evaluation, adds consistency, and
+    # removes the dependency on `NIX_PATH`, which is otherwise used for
+    # importing Nixpkgs.
     useGlobalPkgs = mkDefault true;
+    # Install packages in `/etc/profiles` instead of `~/.nix-profile`.
     useUserPackages = mkDefault true;
 
     users.${user} =
-      { nixosConfig, config, ... }:
+      {
+        osConfig, # https://nix-community.github.io/home-manager/installation/nixos.html#sec-install-nixos-module
+        config,
+        ...
+      }:
       let
         mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
         _currentThemeDir = lib.strings.removePrefix "/home/${user}" currentThemeDir;
@@ -203,18 +208,22 @@ with lib;
         home = {
           username = user;
           homeDirectory = "/home/${user}";
-          stateVersion = nixosConfig.system.stateVersion;
+          stateVersion = osConfig.system.stateVersion;
           packages = with pkgs; [
+            # -- Common packages for all configurations --
             age # Modern encryption tool with small explicit keys
             caligula # User-friendly, lightweight TUI for disk imaging
+            exfatprogs # exFAT filesystem userspace utilities
             fastfetch # Actively maintained, feature-rich and performance oriented, neofetch like system information tool
+            fzf # Command-line fuzzy finder
             just # Handy way to save and run project-specific commands
             pciutils # Collection of programs for inspecting and manipulating configuration of PCI devices
             psmisc # Set of small useful utilities that use the proc filesystem (such as fuser, killall and pstree)
+            ripgrep # Utility that combines the usability of The Silver Searcher with the raw speed of grep
             sops # Simple and flexible tool for managing secrets
           ];
 
-          # Symlink current theme
+          # Create a symlink to the selected theme
           file."${_currentThemeDir}" = {
             source = mkOutOfStoreSymlink "${repoDir}/config/${repoName}/themes/${theme}";
             force = true;

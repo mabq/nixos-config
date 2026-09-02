@@ -38,7 +38,7 @@ inputs.nixpkgs.lib.nixosSystem {
     # inputs.sops-nix.nixosModules.sops
 
     # -- Configuration files --
-    ../modules/defaults.nix
+    ./defaults.nix
     ../hosts/${host}.nix
     ../users/${user}.nix
     ../profiles/${profile}.nix

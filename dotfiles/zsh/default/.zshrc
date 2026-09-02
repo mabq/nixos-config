@@ -4,7 +4,5 @@
 # For more info read notes in zsh nix module.
 
 source "$ZDOTDIR/envs"
-source "$ZDOTDIR/aliases"
-source "$ZDOTDIR/functions"
-source "$ZDOTDIR/init"
-source "$ZDOTDIR/inputrc"
+source "$ZDOTDIR/config"
+source "$ZDOTDIR/tools"

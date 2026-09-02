@@ -1,14 +1,16 @@
 { user, ... }:
 {
   imports = [
-    ../modules/shell/zsh.nix
+    # CLI
+    (import ./modules/zsh.nix { })
+    ./modules/atuin.nix
 
-    ../modules/programs/btop.nix
-    ../modules/programs/git.nix
-    ../modules/programs/keyd.nix
-    ../modules/programs/neovim.nix
+    ./modules/programs/btop.nix
+    ./modules/programs/git.nix
+    ./modules/programs/keyd.nix
+    ./modules/programs/neovim.nix
 
-    ../modules/compositor/hyprland.nix
+    ./modules/compositor/hyprland.nix
   ];
 
   services.tailscale = {

@@ -1,5 +1,8 @@
 # Zsh as the main shell
 {
+  dotfiles ? "default",
+}:
+{
   pkgs,
   user,
   repoDir,
@@ -7,7 +10,6 @@
 }:
 {
   imports = [
-    ./dependencies/atuin.nix
     ./dependencies/bat.nix
     ./dependencies/starship.nix
     ./dependencies/tmux.nix
@@ -24,14 +26,13 @@
   home-manager.users.${user} = {
     home = {
       packages = with pkgs; [
-        exfatprogs # exFAT filesystem userspace utilities (!functions)
+        # -- Tools required by aliases and functions --
+        exfatprogs # exFAT filesystem userspace utilities
         eza # Modern, maintained replacement for ls (!aliases)
-        fd # Simple, fast and user-friendly alternative to find
         ffmpeg # Complete, cross-platform solution to record, convert and stream audio and video (!functions)
         fzf # Command-line fuzzy finder
         imagemagick # Software suite to create, edit, compose, or convert bitmap images (!functions(
-        parted # Create, destroy, resize, check, and copy partitions (!functions)
-        ripgrep # Utility that combines the usability of The Silver Searcher with the raw speed of grep
+        parted # Create, destroy, resize, check, and copy partitions
         zoxide # Fast cd command that learns your habits (!aliases) (must be initialized)
         zsh-autosuggestions # Fish-like shell autosuggestions for Zsh (!inputrc)
         zsh-history-substring-search # Fish-like shell history-substring-search for Zsh (!inputrc)
@@ -43,7 +44,7 @@
         text = ''
           ## -- Read notes in zsh nix module --
           setopt NO_GLOBAL_RCS
-          ZDOTDIR="${repoDir}/config/zsh"
+          ZDOTDIR="${repoDir}/dotfiles/zsh/${dotfiles}"
         '';
         force = true;
       };
