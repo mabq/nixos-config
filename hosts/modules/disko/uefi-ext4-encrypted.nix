@@ -6,7 +6,7 @@
       disk = {
         main = {
           type = "disk";
-          # device = ; # set on each host file
+          # device = (set on host file)
           content = {
             type = "gpt";
             partitions = {

@@ -203,6 +203,7 @@ with lib;
         home = {
           username = user;
           homeDirectory = "/home/${user}";
+          stateVersion = config.system.stateVersion;
           packages = with pkgs; [
             age # Modern encryption tool with small explicit keys
             caligula # User-friendly, lightweight TUI for disk imaging

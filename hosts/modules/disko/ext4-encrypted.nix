@@ -4,7 +4,7 @@
   disko.devices = {
     disk = {
       main = {
-        # device = # set this on the host file! Do not set it here to avoid targeting the wrong disk!
+        # device = (set on host file)
         type = "disk";
         content = {
           type = "gpt";

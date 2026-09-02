@@ -1,38 +1,22 @@
-# Options specific to this host only!
-{ user, ... }:
-let
-  # State version
-  #  Version of NixOS at installation. DO NOT UPDATE this value afterwards.
-  #  Must be set on per-host basis.
-  stateVersion = "26.05";
-in
+# Options inherent to this machine only!
+{ host, ... }:
 {
   imports = [
-    ./modules/disko/ext4-encrypted.nix
-    ./modules/network/systemd-networkd.nix
+    ./modules/disko/ext4-encrypted.nix # disk layout
+    ./modules/network/systemd-networkd.nix # network manager
   ];
 
-  # Disko target disk
-  #  wwn ids are more stable than `/dev/sdX` block devices.
-  #  Must be ser on per-host basis.
+  # The version of NixOS used for installation on this specific machine.
+  # Set it once at installation time and never change it afterwards!
+  system.stateVersion = "26.05";
+
+  # Use `lsblk -o NAME,ID-LINK` to check device's wwn id
   disko.devices.disk.main.device = "/dev/disk/by-id/wwn-0x5000cca55ff314ed";
 
-  # Boot loader
+  # Newer versions of NixOS could take better decisions (which kernel modules,
+  # which options to use) based on the same hardware report.
+  hardware.facter.reportPath = ./facter/${host}.json;
+
   boot.loader.grub.enable = true;
-  # boot.loader.grub.device = # automatically set by disko
-
-  # Facter report
-  #  The `hardware-configuration.nix` file freezes a decision made at
-  #  generation time (which kernel modules, which options) based on the NixOS
-  #  version at that moment. If NixOS's recommendations change later, the file
-  #  is stale until you regenerate it. The `facter.json` report instead freezes
-  #  just the raw facts about the hardware, and the decision-making logic lives
-  #  in the nixpkgs facter modules. As NixOS evolves, you get better decisions
-  #  automatically on rebuild, without re-running detection on the physical
-  #  machine.
-  hardware.facter.reportPath = ./facter/xps.json;
-
-  # State versions for NixOS and Home-Manager
-  system.stateVersion = stateVersion;
-  home-manager.users.${user}.home.stateVersion = stateVersion;
+  # boot.loader.grub.device = (set by disko)
 }
