@@ -1,8 +1,6 @@
 { user, ... }:
 {
   imports = [
-    ../modules/network/systemd-networkd.nix
-
     ../modules/shell/zsh.nix
 
     ../modules/programs/btop.nix
