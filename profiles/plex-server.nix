@@ -3,7 +3,7 @@
   imports = [
     # CLI
     (import ./modules/zsh.nix { })
-    ./modules/atuin.nix
+    (import ./modules/atuin.nix { dotfiles = "simpler"; })
 
     ./modules/bat.nix
     ./modules/starship.nix

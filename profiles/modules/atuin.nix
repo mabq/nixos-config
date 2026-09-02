@@ -1,3 +1,7 @@
+# Authentication required!
+{
+  dotfiles ? "default",
+}:
 {
   pkgs,
   user,
@@ -18,7 +22,7 @@
 
         file = {
           ".config/atuin/config.toml" = {
-            source = mkOutOfStoreSymlink "${repoDir}/config/atuin/config.toml";
+            source = mkOutOfStoreSymlink "${repoDir}/dotfiles/atuin/${dotfiles}/config.toml";
             force = true;
           };
         };
@@ -27,54 +31,35 @@
 }
 
 /*
-  Related configurations
-  ======================
+  Notes
+  -----
 
-  - Shell init
-    Atuin must be initialized by a shell config file.
-      https://docs.atuin.sh/latest/guide/shell-integration/
-      https://docs.atuin.sh/latest/configuration/key-binding/
+  Atuin must be initialized by the shell, for more info see:
+   https://docs.atuin.sh/latest/guide/shell-integration/
+   https://docs.atuin.sh/latest/configuration/key-binding/
 
-  - User's module
-    Overrides the random encryption key created at installation with the one of
-    the user's Atuin account.
-
-  Manual steps
-  ============
-
-  Must run `atuin login` to login and `atuin sync` to start sync (see notes
-  below).
+  This modules enables Atuin and you can start using it right away, but if you
+  want to sync history with another machine/s you must execute `atuin login`
+  and enter a encryption key.
 
   Encryption key
-  ==============
+  --------------
 
-  All devices linked to an Atuin account must use the same encryption key and
-  will share the same history. If you need separate histories, create separate
-  Atuin accounts.
+  To share history with other machines you first need to authenticate (via a
+  web browser) and then enter the same encryption key used by those machines.
 
-  Atuin does not read authentication credentials from files, so if you wish to
-  sync history you need to manually run `atuin login`.
+  Obtain the encryption key:
+   - Get it from your passwork manager, or
+   - Execute `atuin key [--base64]` in one of the other machines.
+
+  Authenticate and sync:
+   - Execute `atuin login` (opens a web browser to authenticate).
+   - When prompted, enter the encryption key. If you don't provide one, Atuin
+     will use the random key stored in `~/.local/share/atuin/key`.
+
+  If you want to backup your history, but not share it with other machines, you
+  need to create a separate account.
+
+  For more information, see:
    https://docs.atuin.sh/latest/guide/sync/#login
-
-  INFO: No longer applies, use the password manager to get the encryption key.
-  If you don't have a web-broser on the machine, ssh into it using Tailscale
-  from a machine that does, copy the code and paste it in the prompt.
-
-  In order to avoid typing the encryption key manually (which replaces the
-  content of `~/.local/share/atuin/key`), we use the user's module to create
-  that file from a secret. So, when executing `atuin login` just leave the
-  encryption key empty. You need a browser to open the authentication URL.
-
-  Run `atuin key --base64` to check the encryption key. We can safely override
-  the key because it is only used for syncing data. The local database is not
-  encrypted.
-
-  Links
-  =====
-
-  Atuin docs:
-    https://docs.atuin.sh/latest/
-
-  Shortcuts:
-    https://docs.atuin.sh/latest/configuration/key-binding/#atuin-ui-shortcuts
 */

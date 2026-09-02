@@ -1,0 +1,14 @@
+# See https://docs.atuin.sh/latest/configuration/config/
+
+# Don't show number shortcuts
+show_numeric_shortcuts = false
+
+# Run the selected command on enter. Press tab to edit.
+enter_accept = true
+
+[keys]
+# Don't exit when scrolled past the first/last entry
+scroll_exits = false
+
+# Don't exit with left arrow
+exit_past_line_start = false

@@ -1,6 +1,6 @@
 # TODO: Don't, some profiles won't include Hyprland
 ## vim: filetype=sh
-#
+
 ## Automatically start hyprland with UWSM.
 ##  https://wiki.hypr.land/Useful-Utilities/Systemd-start/#in-tty
 ##

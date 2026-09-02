@@ -1,4 +1,3 @@
-# Zsh as the main shell
 {
   dotfiles ? "default",
 }:
@@ -32,7 +31,6 @@
         zsh-syntax-highlighting # Fish-like shell like syntax highlighting for Zsh (!inputrc)
       ];
 
-      # Options and variables specific to zsh (must go in this file)
       file.".zshenv" = {
         text = ''
           ## -- Read notes in zsh nix module --
@@ -53,13 +51,11 @@
     - Non-interactive:  Running scripts
     - Login:            Initial login / SSH login
 
-  Verify:
+  Run `echo $0`, if the shell name begins with a hyphen (e.g., `-zsh` or
+  `-bash`), it is a login shell.
 
-    - Run `echo $0`, if the shell name begins with a hyphen (e.g., `-zsh` or
-      `-bash`), it is a login shell.
-
-    - Run `echo $-`, if the output includes the letter `i` (e.g., `58912ilm` or
-      `himBHs`), the shell is interactive.
+  Run `echo $-`, if the output includes the letter `i` (e.g., `58912ilm` or
+  `himBHs`), the shell is interactive.
 
   Config files
   ============
