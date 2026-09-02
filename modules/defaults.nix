@@ -3,6 +3,7 @@
   config,
   lib,
   pkgs,
+  host,
   user,
   theme,
   branch,
@@ -91,7 +92,10 @@ with lib;
   # Network
   # ----------------------------------------------------------------------------
 
-  networking.firewall.enable = mkDefault true; # tailscale can go through
+  networking = {
+    hostname = mkDefault host;
+    firewall.enable = mkDefault true; # tailscale can go through
+  };
 
   # ----------------------------------------------------------------------------
   # Time and locale

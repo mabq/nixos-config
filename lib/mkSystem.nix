@@ -3,6 +3,7 @@
   inputs,
 }:
 {
+  host,
   user,
   profile,
   theme ? "catppuccin",
@@ -30,10 +31,15 @@ in
 inputs.nixpkgs.lib.nixosSystem {
   inherit specialArgs; # [2]
   modules = [
+    # -- Flake inputs --
     inputs.disko.nixosModules.disko
     inputs.home-manager.nixosModules.home-manager
     # inputs.sops-nix.nixosModules.sops
 
+    # -- Configuration files --
+    ../modules/defaults.nix
+    ../hosts/${host}.nix
+    ../users/${user}.nix
     ../profiles/${profile}.nix
   ];
 }

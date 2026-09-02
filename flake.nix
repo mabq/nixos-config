@@ -31,6 +31,7 @@
       nixosConfigurations = {
         # [4]
         "xps" = mkSystem {
+          host = "xps";
           user = "mabq";
           profile = "plex-server";
           branch = "restructure";

@@ -1,11 +1,6 @@
 { user, ... }:
 {
   imports = [
-    ../modules/defaults.nix
-
-    ../modules/users/${user}.nix
-    ../modules/hosts/xps.nix
-
     ../modules/network/systemd-networkd.nix
 
     ../modules/shell/zsh.nix
