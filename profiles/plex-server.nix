@@ -5,8 +5,8 @@
     (import ./modules/zsh.nix { })
     (import ./modules/atuin.nix { configName = "simple"; })
     (import ./modules/bat.nix { })
+    (import ./modules/starship.nix { })
 
-    ./modules/starship.nix
     ./modules/tmux.nix
     ./modules/yazi.nix
 

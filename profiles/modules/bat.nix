@@ -16,9 +16,10 @@
     in
     {
       home = {
-        packages = with pkgs; [
-          bat # Cat clone with syntax highlighting and Git integration
-        ];
+        # packages = with pkgs; [
+        #   bat # Cat clone with syntax highlighting and Git integration
+        # ];
+        programs.bat.enable = true;
 
         file = {
           ".config/bat/config" = {
@@ -31,10 +32,10 @@
           };
         };
 
-        # This is required to update
-        activation.batCache = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
-          ${pkgs.bat}/bin/bat cache --build
-        '';
+        # Bat requires a cache build to update the theme
+        # activation.batCache = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+        #   ${pkgs.bat}/bin/bat cache --build
+        # '';
       };
     };
 }
