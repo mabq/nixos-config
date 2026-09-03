@@ -18,7 +18,7 @@
   home-manager.users.${user} = {
     home = {
       packages = with pkgs; [
-        # -- Tools required by aliases and functions --
+        # -- Packages required by config files --
         exfatprogs # exFAT filesystem userspace utilities
         eza # Modern, maintained replacement for ls (!aliases)
         ffmpeg # Complete, cross-platform solution to record, convert and stream audio and video (!functions)

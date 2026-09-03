@@ -4,8 +4,8 @@
     # CLI
     (import ./modules/zsh.nix { })
     (import ./modules/atuin.nix { dotfiles = "simpler"; })
-
     ./modules/bat.nix
+
     ./modules/starship.nix
     ./modules/tmux.nix
     ./modules/yazi.nix

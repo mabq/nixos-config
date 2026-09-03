@@ -31,35 +31,42 @@
 }
 
 /*
-  Notes
-  -----
+  Related configs
+  ---------------
 
   Atuin must be initialized by the shell, for more info see:
    https://docs.atuin.sh/latest/guide/shell-integration/
    https://docs.atuin.sh/latest/configuration/key-binding/
 
+  Sync history
+  ------------
+
   This modules enables Atuin and you can start using it right away, but if you
-  want to sync history with another machine/s you must execute `atuin login`
-  and enter a encryption key.
+  want to sync history with another machine/s you must execute:
 
-  Encryption key
-  --------------
+    `atuin login`
 
-  To share history with other machines you first need to authenticate (via a
-  web browser) and then enter the same encryption key used by those machines.
+  The command will prompt you for a encryption key.
 
-  Obtain the encryption key:
-   - Get it from your passwork manager, or
-   - Execute `atuin key [--base64]` in one of the other machines.
+  If you don't want to sync history with other machine/s just press enter.
+  Atuin will use a random encryption key stored in
+  `~/.local/share/atuin/key`.
 
-  Authenticate and sync:
-   - Execute `atuin login` (opens a web browser to authenticate).
-   - When prompted, enter the encryption key. If you don't provide one, Atuin
-     will use the random key stored in `~/.local/share/atuin/key`.
+  Otherwise, enter the same encryption key used in the other machine/s. You can
+  obtain the key from the password manager or by executing the following
+  command in one of those machines:
 
-  If you want to backup your history, but not share it with other machines, you
-  need to create a separate account.
+    `atuin key`
+
+  Atuin will replace the content of `~/.local/share/atuin/key` with the entered
+  encryption key.
+
+  Then, Atuin will open a web browser for you to authenticate (use your password
+  manager). That's it!
+
+  If you want to backup your history in atuin's servers, but not share it with
+  other machines, you need to create a separate account.
 
   For more information, see:
-   https://docs.atuin.sh/latest/guide/sync/#login
+   https://docs.atuin.sh/latest/guide
 */
