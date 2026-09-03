@@ -15,11 +15,12 @@
       mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
     in
     {
+      programs.bat.enable = true;
+
       home = {
         # packages = with pkgs; [
         #   bat # Cat clone with syntax highlighting and Git integration
         # ];
-        programs.bat.enable = true;
 
         file = {
           ".config/bat/config" = {
