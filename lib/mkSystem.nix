@@ -6,7 +6,7 @@
   host,
   user,
   profile,
-  theme ? "catppuccin",
+  theme ? "rose-pine",
   branch ? "main",
 }:
 let
