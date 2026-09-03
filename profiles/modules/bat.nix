@@ -33,7 +33,7 @@
 
         # This is required to update
         activation.batCache = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
-          "${pkgs.bat}/bin/bat cache --build
+          ${pkgs.bat}/bin/bat cache --build
         '';
       };
     };
