@@ -225,7 +225,7 @@ with lib;
 
           # Create a symlink to the selected theme
           file."${_currentThemeDir}" = {
-            source = mkOutOfStoreSymlink "${repoDir}/config/${repoName}/themes/${theme}";
+            source = mkOutOfStoreSymlink "${repoDir}/themes/${theme}";
             force = true;
           };
         };

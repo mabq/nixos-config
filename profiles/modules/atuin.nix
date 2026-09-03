@@ -1,6 +1,5 @@
-# Authentication required!
 {
-  dotfiles ? "default",
+  configName ? "default",
 }:
 {
   pkgs,
@@ -22,7 +21,7 @@
 
         file = {
           ".config/atuin/config.toml" = {
-            source = mkOutOfStoreSymlink "${repoDir}/dotfiles/atuin/${dotfiles}/config.toml";
+            source = mkOutOfStoreSymlink "${repoDir}/config/atuin/${configName}.toml";
             force = true;
           };
         };

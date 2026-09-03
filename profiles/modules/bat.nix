@@ -1,50 +1,38 @@
 {
-  theme,
-  # pkgs,
+  configName ? "default",
+}:
+{
   user,
-  # repoName,
-  # repoDir,
-  # currentThemeDir,
+  repoDir,
+  currentThemeDir,
   ...
 }:
 {
-  environment.sessionVariables = {
-
-  };
-
   home-manager.users.${user} =
-    {
-      # config,
-      ...
-    }:
-    # let
-    #   mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
-    # in
+    { config, ... }:
+    let
+      mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
+    in
     {
       programs.bat = {
         enable = true;
-        config.theme = "current";
-        themes.current = {
-          src = ../../config/mynix/themes/${theme};
-          file = "bat.tmTheme";
+
+        # This config never changes, no need for out of store symlink.
+        # see `bat --help` for more options
+        config = {
+          theme = "current";
         };
       };
 
-      # home = {
-      #   packages = with pkgs; [
-      #     bat # Cat clone with syntax highlighting and Git integration
-      #   ];
-      #
-      #   file = {
-      #     ".config/bat/config" = {
-      #       source = mkOutOfStoreSymlink "${repoDir}/config/bat/config";
-      #       force = true;
-      #     };
-      #     ".config/bat/themes/current.tmTheme" = {
-      #       source = mkOutOfStoreSymlink "${currentThemeDir}/bat.tmTheme";
-      #       force = true;
-      #     };
-      #   };
-      # };
+      home.file = {
+        ".config/bat/config" = {
+          source = mkOutOfStoreSymlink "${repoDir}/config/bat/${configName}";
+          force = true;
+        };
+        ".config/bat/themes/current.tmTheme" = {
+          source = mkOutOfStoreSymlink "${currentThemeDir}/bat.tmTheme";
+          force = true;
+        };
+      };
     };
 }

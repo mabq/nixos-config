@@ -1,5 +1,5 @@
 {
-  dotfiles ? "default",
+  configName ? "default",
 }:
 {
   pkgs,
@@ -18,7 +18,7 @@
   home-manager.users.${user} = {
     home = {
       packages = with pkgs; [
-        # -- Packages required by config files --
+        # -- Packages required by default config files --
         exfatprogs # exFAT filesystem userspace utilities
         eza # Modern, maintained replacement for ls (!aliases)
         ffmpeg # Complete, cross-platform solution to record, convert and stream audio and video (!functions)
@@ -29,13 +29,15 @@
         zsh-autosuggestions # Fish-like shell autosuggestions for Zsh (!inputrc)
         zsh-history-substring-search # Fish-like shell history-substring-search for Zsh (!inputrc)
         zsh-syntax-highlighting # Fish-like shell like syntax highlighting for Zsh (!inputrc)
+
+        # -- If you add more config names, add the packages required by those here --
       ];
 
       file.".zshenv" = {
         text = ''
           ## -- Read notes in zsh nix module --
           setopt NO_GLOBAL_RCS
-          ZDOTDIR="${repoDir}/dotfiles/zsh/${dotfiles}"
+          ZDOTDIR="${repoDir}/config/zsh/${configName}"
         '';
         force = true;
       };

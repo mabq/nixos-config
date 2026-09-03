@@ -3,8 +3,8 @@
   imports = [
     # CLI
     (import ./modules/zsh.nix { })
-    (import ./modules/atuin.nix { dotfiles = "simpler"; })
-    ./modules/bat.nix
+    (import ./modules/atuin.nix { configName = "simple"; })
+    (import ./modules/bat.nix { })
 
     ./modules/starship.nix
     ./modules/tmux.nix
