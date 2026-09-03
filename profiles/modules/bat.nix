@@ -10,7 +10,7 @@
 }:
 {
   home-manager.users.${user} =
-    { config, ... }:
+    { config, lib, ... }:
     let
       mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
     in
@@ -30,6 +30,11 @@
             force = true;
           };
         };
+
+        # This is required to update
+        activation.batCache = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+          "${pkgs.bat}/bin/bat cache --build
+        '';
       };
     };
 }
