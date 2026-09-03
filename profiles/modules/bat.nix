@@ -1,8 +1,10 @@
 {
-  pkgs,
+  theme,
+  # pkgs,
   user,
-  repoDir,
-  currentThemeDir,
+  # repoName,
+  # repoDir,
+  # currentThemeDir,
   ...
 }:
 {
@@ -11,16 +13,19 @@
   };
 
   home-manager.users.${user} =
-    { config, ... }:
+    {
+      # config,
+      ...
+    }:
     # let
     #   mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
     # in
     {
       programs.bat = {
         enable = true;
-        config.theme = "bat";
-        themes.bat = {
-          src = "${currentThemeDir}";
+        config.theme = "current";
+        themes.current = {
+          src = ../../config/mynix/themes/${theme};
           file = "bat.tmTheme";
         };
       };
