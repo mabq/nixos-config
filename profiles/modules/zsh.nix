@@ -1,5 +1,5 @@
 {
-  configName ? "default",
+  configName,
 }:
 {
   pkgs,

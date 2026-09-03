@@ -1,18 +1,18 @@
 { user, ... }:
 {
   imports = [
-    # CLI
-    (import ./modules/zsh.nix { })
+    (import ./modules/keyd.nix { configName = user; }) # very personal
+
+    (import ./modules/zsh.nix { configName = "default"; })
+    (import ./modules/starship.nix { configName = "simple"; })
     (import ./modules/atuin.nix { configName = "simple"; })
-    (import ./modules/bat.nix { })
-    (import ./modules/starship.nix { })
+    (import ./modules/bat.nix { configName = "default"; })
 
     ./modules/tmux.nix
     ./modules/yazi.nix
 
     ./modules/programs/btop.nix
     ./modules/programs/git.nix
-    ./modules/programs/keyd.nix
     ./modules/programs/neovim.nix
 
     ./modules/compositor/hyprland.nix
