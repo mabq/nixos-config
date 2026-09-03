@@ -2,6 +2,7 @@
   configName ? "default",
 }:
 {
+  pkgs,
   user,
   repoDir,
   currentThemeDir,
@@ -14,24 +15,20 @@
       mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
     in
     {
-      programs.bat = {
-        enable = true;
+      home = {
+        packages = with pkgs; [
+          bat # Cat clone with syntax highlighting and Git integration
+        ];
 
-        # This config never changes, no need for out of store symlink.
-        # see `bat --help` for more options
-        config = {
-          theme = "current";
-        };
-      };
-
-      home.file = {
-        ".config/bat/config" = {
-          source = mkOutOfStoreSymlink "${repoDir}/config/bat/${configName}";
-          force = true;
-        };
-        ".config/bat/themes/current.tmTheme" = {
-          source = mkOutOfStoreSymlink "${currentThemeDir}/bat.tmTheme";
-          force = true;
+        file = {
+          ".config/bat/config" = {
+            source = mkOutOfStoreSymlink "${repoDir}/config/bat/${configName}";
+            force = true;
+          };
+          ".config/bat/themes/current.tmTheme" = {
+            source = mkOutOfStoreSymlink "${currentThemeDir}/bat.tmTheme";
+            force = true;
+          };
         };
       };
     };
