@@ -12,6 +12,8 @@
 let
   repoName = "mynix";
   repoDir = "/home/${user}/.local/share/${repoName}"; # [1]
+  repoConfigDir = "${repoDir}/config";
+  repoThemeDir = "${repoDir}/theme/${theme}";
   currentThemeDir = "/home/${user}/.config/${repoName}/theme"; # [1]
 
   specialArgs = {
@@ -25,6 +27,8 @@ let
       branch
       repoName
       repoDir
+      repoConfigDir
+      repoThemeDir
       currentThemeDir
       ;
   };

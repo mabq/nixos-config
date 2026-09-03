@@ -4,14 +4,13 @@
 {
   pkgs,
   user,
-  repoDir,
-  theme,
-  # currentThemeDir,
+  repoConfigDir,
+  repoThemeDir,
   ...
 }:
 {
   home-manager.users.${user} =
-    { config, lib, ... }:
+    { config, ... }:
     let
       mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
     in
@@ -23,28 +22,20 @@
 
         file = {
           ".config/bat/config" = {
-            source = mkOutOfStoreSymlink "${repoDir}/config/bat/${configName}";
+            source = mkOutOfStoreSymlink "${repoConfigDir}/bat/${configName}";
             force = true;
           };
-          # ".config/bat/themes/current.tmTheme" = {
-          #   source = mkOutOfStoreSymlink "${currentThemeDir}/bat.tmTheme";
-          #   force = true;
-          # };
           ".config/bat/themes/current.tmTheme" = {
-            source = mkOutOfStoreSymlink "${repoDir}/themes/${theme}/bat.tmTheme";
+            source = mkOutOfStoreSymlink "${repoThemeDir}/bat.tmTheme";
             force = true;
+            # Bat requires a cache rebuild for a new theme to apply. This
+            # activation script only runs when the theme actually changes.
+            # The bat home-manager module runs it on every build.
             onChange = ''
               ${pkgs.bat}/bin/bat cache --build
             '';
           };
         };
-
-        # Bat requires a cache build to update the theme
-        # activation = {
-        #   batCache = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
-        #     ${pkgs.bat}/bin/bat cache --build
-        #   '';
-        # };
       };
     };
 }
