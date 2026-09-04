@@ -1,10 +1,9 @@
-# This file is used by `nixos-anywhere` to partition, format, and mount the disks.
 { lib, ... }:
 {
   disko.devices = {
     disk = {
       main = {
-        # device = (set on host file)
+        # device = # don't set a default value to avoid accidental overrides
         type = "disk";
         content = {
           type = "gpt";

@@ -1,11 +1,10 @@
 /*
-  Do not import this module directly on any profile. This module is used by
-  network manager modules to manage DNS resolution.
+  Used by network manager modules to manage DNS resolution.
 
   IMPORTANT!
-  Per-link DNS servers take precedence over Global configurations.
-  NetworkManager and systemd-networkd modules must be configured to ignore DNS
-  servers obtained from DHCP.
+   NetworkManager and systemd-networkd modules must be configured to ignore DNS
+   servers obtained from DHCP. Per-link DNS servers take precedence over Global
+   configurations.
 */
 
 { lib, ... }:

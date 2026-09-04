@@ -3,11 +3,11 @@
   config,
   lib,
   pkgs,
-
   host,
   user,
   repoBranch,
   repoName,
+  repoUrl,
   repoDir,
   repoThemeDir,
   localThemeDir,
@@ -15,41 +15,30 @@
 }:
 with lib;
 {
-  # ----------------------------------------------------------------------------
-  # Bootstrap repo
-  # ----------------------------------------------------------------------------
-
-  # A systemd service that will automatically clone the repository on new
-  # installations. The repository must be in place for all config files to
-  # work (we use `mkOutOfStoreSymlink` for most of them).
-  systemd.services.clone-repo = {
+  # Clone the repo automatically on first boot.
+  #  Most config files are symlinks pointing to this repository, so we need the
+  #  repository in place since the very first boot.
+  systemd.services."clone-${repoName}" = {
     description = "Clone ${repoName} repository if missing";
     wantedBy = [ "multi-user.target" ];
     before = [ "home-manager-${user}.service" ];
-    # Skip if the repository is already in place
     unitConfig.ConditionPathExists = "!${repoDir}/.git";
     serviceConfig = {
       Type = "oneshot";
       User = "${user}";
       ExecStart = [
-        # Systemd requires absolute paths to executables, it does not rely on $PATH.
-        "${pkgs.git}/bin/git clone https://github.com/mabq/${repoName}.git ${repoDir}"
+        # systemd requires absolute paths to executables
+        "${pkgs.git}/bin/git clone ${repoUrl}.git ${repoDir}"
         "${pkgs.git}/bin/git -C ${repoDir} checkout ${repoBranch}"
       ];
     };
   };
 
-  # ----------------------------------------------------------------------------
-  # Nix
-  # ----------------------------------------------------------------------------
-
-  # Allow proprietary packages
-  nixpkgs.config.allowUnfree = mkDefault true;
+  # -- Nix ---------------------------------------------------------------------
 
   nix = {
-    # Use the latest version of the CLI
+    # Use the latest version of the cli
     package = mkDefault pkgs.nixVersions.latest;
-
     settings = {
       experimental-features = [
         "nix-command"
@@ -57,9 +46,8 @@ with lib;
       ];
       auto-optimise-store = mkDefault true;
     };
-
     gc = {
-      # Save disk space by automatically collection garbage
+      # Save disk space by doing garbage collection automatically
       #  https://nixos.org/manual/nixos/stable/#sec-nix-gc
       automatic = mkDefault true;
       dates = mkDefault "weekly";
@@ -67,12 +55,18 @@ with lib;
     };
   };
 
-  # ----------------------------------------------------------------------------
-  # Boot (kernel)
-  # ----------------------------------------------------------------------------
+  nixpkgs = {
+    # https://nixos.org/manual/nixpkgs/unstable/#sec-config-options-reference
+    config.allowUnfree = mkDefault true;
+  };
 
-  # Use the latest stable Linux kernel available in Nixpkgs
-  boot.kernelPackages = mkDefault pkgs.linuxPackages_latest;
+  # -- Linux -------------------------------------------------------------------
+
+  boot = {
+    # Use the absolute newest, bleeding-edge Linux kernel version available in
+    # the nixpkgs repository
+    kernelPackages = mkDefault pkgs.linuxPackages_latest;
+  };
 
   # ----------------------------------------------------------------------------
   # Memory

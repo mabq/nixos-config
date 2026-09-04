@@ -6,28 +6,22 @@
   host,
   user,
   profile,
-  repoBranch ? "main",
   theme ? "tokyo-night",
+  repoBranch ? "main",
 }:
 let
-  # These variables are used across nix and program's configuration files to
-  # avoid hard-coding the paths, making it a lot easier to move directories or
-  # change the project name if ever required. These must be absolute paths
-  # because they are mainly used to create symlinks.
-  #
-  # Unfortunately these can't be used everywhere, so before changing them do a
-  # quick live-grep to see if you need to do some manual change.
+  # These variables are used across nix and configuration files to avoid
+  # hard-coding those paths. Makes changing things much easier later.
   repoName = "mynix";
-  repoDir = "/home/${user}/.local/share/${repoName}"; # [1]
+  repoUrl = "https://github.com/mabq/${repoName}.git";
+  repoDir = "/home/${user}/.local/share/${repoName}";
   repoConfigDir = "${repoDir}/config";
   repoThemeDir = "${repoDir}/themes/${theme}";
+  localThemeDir = "/home/${user}/.config/${repoName}/theme";
 
-  localThemeDir = "/home/${user}/.config/${repoName}/theme"; # [1]
-
-  # Passing these as `specialArgs` (instead of `_module.args`) allows me to use
-  # these variables in the `imports` sections of all modules without causing
-  # infinite recursion. For more info see:
-  # https://nixos-and-flakes.thiscute.world/nixos-with-flakes/nixos-flake-and-module-system#pass-non-default-parameters-to-submodules
+  # `specialArgs` (unlike `_module.args`) does not cause infinite recursion
+  # when using one of these in the `imports` section of another module.
+  #  https://nixos-and-flakes.thiscute.world/nixos-with-flakes/nixos-flake-and-module-system#pass-non-default-parameters-to-submodules
   specialArgs = {
     inherit
       self
@@ -38,6 +32,7 @@ let
       theme
       repoBranch
       repoName
+      repoUrl
       repoDir
       repoConfigDir
       repoThemeDir
@@ -46,15 +41,15 @@ let
   };
 in
 inputs.nixpkgs.lib.nixosSystem {
-  inherit specialArgs; # [2]
+  inherit specialArgs;
   modules = [
-    # Import all flake inputs modules here. Nix uses lazy-loading so it won't
-    # actually load a module that is not required by the actual configuration.
+    # Modules provided by the flake. Nix uses lazy-loading so it only loads
+    # what is actually required.
     inputs.disko.nixosModules.disko
     inputs.home-manager.nixosModules.home-manager
     # inputs.sops-nix.nixosModules.sops
 
-    # Import the configuration modules here.
+    # Config files
     ./defaults.nix
     ../hosts/${host}.nix
     ../users/${user}.nix

@@ -1,4 +1,4 @@
-# systemd-networkd as the network manager.
+# systemd-networkd as the network manager
 {
   lib,
   pkgs,
@@ -8,7 +8,7 @@
 with lib;
 {
   imports = [
-    ./modules/systemd-resolved.nix # DNS resolution
+    ./dependencies/systemd-resolved.nix
   ];
 
   # ----------------------------------------------------------------------------
@@ -31,8 +31,8 @@ with lib;
   #  https://wiki.archlinux.org/title/Systemd-networkd
   # ----------------------------------------------------------------------------
 
-  # Don't use this option. In many tutorials this option is mentioned, it acts
-  # as compatibility mechanism to translate older `networking.*` options into
+  # Don't use this option. It is mentioned in many tutorials because it acts as
+  # compatibility mechanism to translate older `networking.*` options into
   # networkd configurations. Since we are using native
   # `systemd.network.networks` declarations, it is unnecessary.
   # `networking.useNetworkd = true;`
@@ -42,7 +42,7 @@ with lib;
   # systemd.services."systemd-networkd".environment.SYSTEMD_LOG_LEVEL = "debug";
 
   systemd.network = {
-    enable = mkDefault true;
+    enable = true;
 
     # Consider the system "online" when any interface reaches "routable" state.
     wait-online.anyInterface = mkDefault true;

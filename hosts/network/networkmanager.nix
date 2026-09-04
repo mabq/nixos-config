@@ -1,4 +1,4 @@
-# NetworkManager as the network manager.
+# NetworkManager as the network manager
 {
   lib,
   pkgs,
@@ -8,7 +8,7 @@
 with lib;
 {
   imports = [
-    ./modules/systemd-resolved.nix # DNS resolution
+    ./dependencies/systemd-resolved.nix
   ];
 
   # ----------------------------------------------------------------------------
@@ -26,17 +26,17 @@ with lib;
   hardware.facter.detected.dhcp.enable = false;
 
   # ----------------------------------------------------------------------------
-  # NetworkManager
+  # Network Manager
   #  https://wiki.archlinux.org/title/NetworkManager
   #  https://networkmanager.dev/docs/api/latest/settings-ipv4.html
   # ----------------------------------------------------------------------------
 
   networking.networkmanager = {
-    enable = mkDefault true;
+    enable = true;
 
+    # Important!
     # Instruct NetworkManager to ignore DNS servers obtained from DHCP on all
-    # interfaces. This is important to let DNS resolution be managed by
-    # systemd-resolved servers.
+    # interfaces. Required to let systemd-resolved manage DNS resolution.
     dns = mkForce "none";
     settings.main."systemd-resolved" = false;
   };
