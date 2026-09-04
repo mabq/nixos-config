@@ -31,6 +31,6 @@ in
     ];
 
     # etc."keyd".source = "${_repoConfigDir}/keyd/${configName}";
-    etc."keyd".source = "../../config/keyd/${configName}";
+    etc."keyd".source = ../../config/keyd/${configName};
   };
 }
