@@ -1,7 +1,7 @@
 {
   pkgs,
   user,
-  repoDir,
+  repoConfigDir,
   ...
 }:
 {
@@ -21,11 +21,11 @@
 
         file = {
           ".config/git/config" = {
-            source = mkOutOfStoreSymlink "${repoDir}/config/git/${user}";
+            source = mkOutOfStoreSymlink "${repoConfigDir}/git/${user}";
             force = true;
           };
           ".config/lazygit/config.yml" = {
-            source = mkOutOfStoreSymlink "${repoDir}/config/lazygit/lazygit.yml";
+            source = mkOutOfStoreSymlink "${repoConfigDir}/lazygit/lazygit.yml";
             force = true;
           };
         };

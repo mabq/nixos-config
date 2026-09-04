@@ -4,7 +4,7 @@
 {
   pkgs,
   user,
-  repoDir,
+  repoConfigDir,
   ...
 }:
 {
@@ -21,7 +21,7 @@
 
         file = {
           ".config/atuin/config.toml" = {
-            source = mkOutOfStoreSymlink "${repoDir}/config/atuin/${configName}.toml";
+            source = mkOutOfStoreSymlink "${repoConfigDir}/atuin/${configName}.toml";
             force = true;
           };
         };

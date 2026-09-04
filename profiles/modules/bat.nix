@@ -26,6 +26,7 @@
             force = true;
           };
           ".config/bat/themes/current.tmTheme" = {
+            # Not to the local theme dir to trigger the change
             source = mkOutOfStoreSymlink "${repoThemeDir}/bat.tmTheme";
             force = true;
             # Bat requires a cache rebuild for a new theme to apply. This

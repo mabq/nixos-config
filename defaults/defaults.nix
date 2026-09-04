@@ -1,12 +1,12 @@
-# Don't forget to use `mkDefault`, these should be overidable.
+# Use `mkDefault`, these should be overidable.
 {
   config,
   lib,
   pkgs,
+
   host,
   user,
-  theme,
-  branch,
+  repoBranch,
   repoName,
   repoDir,
   currentThemeDir,
@@ -19,8 +19,8 @@ with lib;
   # ----------------------------------------------------------------------------
 
   # A systemd service that will automatically clone the repository on new
-  # installations. We aggresively use `mkOutOfStoreSymlink` to avoid rebuilds.
-  # Those symlinks are worthless if the repository is not in place.
+  # installations. The repository must be in place for all config files to
+  # work (we use `mkOutOfStoreSymlink` for most of them).
   systemd.services.clone-repo = {
     description = "Clone ${repoName} repository if missing";
     wantedBy = [ "multi-user.target" ];
@@ -31,8 +31,9 @@ with lib;
       Type = "oneshot";
       User = "${user}";
       ExecStart = [
+        # Systemd requires absolute paths to executables, it does not rely on $PATH.
         "${pkgs.git}/bin/git clone https://github.com/mabq/${repoName}.git ${repoDir}"
-        "${pkgs.git}/bin/git -C ${repoDir} checkout ${branch}"
+        "${pkgs.git}/bin/git -C ${repoDir} checkout ${repoBranch}"
       ];
     };
   };
@@ -202,7 +203,7 @@ with lib;
       }:
       let
         mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
-        _currentThemeDir = lib.strings.removePrefix "/home/${user}" currentThemeDir;
+        themeDir = lib.strings.removePrefix "/home/${user}" currentThemeDir;
       in
       {
         home = {
@@ -224,8 +225,8 @@ with lib;
           ];
 
           # Create a symlink to the selected theme
-          file."${_currentThemeDir}" = {
-            source = mkOutOfStoreSymlink "${repoDir}/themes/${theme}";
+          file."${themeDir}" = {
+            source = mkOutOfStoreSymlink "${repoThemeDir}";
             force = true;
           };
         };

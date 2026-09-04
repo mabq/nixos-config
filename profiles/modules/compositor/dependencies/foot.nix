@@ -1,7 +1,7 @@
 {
   pkgs,
   user,
-  repoDir,
+  repoConfigDir,
   ...
 }:
 {
@@ -18,7 +18,7 @@
 
         file = {
           ".config/foot/foot.ini" = {
-            source = mkOutOfStoreSymlink "${repoDir}/config/foot/foot.ini";
+            source = mkOutOfStoreSymlink "${repoConfigDir}/foot/foot.ini";
             force = true;
           };
         };

@@ -1,7 +1,7 @@
 {
   pkgs,
   user,
-  repoDir,
+  repoConfigDir,
   currentThemeDir,
   ...
 }:
@@ -19,7 +19,7 @@
 
         file = {
           ".config/btop/btop.conf" = {
-            source = mkOutOfStoreSymlink "${repoDir}/config/btop/btop.conf";
+            source = mkOutOfStoreSymlink "${repoConfigDir}/btop/btop.conf";
             force = true;
           };
           ".config/btop/themes/current.theme" = {

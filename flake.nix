@@ -25,7 +25,7 @@
   outputs =
     { self, ... }@inputs:
     let
-      mkSystem = import ./lib/mkSystem.nix { inherit self inputs; };
+      mkSystem = import ./defaults/mkSystem.nix { inherit self inputs; };
     in
     {
       nixosConfigurations = {
@@ -34,7 +34,7 @@
           host = "xps";
           user = "mabq";
           profile = "plex-server";
-          branch = "restructure";
+          repoBranch = "restructure";
         };
       };
     };
