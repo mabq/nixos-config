@@ -15,7 +15,6 @@ let
   # cannot use `mkOutOfStoreSymlink` (home-manager) with an absolute path.
   # We can derive an absolute path from the flake root to avoid breaking the
   # path if we move this module.
-  # _repoConfigDir = self + (lib.strings.removePrefix "${repoDir}" "${repoConfigDir}");
 in
 {
   # Keyd is a system-level service
@@ -31,6 +30,7 @@ in
     ];
 
     # etc."keyd".source = "${_repoConfigDir}/keyd/${configName}";
-    etc."keyd".source = ../../config/keyd/${configName};
+    etc."keyd".source =
+      self + (lib.strings.removePrefix "${repoDir}" "${repoConfigDir}") + "/config/keyd/${configName}";
   };
 }
