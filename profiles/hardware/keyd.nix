@@ -25,7 +25,7 @@
       pkgs.keyd # Key remapping daemon for Linux
     ];
 
-    # etc."keyd".source = "${_repoConfigDir}/keyd/${configName}";
-    etc."keyd".source = self + "/config/keyd/${configName}";
+    etc."keyd".source =
+      self + lib.strings.removePrefix "${repoDir}" repoConfigDir + "/keyd/${configName}";
   };
 }
