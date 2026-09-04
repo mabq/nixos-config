@@ -1,3 +1,5 @@
+# This module uses a relative path to target its config directory, it you move
+# it it will break.
 {
   configName ? "default",
 }:
@@ -10,12 +12,6 @@
   repoConfigDir,
   ...
 }:
-let
-  # Cannot use absolute path here. Keyd config files go into `/etc/keyd` so we
-  # cannot use `mkOutOfStoreSymlink` (home-manager) with an absolute path.
-  # We can derive an absolute path from the flake root to avoid breaking the
-  # path if we move this module.
-in
 {
   # Keyd is a system-level service
   services.keyd.enable = true;
@@ -30,7 +26,6 @@ in
     ];
 
     # etc."keyd".source = "${_repoConfigDir}/keyd/${configName}";
-    etc."keyd".source =
-      self + (lib.strings.removePrefix "${repoDir}" "${repoConfigDir}") + "/config/keyd/${configName}";
+    etc."keyd".source = self + "/config/keyd/${configName}";
   };
 }
