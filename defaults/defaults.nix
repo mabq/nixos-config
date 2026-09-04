@@ -15,6 +15,10 @@
 }:
 with lib;
 {
+  # ----------------------------------------------------------------------------
+  # NixOS
+  # ----------------------------------------------------------------------------
+
   # Clone the repo automatically on first boot.
   #  Most config files are symlinks pointing to this repository, so we need the
   #  repository in place since the very first boot.
@@ -114,8 +118,8 @@ with lib;
       MYNIX_REPO = "${repoDir}";
       MYNIX_THEME = "${localThemeDir}";
 
-      # Include binaries of this repo in PATH.
-      PATH = "${repoDir}/bin"; # don't use `<path>:$PATH` syntax here
+      # Include binaries of this repo in PATH
+      # PATH = "${repoDir}/bin"; # don't use `<path>:$PATH` syntax here
 
       PAGER = "less -R --use-color -Dd+r -Du+b";
       MANPAGER = "less -R --use-color -Dd+r -Du+b";
@@ -124,9 +128,7 @@ with lib;
     };
   };
 
-  # ----------------------------------------------------------------------------
-  # Services
-  # ----------------------------------------------------------------------------
+  # -- Services ----------------------------------------------------------------
 
   services = {
     tailscale = {
@@ -155,12 +157,13 @@ with lib;
   # ----------------------------------------------------------------------------
 
   home-manager = {
-    # Use the global `pkgs` that is configured via the system level nixpkgs
-    # options. This saves an extra Nixpkgs evaluation, adds consistency, and
-    # removes the dependency on `NIX_PATH`, which is otherwise used for
-    # importing Nixpkgs.
+    # Make HomeManager use the global `pkgs` that is configured via the system
+    # level nixpkgs options. This saves an extra Nixpkgs evaluation, adds
+    # consistency, and removes the dependency on `NIX_PATH`, which is otherwise
+    # used for importing Nixpkgs.
     useGlobalPkgs = mkDefault true;
     # Install packages in `/etc/profiles` instead of `~/.nix-profile`.
+    # This makes garbage collection work for both Nixos and HomeManager.
     useUserPackages = mkDefault true;
 
     users.${user} =
@@ -192,7 +195,7 @@ with lib;
             sops # Simple and flexible tool for managing secrets
           ];
 
-          # Create a symlink to the selected theme
+          # Symlink the selected theme
           file."${themeDir}" = {
             source = mkOutOfStoreSymlink "${repoThemeDir}";
             force = true;

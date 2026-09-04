@@ -1,11 +1,13 @@
 { user, ... }:
 {
   imports = [
-    (import ./modules/keyd.nix { configName = user; }) # very personal
+    (import ./hardware/keyd.nix { })
 
     (import ./modules/zsh.nix { })
-    (import ./modules/starship.nix { configName = "simple"; })
-    (import ./modules/atuin.nix { configName = "simple"; })
+    (import ./modules/starship.nix { })
+    # (import ./modules/starship.nix { configName = "simple"; })
+    (import ./modules/atuin.nix { })
+    # (import ./modules/atuin.nix { configName = "simple"; })
     (import ./modules/bat.nix { })
     (import ./modules/tmux.nix { })
 
