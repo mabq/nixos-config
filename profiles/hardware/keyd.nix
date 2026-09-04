@@ -1,5 +1,5 @@
 {
-  configName,
+  configName ? "default",
 }:
 {
   self,
