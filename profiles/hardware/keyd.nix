@@ -14,8 +14,6 @@
 }:
 let
   # Avoid breaking this module if you move it or the config dir.
-  # Keyd config files live in the `/etc` directory, so we cannot use
-  # `mkOutOfStoreSymlink` here with an absolute path.
   configDir = self + lib.strings.removePrefix "${repoDir}" repoConfigDir;
 in
 {
@@ -31,9 +29,8 @@ in
       pkgs.keyd # Key remapping daemon for Linux
     ];
 
-    etc."keyd" = {
-      source = configDir + "/keyd/${configName}";
-      force = true;
-    };
+    # Keyd config files live in the `/etc` directory, so we cannot use
+    # `mkOutOfStoreSymlink` here with an absolute path.
+    etc."keyd".source = configDir + "/keyd/${configName}";
   };
 }
