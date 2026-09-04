@@ -9,6 +9,7 @@
   repoBranch,
   repoName,
   repoDir,
+  repoThemeDir,
   localThemeDir,
   ...
 }:
