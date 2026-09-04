@@ -28,6 +28,7 @@
       mkSystem = import ./defaults/mkSystem.nix { inherit self inputs; };
     in
     {
+      # This flake produces NixOS configurations
       nixosConfigurations = {
         # [4]
         "xps" = mkSystem {

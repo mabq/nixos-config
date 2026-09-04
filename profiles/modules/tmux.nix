@@ -1,7 +1,7 @@
 {
   pkgs,
   user,
-  repoDir,
+  repoConfigDir,
   ...
 }:
 {
@@ -20,7 +20,7 @@
 
         file = {
           ".config/tmux/tmux.conf" = {
-            source = mkOutOfStoreSymlink "${repoDir}/config/tmux/tmux.conf";
+            source = mkOutOfStoreSymlink "${repoConfigDir}/tmux/tmux.conf";
             force = true;
           };
         };

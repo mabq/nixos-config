@@ -9,7 +9,7 @@
   repoBranch,
   repoName,
   repoDir,
-  currentThemeDir,
+  localThemeDir,
   ...
 }:
 with lib;
@@ -142,7 +142,7 @@ with lib;
     # These are used to avoid hard-coding paths in config files. Not all config
     # files accept environment variables though.
     MYNIX_REPO = "${repoDir}";
-    MYNIX_THEME = "${currentThemeDir}";
+    MYNIX_THEME = "${localThemeDir}";
 
     # Include binaries of this repo in PATH. Don't use `<path>:$PATH` syntax here.
     PATH = "${repoDir}/bin";
@@ -203,7 +203,7 @@ with lib;
       }:
       let
         mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
-        themeDir = lib.strings.removePrefix "/home/${user}" currentThemeDir;
+        themeDir = lib.strings.removePrefix "/home/${user}" localThemeDir;
       in
       {
         home = {

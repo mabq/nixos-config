@@ -1,4 +1,4 @@
-{ user, currentThemeDir, ... }:
+{ user, localThemeDir, ... }:
 {
   home-manager.users.${user} =
     { pkgs, config, ... }:
@@ -14,7 +14,7 @@
 
         file = {
           ".config/Kvantum/kvantum.kvconfig" = {
-            source = mkOutOfStoreSymlink "${currentThemeDir}/kvantum.kvconfig";
+            source = mkOutOfStoreSymlink "${localThemeDir}/kvantum.kvconfig";
             force = true;
           };
         };

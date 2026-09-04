@@ -6,8 +6,8 @@
   host,
   user,
   profile,
-  theme ? "catppuccin",
   repoBranch ? "main",
+  theme ? "tokyo-night",
 }:
 let
   # These variables are used across nix and program's configuration files to
@@ -22,7 +22,7 @@ let
   repoConfigDir = "${repoDir}/config";
   repoThemeDir = "${repoDir}/themes/${theme}";
 
-  currentThemeDir = "/home/${user}/.config/${repoName}/theme"; # [1]
+  localThemeDir = "/home/${user}/.config/${repoName}/theme"; # [1]
 
   # Passing these as `specialArgs` (instead of `_module.args`) allows me to use
   # these variables in the `imports` sections of all modules without causing
@@ -41,7 +41,7 @@ let
       repoDir
       repoConfigDir
       repoThemeDir
-      currentThemeDir
+      localThemeDir
       ;
   };
 in

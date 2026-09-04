@@ -2,7 +2,7 @@
   pkgs,
   user,
   repoConfigDir,
-  currentThemeDir,
+  localThemeDir,
   ...
 }:
 {
@@ -23,7 +23,7 @@
             force = true;
           };
           ".config/btop/themes/current.theme" = {
-            source = mkOutOfStoreSymlink "${currentThemeDir}/btop.theme";
+            source = mkOutOfStoreSymlink "${localThemeDir}/btop.theme";
             force = true;
           };
         };
