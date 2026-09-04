@@ -1,4 +1,7 @@
 {
+  configName ? "default",
+}:
+{
   pkgs,
   user,
   repoConfigDir,
@@ -14,13 +17,19 @@
       home = {
         packages = with pkgs; [
           tmux # Terminal multiplexer
-          fd # Simple, fast and user-friendly alternative to find (!tmux-sessionizer)
-          fzf # Command-line fuzzy finder (!tmux-sessionizer)
+
+          # -- Packages required by scripts --
+          fd # Simple, fast and user-friendly alternative to find
+          fzf # Command-line fuzzy finder
         ];
 
         file = {
           ".config/tmux/tmux.conf" = {
-            source = mkOutOfStoreSymlink "${repoConfigDir}/tmux/tmux.conf";
+            source = mkOutOfStoreSymlink "${repoConfigDir}/tmux/${configName}.conf";
+            force = true;
+          };
+          ".local/bin" = {
+            source = mkOutOfStoreSymlink "${repoConfigDir}/tmux/bin";
             force = true;
           };
         };

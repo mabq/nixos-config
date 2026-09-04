@@ -68,47 +68,20 @@ with lib;
     kernelPackages = mkDefault pkgs.linuxPackages_latest;
   };
 
-  # ----------------------------------------------------------------------------
-  # Memory
-  # ----------------------------------------------------------------------------
-
-  # Compress data in memory — minor CPU penalty in exchange of more capacity
-  zramSwap = {
-    enable = mkDefault true;
-    memoryPercent = mkDefault 50;
-    # Use `zstd` for higher compression rates on machines with capable CPUs
-    algorithm = mkDefault "lz4";
-    priority = 100; # prioritize zram over swap
-  };
-
-  # Swap — do this on host file when needed
-  # swapDevices = [{
-  #   device = "/var/lib/swapfile";
-  #   size = 8 * 1024; # NixOS expects size in MB
-  #   priority = 5; # Lower priority than zram
-  # }];
-
-  # ----------------------------------------------------------------------------
-  # Network
-  # ----------------------------------------------------------------------------
+  # -- Network -----------------------------------------------------------------
 
   networking = {
-    hostName = mkDefault host;
+    hostName = mkDefault host; # override it in host file if required
     firewall.enable = mkDefault true; # tailscale can go through
   };
 
-  # ----------------------------------------------------------------------------
-  # Time and locale
-  # ----------------------------------------------------------------------------
+  # -- Time and locale ---------------------------------------------------------
 
   time.timeZone = mkDefault "America/Guayaquil";
   services.tzupdate.enable = mkDefault true; # update timezone automatically
-
   i18n.defaultLocale = mkDefault "en_US.UTF-8";
 
-  # ----------------------------------------------------------------------------
-  # User accounts
-  # ----------------------------------------------------------------------------
+  # -- User accounts -----------------------------------------------------------
 
   users = {
     mutableUsers = mkDefault false; # no imperative changes
@@ -121,34 +94,34 @@ with lib;
   # No password when escalating privileges for members of the `wheel` group
   security.sudo.wheelNeedsPassword = mkDefault false;
 
-  # ----------------------------------------------------------------------------
-  # Environment
-  # ----------------------------------------------------------------------------
+  # -- Environment -------------------------------------------------------------
 
-  # environment.systemPackages = with pkgs; [ ];
+  environment = {
+    # systemPackages = with pkgs; [ ];
 
-  # Environment variables
-  #  These variables are pushed by NixOS to all shells (Bash, Zsh, etc.) and
-  #  systemd user environment. Read more in "environment-variables"
-  #  learning notes. Put here variables that you want available everywhere, for
-  #  more specific variables use this option in the modules requiring them.
-  #  Don't use `mkDefault` here
-  environment.sessionVariables = {
-    # These are used to avoid hard-coding paths in config files. Not all config
-    # files accept environment variables though.
-    MYNIX_REPO = "${repoDir}";
-    MYNIX_THEME = "${localThemeDir}";
+    # Add ~/.local/bin to PATH.
+    #  This is where we put symlinks to binaries in this repo.
+    localBinInPath = mkDefault true;
 
-    # Include binaries of this repo in PATH. Don't use `<path>:$PATH` syntax here.
-    PATH = "${repoDir}/bin";
+    # Environment variables
+    #  Pushed by NixOS to all shells (Bash, Zsh) and systemd user environment.
+    #  Only include here variables you want always available. Read more in
+    #  "environment-variables" learning notes.
+    #  Important! Don't use `mkDefault` here
+    sessionVariables = {
+      # These help avoid hard-coding paths in configuration files (not all config
+      # files accept environment variables).
+      MYNIX_REPO = "${repoDir}";
+      MYNIX_THEME = "${localThemeDir}";
 
-    # Colorized man pages
-    PAGER = "less -R --use-color -Dd+r -Du+b";
-    MANPAGER = "less -R --use-color -Dd+r -Du+b";
+      # Include binaries of this repo in PATH.
+      PATH = "${repoDir}/bin"; # don't use `<path>:$PATH` syntax here
 
-    # Others
-    MANROFFOPT = "-P -c"; # https://wiki.archlinux.org/title/Color_output_in_console#Using_less
-    # TERM = # do not set this variable, it is set by each terminal emulator.
+      PAGER = "less -R --use-color -Dd+r -Du+b";
+      MANPAGER = "less -R --use-color -Dd+r -Du+b";
+      MANROFFOPT = "-P -c"; # https://wiki.archlinux.org/title/Color_output_in_console#Using_less
+      # TERM = # do not set this variable, it is set by each terminal emulator.
+    };
   };
 
   # ----------------------------------------------------------------------------

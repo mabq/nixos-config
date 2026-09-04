@@ -3,12 +3,12 @@
   imports = [
     (import ./modules/keyd.nix { configName = user; }) # very personal
 
-    (import ./modules/zsh.nix { configName = "default"; })
+    (import ./modules/zsh.nix { })
     (import ./modules/starship.nix { configName = "simple"; })
     (import ./modules/atuin.nix { configName = "simple"; })
-    (import ./modules/bat.nix { configName = "default"; })
+    (import ./modules/bat.nix { })
+    (import ./modules/tmux.nix { })
 
-    ./modules/tmux.nix
     ./modules/yazi.nix
 
     ./modules/programs/btop.nix
