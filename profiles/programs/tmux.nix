@@ -4,7 +4,7 @@
 {
   pkgs,
   user,
-  repoConfigDir,
+  repoConfigDirAbs,
   ...
 }:
 {
@@ -25,11 +25,11 @@
 
         file = {
           ".config/tmux/tmux.conf" = {
-            source = mkOutOfStoreSymlink "${repoConfigDir}/tmux/${configName}.conf";
+            source = mkOutOfStoreSymlink "${repoConfigDirAbs}/tmux/${configName}.conf";
             force = true;
           };
           ".local/bin/tmux-sessionizer" = {
-            source = mkOutOfStoreSymlink "${repoConfigDir}/tmux/bin/tmux-sessionizer";
+            source = mkOutOfStoreSymlink "${repoConfigDirAbs}/tmux/bin/tmux-sessionizer";
             force = true;
           };
         };

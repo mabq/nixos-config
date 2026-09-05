@@ -9,8 +9,9 @@
   repoName,
   repoUrl,
   repoDir,
-  repoThemeDir,
+  repoThemeDirAbs,
   localThemeDir,
+  localThemeDirAbs,
   ...
 }:
 with lib;
@@ -118,7 +119,7 @@ with lib;
       # These help avoid hard-coding paths in configuration files (not all config
       # files accept environment variables).
       MYNIX_REPO = "${repoDir}";
-      MYNIX_THEME = "${localThemeDir}";
+      MYNIX_THEME = "${localThemeDirAbs}";
 
       # Include binaries of this repo in PATH
       # PATH = "${repoDir}/bin"; # don't use `<path>:$PATH` syntax here
@@ -176,7 +177,6 @@ with lib;
       }:
       let
         mkOutOfStoreSymlink = config.lib.file.mkOutOfStoreSymlink;
-        themeDir = lib.strings.removePrefix "/home/${user}" localThemeDir;
       in
       {
         home = {
@@ -198,8 +198,8 @@ with lib;
           ];
 
           # Symlink the selected theme
-          file."${themeDir}" = {
-            source = mkOutOfStoreSymlink "${repoThemeDir}";
+          file."${localThemeDir}" = {
+            source = mkOutOfStoreSymlink "${repoThemeDirAbs}";
             force = true;
           };
         };

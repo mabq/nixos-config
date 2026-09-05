@@ -4,8 +4,8 @@
 {
   pkgs,
   user,
-  repoConfigDir,
-  repoThemeDir,
+  repoConfigDirAbs,
+  repoThemeDirAbs,
   ...
 }:
 {
@@ -22,7 +22,7 @@
 
         file = {
           ".config/foot/foot.ini" = {
-            source = mkOutOfStoreSymlink "${repoConfigDir}/foot/${configName}.ini";
+            source = mkOutOfStoreSymlink "${repoConfigDirAbs}/foot/${configName}.ini";
             force = true;
           };
           ".config/foot/theme.ini" = {
@@ -30,7 +30,7 @@
             # paths, so we cannot point to out local theme dir. We must create
             # this extra symlink to avoid breaking the path if we change the
             # themes dir.
-            source = mkOutOfStoreSymlink "${repoThemeDir}/foot.ini";
+            source = mkOutOfStoreSymlink "${repoThemeDirAbs}/foot.ini";
             force = true;
           };
         };

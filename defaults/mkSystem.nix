@@ -15,14 +15,21 @@ let
   repoName = "mynix";
   repoUrl = "https://github.com/mabq/${repoName}.git";
   repoDir = "/home/${user}/.local/share/${repoName}";
+
   # Placing all configs/themes in a single directory help a lot for
   # outOfStoreSymliks because those require absolute paths.
-  repoConfigDir = "${repoDir}/config";
+
+  repoConfigDir = "/config";
+  repoConfigDirAbs = repoDir + repoConfigDir;
+
   repoThemeDir = "${repoConfigDir}/${repoName}/themes/${theme}";
+  repoThemeDirAbs = repoDir + repoThemeDir;
+
   # Unfortunately some config files do not allow global varaibles or relative
   # paths, so do a live grep for "__MYNIX_HARDCODED_PATH__" to see where manual
   # changes are required when changing this.
-  localThemeDir = "/home/${user}/.config/${repoName}/theme";
+  localThemeDir = "/.config/${repoName}/theme";
+  localThemeDirAbs = "/home/${user}" + localThemeDir;
 
   # `specialArgs` (unlike `_module.args`) does not cause infinite recursion
   # when using one of these in the `imports` section of another module.
@@ -40,8 +47,11 @@ let
       repoUrl
       repoDir
       repoConfigDir
+      repoConfigDirAbs
       repoThemeDir
+      repoThemeDirAbs
       localThemeDir
+      localThemeDirAbs
       ;
   };
 in

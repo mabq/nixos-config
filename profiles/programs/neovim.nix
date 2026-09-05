@@ -3,16 +3,15 @@
 }:
 {
   self,
-  lib,
   pkgs,
   user,
-  repoDir,
   repoConfigDir,
+  repoConfigDirAbs,
   ...
 }:
 let
-  # Avoid breaking this module if moves
-  configDir = self + lib.strings.removePrefix "${repoDir}" repoConfigDir;
+  # Avoid breaking if the module is moved to another directory
+  packagesList = self + repoConfigDir + "/nvim/${configName}/packages.nix";
 in
 {
   # Make nvim the default text editor.
@@ -31,11 +30,11 @@ in
     in
     {
       home = {
-        packages = import "${configDir}/nvim/${configName}/packages.nix" { inherit pkgs; };
+        packages = import packagesList { inherit pkgs; };
 
         file = {
           ".config/nvim" = {
-            source = mkOutOfStoreSymlink "${repoConfigDir}/nvim/${configName}";
+            source = mkOutOfStoreSymlink "${repoConfigDirAbs}/nvim/${configName}";
             force = true;
           };
         };

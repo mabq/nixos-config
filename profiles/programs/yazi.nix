@@ -4,7 +4,7 @@
 {
   pkgs,
   user,
-  repoConfigDir,
+  repoConfigDirAbs,
   ...
 }:
 {
@@ -37,7 +37,7 @@
 
         file = {
           ".config/yazi" = {
-            source = mkOutOfStoreSymlink "${repoConfigDir}/yazi/${configName}";
+            source = mkOutOfStoreSymlink "${repoConfigDirAbs}/yazi/${configName}";
             force = true;
           };
         };

@@ -4,7 +4,7 @@
 {
   pkgs,
   user,
-  repoConfigDir,
+  repoConfigDirAbs,
   ...
 }:
 {
@@ -21,7 +21,7 @@
 
         file = {
           ".config/starship.toml" = {
-            source = mkOutOfStoreSymlink "${repoConfigDir}/starship/${configName}.toml";
+            source = mkOutOfStoreSymlink "${repoConfigDirAbs}/starship/${configName}.toml";
             force = true;
           };
         };

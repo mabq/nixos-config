@@ -1,7 +1,7 @@
 {
   pkgs,
   user,
-  repoConfigDir,
+  repoConfigDirAbs,
   ...
 }:
 {
@@ -56,15 +56,15 @@
 
         file = {
           # ".config/elephant" = {
-          #   source = mkOutOfStoreSymlink "${repoConfigDir}/elephant";
+          #   source = mkOutOfStoreSymlink "${repoConfigDirAbs}/elephant";
           #   force = true;
           # };
           # ".config/walker" = {
-          #   source = mkOutOfStoreSymlink "${repoConfigDir}/walker";
+          #   source = mkOutOfStoreSymlink "${repoConfigDirAbs}/walker";
           #   force = true;
           # };
           ".config/hypr" = {
-            source = mkOutOfStoreSymlink "${repoConfigDir}/hypr";
+            source = mkOutOfStoreSymlink "${repoConfigDirAbs}/hypr";
             force = true;
           };
         };

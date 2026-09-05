@@ -4,7 +4,7 @@
 {
   pkgs,
   user,
-  repoConfigDir,
+  repoConfigDirAbs,
   ...
 }:
 {
@@ -28,7 +28,7 @@
 
         file = {
           ".config/niri" = {
-            source = mkOutOfStoreSymlink "${repoConfigDir}/niri/${configName}";
+            source = mkOutOfStoreSymlink "${repoConfigDirAbs}/niri/${configName}";
             force = true;
           };
         };
