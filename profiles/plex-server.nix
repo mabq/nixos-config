@@ -17,7 +17,9 @@
     (import ./programs/zsh.nix { })
 
     (import ./programs/foot.nix { })
-    ./modules/compositor/hyprland.nix
+    # (import ./programs/wayland/niri.nix { })
+
+    # ./modules/compositor/hyprland.nix
   ];
 
   services.tailscale = {

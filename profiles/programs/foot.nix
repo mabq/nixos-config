@@ -37,10 +37,3 @@
       };
     };
 }
-
-/*
-  Related configurations:
-
-    The defaults module creates the symlink for the local theme used in the
-    config file.
-*/

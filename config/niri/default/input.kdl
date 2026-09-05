@@ -25,3 +25,13 @@ input {
         scroll-factor horizontal=-1.0 vertical=1.0 // MxKeys
     }
 }
+
+cursor {
+    hide-when-typing
+}
+
+gestures {
+    hot-corners {
+        off
+    }
+}
