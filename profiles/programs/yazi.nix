@@ -46,9 +46,8 @@
 }
 
 /*
-  Related configurations
-  ======================
+  Related configurations:
 
-  - Shell config
-    Alias `y` to automatically change directory on exit.
+    Shell config files set the `y` function to automatically change directory
+    on exit.
 */

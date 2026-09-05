@@ -47,7 +47,7 @@
 
 /*
   Shell Types
-  ===========
+  -----------
 
     - Interactive:      Terminal windows
     - Non-interactive:  Running scripts
@@ -60,7 +60,7 @@
   `himBHs`), the shell is interactive.
 
   Config files
-  ============
+  ------------
 
   Zsh uses five main startup configuration files, each serving a specific
   purpose depending on whether the shell is interactive or non-interactive, and

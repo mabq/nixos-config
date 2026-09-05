@@ -38,16 +38,11 @@
 }
 
 /*
-  Related configurations
-  ======================
+  Related configurations:
 
-  - Defaults module
-    Includes `~/.local/bin` into PATH.
-    Sets an environment variable used in tmux-sessionizer.
+    The defaults module includes `~/.local/bin` in PATH which is required for the
+    script to work and also sets an environment variable used by the script.
 
-  - Shell configs
-    Shortcut to invoke `tmux-sessionizer`
-
-  - Neovim config
-    Shortcut to invoke `tmux-sessionizer`
+    Shortcuts to trigger the script are set in the shell config files (zsh) and in
+    neovim config files.
 */
