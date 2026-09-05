@@ -34,6 +34,7 @@
           libqalculate # Advanced calculator library (!elephant)
           wev # Wayland event viewer (keycodes)
           xlsclients # Utility to list client applications running on a X11 display
+          foot # Fast, lightweight and minimalistic Wayland terminal emulator
 
           # -- Launcher --
           # INFO: Read [Service Management](https://nixos.org/manual/nixos/stable/#sec-systemctl)

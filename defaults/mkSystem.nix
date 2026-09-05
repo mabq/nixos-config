@@ -18,7 +18,7 @@ let
   # Grouping all configs and themes (instead of placing those in each module)
   # makes managing symlinks (absolute paths) much easier.
   repoConfigDir = "${repoDir}/config";
-  repoThemeDir = "${repoDir}/themes/${theme}";
+  repoThemeDir = "${repoConfigDir}/themes/${theme}";
   localThemeDir = "/home/${user}/.config/${repoName}/theme";
 
   # `specialArgs` (unlike `_module.args`) does not cause infinite recursion
