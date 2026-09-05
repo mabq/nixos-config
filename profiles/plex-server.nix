@@ -1,8 +1,8 @@
 { user, ... }:
 {
   imports = [
-    # You must pass the configName for each module or leave it empty to use the
-    # default config file.
+    # All these modules are wrapped with a function that expects a `configName`
+    # to select proper config files. If you don't pass any `default` is used.
 
     (import ./hardware/keyd.nix { })
 
@@ -16,6 +16,7 @@
     (import ./programs/yazi.nix { })
     (import ./programs/zsh.nix { })
 
+    (import ./programs/foot.nix { })
     ./modules/compositor/hyprland.nix
   ];
 

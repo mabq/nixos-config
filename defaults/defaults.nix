@@ -48,6 +48,8 @@ with lib;
         "nix-command"
         "flakes"
       ];
+      # Optimize storage
+      #  https://nixos.org/manual/nix/stable/command-ref/conf-file.html#conf-auto-optimise-store
       auto-optimise-store = mkDefault true;
     };
     gc = {

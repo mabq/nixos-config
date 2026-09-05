@@ -6,7 +6,6 @@
 }:
 {
   imports = [
-    ./dependencies/foot.nix
     # ./dependencies/hypr-uwsm.nix
     # ./theme-desktop.nix
   ];

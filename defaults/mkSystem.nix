@@ -15,10 +15,13 @@ let
   repoName = "mynix";
   repoUrl = "https://github.com/mabq/${repoName}.git";
   repoDir = "/home/${user}/.local/share/${repoName}";
-  # Grouping all configs and themes (instead of placing those in each module)
-  # makes managing symlinks (absolute paths) much easier.
+  # Placing all configs/themes in a single directory help a lot for
+  # outOfStoreSymliks because those require absolute paths.
   repoConfigDir = "${repoDir}/config";
   repoThemeDir = "${repoConfigDir}/${repoName}/themes/${theme}";
+  # Unfortunately some config files do not allow global varaibles or relative
+  # paths, so do a live grep for "__MYNIX_HARDCODED_PATH__" to see where manual
+  # changes are required when changing this.
   localThemeDir = "/home/${user}/.config/${repoName}/theme";
 
   # `specialArgs` (unlike `_module.args`) does not cause infinite recursion
