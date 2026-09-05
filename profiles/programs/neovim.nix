@@ -31,7 +31,7 @@ in
     in
     {
       home = {
-        packages = import "${configDir}/nvim/packages.nix" { inherit pkgs; };
+        packages = import "${configDir}/nvim/${configName}/packages.nix" { inherit pkgs; };
 
         file = {
           ".config/nvim" = {
