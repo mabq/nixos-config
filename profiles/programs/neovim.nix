@@ -2,11 +2,18 @@
   configName ? "default",
 }:
 {
+  self,
+  lib,
   pkgs,
   user,
+  repoDir,
   repoConfigDir,
   ...
 }:
+let
+  # Avoid breaking this module if moves
+  configDir = self + lib.strings.removePrefix "${repoDir}" repoConfigDir;
+in
 {
   # Make nvim the default text editor.
   # Read session variables notes in the default module for more information
@@ -24,7 +31,7 @@
     in
     {
       home = {
-        packages = import "${repoConfigDir}/nvim/packages.nix";
+        packages = import "${configDir}/nvim/packages.nix" { inherit pkgs; };
 
         file = {
           ".config/nvim" = {
