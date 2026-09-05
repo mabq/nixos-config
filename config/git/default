@@ -1,0 +1,3 @@
+# vim: set filetype=gitconfig:
+
+# Did you forgot to pass a configName when importing the git module?

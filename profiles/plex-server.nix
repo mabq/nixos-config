@@ -1,21 +1,20 @@
 { user, ... }:
 {
   imports = [
+    # You must pass the configName for each module or leave it empty to use the
+    # default config file.
+
     (import ./hardware/keyd.nix { })
 
-    (import ./modules/zsh.nix { })
-    (import ./modules/starship.nix { })
-    # (import ./modules/starship.nix { configName = "simple"; })
-    (import ./modules/atuin.nix { })
-    # (import ./modules/atuin.nix { configName = "simple"; })
-    (import ./modules/bat.nix { })
-    (import ./modules/tmux.nix { })
-
-    ./modules/yazi.nix
-
-    ./modules/programs/btop.nix
-    ./modules/programs/git.nix
-    ./modules/programs/neovim.nix
+    (import ./programs/atuin.nix { configName = "simple"; })
+    (import ./programs/bat.nix { })
+    (import ./programs/btop.nix { })
+    (import ./programs/git.nix { configName = user; })
+    (import ./programs/neovim.nix { configName = user; })
+    (import ./programs/starship.nix { configName = "simple"; })
+    (import ./programs/tmux.nix { })
+    (import ./programs/yazi.nix { })
+    (import ./programs/zsh.nix { })
 
     ./modules/compositor/hyprland.nix
   ];

@@ -4,7 +4,7 @@
 {
   pkgs,
   user,
-  repoDir,
+  repoConfigDir,
   ...
 }:
 {
@@ -21,7 +21,7 @@
 
         file = {
           ".config/starship.toml" = {
-            source = mkOutOfStoreSymlink "${repoDir}/config/starship/${configName}.toml";
+            source = mkOutOfStoreSymlink "${repoConfigDir}/starship/${configName}.toml";
             force = true;
           };
         };
@@ -29,4 +29,5 @@
     };
 }
 
-# Starship must be initialized by a shell config file
+# Important!
+#  Starship must be initialized by a shell config file.

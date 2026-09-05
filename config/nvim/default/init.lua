@@ -1,0 +1,1 @@
+-- Did you forget to pass a configName to the neovim module?

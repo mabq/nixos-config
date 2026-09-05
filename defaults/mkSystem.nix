@@ -15,6 +15,8 @@ let
   repoName = "mynix";
   repoUrl = "https://github.com/mabq/${repoName}.git";
   repoDir = "/home/${user}/.local/share/${repoName}";
+  # Grouping all configs and themes (instead of placing those in each module)
+  # makes managing symlinks (absolute paths) much easier.
   repoConfigDir = "${repoDir}/config";
   repoThemeDir = "${repoDir}/themes/${theme}";
   localThemeDir = "/home/${user}/.config/${repoName}/theme";

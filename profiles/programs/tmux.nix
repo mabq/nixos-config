@@ -28,8 +28,8 @@
             source = mkOutOfStoreSymlink "${repoConfigDir}/tmux/${configName}.conf";
             force = true;
           };
-          ".local/bin" = {
-            source = mkOutOfStoreSymlink "${repoConfigDir}/tmux/bin";
+          ".local/bin/tmux-sessionizer" = {
+            source = mkOutOfStoreSymlink "${repoConfigDir}/tmux/bin/tmux-sessionizer";
             force = true;
           };
         };
@@ -41,13 +41,11 @@
   Related configurations
   ======================
 
+  - Defaults module
+    Includes `~/.local/bin` into PATH.
+    Sets an environment variable used in tmux-sessionizer.
+
   - Shell configs
-    Include the repository `bin` directory to $PATH (required for
-    `tmux-sessionizer` to be reachable.
-
-    The defaults module sets an environment variable used by `tmux-sessionizer`
-    to include the repository directory.
-
     Shortcut to invoke `tmux-sessionizer`
 
   - Neovim config

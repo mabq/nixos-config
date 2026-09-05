@@ -4,7 +4,7 @@
 {
   pkgs,
   user,
-  repoDir,
+  repoConfigDir,
   ...
 }:
 {
@@ -37,7 +37,7 @@
         text = ''
           ## -- Read notes in zsh nix module --
           setopt NO_GLOBAL_RCS
-          ZDOTDIR="${repoDir}/config/zsh/${configName}"
+          ZDOTDIR="${repoConfigDir}/zsh/${configName}"
         '';
         force = true;
       };

@@ -1,4 +1,7 @@
 {
+  configName ? "default",
+}:
+{
   pkgs,
   user,
   repoConfigDir,
@@ -19,7 +22,7 @@
 
         file = {
           ".config/btop/btop.conf" = {
-            source = mkOutOfStoreSymlink "${repoConfigDir}/btop/btop.conf";
+            source = mkOutOfStoreSymlink "${repoConfigDir}/btop/${configName}.conf";
             force = true;
           };
           ".config/btop/themes/current.theme" = {
@@ -32,9 +35,6 @@
 }
 
 /*
-  Related configurations
-  ======================
-
-  - Default module
-    Symlink to current theme.
+  Related configurations:
+    The defaults module creates local theme dir symlink.
 */

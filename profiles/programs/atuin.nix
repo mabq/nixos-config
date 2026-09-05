@@ -30,10 +30,8 @@
 }
 
 /*
-  Related configs
-  ---------------
-
-  Atuin must be initialized by the shell, for more info see:
+  Important!
+   Atuin must be initialized by a shell config file:
    https://docs.atuin.sh/latest/guide/shell-integration/
    https://docs.atuin.sh/latest/configuration/key-binding/
 

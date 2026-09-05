@@ -1,5 +1,3 @@
-# This module uses a relative path to target its config directory, it you move
-# it it will break.
 {
   configName ? "default",
 }:
@@ -13,7 +11,8 @@
   ...
 }:
 let
-  # Avoid breaking this module if you move it or the config dir.
+  # Avoid breaking this module if you move it or change the location of the
+  # config directory inside this repo.
   configDir = self + lib.strings.removePrefix "${repoDir}" repoConfigDir;
 in
 {

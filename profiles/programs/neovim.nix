@@ -1,4 +1,7 @@
 {
+  configName ? "default",
+}:
+{
   pkgs,
   user,
   repoConfigDir,
@@ -54,7 +57,7 @@
 
         file = {
           ".config/nvim" = {
-            source = mkOutOfStoreSymlink "${repoConfigDir}/nvim";
+            source = mkOutOfStoreSymlink "${repoConfigDir}/nvim/${configName}";
             force = true;
           };
         };

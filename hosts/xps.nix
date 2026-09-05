@@ -3,8 +3,8 @@
 {
   imports = [
     ./disko/ext4-encrypted.nix
-    ./memory/compress.nix
-    ./network/systemd-networkd.nix
+    ./memory/zram.nix
+    ./networking/systemd-networkd.nix
   ];
 
   # -- Override imports --------------------------------------------------------

@@ -1,4 +1,7 @@
 {
+  configName ? "default",
+}:
+{
   pkgs,
   user,
   repoConfigDir,
@@ -33,16 +36,8 @@
         ];
 
         file = {
-          ".config/yazi/yazi.toml" = {
-            source = mkOutOfStoreSymlink "${repoConfigDir}/yazi/yazi.toml";
-            force = true;
-          };
-          ".config/yazi/theme.toml" = {
-            source = mkOutOfStoreSymlink "${repoConfigDir}/yazi/theme.toml";
-            force = true;
-          };
-          ".config/yazi/init.lua" = {
-            source = mkOutOfStoreSymlink "${repoConfigDir}/yazi/init.lua";
+          ".config/yazi" = {
+            source = mkOutOfStoreSymlink "${repoConfigDir}/yazi/${configName}";
             force = true;
           };
         };
