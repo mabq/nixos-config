@@ -19,7 +19,7 @@
     (import ./programs/foot.nix { })
     # (import ./programs/wayland/niri.nix { })
 
-    # ./modules/compositor/hyprland.nix
+    ./modules/compositor/hyprland.nix
   ];
 
   services.tailscale = {
