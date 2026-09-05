@@ -5,6 +5,7 @@
   pkgs,
   user,
   repoConfigDir,
+  repoThemeDir,
   ...
 }:
 {
@@ -21,11 +22,15 @@
 
         file = {
           ".config/foot/foot.ini" = {
-            # This config file requires a hard-coded path to the theme. The
-            # alternative was to use home-manager options to configure foot but
-            # that would make it harder to have different config files in case
-            # we need them.
             source = mkOutOfStoreSymlink "${repoConfigDir}/foot/${configName}.ini";
+            force = true;
+          };
+          ".config/foot/theme.ini" = {
+            # The foot config files does not allow global variables or relative
+            # paths, so we cannot point to out local theme dir. We must create
+            # this extra symlink to avoid breaking the path if we change the
+            # themes dir.
+            source = mkOutOfStoreSymlink "${repoThemeDir}/foot.ini";
             force = true;
           };
         };
